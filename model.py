@@ -19,7 +19,6 @@ class User(db.Model):
     last_name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=False, unique=True)
     valid_email = db.Column(db.Boolean, nullable=False, default=False)
-    other_emails = db.Column(db.String(64), nullable=True)  # would be list of emails
     password = db.Column(db.String(64), nullable=False)  # should encrypt
     user_pic = image_attachment('UserPic')
     dob = db.Column(db.DateTime, nullable=True)
@@ -27,12 +26,20 @@ class User(db.Model):
     biz_acct = db.Column(db.Boolean, nullable=False, default=False)
 
     userpic = db.relationship('UserPic')
-    userbiz = db.relationship('UserBiz')
+    biz = db.relationship('Business', secondary='user_biz')
+    friends = db.relationship('User', seondary='friends')
+    promos = db.relationship('Promo', secondary='user_promos')
+    checkins = db.relationship('CheckIn')
+    referrals = db.relationship('Referral')
+    reviews = db.relationship('Review')
+    invites = db.relationship('Invite')
+    # not sure if this is done correctly with the secondary and both users from
+    # friends table relying on foreign key from users table
 
     def __repr__(self):
         """Displays info"""
 
-        return ("<User user_id={} username={} email={}>".format(self.user_id,
+        return ("<user_id={} username={} email={}>".format(self.user_id,
                 self.username, self.email))
 
 
@@ -43,7 +50,24 @@ class UserPic(db.Model, Image):  # need to check on the image one (https://sqlal
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
 
+    user = db.relationship('User', uselist=False)
+
+
+class Friend(db.Model):
+    """ Relationship information between user profiles. """
+
+    __tablename__ = 'friends'
+
+    # Links user account to friends.
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
+    friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
     user = db.relationship('User')
+
+    def __repr__(self):
+        """ Displays info. """
+
+        return ("<user_id={} friend_id={}>".format(self.user_id, self.friend_id))
 
 
 class UserBiz(db.Model):
@@ -62,7 +86,7 @@ class UserBiz(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<User user_id={} biz_id={}>".format(self.user_id, self.biz_id))
+        return ("<user_id={} biz_id={}>".format(self.user_id, self.biz_id))
 
 
 class Business(db.Model):
@@ -78,19 +102,24 @@ class Business(db.Model):
     country = db.Column(db.String(64), nullable=True)
     phone = db.Column(db.String(64), nullable=True)
     email = db.Column(db.String(64), nullable=True)
-    hours = db.Column(db.String(64), nullable=True)  # need to check on data type
+    valid_email = db.Column(db.Boolean, nullable=False, default=False)
+    category = db.Column(db.String(64), nullable=True)
+    days_open = db.Column(db.String(64), nullable=True)
+    open_time = db.Column(db.Integer, nullable=True)
+    close_time = db.Column(db.Integer, nullable=True)
     claimed = db.Column(db.Boolean, nullable=False, default=False)
-    promo = db.Column(db.String(100), nullable=True)
-    promo_exp = db.Column(db.DateTime, nullable=True)
     biz_pic_main = image_attachment('BizPic')
     # biz_pic_other = image_attachment() # maybe future versions to determine how to do gallery of pics
 
-    userbiz = db.relationship('UserBiz')
+    users = db.relationship('User', secondary='user-biz')
+    checkins = db.relationship('CheckIn')
+    referrals = db.relationship('Referral')
+    reviews = db.relationship('Review')
 
     def __repr__(self):
         """ Displays info. """
 
-        return ("<User biz_id={} bizname={}>".format(self.biz_id, self.bizname))
+        return ("<biz_id={} bizname={}>".format(self.biz_id, self.bizname))
 
 
 class BizPic(db.Model, Image):  # need to check on the image one (https://sqlalchemy-imageattach.readthedocs.io/en/1.1.0/guide/declare.html)
@@ -100,26 +129,73 @@ class BizPic(db.Model, Image):  # need to check on the image one (https://sqlalc
 
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'), primary_key=True)
 
+    biz = db.relationship('Business', uselist=False)
+
+
+class BizPromo(db.Model):
+    """ Relationship information between business(es) and related promotions. """
+
+    __tablename__ = 'biz_promos'
+
+    biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'), primary_key=True)
+    promo_id = db.Column(db.Integer, db.ForeignKey('promos.promo_id'))
+    promo_active = db.Column(db.Boolean, nullable=False, default=True)
+
     biz = db.relationship('Business')
-
-
-class Friend(db.Model):
-    """ Relationship information between user profiles. """
-
-    __tablename__ = 'friends'
-
-    # Links user account to friends.
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
-    friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    # not sure if this should be classified as foreign key
-    # also not sure if separate transaction # is needed
-
-    user = db.relationship('User')
+    promos = db.relationship('Promo')
 
     def __repr__(self):
         """ Displays info. """
 
-        return ("<User user_id={} friend_id={}>".format(self.user_id, self.friend_id))
+        return ("<biz_id={} promo_id={} promo_active={}>".format(self.biz_id,
+                                                                 self.promo_id,
+                                                                 self.promo_active))
+
+
+class Promo(db.Model):
+    """ Promotion model. """
+
+    __tablename__ = 'promos'
+
+    promo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    title = db.Column(db.String(64), nullable=False)
+    descr = db.Column(db.String(64), nullable=True)
+    start_date = db.Column(db.DateTime, nullable=True)
+    end_date = db.Column(db.DateTime, nullable=True)
+    referral_promo = db.Column(db.Boolean, nullable=False, default=False)
+    birthday_promo = db.Column(db.Boolean, nullable=False, default=False)
+    redeem_count = db.Column(db.Integer, nullable=False, default=None)
+
+    users = db.relationship('User', secondary='user_promos')
+    biz = db.relationship('Business')
+
+    def __repr__(self):
+        """ Displays info. """
+
+        return ("<promo_id={} title={} end_date={}>".format(self.promo_id,
+                                                            self.title,
+                                                            self.end_date))
+
+
+class UserPromo(db.Model):
+    """ Relationship information between user and related promotions. """
+
+    __tablename__ = 'user_promos'
+
+    user_promo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    promo_id = db.Column(db.Integer, db.ForeignKey('promos.promo_id'))
+    redeem_date = db.Column(db.DateTime, nullable=True)
+    redeemed = db.Column(db.Boolean, nullable=False, default=False)
+
+    users = db.relationship('User')
+    promos = db.relationship('Promo')
+
+    def __repr__(self):
+        """ Displays info. """
+
+        return ("<user_promo_id={} user_id={} promo_id={} redeemed={}>"
+                .format(self.user_promo_id, self.user_id, self.promo_id, self.redeemed))
 
 
 class CheckIn(db.Model):
@@ -132,13 +208,13 @@ class CheckIn(db.Model):
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
     checkin_date = db.Column(db.DateTime, nullable=False)
 
-    user = db.relationship('User')
+    users = db.relationship('User')
     biz = db.relationship('Business')
 
     def __repr__(self):
         """ Displays info. """
 
-        return ("<User checkin_id={} user_id={} biz_id={} checkin_date={}>"
+        return ("<checkin_id={} user_id={} biz_id={} checkin_date={}>"
                 .format(self.checkin_id, self.user_id, self.biz_id, self.checkin_date))
 
 
@@ -150,22 +226,16 @@ class Referral(db.Model):
     referral_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     referrer_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     referree_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    # similar to friend class, not sure if foreign key is appropriate
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
     refer_date = db.Column(db.DateTime, nullable=False)
-    promo = db.Column(db.String(100), db.ForeignKey('businesses.promo'))
-    # once redeemed though, the promo should be frozen in database so not sure if this is a foreign key
-    promo_exp = db.Column(db.DateTime, db.ForeignKey('businesses.promo_exp'))
-    redeem_date = db.Column(db.DateTime, nullable=True)
-    redeemed = db.Column(db.Boolean, nullable=False, default=False)
 
-    user = db.relationship('User')
+    users = db.relationship('User')
     biz = db.relationship('Business')
 
     def __repr__(self):
         """ Displays info. """
 
-        return ("<User referral_id={} biz_id={} refer_date={} redeem_date>"
+        return ("<referral_id={} biz_id={} refer_date={} redeem_date>"
                 .format(self.referral_id, self.biz_id, self.refer_date, self.redeem_date))
 
 
@@ -193,8 +263,27 @@ class Review(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<User review_id={} user_id={} biz_id={} rating={}>"
+        return ("<review_id={} user_id={} biz_id={} rating={}>"
                 .format(self.review_id, self.user_id, self.biz_id, self.rating))
+
+
+class Invite(db.Model):
+    """ User invite model. """
+
+    __tablename__ = 'invites'
+
+    invite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.String(64), db.ForeignKey('users.user_id'), nullable=False)
+    friend_email = db.Column(db.String(64), nullable=False)
+    accepted = db.Column(db.Boolean, nullable=False, default=False)
+
+    user = db.relationship('User')
+
+    def __repr__(self):
+    """ Displays info. """
+
+        return ("<invite_id={} user_id={} accepted={}"
+                .format(self.invite_id, self.user_id, self.accepted))
 
 
 ##############################################################################
