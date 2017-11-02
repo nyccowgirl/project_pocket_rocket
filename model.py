@@ -22,7 +22,7 @@ class User(db.Model):
     password = db.Column(db.String(64), nullable=False)  # should encrypt
     user_pic = image_attachment('UserPic')
     dob = db.Column(db.DateTime, nullable=True)
-    join_date = db.Column(db.DateTime, nullable=False, default=func.current_timestamp())
+    join_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     # not sure if current_timestamp syntax is correct for SQLAlchemy
     biz_acct = db.Column(db.Boolean, nullable=False, default=False)
 
@@ -215,7 +215,7 @@ class CheckIn(db.Model):
     checkin_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
-    checkin_date = db.Column(db.DateTime, nullable=False, default=func.current_timestamp())
+    checkin_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     # same re: timestamp
 
     # users = db.relationship('User')
@@ -237,7 +237,7 @@ class Referral(db.Model):
     referrer_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     referree_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
-    refer_date = db.Column(db.DateTime, nullable=False, default=func.current_timestamp())
+    refer_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     # same re: timestamp
 
     # users = db.relationship('User')
@@ -258,14 +258,14 @@ class Review(db.Model):
     review_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
-    rating = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.Integer, db.CheckConstraint('(rating >= 1) && (rating <= 5)'), nullable=False)
     review = db.Column(db.String(5000), nullable=False)
-    review_date = db.Column(db.DateTime, nullable=False, default=func.current_timestamp())
+    review_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     # same re: timestamp
     dispute = db.Column(db.Boolean, nullable=False, default=False)
     response = db.Column(db.String(5000), nullable=True)
     revise_review = db.Column(db.Boolean, nullable=False, default=False)
-    new_rating = db.Column(db.Integer, nullable=True)
+    new_rating = db.Column(db.Integer, db.CheckConstraint('(rating >= 1) && (rating <= 5)'), nullable=True)
     new_review = db.Column(db.String(3000), nullable=True)
 
     # user = db.relationship('User')
@@ -289,7 +289,6 @@ class LikeReview(db.Model):
     # and to gray out like button from the individual user
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-
     # users = db.relationship('User')
     # reviews = db.relationship('Review')
 
@@ -312,7 +311,7 @@ class Invite(db.Model):
     # user = db.relationship('User')
 
     def __repr__(self):
-    """ Displays info. """
+        """ Displays info. """
 
         return ("<invite_id={} user_id={} accepted={}"
                 .format(self.invite_id, self.user_id, self.accepted))
