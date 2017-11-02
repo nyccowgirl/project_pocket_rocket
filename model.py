@@ -17,7 +17,8 @@ class User(db.Model):
     username = db.Column(db.String(64), nullable=False, unique=True)
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
-    email = db.Column(db.String(64), nullable=False, unique=True)
+    email = (db.Column(db.String(64), nullable=False,
+             db.CheckConstraint('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}'), unique=True))
     valid_email = db.Column(db.Boolean, nullable=False, default=False)
     password = db.Column(db.String(64), nullable=False)  # should encrypt
     user_pic = image_attachment('UserPic')
@@ -102,7 +103,8 @@ class Business(db.Model):
     state = db.Column(db.String(64), nullable=True)
     country = db.Column(db.String(64), nullable=True)
     phone = db.Column(db.String(64), nullable=True)
-    email = db.Column(db.String(64), nullable=True)
+    email = (db.Column(db.String(64),
+             db.CheckConstraint('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}'), nullable=True))
     valid_email = db.Column(db.Boolean, nullable=False, default=False)
     category = db.Column(db.String(64), nullable=True)
     days_open = db.Column(db.String(64), nullable=True)
@@ -305,7 +307,9 @@ class Invite(db.Model):
 
     invite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.String(64), db.ForeignKey('users.user_id'), nullable=False)
-    friend_email = db.Column(db.String(64), nullable=False)
+    friend_email = (db.Column(db.String(64),
+                    db.CheckConstraint('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}'),
+                    nullable=False))
     accepted = db.Column(db.Boolean, nullable=False, default=False)
 
     # user = db.relationship('User')
