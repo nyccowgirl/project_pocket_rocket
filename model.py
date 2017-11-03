@@ -17,8 +17,9 @@ class User(db.Model):
     username = db.Column(db.String(64), nullable=False, unique=True)
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
-    email = (db.Column(db.String(64), nullable=False,
-             db.CheckConstraint('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}'), unique=True))
+    email = (db.Column(db.String(64),
+             db.CheckConstraint('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}'),
+             nullable=False, unique=True))
     valid_email = db.Column(db.Boolean, nullable=False, default=False)
     password = db.Column(db.String(64), nullable=False)  # should encrypt
     user_pic = image_attachment('UserPic')
