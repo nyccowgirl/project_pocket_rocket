@@ -30,13 +30,11 @@ class User(db.Model):
 
     userpic = db.relationship('UserPic', uselist=False, backref='users')
     biz = db.relationship('Business', secondary='user_biz', backref='users')
-    friends = db.relationship('User', seondary='friends', backref='users')
+    invites = db.relationship('User', seondary='friends', backref='users')
     promos = db.relationship('Promo', secondary='user_promos', backref='users')
     checkins = db.relationship('CheckIn', backref='users')
     referrals = db.relationship('Referral', backref='users')
     reviews = db.relationship('Review', backref='users')
-    invites = db.relationship('Invite', backref='users')
-    reviews = db.relationship('Review', secondary='likes', backref='users')
 
     def __repr__(self):
         """Displays info"""
@@ -286,9 +284,8 @@ class LikeReview(db.Model):
 
     __tablename__ = 'likes'
 
-    like_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    review_id = db.Column(db.Integer, db.ForeignKey('reviews.review_id'))
-    # or is review_id primary key? only needed to count total likes per review
+    review_id = db.Column(db.Integer, db.ForeignKey('reviews.review_id'), primary_key=True)
+    # only needed to count total likes per review
     # and to gray out like button from the individual user
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
