@@ -26,7 +26,8 @@ class User(db.Model):
     dob = db.Column(db.DateTime, nullable=True)
     join_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     # not sure if current_timestamp syntax is correct for SQLAlchemy
-    biz_acct = db.Column(db.Boolean, nullable=False, default=False)
+    biz_acct = db.Column(db.Boolean, nullable=True)
+    # may not need, when user logs in, can do query of userbiz table for userid and store it all in businesses
 
     userpic = db.relationship('UserPic', uselist=False, backref='users')
     biz = db.relationship('Business', secondary='user_biz', backref='users')
@@ -52,6 +53,8 @@ class UserPic(db.Model, Image):  # need to check on the image one (https://sqlal
 
     # user = db.relationship('User', uselist=False)
 
+    # look into uploading image to flask
+
 
 class Friend(db.Model):
     """ Relationship information between user profiles. """
@@ -59,6 +62,7 @@ class Friend(db.Model):
     __tablename__ = 'friends'
 
     # Links user account to friends. trigger from invites.accepted == True
+    link_id
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
     friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
@@ -309,6 +313,8 @@ class Invite(db.Model):
                     db.CheckConstraint('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}'),
                     nullable=False))
     accepted = db.Column(db.Boolean, nullable=False, default=False)
+
+    # data modeling lecture, look at many to many demo, instantiate book and user and comment link
 
     # user = db.relationship('User')
 
