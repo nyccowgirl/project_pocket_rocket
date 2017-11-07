@@ -25,16 +25,21 @@ class User(db.Model):
     user_pic = image_attachment('UserPic')
     dob = db.Column(db.DateTime, nullable=True)
     join_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-    # not sure if current_timestamp syntax is correct for SQLAlchemy
+    # FIXME: not sure if current_timestamp syntax is correct for SQLAlchemy
     biz_acct = db.Column(db.Boolean, nullable=True)
-    # may not need, when user logs in, can do query of userbiz table for userid and store it all in businesses
+    # FIXME: may not need, when user logs in, can do query of userbiz table for userid and store it all in businesses
 
     userpic = db.relationship('UserPic', uselist=False, backref='users')
     biz = db.relationship('Business', secondary='user_biz', backref='users')
-    invites = db.relationship('User', seondary='friends', backref='users')
+    invites = db.relationship('Invite', backref='users')
+    friends = (db.relationship('User', secondary='friends',
+                               primaryjoin='User.user_id == Friend.user_id',
+                               secondaryjoin='User.user_id == Friend.friend_id'))
     promos = db.relationship('Promo', secondary='user_promos', backref='users')
     checkins = db.relationship('CheckIn', backref='users')
-    referrals = db.relationship('Referral', backref='users')
+    referees = (db.relationship('User', secondary='referrals',
+                                primaryjoin='User.user_id == Referral.referer_id',
+                                secondaryjoin='User.user_id == Referral.referee_id'))
     reviews = db.relationship('Review', backref='users')
 
     def __repr__(self):
@@ -44,7 +49,7 @@ class User(db.Model):
                 self.username, self.email))
 
 
-class UserPic(db.Model, Image):  # need to check on the image one (https://sqlalchemy-imageattach.readthedocs.io/en/1.1.0/guide/declare.html)
+class UserPic(db.Model, Image):  # TO DO: need to check on the image one (https://sqlalchemy-imageattach.readthedocs.io/en/1.1.0/guide/declare.html)
     """ User picture model. """
 
     __tablename__ = 'user_pics'
@@ -53,7 +58,7 @@ class UserPic(db.Model, Image):  # need to check on the image one (https://sqlal
 
     # user = db.relationship('User', uselist=False)
 
-    # look into uploading image to flask
+    # TO DO: look into uploading image to flask
 
 
 class Friend(db.Model):
@@ -62,8 +67,8 @@ class Friend(db.Model):
     __tablename__ = 'friends'
 
     # Links user account to friends. trigger from invites.accepted == True
-    link_id
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
+    link_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
     # user = db.relationship('User')
@@ -82,7 +87,8 @@ class UserBiz(db.Model):
 
     # Links business user account to related business(es) claimed.
     # trigger (users.biz_acct = True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
+    userbiz_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
 
     # user = db.relationship('User')
@@ -123,7 +129,7 @@ class Business(db.Model):
     referrals = db.relationship('Referral', backref='businesses')
     reviews = db.relationship('Review', backref='businesses')
     bizpic = db.relationship('BizPic', uselist=False, backref='businesses')
-    bizpromo = db.relationship('BizPromo', backref='businesses')
+    # bizpromo = db.relationship('BizPromo', backref='businesses')
 
     def __repr__(self):
         """ Displays info. """
@@ -131,7 +137,7 @@ class Business(db.Model):
         return ("<biz_id={} bizname={}>".format(self.biz_id, self.bizname))
 
 
-class BizPic(db.Model, Image):  # need to check on the image one (https://sqlalchemy-imageattach.readthedocs.io/en/1.1.0/guide/declare.html)
+class BizPic(db.Model, Image):  # TO DO: need to check on the image one (https://sqlalchemy-imageattach.readthedocs.io/en/1.1.0/guide/declare.html)
     """ Business picture model. """
 
     __tablename__ = 'biz_pics'
@@ -141,26 +147,25 @@ class BizPic(db.Model, Image):  # need to check on the image one (https://sqlalc
     # biz = db.relationship('Business', uselist=False)
 
 
-class BizPromo(db.Model):
-    """ Relationship information between business(es) and related promotions. """
+# class BizPromo(db.Model):
+#     """ Relationship information between business(es) and related promotions. """
 
-    __tablename__ = 'biz_promos'
+#     __tablename__ = 'biz_promos'
 
-    biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'), primary_key=True)
-    promo_id = db.Column(db.Integer, db.ForeignKey('promos.promo_id'))
-    promo_active = db.Column(db.Boolean, nullable=False, default=True)
-    # trigger or check based on promos.end_date is past today()
+#     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'), primary_key=True)
+#     promo_id = db.Column(db.Integer, db.ForeignKey('promos.promo_id'))
+#     promo_active = db.Column(db.Boolean, nullable=False, default=True)
+#     # trigger or check based on promos.end_date is past today()
 
-    # biz = db.relationship('Business')
-    promos = db.relationship('Promo', backref='biz_promos')
+#     # biz = db.relationship('Business')
+#     promos = db.relationship('Promo', backref='biz_promos')
 
-    def __repr__(self):
-        """ Displays info. """
+#     def __repr__(self):
+#         """ Displays info. """
 
-        return ("<biz_id={} promo_id={} promo_active={}>".format(self.biz_id,
-                                                                 self.promo_id,
-                                                                 self.promo_active))
-
+#         return ("<biz_id={} promo_id={} promo_active={}>".format(self.biz_id,
+#                                                                  self.promo_id,
+                                                                 # self.promo_active))
 
 class Promo(db.Model):
     """ Promotion model. """
@@ -168,6 +173,7 @@ class Promo(db.Model):
     __tablename__ = 'promos'
 
     promo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
     title = db.Column(db.String(64), nullable=False)
     descr = db.Column(db.String(64), nullable=True)
     start_date = db.Column(db.DateTime, nullable=True)
@@ -239,8 +245,8 @@ class Referral(db.Model):
     __tablename__ = 'referrals'
 
     referral_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    referrer_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    referree_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    referer_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    referee_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
     refer_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     # same re: timestamp
@@ -263,15 +269,16 @@ class Review(db.Model):
     review_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
-    rating = db.Column(db.Integer, db.CheckConstraint('(rating >= 1) && (rating <= 5)'), nullable=False)
+    rating = db.Column(db.Integer, db.CheckConstraint('rating >= 1'), db.CheckConstraint('rating <= 5'), nullable=False)
     review = db.Column(db.String(5000), nullable=False)
     review_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     # same re: timestamp
     dispute = db.Column(db.Boolean, nullable=False, default=False)
     response = db.Column(db.String(5000), nullable=True)
     revise_review = db.Column(db.Boolean, nullable=False, default=False)
-    new_rating = db.Column(db.Integer, db.CheckConstraint('(rating >= 1) && (rating <= 5)'), nullable=True)
+    new_rating = db.Column(db.Integer, db.CheckConstraint('new_rating >= 1'), db.CheckConstraint('new_rating <= 5'), nullable=True)
     new_review = db.Column(db.String(3000), nullable=True)
+    cust_svc = db.Column(db.Integer, db.CheckConstraint('cust_svc >= 1'), db.CheckConstraint('cust_svc <= 5'), nullable=True)
 
     # user = db.relationship('User')
     # biz = db.relationship('Business')
@@ -288,7 +295,8 @@ class LikeReview(db.Model):
 
     __tablename__ = 'likes'
 
-    review_id = db.Column(db.Integer, db.ForeignKey('reviews.review_id'), primary_key=True)
+    like_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    review_id = db.Column(db.Integer, db.ForeignKey('reviews.review_id'))
     # only needed to count total likes per review
     # and to gray out like button from the individual user
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))

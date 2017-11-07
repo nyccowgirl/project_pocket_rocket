@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Log-In</h1>
+
+<form action='/login' method='POST'>
+
+    <div>
+        <label>
+            Username or Email: <input type='text' name='user-info' required>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Password: <input type='password' name='pword' required>
+        </label>
+    </div>
+
+    <div>
+        <a href='/pword-reset'>Forgot password.</a>
+    </div>
+
+<!-- TO DO: Make a pop up window and set up email message and link to reset password. -->
+<!--     <div>
+        <label>
+            <button id='resetBtn'>Password Reset</button>
+            <div class='resetPword'>
+                <p>A link has been sent to your email to reset your password.</p>
+            </div>
+        </label>
+    </div> -->
+    <input type='submit'>
+</form>
+
+{% endblock %}
+
+<script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+<script type="text/javascript">
+
+function checkEmail(result) {
+    if (not 'user-info') {
+        alert('Please input a user name or email');
+    } else if (result == False) {
+        alert('User name or email does not exist. Please check your input or register.')
+    }
+}
+
+function sendEmail(evt) {
+    evt.preventDefault();
+    checkEmail();
+    let result = $.get('/pword-reset',checkEmail);
+    // TO DO: send link to email to reset password
+    }
+}
+
+$('#resetBtn').on('click', sendEmail)
+</script>
