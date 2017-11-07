@@ -125,10 +125,10 @@ class Business(db.Model):
     # biz_pic_other = image_attachment() # maybe future versions to determine how to do gallery of pics
 
     # users = db.relationship('User', secondary='user-biz')
-    checkins = db.relationship('CheckIn', backref='businesses')
-    referrals = db.relationship('Referral', backref='businesses')
-    reviews = db.relationship('Review', backref='businesses')
-    bizpic = db.relationship('BizPic', uselist=False, backref='businesses')
+    checkins = db.relationship('CheckIn', backref='biz')
+    referrals = db.relationship('Referral', backref='biz')
+    reviews = db.relationship('Review', backref='biz')
+    bizpic = db.relationship('BizPic', uselist=False, backref='biz')
     # bizpromo = db.relationship('BizPromo', backref='businesses')
 
     def __repr__(self):
@@ -249,10 +249,12 @@ class Referral(db.Model):
     referee_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
     refer_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    user_promo_id = db.Column(db.Integer, db.ForeignKey('user-promos.user_promo_id'))
     # same re: timestamp
 
     # users = db.relationship('User')
     # biz = db.relationship('Business')
+    user_promo = db.relationship('UserPromo', backref='referral')
 
     def __repr__(self):
         """ Displays info. """
@@ -275,7 +277,7 @@ class Review(db.Model):
     # same re: timestamp
     dispute = db.Column(db.Boolean, nullable=False, default=False)
     response = db.Column(db.String(5000), nullable=True)
-    revise_review = db.Column(db.Boolean, nullable=False, default=False)
+    revise_review = db.Column(db.Boolean, nullable=True)
     new_rating = db.Column(db.Integer, db.CheckConstraint('new_rating >= 1'), db.CheckConstraint('new_rating <= 5'), nullable=True)
     new_review = db.Column(db.String(3000), nullable=True)
     cust_svc = db.Column(db.Integer, db.CheckConstraint('cust_svc >= 1'), db.CheckConstraint('cust_svc <= 5'), nullable=True)

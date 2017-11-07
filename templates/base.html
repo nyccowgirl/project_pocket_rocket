@@ -8,17 +8,26 @@
 BUDdy
 
 {% if "user_id" in session %}
-    <a href="/logout">Log Out</a>
+    <div>
+        <a href="/logout">Log Out</a> | <a href='/user-profile'>Account</a>
+    </div>
+
+    <div>
+        <form action='/search' method='POST'>
+        Search: <input type='search' name='search-keys'>
+        <input type='submit'>
+        <!-- TO DO: build out BUD button for submit button
+            build out /search page and related python code -->
+        </form>
+    </div>
+
 {% else %}
-    <a href="/login">Log In</a> | <a href='/register'>Sign Up</a>
+    <div>
+        <a href="/login">Log In</a> | <a href='/register'>Sign Up</a>
+    </div>
 {% endif %}
 
-<form action='/search' method='POST'>
-Search: <input type='search' name='search-keys'>
-<input type='submit'>
-<!-- TO DO: build out BUD button for submit button
-            build out /search page and related python code -->
-</form>
+
 
 <hr>
 

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <h1>User Profile</h1>
+
+  <!-- TO DO: Set each as either menu item on left panel or as scroll down from nav bar. -->
+
+  <h2>{{ user.username }}</h2>
+
+  TO DO: Summarize total friends, reviews, referrals, check-ins
+
+  <h3>About Me</h3>
+
+    <div>
+      <p>First Name: {{ user.first_name }}</p>
+      <p>Last Name: {{ user.last_name }}</p>
+      <p>User Name: {{ user.username }}</p>
+      <p>Email: {{ user.email }}</p>
+      <p>Password: {{ user.password }}</p>
+      <p>Birthday: {{ user.dob|datetimeformat(%d %b %Y) }}</p>
+      <p>Member Since: {{ user.join_date|datetimeformat(%b %Y) }}</p>
+    </div>
+
+    <div>
+      <img src='{{ user.userpic }}'>
+    </div>
+
+  <h3>My Digits</h3>
+
+  TO: Summarize total reviews, referrals, redemptions of referrals, check-ins
+
+  {% if user.friends %}
+    <h3>My Friends</h3>
+
+    <ul>
+    {% for friend in user.friends|sort(attribute='username') %}
+      <li>
+        <a href='/friend_profile/{{ friend.friend_id }}'>{{ friend.username }}
+        <!-- TO DO: Create friend_profile.html and wrapper -->
+        </a>
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+  <!-- TO DO: Create business_profile.html and wrapper -->
+
+  {% if user.reviews %}
+    <h3>My Reviews</h3>
+
+    <ul>
+    {% for review in user.reviews|sort(attribute='review_date') %}
+      <li>
+        <a href='/business_profile/{{ review.biz_id }}'>{{ review.biz.biz_name}}</a>
+        <br>
+        {% if review.revise_review %}
+          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date }}</p><br>
+          <p>{{ review.new_review }}</p>
+        (% else %)
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date }}</p><br>
+          <p>{{ review.review }}</p>
+        (% endif %)
+      </li>
+    {% endfor %}
+    </ul>
+
+  {% if user.referrals %}
+    <h3>My Referrals</h3>
+
+    <ul>
+    {% for referral in user.referrals|groupby('referral.biz_id') %}
+      <li>{{ referral.grouper }}: <a href='/business_profile/{{ referral.biz_id }}'>{{ referral.biz.biz_name }}</a>
+        <!-- FIXME: convert grouper from biz_id to biz_name -->
+        <ul>
+          {% for referee in group.list %}
+            </li>{{ referee.username }}: refer date {{ referee.refer_date|datetimeformat(%d %b %Y) }} | redeem date {{ referee.user_promo.redeem_date|datetimeformat(%d %b %Y) }} </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if user.promos %}
+    <h3>My Promotions/Redemptions</h3>
+
+    <ul>
+    {% for promo in user.promos|groupby('promos.biz_id') %}
+      <li>{{ promo.grouper }}: <a href='/business_profile/{{ promo.biz_id }}'>{{ promo.biz.biz_name }}</a>
+        <!-- FIXME: convert grouper from biz_id to biz_name -->
+        <ul>
+          {% for item in group.list %}
+            {% if item.redeemed %}
+              <li>{{ item.title }}: {{ item.redeem_date|datetimeformat(%d %b %Y) }}</li>
+            {% else %}
+              <li>Available: {{ item.title }} | expiration date: {{ item.end_date|datetimeformat(%d %b %Y) }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+{% endblock %}

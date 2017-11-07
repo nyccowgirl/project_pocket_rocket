@@ -1,6 +1,8 @@
 from jinja2 import StrictUndefined
 
-from flask import Flask, jsonify, render_template, request, flash, redirect, session
+from flask import (Flask, jsonify, render_template, request, flash, redirect,
+                   session)
+
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, User  # Business
@@ -48,6 +50,9 @@ def register_process():
     bday_str = request.form['bday']
     pic = request.form['pic']
     biz = request.form['biz']
+
+    # TO DELETE
+    print '\n\n\n{}\n\n\n'.format(biz)
 
     # Convert birthday to datetime format
     if bday_str:
@@ -149,12 +154,30 @@ def reset_pword():
     user = buddy.check_user_info(user_input)
 
     user.password = new_pword
+    db.session.commit()
     session['user_id'] = user.user_id
     session['username'] = user.username
 
     flash('{} is now logged in.'.format(user.username))
 
     return redirect('/')
+
+
+@app.route('/user-profile')
+def user_profile():
+    """Displays user information."""
+
+    user = User.query.filter_by(user_id=session['user_id']).first()
+
+    # TO DELETE
+    print '\n\n\n{}\n\n\n'.format(user.reviews)
+    print '\n\n\n{}\n\n\n'.format(user.friends)
+    print '\n\n\n{}\n\n\n'.format(user.referrals)
+    print '\n\n\n{}\n\n\n'.format(user.promos)
+
+    # TO DO: build out helper functions to pull in totals to summarize
+
+    return render_template('/user_profile.html', user=user)
 
 
 if __name__ == "__main__":
