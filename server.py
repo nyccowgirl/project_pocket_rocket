@@ -44,14 +44,15 @@ def register_process():
     # Get form variables
     fname = request.form['fname']
     lname = request.form['lname']
-    user = request.form['user']
+    username = request.form['username']
     email = request.form['email']
     pword = request.form['pword']
     bday_str = request.form['bday']
-    pic = request.form['pic']
+    # pic = request.form['pic']
     biz = request.form['biz']
 
     # TO DELETE
+    print '\n\n\n{}\n\n\n'.format(username)
     print '\n\n\n{}\n\n\n'.format(biz)
 
     # Convert birthday to datetime format
@@ -67,12 +68,12 @@ def register_process():
         flash('The email provided already has an account. Please log-in.')
         return redirect('/login')
     else:
-        user = User(username=user,
+        user = User(username=username,
                     first_name=fname,
                     last_name=lname,
                     email=email,
                     password=pword,
-                    user_pic=pic,
+                    # user_pic=pic,
                     dob=bday,
                     join_date=datetime.now(),
                     biz_acct=biz)

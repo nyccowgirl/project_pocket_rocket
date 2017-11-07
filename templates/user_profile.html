@@ -102,4 +102,14 @@
     </ul>
   {% endif %}
 
+  {% if user.bix %}
+    <h3>My Businesses</h3>
+
+    <ul>
+    {% for biz in user.biz %}
+      <li><a href='/business_profile{{ biz.biz_id }}'>{{ biz.biz_name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% end if %}
+
 {% endblock %}

@@ -9,10 +9,10 @@ BUDdy
 
 {% if "user_id" in session %}
     <div>
-        <a href="/logout">Log Out</a> | <a href='/user-profile'>Account</a>
+        <a href="/logout">Log Out</a> | <a href='/user-profile'>Profile</a>
     </div>
 
-    <div>
+    <div id='search'>
         <form action='/search' method='POST'>
         Search: <input type='search' name='search-keys'>
         <input type='submit'>
@@ -40,4 +40,27 @@ BUDdy
 {% endblock %}
 
 </body>
+
+<!-- FIXME: Move style to separate stylesheet. -->
+
+<style>
+#search {
+    text-align: center;
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: lavender;
+    color: white;
+    text-align: center;
+}
+</style>
+
+<div class='footer'>
+  <a href='/about-us'>About Us</a> | <a href='mailto:balloonicorn@hackbrightacademy.com'>Contact Us</a>
+  <!-- FIX ME: Contact us generates email from user email program. -->
+</div>
+
 </html>
