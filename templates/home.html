@@ -9,4 +9,10 @@
   <!-- TO DO: build out trending page and features for either top key searches,
                 top businesses checked into, etc. -->
 
+  {% if 'user_id' in session %}
+    <form action='/add-biz'>
+      <button type='submit' name='add-biz'>Add a Biz!</button>
+    </form>
+  {% endif %}
+
 {% endblock %}

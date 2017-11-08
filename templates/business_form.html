@@ -1,60 +1,103 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Register</h1>
+<h1></h1>
 
-<form action='/register' method='POST'>
+<form action='/add-biz' method='POST'>
 
-    <div>
-        <label>
-            First Name: <input type='text' name='fname' required>
-        </label>
-    </div>
+  <div>
+    <label>
+      Business Name: <input type='text' name='name' required>
+    </label>
+  </div>
 
-    <div>
-        <label>
-            Last Name: <input type='text' name='lname' required>
-        </label>
-    </div>
+  <div>
+    <label>
+      Address: <input type='text' name='addy'>
+    </label>
+  </div>
 
-    <div>
-        <label>
-            Username: <input type='text' name='username' required>
-        </label>
-    </div>
+  <div>
+    <label>
+      City: <input type='text' name='city'>
+    </label>
+  </div>
 
-    <div>
-        <label>
-            Email: <input type='email' name='email' required>
-        </label>
-    </div>
+  <div>
+    <label>
+      State/Province: <input type='text' name='state'>
+    </label>
+  </div>
 
-    <div>
-        <label>
-            Password: <input type='password' name='pword' required>
-        </label>
-    </div>
+  <div>
+    <label>
+      Zip/Country code: <input type='text' name='zipcode'>
+    </label>
+  </div>
 
-    <div>
-        <label>
-            Birth Date (mm/dd/yyyy): <input type='date' name='bday'>
-        </label>
-    </div>
+  <div>
+    <label>
+      Phone: <input type='text' name='tel'>
+    </label>
+  </div>
 
-    <div>
-        <label>
-            Picture: <input type='file' name='pic' accept='image/*'>
-        </label>
-    </div>
+  <div>
+    <label>
+      Email: <input type='email' name='email'>
+    </label>
+  </div>
 
-    <div>
-        <label>
-            Business account?
-            <input type='radio' name='biz' value='true' checked>Yes
-            <input type='radio' name='biz' value='false'>No
-        </label>
-    </div>
-    <input type='submit'>
+  <div>
+    <label>
+      Category:<select name='category'>
+        <option value='bar'>Bar</option>
+        <option value='cleaner'>Cleaners</option>
+        <option value='cafe'>Coffee/Cafe/Tea</option>
+        <option value='grocery'>Deli/Grocery</option>
+        <option value='florist'>Florist</option>
+        <option value='home'>Home Services</option>
+        <option value='medicine'>Medical Field</option>
+        <option value='nightlife'>Nightlife</option>
+        <option value='pet'>Pets</option>
+        <option value='restaurant'>Restaurant</option>
+        <option value='salon'>Salon</option>
+        <option value='spa'>Spa</option>
+    </label>
+  </div>
+
+  <div>
+    <label>
+      Days Open: <input type='text' name='days-open'>
+    </label>
+  </div>
+
+  <div>
+    <label>
+      Open Time: <input type='number' name='time-open' min='1' max='12'>
+      <input type='radio' name='open-ampm' value='am' checked>AM
+      <input type='radio' name='open-ampm' value='pm'>PM
+    </label>
+  </div>
+
+  <div>
+    <label>
+      Close Time: <input type='number' name='time-close' min='1' max='12'>
+      <input type='radio' name='close-ampm' value='am' checked>AM
+      <input type='radio' name='close-ampm' value='pm'>PM
+    </label>
+  </div>
+
+  <div>
+    <label>
+      Claim?
+      <input type='radio' name='claim' value='true' checked>Yes
+      <input type='radio' name='claim' value='false'>No
+    </label>
+  </div>
+
+<!-- TO DO: Need to add in pic. -->
+
+  <input type='submit'>
 </form>
 
 {% endblock %}

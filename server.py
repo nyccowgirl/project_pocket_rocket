@@ -214,6 +214,68 @@ def friend_profile(friend_id):
     return render_template('/friend_profile.html', user=friend)
 
 
+@app.route('/add-biz')
+def biz_form():
+    """Displays form to add a business."""
+
+    return render_template('business_form.html')
+
+
+@app.route('/add-biz', methods=['POST'])
+def biz_process():
+    """Processes new business request."""
+
+    # Get form variables
+    name = request.form['name']
+    address = request.form['addy']
+    city = request.form['city']
+    state = request.form['state']
+    zipcode = request.form['zipcode']
+    phone = request.form['tel']
+    email = request.form['email']
+    category = request.form['category']
+    days_open = request.form['days-open']
+    open_time = request.form['time-open']
+    open_mil = request.form['open-ampm']
+    close_time = request.form['time-close']
+    close_mil = request.form['close-ampm']
+    claim = request.form['claim']
+
+    # TO DELETE
+    print '\n\n\n{}\n\n\n'.format(name)
+    print '\n\n\n{}\n\n\n'.format(claim)
+
+    # Convert time to military format
+    if open_mil == 'pm':
+        open_time += 12
+
+    if close_mil == 'pm':
+        close_time += 12
+
+    # Check if user is already in database
+    user = User.query.filter((User.email == email) | (User.username == username)).first()
+
+    if user:
+        flash('The user name or email provided already has an account. Please log-in.')
+        return redirect('/login')
+    else:
+        user = User(username=username,
+                    first_name=fname,
+                    last_name=lname,
+                    email=email,
+                    password=pword,
+                    # user_pic=pic,
+                    dob=bday,
+                    join_date=datetime.now(),
+                    biz_acct=biz)
+        db.session.add(user)
+        db.session.commit()
+        session['user_id'] = user.user_id
+        session['username'] = user.username
+        flash('{} is now registered and logged in as {}'.format(user.email, user.username))
+
+        return redirect('/')
+
 ##############################################################################
 
 

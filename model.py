@@ -103,6 +103,7 @@ class Business(db.Model):
     city = db.Column(db.String(64), nullable=True)
     state = db.Column(db.String(64), nullable=True)
     country = db.Column(db.String(64), nullable=True)
+    zipcode = db.Column(db.String(64), nullable=True)
     phone = db.Column(db.String(64), nullable=True)
     email = (db.Column(db.String(64), nullable=True))
     valid_email = db.Column(db.Boolean, nullable=False, default=False)
