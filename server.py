@@ -5,11 +5,13 @@ from flask import (Flask, render_template, request, flash, redirect,
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, User  # Business
+from model import connect_to_db, db, User, Business, UserBiz
 
 from datetime import datetime
 
 import buddy
+
+import re
 
 
 app = Flask(__name__)
@@ -230,6 +232,7 @@ def biz_process():
     address = request.form['addy']
     city = request.form['city']
     state = request.form['state']
+    country = request.form['country']
     zipcode = request.form['zipcode']
     phone = request.form['tel']
     email = request.form['email']
@@ -252,29 +255,57 @@ def biz_process():
     if close_mil == 'pm':
         close_time += 12
 
-    # Check if user is already in database
-    user = User.query.filter((User.email == email) | (User.username == username)).first()
+    # Convert phone to same format
+    re.sub('\ |\?|\.|\!|\/|\;|\:|\-|\(|\)', '', phone)
 
-    if user:
-        flash('The user name or email provided already has an account. Please log-in.')
+    # Check if user is already in database
+    business = Business.query.filter((Business.email == email) | (Business.biz_name == name)).first()
+
+    if business:
+        flash('The business name or email provided is already in BUDdy.')
         return redirect('/login')
     else:
-        user = User(username=username,
-                    first_name=fname,
-                    last_name=lname,
-                    email=email,
-                    password=pword,
-                    # user_pic=pic,
-                    dob=bday,
-                    join_date=datetime.now(),
-                    biz_acct=biz)
-        db.session.add(user)
+        biz = Business(biz_name=name,
+                       address=address,
+                       city=city,
+                       state=state,
+                       country=country,
+                       zipcode=zipcode,
+                       phone=phone,
+                       email=email,
+                       category=category,
+                       days_open=days_open,
+                       open_time=open_time,
+                       close_time=close_time,
+                       claimed=claim)
+                       # biz_pic_main=pic
+
+        if claim:
+            userbiz = UserBiz(user_id=session['user_id'], biz_id=biz.biz_id)
+
+        db.session.add(biz, userbiz)
         db.session.commit()
-        session['user_id'] = user.user_id
-        session['username'] = user.username
-        flash('{} is now registered and logged in as {}'.format(user.email, user.username))
+
+        flash('{} has been added'.format(biz.biz_name))
 
         return redirect('/')
+
+
+@app.route('/business-profile/<int:biz_id>')
+def biz_profile(biz_id):
+    """Displays business information."""
+
+    biz = Business.query.filter_by(biz_id=biz_id).first()
+
+    # TO DELETE
+    print '\n\n\n{}\n\n\n'.format(biz.reviews)
+    print '\n\n\n{}\n\n\n'.format(biz.referrals)
+    print '\n\n\n{}\n\n\n'.format(biz.promos)
+
+    # TO DO: build out helper functions to pull in totals to summarize;
+    # format phone number and hours
+
+    return render_template('/business_profile.html', biz=biz)
 
 ##############################################################################
 

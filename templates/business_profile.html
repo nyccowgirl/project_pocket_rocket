@@ -7,52 +7,50 @@
 
   <h2>{{ biz.biz_name }}</h2>
 
-  TO DO: Summarize total friends, reviews, referrals, check-ins
+  TO DO: Summarize total reviews, referrals, check-ins
 
-  <h3>About Me</h3>
+  <h3>About Them</h3>
 
     <div>
+      <address>
+        Business Name: {{ biz.biz_name }}<br>
+        Address: {{ biz.address }}<br>
+        City: {{ biz.city }}<br>
+        State: {{ biz.state }}<br>
+        Country: {{ biz.country }}<br>
+        Zip/Country Code: {{ biz.zipcode }}<br>
+        Email: {{ biz.email }}<br>
+        Phone: {{ biz.phone }}<br>
+      </address>
+    </div>
+
+    <div>
+      <h4>Operation:</h4>
       <ul>
-        First Name: {{ user.first_name }}<br>
-        Last Name: {{ user.last_name }}<br>
-        User Name: {{ user.username }}<br>
-        Email: {{ user.email }}<br>
-        Password: {{ user.password }}<br>
-        Birthday: {{ user.dob|datetimeformat('%d %b %Y') }}<br>
-        Member Since: {{ user.join_date|datetimeformat('%b %Y') }}<br>
+        <li>Days: {{ biz.days_open }}</li>
+        <li>Open: {{ biz.open_time }}</li>
+        <li>Close: {{ biz.close_time }}</li>
+      </ul>
     </div>
 
 <!--     <div>
       TO DO: Need to figure out images "\<img src=''>\"
     </div> -->
 
-  <h3>My Digits</h3>
-
-  TO: Summarize total reviews, referrals, redemptions of referrals, check-ins
-
-  {% if user.friends %}
-    <h3>My Friends</h3>
-
-    <ul>
-    {% for friend in user.friends|sort(attribute='username') %}
-      <li>
-        <a href='/friend_profile/{{ friend.friend_id }}'>{{ friend.username }}
-        <!-- TO DO: Create friend_profile.html and wrapper -->
-        </a>
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-
   <!-- TO DO: Create business_profile.html and wrapper -->
 
-  {% if user.reviews %}
-    <h3>My Reviews</h3>
+  {% if biz.reviews %}
+    <h3>Our Reviews</h3>
+
+    <div>Average Rating: </div>
+    <div>Total Reviews: </div>
+
+    <!-- TO DO: Calculate and pass in  -->
 
     <ul>
-    {% for review in user.reviews|sort(attribute='review_date') %}
+    {% for review in biz.reviews|sort(attribute='review_date') %}
       <li>
-        <a href='/business_profile/{{ review.biz_id }}'>{{ review.biz.biz_name}}</a>
+        <a href='/user_profile/{{ review.user_id }}'>{{ review.user.username}}</a>
         <br>
         {% if review.revise_review %}
           <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date }}</p><br>
@@ -66,49 +64,22 @@
     </ul>
   {% endif %}
 
-  {% if user.referees %}
-    <h3>My Referrals</h3>
-
-    <ul>
-    {% for referral in user.referees|groupby('referees.biz_id') %}
-      <li>{{ referral.grouper }}: <a href='/business_profile/{{ referral.biz_id }}'>{{ referral.biz.biz_name }}</a>
-        <!-- FIXME: convert grouper from biz_id to biz_name -->
-        <ul>
-          {% for referee in group.list %}
-            </li>{{ referee.username }}: refer date {{ referee.refer_date|datetimeformat('%d %b %Y') }} | redeem date {{ referee.user_promo.redeem_date|datetimeformat('%d %b %Y') }} </li>
-          {% endfor %}
-        </ul>
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-
   {% if user.promos %}
-    <h3>My Promotions/Redemptions</h3>
+    <h3>Our Promotions</h3>
 
     <ul>
-    {% for promo in user.promos|groupby('promos.biz_id') %}
-      <li>{{ promo.grouper }}: <a href='/business_profile/{{ promo.biz_id }}'>{{ promo.biz.biz_name }}</a>
-        <!-- FIXME: convert grouper from biz_id to biz_name -->
-        <ul>
-          {% for item in group.list %}
-            {% if item.redeemed %}
-              <li>{{ item.title }}: {{ item.redeem_date|datetimeformat('%d %b %Y') }}</li>
-            {% else %}
-              <li>Available: {{ item.title }} | expiration date: {{ item.end_date|datetimeformat('%d %b %Y') }}</li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-      </li>
+    {% for promo in biz.promos|sort(attribute='end_date') %}
+      {% if promo.end_date >= now %}
+        <li>{{ promo.title }}: {{ promo.descr }} | {{ promo.end_date|datetimeformat('%d %b %Y') }}</li>
+      {% endif %}
     {% endfor %}
     </ul>
-  {% endif %}
 
-  {% if user.biz %}
-    <h3>My Businesses</h3>
+  {% if biz.users.user_biz %}
+    <h3>Business Affiliates</h3>
 
     <ul>
-    {% for biz in user.biz %}
+    {% for biz in biz.users.user_biz %}
       <li><a href='/business_profile{{ biz.biz_id }}'>{{ biz.biz_name }}</a></li>
     {% endfor %}
     </ul>

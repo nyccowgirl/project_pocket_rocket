@@ -120,6 +120,7 @@ class Business(db.Model):
     checkins = db.relationship('CheckIn', backref='biz')
     referrals = db.relationship('Referral', backref='biz')
     reviews = db.relationship('Review', backref='biz')
+    promos = db.relationship('Promo', backref='biz')
     # bizpic = db.relationship('BizPic', uselist=False, backref='biz')
 
     def __repr__(self):
