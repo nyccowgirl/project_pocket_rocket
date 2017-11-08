@@ -43,6 +43,32 @@ class BuddyTests(unittest.TestCase):
         self.assertIn('Profile', result.data)
         self.assertNotIn('Log In', result.data)
 
+    def test_about(self):
+        """Can we reach the about page?"""
+
+        result = self.client.get('/about-us')
+        self.assertIn('Great things come in small packages', result.data)
+
+    def test_no_register_yet(self):
+        """Do users who haven't registered see the correct view?"""
+
+        result = self.client.get('/register')
+        self.assertIn('Business Account', result.data)
+        self.assertNotIn('Profile', result.data)
+
+    def test_register(self):
+        """Do logged-in users see the correct view?"""
+
+        register_info = {'fname': 'Pussy', 'lname': 'Galore',
+                         'username': 'libellula', 'email': 'dragon@fly.com',
+                         'pword': 'kissme'}
+
+        result = self.client.post('/register', data=register_info,
+                                  follow_redirects=True)
+
+        self.assertIn('Profile', result.data)
+        self.assertNotIn('Sign Up', result.data)
+
 
 class BuddyTestsDatabase(unittest.TestCase):
     """Flask tests that use the database."""

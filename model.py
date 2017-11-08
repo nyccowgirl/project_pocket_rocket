@@ -28,7 +28,7 @@ class User(db.Model):
     # FIXME: may not need, when user logs in, can do query of userbiz table for userid and store it all in businesses
     # __table_args__ = (db.CheckConstraint("regexp_like(email, '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$')", name='emailcheck'),)
 
-    # userpic = db.relationship('UserPic', uselist=False, backref='users')
+    # userpic = db.relationship('UserPic', uselist=False, backref='user')
     biz = db.relationship('Business', secondary='user_biz', backref='users')
     invites = db.relationship('Invite', backref='users')
     friends = (db.relationship('User', secondary='friends',
@@ -55,8 +55,6 @@ class User(db.Model):
 
 #     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
 
-    # user = db.relationship('User', uselist=False)
-
     # TO DO: look into uploading image to flask
 
 
@@ -69,8 +67,6 @@ class Friend(db.Model):
     link_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-
-    # user = db.relationship('User')
 
     def __repr__(self):
         """ Displays info. """
@@ -89,9 +85,6 @@ class UserBiz(db.Model):
     userbiz_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
-
-    # user = db.relationship('User')
-    # biz = db.relationship('Business')
 
     def __repr__(self):
         """ Displays info. """
@@ -123,12 +116,10 @@ class Business(db.Model):
     # biz_pic_other = image_attachment() # maybe future versions to determine how to do gallery of pics
     # __table_args__ = (db.CheckConstraint("regexp_like(email, '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$')", name='emailcheck'),)
 
-    # users = db.relationship('User', secondary='user-biz')
     checkins = db.relationship('CheckIn', backref='biz')
     referrals = db.relationship('Referral', backref='biz')
     reviews = db.relationship('Review', backref='biz')
     # bizpic = db.relationship('BizPic', uselist=False, backref='biz')
-    # bizpromo = db.relationship('BizPromo', backref='businesses')
 
     def __repr__(self):
         """ Displays info. """
@@ -146,26 +137,6 @@ class Business(db.Model):
     # biz = db.relationship('Business', uselist=False)
 
 
-# class BizPromo(db.Model):
-#     """ Relationship information between business(es) and related promotions. """
-
-#     __tablename__ = 'biz_promos'
-
-#     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'), primary_key=True)
-#     promo_id = db.Column(db.Integer, db.ForeignKey('promos.promo_id'))
-#     promo_active = db.Column(db.Boolean, nullable=False, default=True)
-#     # trigger or check based on promos.end_date is past today()
-
-#     # biz = db.relationship('Business')
-#     promos = db.relationship('Promo', backref='biz_promos')
-
-#     def __repr__(self):
-#         """ Displays info. """
-
-#         return ("<biz_id={} promo_id={} promo_active={}>".format(self.biz_id,
-#                                                                  self.promo_id,
-                                                                 # self.promo_active))
-
 class Promo(db.Model):
     """ Promotion model. """
 
@@ -181,9 +152,6 @@ class Promo(db.Model):
     birthday_promo = db.Column(db.Boolean, nullable=False, default=False)
     redeem_count = db.Column(db.Integer, nullable=False, default=None)
     # trigger and count (user_promos.redeemed) based on end_date is past today()
-
-    # users = db.relationship('User', secondary='user_promos')
-    # biz = db.relationship('Business')
 
     def __repr__(self):
         """ Displays info. """
@@ -207,9 +175,6 @@ class UserPromo(db.Model):
     redeemed = db.Column(db.Boolean, nullable=False, default=False)
     # trigger should create redeem date with timestamp
 
-    # users = db.relationship('User')
-    # promos = db.relationship('Promo')
-
     def __repr__(self):
         """ Displays info. """
 
@@ -220,16 +185,13 @@ class UserPromo(db.Model):
 class CheckIn(db.Model):
     """ Check-in model. """
 
-    __tablename__ = 'check_ins'
+    __tablename__ = 'checkins'
 
     checkin_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
     checkin_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     # same re: timestamp
-
-    # users = db.relationship('User')
-    # biz = db.relationship('Business')
 
     def __repr__(self):
         """ Displays info. """
@@ -251,8 +213,6 @@ class Referral(db.Model):
     userpromo_id = db.Column(db.Integer, db.ForeignKey('user_promos.userpromo_id'))
     # same re: timestamp
 
-    # users = db.relationship('User')
-    # biz = db.relationship('Business')
     user_promo = db.relationship('UserPromo', backref='referral')
 
     def __repr__(self):
@@ -284,9 +244,6 @@ class Review(db.Model):
                       db.CheckConstraint('new_rating >= 1'), db.CheckConstraint('new_rating <= 5'),
                       db.CheckConstraint('cust_svc >= 1'), db.CheckConstraint('cust_svc <= 5'))
 
-    # user = db.relationship('User')
-    # biz = db.relationship('Business')
-
     def __repr__(self):
         """ Displays info. """
 
@@ -304,9 +261,6 @@ class LikeReview(db.Model):
     # only needed to count total likes per review
     # and to gray out like button from the individual user
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-
-    # users = db.relationship('User')
-    # reviews = db.relationship('Review')
 
     def __repr__(self):
         """ Displays info. """
@@ -326,8 +280,6 @@ class Invite(db.Model):
     # __table_args__ = (db.CheckConstraint("regexp_like(email, '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$')", name='emailcheck'),)
 
     # data modeling lecture, look at many to many demo, instantiate book and user and comment link
-
-    # user = db.relationship('User')
 
     def __repr__(self):
         """ Displays info. """

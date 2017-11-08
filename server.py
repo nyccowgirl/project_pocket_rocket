@@ -1,7 +1,7 @@
 from jinja2 import StrictUndefined
 
-from flask import (Flask, jsonify, render_template, request, flash, redirect,
-                   session)
+from flask import (Flask, render_template, request, flash, redirect,
+                   session)  # jsonify
 
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -23,11 +23,27 @@ app.secret_key = "SHHHHHHIIIITTTT"
 app.jinja_env.undefined = StrictUndefined
 
 
+@app.template_filter()
+def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
+    """Custom Jinja filter to format dates consistently."""
+
+    return value.strftime(format)
+
+
+##############################################################################
+
 @app.route('/')
 def index():
     """Displays homepage."""
 
     return render_template('home.html')
+
+
+@app.route('/about-us')
+def about():
+    """Displays about us page."""
+
+    return render_template('about.html')
 
 
 @app.route('/register')
@@ -62,10 +78,10 @@ def register_process():
         bday = None
 
     # Check if user is already in database
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter((User.email == email) | (User.username == username)).first()
 
     if user:
-        flash('The email provided already has an account. Please log-in.')
+        flash('The user name or email provided already has an account. Please log-in.')
         return redirect('/login')
     else:
         user = User(username=username,
@@ -173,12 +189,32 @@ def user_profile():
     # TO DELETE
     print '\n\n\n{}\n\n\n'.format(user.reviews)
     print '\n\n\n{}\n\n\n'.format(user.friends)
-    print '\n\n\n{}\n\n\n'.format(user.referrals)
+    print '\n\n\n{}\n\n\n'.format(user.referees)
     print '\n\n\n{}\n\n\n'.format(user.promos)
 
     # TO DO: build out helper functions to pull in totals to summarize
 
     return render_template('/user_profile.html', user=user)
+
+
+@app.route('/friend-profile/<int:friend_id>')
+def friend_profile(friend_id):
+    """Displays friend information."""
+
+    friend = User.query.filter_by(user_id=friend_id).first()
+
+    # TO DELETE
+    print '\n\n\n{}\n\n\n'.format(friend.reviews)
+    print '\n\n\n{}\n\n\n'.format(friend.friends)
+    print '\n\n\n{}\n\n\n'.format(friend.referees)
+    print '\n\n\n{}\n\n\n'.format(friend.promos)
+
+    # TO DO: build out helper functions to pull in totals to summarize
+
+    return render_template('/friend_profile.html', user=friend)
+
+
+##############################################################################
 
 
 if __name__ == "__main__":

@@ -1,24 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h1>User Profile</h1>
+  <h1>Friend's Profile</h1>
 
   <!-- TO DO: Set each as either menu item on left panel or as scroll down from nav bar. -->
 
-  <h2>{{ user.username }}</h2>
-
   TO DO: Summarize total friends, reviews, referrals, check-ins
 
-  <h3>About Me</h3>
+  <h3>About {{ user.username }}</h3>
 
     <div>
       <ul>
         First Name: {{ user.first_name }}<br>
         Last Name: {{ user.last_name }}<br>
         User Name: {{ user.username }}<br>
-        Email: {{ user.email }}<br>
-        Password: {{ user.password }}<br>
-        Birthday: {{ user.dob|datetimeformat('%d %b %Y') }}<br>
         Member Since: {{ user.join_date|datetimeformat('%b %Y') }}<br>
     </div>
 
@@ -31,7 +26,7 @@
   TO: Summarize total reviews, referrals, redemptions of referrals, check-ins
 
   {% if user.friends %}
-    <h3>My Friends</h3>
+    <h3>Friends</h3>
 
     <ul>
     {% for friend in user.friends|sort(attribute='username') %}
@@ -47,7 +42,7 @@
   <!-- TO DO: Create business_profile.html and wrapper -->
 
   {% if user.reviews %}
-    <h3>My Reviews</h3>
+    <h3>Reviews</h3>
 
     <ul>
     {% for review in user.reviews|sort(attribute='review_date') %}
@@ -61,44 +56,6 @@
           <p>Rating: {{ review.rating }} | Date: {{ review.review_date }}</p><br>
           <p>{{ review.review }}</p>
         {% endif %}
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-
-  {% if user.referees %}
-    <h3>My Referrals</h3>
-
-    <ul>
-    {% for referral in user.referees|groupby('referees.biz_id') %}
-      <li>{{ referral.grouper }}: <a href='/business_profile/{{ referral.biz_id }}'>{{ referral.biz.biz_name }}</a>
-        <!-- FIXME: convert grouper from biz_id to biz_name -->
-        <ul>
-          {% for referee in group.list %}
-            </li>{{ referee.username }}: refer date {{ referee.refer_date|datetimeformat('%d %b %Y') }} | redeem date {{ referee.user_promo.redeem_date|datetimeformat('%d %b %Y') }} </li>
-          {% endfor %}
-        </ul>
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-
-  {% if user.promos %}
-    <h3>My Promotions/Redemptions</h3>
-
-    <ul>
-    {% for promo in user.promos|groupby('promos.biz_id') %}
-      <li>{{ promo.grouper }}: <a href='/business_profile/{{ promo.biz_id }}'>{{ promo.biz.biz_name }}</a>
-        <!-- FIXME: convert grouper from biz_id to biz_name -->
-        <ul>
-          {% for item in group.list %}
-            {% if item.redeemed %}
-              <li>{{ item.title }}: {{ item.redeem_date|datetimeformat('%d %b %Y') }}</li>
-            {% else %}
-              <li>Available: {{ item.title }} | expiration date: {{ item.end_date|datetimeformat('%d %b %Y') }}</li>
-            {% endif %}
-          {% endfor %}
-        </ul>
       </li>
     {% endfor %}
     </ul>

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Register</h1>
+
+<form action='/register' method='POST'>
+
+    <div>
+        <label>
+            First Name: <input type='text' name='fname' required>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Last Name: <input type='text' name='lname' required>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Username: <input type='text' name='username' required>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Email: <input type='email' name='email' required>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Password: <input type='password' name='pword' required>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Birth Date (mm/dd/yyyy): <input type='date' name='bday'>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Picture: <input type='file' name='pic' accept='image/*'>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Business account?
+            <input type='radio' name='biz' value='true' checked>Yes
+            <input type='radio' name='biz' value='false'>No
+        </label>
+    </div>
+    <input type='submit'>
+</form>
+
+{% endblock %}
