@@ -19,9 +19,13 @@ def load_users():
     User.query.delete()
 
     # Read user file and insert data
-    for row in open("data/mini_user"):
+    for row in open('data/mini_user'):
         row = row.rstrip()
-        username, first_name, last_name, email, valid_email, password, dob, join_date, biz_acct = row.split('\t')
+
+        user_id, username, first_name, last_name, email, valid_email, password, dob_str, join_date_str, biz_acct = row.split('\t')
+
+        dob = datetime.strptime(dob_str, '%Y-%m-%d')
+        join_date = datetime.strptime(join_date_str, '%Y-%m-%d')
 
         user = User(username=username,
                     first_name=first_name,
@@ -40,59 +44,87 @@ def load_users():
     db.session.commit()
 
 
-def load_movies():
-    """Load movies from u.item into database."""
+def load_friends():
+    """Load friends relationship from mini_user into database."""
 
-    print "Movies"
+    print "Friends"
 
-    # To delete tables each time we open up a session.
-    Movie.query.delete()
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    Friend.query.delete()
 
-    for row in open('seed_data/u.item'):
-        row = row.rstrip()  # removes whitespace, but still a long string
-        row = row.split('|')
-        movie_id, title, release_date, video_date, imdb = row[:5]
-        # movie_id = row[0]
-        # title = row[1]
-        # release_date = row[2]
-        # imdb = row[3]
+    # Read user file and insert data
+    for row in open('data/mini_friend'):
+        row = row.rstrip()
 
-        if release_date:
-            release_date = datetime.strptime(release_date, '%d-%b-%Y')
-        else:
-            release_date = None
+        link_id, user_id, friend_id = row.split('\t')
 
-        title = title[:-7] # (\d{4})$ regex (import re library)
-        print imdb
-        movie = Movie(movie_id=movie_id,
-                      title=title,
-                      released_at=release_date,
-                      imdb_url=imdb)
+        friend = Friend(user_id=int(user_id), friend_id=int(friend_id))
 
-        # to add to database for each movie
-        db.session.add(movie)
+        # Add each friend relationship to the session
+        db.session.add(friend)
 
-    # to show that we do not have a fear of committing
+    # Commit at end
     db.session.commit()
 
 
-def load_ratings():
-    """Load ratings from u.data into database."""
+def load_userbiz():
+    """Load user-biz relationship from mini_user into database."""
 
-    print "Ratings"
+    print "UserBiz"
 
-    Rating.query.delete()
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    UserBiz.query.delete()
 
-    for row in open('seed_data/u.data'):
+    # Read user file and insert data
+    for row in open('data/mini_userbiz'):
         row = row.rstrip()
-        user_id, movie_id, score, timestamp = row.split('\t')
 
-        rating = Rating(user_id=user_id,
-                        movie_id=movie_id,
-                        score=score)
+        userbiz_id, user_id, biz_id = row.split('\t')
 
-        db.session.add(rating)
+        userbiz = UserBiz(user_id=int(user_id), biz_id=int(biz_id))
 
+        # Add each user-biz relationship to the session
+        db.session.add(userbiz)
+
+    # Commit at end
+    db.session.commit()
+
+
+def load_biz():
+    """Load businesses from mini_user into database."""
+
+    print "Business"
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    Business.query.delete()
+
+    # Read user file and insert data
+    for row in open('data/mini_biz'):
+        row = row.rstrip()
+
+        biz_id, biz_name, address, city, state, country, zipcode, email, valid_email, phone, days_open, open_time, close_time, claimed = row.split('\t')
+
+        biz = Business(biz_name=biz_name,
+                       address=address,
+                       city=city,
+                       state=state,
+                       country=country,
+                       zipcode=zipcode,
+                       email=email,
+                       valid_email=valid_email,
+                       phone=phone,
+                       days_open=days_open,
+                       open_time=int(open_time),
+                       close_time=int(close_time),
+                       claimed = claimed)
+
+        # Add each business to the session
+        db.session.add(rbiz)
+
+    # Commit at end
     db.session.commit()
 
 

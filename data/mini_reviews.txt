@@ -1,1 +1,1 @@
-review_id	user_id	biz_id	rating	review	review_date	dispute	response	revise_review	new_rating	new_review	cust_svc1	1	8	5	Awesome!	8/17/17						2	3	6	2	Sucks!	9/12/17	TRUE	Bite Me!	FALSE			33	7	3	3	So-So!	9/28/17	TRUE	Freebie on Us	TRUE	4	Yay for freebies!	4	1	4	4	Good Enough!	8/31/17						5	2	8	1	Awful!	10/14/17	TRUE	Toughie!	TRUE	3	Giddyup!	
+1	1	8	5	Awesome!	8/17/172	3	6	2	Sucks!	9/12/17	TRUE	Bite Me!	FALSE			33	7	3	3	So-So!	9/28/17	TRUE	Freebie on Us	TRUE	4	Yay for freebies!4	1	4	4	Good Enough!	8/31/175	2	8	1	Awful!	10/14/17	TRUE	Toughie!	TRUE	3	Giddyup!

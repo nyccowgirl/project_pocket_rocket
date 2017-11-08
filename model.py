@@ -116,6 +116,7 @@ class Business(db.Model):
     # biz_pic_main = image_attachment('BizPic')
     # biz_pic_other = image_attachment() # maybe future versions to determine how to do gallery of pics
     # __table_args__ = (db.CheckConstraint("regexp_like(email, '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$')", name='emailcheck'),)
+    # TO DO: add field for coordinates using postgis library
 
     checkins = db.relationship('CheckIn', backref='biz')
     referrals = db.relationship('Referral', backref='biz')
