@@ -1,10 +1,11 @@
+from selenium import webdriver
 import unittest
 
 from server import app
 from model import db, example_data, connect_to_db
 
 
-class BuddyTests(unittest.TestCase):
+class LoginRegisterTests(unittest.TestCase):
     """Tests for the BUDdy site."""
 
     def setUp(self):
@@ -70,7 +71,7 @@ class BuddyTests(unittest.TestCase):
         self.assertNotIn('Sign Up', result.data)
 
 
-class BuddyTestsDatabase(unittest.TestCase):
+class DatabaseTests(unittest.TestCase):
     """Flask tests that use the database."""
 
     def setUp(self):
