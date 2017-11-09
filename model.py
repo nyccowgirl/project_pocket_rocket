@@ -1,6 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-# from sqlalchemy_imageattach.entity import Image, image_attachment
-
 
 db = SQLAlchemy()
 
@@ -20,15 +18,14 @@ class User(db.Model):
     email = (db.Column(db.String(64), nullable=False, unique=True))
     valid_email = db.Column(db.Boolean, nullable=False, default=False)
     password = db.Column(db.String(64), nullable=False)  # should encrypt
-    # user_pic = image_attachment('UserPic')
+    user_pic = db.Column(db.String(64), nullable=True)
     dob = db.Column(db.DateTime, nullable=True)
     join_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     # FIXME: not sure if current_timestamp syntax is correct for SQLAlchemy
     biz_acct = db.Column(db.Boolean, nullable=True)
     # FIXME: may not need, when user logs in, can do query of userbiz table for userid and store it all in businesses
-    # __table_args__ = (db.CheckConstraint("regexp_like(email, '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$')", name='emailcheck'),)
+    __table_args__ = (db.CheckConstraint(db.func.regexp_matches(email, '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'), name='emailcheck'))
 
-    # userpic = db.relationship('UserPic', uselist=False, backref='user')
     biz = db.relationship('Business', secondary='user_biz', backref='users')
     invites = db.relationship('Invite', backref='users')
     friends = (db.relationship('User', secondary='friends',
@@ -46,15 +43,6 @@ class User(db.Model):
 
         return ("<user_id={} username={} email={}>".format(self.user_id,
                 self.username, self.email))
-
-
-# class UserPic(db.Model, Image):  # TO DO: need to check on the image one (https://sqlalchemy-imageattach.readthedocs.io/en/1.1.0/guide/declare.html)
-#     """ User picture model. """
-
-#     __tablename__ = 'user_pics'
-
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
-
     # TO DO: look into uploading image to flask
 
 
@@ -63,7 +51,6 @@ class Friend(db.Model):
 
     __tablename__ = 'friends'
 
-    # Links user account to friends. trigger from invites.accepted == True
     link_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
@@ -80,8 +67,6 @@ class UserBiz(db.Model):
 
     __tablename__ = 'user_biz'
 
-    # Links business user account to related business(es) claimed.
-    # trigger (users.biz_acct = True)
     userbiz_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
@@ -112,32 +97,19 @@ class Business(db.Model):
     open_time = db.Column(db.Integer, nullable=True)
     close_time = db.Column(db.Integer, nullable=True)
     claimed = db.Column(db.Boolean, nullable=False, default=False)
-    # trigger user_biz link when user claims business
-    # biz_pic_main = image_attachment('BizPic')
-    # biz_pic_other = image_attachment() # maybe future versions to determine how to do gallery of pics
-    # __table_args__ = (db.CheckConstraint("regexp_like(email, '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$')", name='emailcheck'),)
+    biz_pic = db.Column(db.String(64), nullable=True)
+    __table_args__ = (db.CheckConstraint(db.func.regexp_matches(email, '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'), name='emailcheck'))
     # TO DO: add field for coordinates using postgis library
 
     checkins = db.relationship('CheckIn', backref='biz')
     referrals = db.relationship('Referral', backref='biz')
     reviews = db.relationship('Review', backref='biz')
     promos = db.relationship('Promo', backref='biz')
-    # bizpic = db.relationship('BizPic', uselist=False, backref='biz')
 
     def __repr__(self):
         """ Displays info. """
 
         return ("<biz_id={} bizname={}>".format(self.biz_id, self.bizname))
-
-
-# class BizPic(db.Model, Image):  # TO DO: need to check on the image one (https://sqlalchemy-imageattach.readthedocs.io/en/1.1.0/guide/declare.html)
-#     """ Business picture model. """
-
-#     __tablename__ = 'biz_pics'
-
-#     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'), primary_key=True)
-
-    # biz = db.relationship('Business', uselist=False)
 
 
 class Promo(db.Model):
@@ -154,7 +126,6 @@ class Promo(db.Model):
     referral_promo = db.Column(db.Boolean, nullable=False, default=False)
     birthday_promo = db.Column(db.Boolean, nullable=False, default=False)
     redeem_count = db.Column(db.Integer, nullable=False, default=None)
-    # trigger and count (user_promos.redeemed) based on end_date is past today()
 
     def __repr__(self):
         """ Displays info. """
@@ -170,13 +141,10 @@ class UserPromo(db.Model):
     __tablename__ = 'user_promos'
 
     userpromo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    # triggered from referral from user_id to user_id, by users.DOB and promos.birthday_promo
-    # or by actual redemption from business page
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     promo_id = db.Column(db.Integer, db.ForeignKey('promos.promo_id'))
     redeem_date = db.Column(db.DateTime, nullable=True)
     redeemed = db.Column(db.Boolean, nullable=False, default=False)
-    # trigger should create redeem date with timestamp
 
     def __repr__(self):
         """ Displays info. """
@@ -194,7 +162,6 @@ class CheckIn(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
     checkin_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-    # same re: timestamp
 
     def __repr__(self):
         """ Displays info. """
@@ -214,7 +181,6 @@ class Referral(db.Model):
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
     refer_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     userpromo_id = db.Column(db.Integer, db.ForeignKey('user_promos.userpromo_id'))
-    # same re: timestamp
 
     user_promo = db.relationship('UserPromo', backref='referral')
 
@@ -261,8 +227,6 @@ class LikeReview(db.Model):
 
     like_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     review_id = db.Column(db.Integer, db.ForeignKey('reviews.review_id'))
-    # only needed to count total likes per review
-    # and to gray out like button from the individual user
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
     def __repr__(self):
@@ -280,7 +244,7 @@ class Invite(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     friend_email = (db.Column(db.String(64), nullable=False))
     accepted = db.Column(db.Boolean, nullable=False, default=False)
-    # __table_args__ = (db.CheckConstraint("regexp_like(email, '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$')", name='emailcheck'),)
+    __table_args__ = (db.CheckConstraint(db.func.regexp_matches(email, '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'), name='emailcheck'))
 
     # data modeling lecture, look at many to many demo, instantiate book and user and comment link
 
