@@ -278,7 +278,8 @@ def biz_process():
                        open_time=open_time,
                        close_time=close_time,
                        claimed=claim)
-                       # biz_pic_main=pic
+                       # biz_pic_main=pic TO DO: Add option to add pic to biz profile
+                       # to only have access if user_id has claimed biz.
 
         if claim:
             userbiz = UserBiz(user_id=session['user_id'], biz_id=biz.biz_id)

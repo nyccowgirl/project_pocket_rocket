@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.associationproxy import association_proxy
 
 db = SQLAlchemy()
 
@@ -24,14 +25,14 @@ class User(db.Model):
     # FIXME: not sure if current_timestamp syntax is correct for SQLAlchemy
     biz_acct = db.Column(db.Boolean, nullable=True)
     # FIXME: may not need, when user logs in, can do query of userbiz table for userid and store it all in businesses
-    # __table_args__ = (db.CheckConstraint(db.func.regexp_matches(email, '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$')))
+    # __table_args__ = (db.CheckConstraint('email ~ ^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'))
 
     biz = db.relationship('Business', secondary='user_biz', backref='users')
     invites = db.relationship('Invite', backref='users')
     friends = (db.relationship('User', secondary='friends',
                                primaryjoin='User.user_id == Friend.user_id',
                                secondaryjoin='User.user_id == Friend.friend_id'))
-    promos = db.relationship('Promo', secondary='user_promos', backref='users')
+    # promos = db.relationship('Promo', secondary='user_promos', backref='users')
     checkins = db.relationship('CheckIn', backref='users')
     referees = (db.relationship('User', secondary='referrals',
                                 primaryjoin='User.user_id == Referral.referer_id',
@@ -98,7 +99,7 @@ class Business(db.Model):
     close_time = db.Column(db.Integer, nullable=True)
     claimed = db.Column(db.Boolean, nullable=False, default=False)
     biz_pic = db.Column(db.String(64), nullable=True)
-    # __table_args__ = (db.CheckConstraint(db.func.regexp_matches(email, '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$')))
+    # __table_args__ = (db.CheckConstraint('email ~ ^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'))
     # TO DO: add field for coordinates using postgis library
 
     checkins = db.relationship('CheckIn', backref='biz')
@@ -145,6 +146,9 @@ class UserPromo(db.Model):
     promo_id = db.Column(db.Integer, db.ForeignKey('promos.promo_id'))
     redeem_date = db.Column(db.DateTime, nullable=True)
     redeemed = db.Column(db.Boolean, nullable=False, default=False)
+
+    user = db.relationship(User, backref='user_promos')
+    promo = db.relationship(Promo, backref='user_promos')
 
     def __repr__(self):
         """ Displays info. """
@@ -244,7 +248,7 @@ class Invite(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     friend_email = (db.Column(db.String(64), nullable=False))
     accepted = db.Column(db.Boolean, nullable=False, default=False)
-    # __table_args__ = (db.CheckConstraint(db.func.regexp_matches(friend_email, '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$')))
+    # __table_args__ = (db.CheckConstraint('friend_email ~ ^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'))
 
     # data modeling lecture, look at many to many demo, instantiate book and user and comment link
 
@@ -253,6 +257,9 @@ class Invite(db.Model):
 
         return ("<invite_id={} user_id={} accepted={}"
                 .format(self.invite_id, self.user_id, self.accepted))
+
+User.promos = association_proxy('user_promos', "user")
+Promo.users = association_proxy('user_promos', 'promo')
 
 
 ##############################################################################
