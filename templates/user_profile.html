@@ -72,8 +72,8 @@
     <h3>My Referrals</h3>
 
     <ul>
-    {% for referral in user.referees|groupby('biz_id') %}
-      <li>{{ referral.grouper }}: <a href='/business_profile/{{ referral.biz_id }}'>{{ referral.biz.biz_name }}</a>
+    {% for referral in user.referees|groupby('biz.biz_name') %}
+      <li>{{ referral.grouper }}: <a href='/business_profile/{{ referral.grouper }}'>{{ referral.grouper }}</a>
         <!-- FIXME: convert grouper from biz_id to biz_name -->
         <ul>
           {% for referee in group.list %}
