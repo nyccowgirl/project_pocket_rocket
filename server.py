@@ -115,7 +115,7 @@ def login_form():
 def login_process():
     """Logs in user."""
 
-    user_input = request.form['user']
+    user_input = request.form['user-info']
     pword = request.form['pword']
 
     user = buddy.check_user_info(user_input)

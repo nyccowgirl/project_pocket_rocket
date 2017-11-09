@@ -38,7 +38,7 @@
     <ul>
     {% for friend in user.friends|sort(attribute='username') %}
       <li>
-        <a href='/friend_profile/{{ friend.friend_id }}'>{{ friend.username }}
+        <a href='/friend_profile/{{ friend.user_id }}'>{{ friend.username }}
         <!-- TO DO: Create friend_profile.html and wrapper -->
         </a>
       </li>
@@ -89,11 +89,11 @@
     <h3>My Promotions/Redemptions</h3>
 
     <ul>
-    {% for promo in user.promos|groupby('promos.biz_id') %}
-      <li>{{ promo.grouper }}: <a href='/business_profile/{{ promo.biz_id }}'>{{ promo.biz.biz_name }}</a>
+    {% for promo in user.promos|groupby('biz_id') %}
+      <li>{{ promo.grouper }}: <a href='/business_profile/{{ promo.grouper }}'>{{ promo.grouper.biz_name }}</a>
         <!-- FIXME: convert grouper from biz_id to biz_name -->
         <ul>
-          {% for item in group.list %}
+          {% for item in promo.list %}
             {% if item.redeemed %}
               <li>{{ item.title }}: {{ item.redeem_date|datetimeformat('%d %b %Y') }}</li>
             {% else %}
