@@ -66,7 +66,7 @@ def register_process():
     email = request.form['email']
     pword = request.form['pword']
     bday_str = request.form['bday']
-    # pic = request.form['pic']
+    pic = request.form['pic']
     biz = request.form['biz']
 
     # TO DELETE
@@ -91,7 +91,7 @@ def register_process():
                     last_name=lname,
                     email=email,
                     password=pword,
-                    # user_pic=pic,
+                    user_pic=pic,
                     dob=bday,
                     join_date=datetime.now(),
                     biz_acct=biz)
