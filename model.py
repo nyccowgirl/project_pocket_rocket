@@ -25,7 +25,7 @@ class User(db.Model):
     # FIXME: not sure if current_timestamp syntax is correct for SQLAlchemy
     biz_acct = db.Column(db.Boolean, nullable=True)
     # FIXME: may not need, when user logs in, can do query of userbiz table for userid and store it all in businesses
-    # __table_args__ = (db.CheckConstraint('email ~ ^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'))
+    # __table_args__ = (db.CheckConstraint('email ~ ^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'),)
 
     biz = db.relationship('Business', secondary='user_biz', backref='users')
     invites = db.relationship('Invite', backref='users')
@@ -50,7 +50,7 @@ class User(db.Model):
 class Friend(db.Model):
     """ Relationship information between user profiles. """
 
-    __tablename__ = 'friends'
+    __table,name__ = 'friends'
 
     link_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
@@ -99,8 +99,7 @@ class Business(db.Model):
     close_time = db.Column(db.Integer, nullable=True)
     claimed = db.Column(db.Boolean, nullable=False, default=False)
     biz_pic = db.Column(db.String(64), nullable=True)
-    # __table_args__ = (db.CheckConstraint('email ~ ^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'))
-    # TO DO: add field for coordinates using postgis library
+    # __table_args__ = (db.CheckConstraint('email ~ ^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'),)    # TO DO: add field for coordinates using postgis library
 
     checkins = db.relationship('CheckIn', backref='biz')
     referrals = db.relationship('Referral', backref='biz')
@@ -248,8 +247,7 @@ class Invite(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     friend_email = (db.Column(db.String(64), nullable=False))
     accepted = db.Column(db.Boolean, nullable=False, default=False)
-    # __table_args__ = (db.CheckConstraint('friend_email ~ ^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'))
-
+    # __table_args__ = (db.CheckConstraint('friend_email ~ ^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'),)
     # data modeling lecture, look at many to many demo, instantiate book and user and comment link
 
     def __repr__(self):

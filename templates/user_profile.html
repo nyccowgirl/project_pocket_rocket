@@ -85,7 +85,7 @@
     </ul>
   {% endif %}
 
-  {% if user.promos %}
+  {% if user.user_promos %}
     <h3>My Promotions/Redemptions</h3>
 
     <ul>
@@ -94,10 +94,10 @@
         <!-- FIXME: convert grouper from biz_id to biz_name -->
         <ul>
           {% for promo in list %}
-            {% if promo.user_promos.redeemed %}
-              <li>{{ promo.title }}: {{ promo.user_promos.redeem_date|datetimeformat('%d %b %Y') }}</li>
+            {% if promo.redeemed %}
+              <li>{{ promo.promos.title }}: {{ promo.redeem_date|datetimeformat('%d %b %Y') }}</li>
             {% else %}
-              <li>Available: {{ promo.title }} | expiration date: {{ promo.end_date|datetimeformat('%d %b %Y') }}</li>
+              <li>Available: {{ promo.promos.title }} | expiration date: {{ promo.promos.end_date|datetimeformat('%d %b %Y') }}</li>
             {% endif %}
           {% endfor %}
         </ul>
