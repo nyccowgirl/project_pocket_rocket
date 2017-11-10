@@ -85,11 +85,11 @@
     </ul>
   {% endif %}
 
-  {% if user.promos %}
+  {% if user.user_promos %}
     <h3>My Promotions/Redemptions</h3>
 
     <ul>
-    {% for promos in user.promos|groupby('biz.biz_name') %}
+    {% for promos in user.user_promos.promo|groupby('biz_name') %}
       <li>{{ promos.grouper }}: <a href='/business_profile/{{ promos.grouper }}'>{{ promos.grouper }}</a>
         <!-- FIXME: convert grouper from biz_id to biz_name -->
         <ul>

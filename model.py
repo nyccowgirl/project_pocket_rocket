@@ -32,7 +32,7 @@ class User(db.Model):
     friends = (db.relationship('User', secondary='friends',
                                primaryjoin='User.user_id == Friend.user_id',
                                secondaryjoin='User.user_id == Friend.friend_id'))
-    promos = db.relationship('Promo', secondary='user_promos', backref='users')
+    # promos = db.relationship('Promo', secondary='user_promos', backref='users')
     checkins = db.relationship('CheckIn', backref='users')
     referees = (db.relationship('User', secondary='referrals',
                                 primaryjoin='User.user_id == Referral.referer_id',
@@ -109,7 +109,7 @@ class Business(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<biz_id={} bizname={}>".format(self.biz_id, self.bizname))
+        return ("<biz_id={} biz_name={}>".format(self.biz_id, self.biz_name))
 
 
 class Promo(db.Model):
@@ -130,9 +130,8 @@ class Promo(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<promo_id={} title={} end_date={}>".format(self.promo_id,
-                                                            self.title,
-                                                            self.end_date))
+        return ("<promo_id={} biz_id={} title={} end_date={}>"
+                .format(self.promo_id, self.biz_id, self.title, self.end_date))
 
 
 class UserPromo(db.Model):
@@ -146,16 +145,16 @@ class UserPromo(db.Model):
     redeem_date = db.Column(db.DateTime, nullable=True)
     redeemed = db.Column(db.Boolean, nullable=False, default=False)
 
-    user = db.relationship(User, backref='user_promos')
-    promo = db.relationship(Promo, backref='user_promos')
-    # User.promos = association_proxy('user_promos', "users")
-    # Promo.users = association_proxy('user_promos', 'promos')
+    users = db.relationship(User, backref='user_promos')
+    promos = db.relationship(Promo, backref='user_promos')
+    User.promos = association_proxy('user_promos', "promos")
+    Promo.users = association_proxy('user_promos', 'users')
 
     def __repr__(self):
         """ Displays info. """
 
-        return ("<user_promo_id={} user_id={} promo_id={} redeemed={}>"
-                .format(self.user_promo_id, self.user_id, self.promo_id, self.redeemed))
+        return ("<userpromo_id={} user_id={} promo_id={} redeemed={}>"
+                .format(self.userpromo_id, self.user_id, self.promo_id, self.redeemed))
 
 
 class CheckIn(db.Model):
