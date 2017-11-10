@@ -72,7 +72,7 @@
     <h3>My Referrals</h3>
 
     <ul>
-    {% for grouper, list in user.referees|groupby('biz.biz_name') %}
+    {% for grouper, list in user.referees|groupby('biz_id') %}
       <li>{{ grouper }}: <a href='/business_profile/{{ grouper }}'>{{ grouper }}</a>
         <!-- FIXME: convert grouper from biz_id to biz_name -->
         <ul>
@@ -85,19 +85,19 @@
     </ul>
   {% endif %}
 
-  {% if user.user_promos %}
+  {% if user.promos %}
     <h3>My Promotions/Redemptions</h3>
 
     <ul>
-    {% for grouper, list in user.promos|groupby('biz.biz_name') %}
-      <li>{{ grouper }}: <a href='/business_profile/{{ grouper }}'>{{ grouper }}</a>
+    {% for promos in user.promos|groupby('biz.biz_name') %}
+      <li>{{ promos.grouper }}: <a href='/business_profile/{{ promos.grouper }}'>{{ promos.grouper }}</a>
         <!-- FIXME: convert grouper from biz_id to biz_name -->
         <ul>
-          {% for promo in list %}
-            {% if promo.redeemed %}
-              <li>{{ promo.promos.title }}: {{ promo.redeem_date|datetimeformat('%d %b %Y') }}</li>
+          {% for promo in promos.list %}
+            {% if promo.user_promos.redeemed %}
+              <li>{{ promo.title }}: {{ promo.user_promos.redeem_date|datetimeformat('%d %b %Y') }}</li>
             {% else %}
-              <li>Available: {{ promo.promos.title }} | expiration date: {{ promo.promos.end_date|datetimeformat('%d %b %Y') }}</li>
+              <li>Available: {{ promo.title }} | expiration date: {{ promo.end_date|datetimeformat('%d %b %Y') }}</li>
             {% endif %}
           {% endfor %}
         </ul>
