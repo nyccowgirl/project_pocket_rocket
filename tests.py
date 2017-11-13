@@ -2,7 +2,7 @@
 import unittest
 
 from server import app
-from model import db, connect_to_db # example_data
+from model import db, connect_to_db  # example_data
 
 from mini_seed import (load_users, load_friends, load_biz, load_userbiz,
                        load_promos, load_userpromos, load_checkin,

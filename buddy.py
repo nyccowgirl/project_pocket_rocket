@@ -60,7 +60,7 @@ def calc_referrals(user_obj):
     redeemed_refs = 0
 
     for item in user_obj.referees:
-        if item.user_promo.redeemed is True:
+        if item.user_promos.redeemed is True:
             redeemed_refs += 1
 
     return total_refs, redeemed_refs

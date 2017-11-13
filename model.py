@@ -32,7 +32,7 @@ class User(db.Model):
     friends = (db.relationship('User', secondary='friends',
                                primaryjoin='User.user_id == Friend.user_id',
                                secondaryjoin='User.user_id == Friend.friend_id'))
-    # promos = db.relationship('Promo', secondary='user_promos', backref='users')
+    promos = db.relationship('Promo', secondary='user_promos', backref='users')
     checkins = db.relationship('CheckIn', backref='users')
     referees = (db.relationship('User', secondary='referrals',
                                 primaryjoin='User.user_id == Referral.referer_id',
@@ -42,7 +42,7 @@ class User(db.Model):
     def __repr__(self):
         """Displays info"""
 
-        return ("<user_id={} username={} email={}>".format(self.user_id,
+        return ('<user_id={} username={} email={}>'.format(self.user_id,
                 self.username, self.email))
     # TO DO: look into uploading image to flask
 
@@ -59,7 +59,7 @@ class Friend(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<user_id={} friend_id={}>".format(self.user_id, self.friend_id))
+        return ('<user_id={} friend_id={}>'.format(self.user_id, self.friend_id))
 
 
 class UserBiz(db.Model):
@@ -75,7 +75,7 @@ class UserBiz(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<user_id={} biz_id={}>".format(self.user_id, self.biz_id))
+        return ('<user_id={} biz_id={}>'.format(self.user_id, self.biz_id))
 
 
 class Business(db.Model):
@@ -109,7 +109,7 @@ class Business(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<biz_id={} biz_name={}>".format(self.biz_id, self.biz_name))
+        return ('<biz_id={} biz_name={}>'.format(self.biz_id, self.biz_name))
 
 
 class Promo(db.Model):
@@ -130,7 +130,7 @@ class Promo(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<promo_id={} biz_id={} title={} end_date={}>"
+        return ('<promo_id={} biz_id={} title={} end_date={}>'
                 .format(self.promo_id, self.biz_id, self.title, self.end_date))
 
 
@@ -145,15 +145,15 @@ class UserPromo(db.Model):
     redeem_date = db.Column(db.DateTime, nullable=True)
     redeemed = db.Column(db.Boolean, nullable=False, default=False)
 
-    users = db.relationship(User, backref='user_promos')
-    promos = db.relationship(Promo, backref='user_promos')
-    User.promos = association_proxy('user_promos', "promos")
-    Promo.users = association_proxy('user_promos', 'users')
+    user = db.relationship('User', backref='user_promos')
+    promo = db.relationship('Promo', backref='user_promos')
+    # User.promos = association_proxy('user_promos', 'promos')
+    # Promo.users = association_proxy('user_promos', 'users')
 
     def __repr__(self):
         """ Displays info. """
 
-        return ("<userpromo_id={} user_id={} promo_id={} redeemed={}>"
+        return ('<userpromo_id={} user_id={} promo_id={} redeemed={}>'
                 .format(self.userpromo_id, self.user_id, self.promo_id, self.redeemed))
 
 
@@ -170,7 +170,7 @@ class CheckIn(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<checkin_id={} user_id={} biz_id={} checkin_date={}>"
+        return ('<checkin_id={} user_id={} biz_id={} checkin_date={}>'
                 .format(self.checkin_id, self.user_id, self.biz_id, self.checkin_date))
 
 
@@ -191,7 +191,7 @@ class Referral(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<referral_id={} biz_id={} refer_date={} redeem_date>"
+        return ('<referral_id={} biz_id={} refer_date={} redeem_date>'
                 .format(self.referral_id, self.biz_id, self.refer_date, self.redeem_date))
 
 
@@ -220,7 +220,7 @@ class Review(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<review_id={} user_id={} biz_id={} rating={}>"
+        return ('<review_id={} user_id={} biz_id={} rating={}>'
                 .format(self.review_id, self.user_id, self.biz_id, self.rating))
 
 
@@ -236,7 +236,7 @@ class LikeReview(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<review_id={} user_id={}>".format(self.review_id, self.user_id))
+        return ('<review_id={} user_id={}>'.format(self.review_id, self.user_id))
 
 
 class Invite(db.Model):
@@ -254,7 +254,7 @@ class Invite(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ("<invite_id={} user_id={} accepted={}"
+        return ('<invite_id={} user_id={} accepted={}'
                 .format(self.invite_id, self.user_id, self.accepted))
 
 # User.promos = association_proxy('user_promos', "user")

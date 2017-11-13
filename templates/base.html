@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/boostrap.css'>
     <link rel='stylesheet' type='text/css' href='/static/css/style.css'>
     <title>BUDdy</title>
 </head>
@@ -10,7 +11,7 @@ BUDdy
 
 {% if 'user_id' in session %}
     <div>
-        <a href="/logout">Log Out</a> | <a href='/user-profile'>Profile</a>
+        <a href='/logout'>Log Out</a> | <a href='/user-profile'>Profile</a>
     </div>
 
     <div id='search'>
@@ -24,7 +25,7 @@ BUDdy
 
 {% else %}
     <div>
-        <a href="/login">Log In</a> | <a href='/register'>Sign Up</a>
+        <a href='/login'>Log In</a> | <a href='/register'>Sign Up</a>
     </div>
 {% endif %}
 
@@ -39,6 +40,9 @@ BUDdy
 {% block content %}
     Put your body here.
 {% endblock %}
+
+<script src='http://code.jquery.com/jquery.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js'></script>
 
 </body>
 
