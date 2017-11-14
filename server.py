@@ -238,9 +238,9 @@ def biz_process():
     email = request.form['email']
     category = request.form['category']
     days_open = request.form['days-open']
-    open_time = request.form['time-open']
+    open_time = int(request.form['time-open'])
     open_mil = request.form['open-ampm']
-    close_time = request.form['time-close']
+    close_time = int(request.form['time-close'])
     close_mil = request.form['close-ampm']
     claim = request.form['claim']
 
@@ -280,6 +280,9 @@ def biz_process():
                        claimed=claim)
                        # biz_pic_main=pic TO DO: Add option to add pic to biz profile
                        # to only have access if user_id has claimed biz.
+
+        # TO DELETE
+        print '\n\n\n{}\n\n\n'.format(claim)
 
         if claim:
             userbiz = UserBiz(user_id=session['user_id'], biz_id=biz.biz_id)
