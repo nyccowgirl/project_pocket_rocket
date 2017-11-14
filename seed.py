@@ -106,7 +106,7 @@ def create_promos():
                                               fake.time_delta(end_datetime=None),
                                               fake.boolean(chance_of_getting_true=10),
                                               fake.boolean(chance_of_getting_true=10),
-                                              fake.random_digit_or_empty())
+                                              fake.random_digit_or_empty()))
 
 
 def load_users():
