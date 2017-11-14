@@ -8,6 +8,8 @@ from datetime import datetime
 
 from server import app
 
+# TO DO: Need to update for additional fields added into model.py. Also need to build out functions for autoincrementing.
+
 
 def load_users():
     """Load users from mini_user into database."""

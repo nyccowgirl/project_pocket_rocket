@@ -19,6 +19,10 @@
   <h3>About Them</h3>
 
     <div>
+      <img src='{{ biz.pic }}'>
+    </div>
+
+    <div>
       <address>
         Business Name: {{ biz.biz_name }}<br>
         Address: {{ biz.address }}<br>
@@ -28,6 +32,7 @@
         Zip/Country Code: {{ biz.zipcode }}<br>
         Email: {{ biz.email }}<br>
         Phone: {{ biz.phone }}<br>
+        Category: {{ category }}<br>
       </address>
     </div>
 
@@ -51,12 +56,6 @@
         </li>
       </ul>
     </div>
-
-<!--     <div>
-      TO DO: Need to figure out images "\<img src=''>\"
-    </div> -->
-
-  <!-- TO DO: Create business_profile.html and wrapper -->
 
   {% if biz.reviews %}
     <h3>Our Reviews</h3>

@@ -13,6 +13,8 @@ import buddy
 
 import re
 
+import constants as c
+
 
 app = Flask(__name__)
 
@@ -78,6 +80,12 @@ def register_process():
         bday = datetime.strptime(bday_str, '%Y-%m-%d')
     else:
         bday = None
+
+    # Convert boolean to python format
+    if biz == 'true':
+        biz = True
+    else:
+        biz = False
 
     # Check if user is already in database
     user = User.query.filter((User.email == email) | (User.username == username)).first()
@@ -260,6 +268,12 @@ def biz_process():
     # Convert phone to same format
     re.sub('\ |\?|\.|\!|\/|\;|\:|\-|\(|\)', '', phone)
 
+    # Convert boolean to python format
+    if claim == 'true':
+        claim = True
+    else:
+        claim = False
+
     # Check if user is already in database
     business = Business.query.filter((Business.email == email) | (Business.biz_name == name)).first()
 
@@ -283,14 +297,17 @@ def biz_process():
                        claimed=claim,
                        biz_pic=pic)
 
+        db.session.add(biz)
+        db.session.commit()
+
         # TO DELETE
         print '\n\n\n{}\n\n\n'.format(claim)
 
         if claim:
             userbiz = UserBiz(user_id=session['user_id'], biz_id=biz.biz_id)
 
-        db.session.add(biz, userbiz)
-        db.session.commit()
+            db.session.add(userbiz)
+            db.session.commit()
 
         flash('{} has been added'.format(biz.biz_name))
 
@@ -303,6 +320,7 @@ def biz_profile(biz_name):
 
     biz = Business.query.filter_by(biz_name=biz_name).first()
     today = datetime.today()
+    category = c.BIZ_CATEGORY.get(biz.category)
 
     # TO DELETE
     print '\n\n\n{}\n\n\n'.format(biz_name)
@@ -314,7 +332,7 @@ def biz_profile(biz_name):
     # TO DO: build out helper functions to pull in totals to summarize;
     # format phone number and hours
 
-    return render_template('/business_profile.html', biz=biz, today=today)
+    return render_template('/business_profile.html', biz=biz, today=today, category=category)
 
 
 @app.route('/checkin/<int:biz_id>', methods=['POST'])

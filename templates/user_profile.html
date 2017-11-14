@@ -12,6 +12,10 @@
   <h3>About Me</h3>
 
     <div>
+      <img src='{{ user.pic }}'>
+    </div>
+
+    <div>
       <ul>
         First Name: {{ user.first_name }}<br>
         Last Name: {{ user.last_name }}<br>
@@ -22,15 +26,10 @@
         Member Since: {{ user.join_date|datetimeformat('%b %Y') }}<br>
     </div>
 
-<!--     <div>
-      TO DO: Need to figure out images "\<img src=''>\"
-    </div> -->
-
   <h3>My Digits</h3>
 
   TO DO: Summarize total reviews, referrals, redemptions of referrals, check-ins
 
-  <!-- TO DO: Need to loop over regardless if user_id is in user_id or friend_id fields -->
 
   {% if user.friends %}
     <h3>My Friends</h3>
@@ -38,15 +37,11 @@
     <ul>
     {% for friend in user.friends|sort(attribute='username') %}
       <li>
-        <a href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}
-        <!-- TO DO: Create friend_profile.html and wrapper -->
-        </a>
+        <a href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a>
       </li>
     {% endfor %}
     </ul>
   {% endif %}
-
-  <!-- TO DO: Create business_profile.html and wrapper -->
 
   {% if user.reviews %}
     <h3>My Reviews</h3>
