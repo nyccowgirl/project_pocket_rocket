@@ -1,0 +1,13 @@
+BIZ_CATEGORY = {'bar': 'Bar',
+                'cleaner': 'Cleaners',
+                'cafe': 'Coffee/Cafe/Tea',
+                'grocery': 'Deli/Grocery',
+                'florist': 'Florist',
+                'home': 'Home Services',
+                'medicine': 'Medical Services',
+                'nightlife': 'Nightlife',
+                'pet': 'Pets',
+                'restaurant': 'Restaurant',
+                'salon': 'Salon',
+                'spa': 'Spa',
+                }
