@@ -180,6 +180,69 @@ def create_userpromos():
                                                   fake.random_int(min=1, max=100),
                                                   redeemed,
                                                   redeem_date)
+
+
+def create_reviews():
+    """Create reviews from Faker."""
+
+    with open('reviews.txt', 'r+') as reviews:
+
+        for i in range(150):
+            dispute = fake.boolean(chance_of_getting_true=20)
+
+            if dispute:
+                response = fake.text(max_nb_chars=5000, ext_word_list=None)
+                revise_review = fake.boolean(chance_of_getting_true=30)
+                if revise_review:
+                    new_rating = fake.random_int(min=1, max=5)
+                    new_review = fake.text(max_nb_chars=3000, ext_word_list=None)
+                else:
+                    cust_svc = fake.random_int(min=1, max=5)
+            else:
+                response = None
+                revise_review = None
+                new_rating = None
+                new_review = None
+                cust_svc = None
+
+            reviews.write('{}|{}|{}|{}|{}|{}|{}|{}|{}|{}'.format(fake.random_int(min=1, max=250),
+                                                                 fake.random_int(min=1, max=100),
+                                                                 fake.random_int(min=1, max=5),
+                                                                 fake.text(max_nb_chars=5000,
+                                                                           ext_word_list=None),
+                                                                 fake.date_this_decade(before_today=True,
+                                                                           after_today=False),
+                                                                 dispute,
+                                                                 response,
+                                                                 revise_review,
+                                                                 new_rating,
+                                                                 new_review,
+                                                                 cust_svc))
+
+
+def create_likes():
+    """Create likes of reviews from Faker."""
+
+    with open('likes.txt', 'r+') as likes:
+
+        for i in range(150):
+            likes.write('{}|{}'.format(fake.random_int(min=1, max=150),
+                                       fake.random_int(min=1, max=250)))
+
+
+def create_invites():
+    """Create invites from Faker."""
+
+    with open('invites.txt', 'r+') as invites:
+
+        for i in range(100):
+            invites.write('{}|{}|{}'.format(fake.random_int(min=1, max=250),
+                                            fake.free_email(),
+                                            fake.boolean(chance_of_getting_true=30)))
+            # if accepted is True, override email with respective email from friend_id
+            # to also match with some of the friends table data
+
+
 def load_users():
     """Load users from fake data into database."""
 
@@ -320,8 +383,29 @@ if __name__ == "__main__":
     # In case tables haven't been created, create them
     db.create_all()
 
+    # Create fake data
+    create_users()
+    create_biz()
+    create_friends()
+    create_userbiz()
+    create_promos()
+    create_checkins()
+    create_referrals()
+    create_userpromos()
+    create_reviews()
+    create_likes()
+    create_invites()
+
     # Import different types of data
-    load_users()
-    load_movies()
-    load_ratings()
-    set_val_user_id()
+    # load_users()
+    # load_friends()
+    # load_biz()
+    # load_userbiz()
+    # load_promos()
+    # load_userpromos()
+    # load_checkin()
+    # load_referrals()
+    # load_reviews()
+    # load_likes()
+    # load_invite()
+    # set_val_user_id()
