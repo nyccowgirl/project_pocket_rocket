@@ -236,6 +236,7 @@ def biz_process():
     zipcode = request.form['zipcode']
     phone = request.form['tel']
     email = request.form['email']
+    url = request.form['url']
     category = request.form['category']
     days_open = request.form['days-open']
     open_time = int(request.form['time-open'])
@@ -243,6 +244,7 @@ def biz_process():
     close_time = int(request.form['time-close'])
     close_mil = request.form['close-ampm']
     claim = request.form['claim']
+    pic = request.form['pic']
 
     # TO DELETE
     print '\n\n\n{}\n\n\n'.format(name)
@@ -273,13 +275,13 @@ def biz_process():
                        zipcode=zipcode,
                        phone=phone,
                        email=email,
+                       url=url,
                        category=category,
                        days_open=days_open,
                        open_time=open_time,
                        close_time=close_time,
-                       claimed=claim)
-                       # biz_pic_main=pic TO DO: Add option to add pic to biz profile
-                       # to only have access if user_id has claimed biz.
+                       claimed=claim,
+                       biz_pic=pic)
 
         # TO DELETE
         print '\n\n\n{}\n\n\n'.format(claim)

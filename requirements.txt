@@ -4,9 +4,11 @@ click==6.7
 coverage==4.4.2
 decorator==4.1.2
 enum34==1.1.6
+Faker==0.8.6
 Flask==0.12.2
 Flask-DebugToolbar==0.10.1
 Flask-SQLAlchemy==2.3.2
+ipaddress==1.0.18
 ipython==5.5.0
 ipython-genutils==0.2.0
 itsdangerous==0.24
@@ -21,10 +23,12 @@ prompt-toolkit==1.0.15
 psycopg2==2.7.3.2
 ptyprocess==0.5.2
 Pygments==2.2.0
+python-dateutil==2.6.1
 scandir==1.6
 simplegeneric==0.8.1
 six==1.11.0
 SQLAlchemy==1.1.14
+text-unidecode==1.1
 traitlets==4.3.2
 wcwidth==0.1.7
 Werkzeug==0.12.2

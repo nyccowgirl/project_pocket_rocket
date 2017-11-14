@@ -91,15 +91,17 @@ class Business(db.Model):
     country = db.Column(db.String(64), nullable=True)
     zipcode = db.Column(db.String(64), nullable=True)
     phone = db.Column(db.String(64), nullable=True)
-    email = (db.Column(db.String(64), nullable=True))
+    email = db.Column(db.String(64), nullable=True)
     valid_email = db.Column(db.Boolean, nullable=False, default=False)
+    url = db.Column(db.String(64), nullable=True)
     category = db.Column(db.String(64), nullable=True)
     days_open = db.Column(db.String(64), nullable=True)
     open_time = db.Column(db.Integer, nullable=True)
     close_time = db.Column(db.Integer, nullable=True)
     claimed = db.Column(db.Boolean, nullable=False, default=False)
     biz_pic = db.Column(db.String(64), nullable=True)
-    __table_args__ = (db.CheckConstraint("email ~ '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'"),)    # TO DO: add field for coordinates using postgis library
+    __table_args__ = (db.CheckConstraint("email ~ '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'"),)
+    # TO DO: add field for coordinates using postgis library
 
     checkins = db.relationship('CheckIn', backref='biz')
     referrals = db.relationship('Referral', backref='biz')
