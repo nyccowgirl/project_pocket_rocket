@@ -144,8 +144,8 @@ class UserPromo(db.Model):
     userpromo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     promo_id = db.Column(db.Integer, db.ForeignKey('promos.promo_id'))
-    redeem_date = db.Column(db.DateTime, nullable=True)
     redeemed = db.Column(db.Boolean, nullable=False, default=False)
+    redeem_date = db.Column(db.DateTime, nullable=True)
 
     user = db.relationship('User', backref='user_promos')
     promo = db.relationship('Promo', backref='user_promos')

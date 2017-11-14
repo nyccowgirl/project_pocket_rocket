@@ -76,8 +76,14 @@ def create_friends():
     with open('friends.txt', 'r+') as friends:
 
         for i in range(150):
-            friends.write('{}|{}'.format(fake.random_int(min=1, max=250),
-                                         fake.random_int(min=1, max=250)))
+            user_id = fake.random_int(min=1, max=250)
+
+            friend_id = fake.random_int(min=1, max=250)
+
+            while user_id == friend_id:
+                friend_id = fake.random_int(min=1, max=250)
+
+            friends.write('{}|{}'.format(user_id, friend_id))
 
 
 def create_userbiz():
@@ -109,6 +115,71 @@ def create_promos():
                                               fake.random_digit_or_empty()))
 
 
+def create_checkins():
+    """Create check-ins from Faker."""
+
+    with open('checkins.txt', 'r+') as checkins:
+
+        for i in range(500):
+            checkins.write('{}|{}|{}'.format(fake.random_int(min=1, max=250),
+                                             fake.random_int(min=1, max=100),
+                                             fake.date_this_decade(before_today=True,
+                                                                   after_today=False)))
+
+
+def create_referrals():
+    """Create referrals relationships from Faker."""
+
+    with open('referrals.txt', 'r+') as referrals:
+
+        for i in range(100):
+            referer_id = fake.random_int(min=1, max=250)
+
+            referee_id = fake.random_int(min=1, max=250)
+
+            while referer_id == referee_id:
+                referee_id = fake.random_int(min=1, max=250)
+
+            referrals.write('{}|{}|{}|{}'.format(referer_id, referee_id,
+                                                 fake.random_int(min=1, max=100),
+                                                 fake.date_this_decade(before_today=True,
+                                                                       after_today=False),
+                                                 i + 1))
+
+            with open('userpromos.txt', 'r+') as userpromos:
+
+                redeemed = fake.boolean(chance_of_getting_true=20)
+
+                if redeemed:
+                    redeem_date = fake.date_this_decade(before_today=True, after_today=False)
+                else:
+                    redeem_date = None
+
+                userpromos.write('{}|{}|{}|{}'.format(referee_id,
+                                                      fake.random_int(min=1, max=100),
+                                                      redeemed,
+                                                      redeem_date))
+            # each instantiation results in userpromo_id and respective referee_id
+            # into user_promo table; FIXME: to add in userpromo_id
+
+
+def create_userpromos():
+    """Create user-promotions relationships from Faker."""
+
+    with open('userpromos.txt', 'a+') as userpromos:
+
+        for i in range(100):
+            redeemed = fake.boolean(chance_of_getting_true=20)
+
+            if redeemed:
+                redeem_date = fake.date_this_decade(before_today=True, after_today=False)
+            else:
+                redeem_date = None
+
+            userpromos.write('{}|{}|{}|{}'.format(fake.random_int(min=1, max=250),
+                                                  fake.random_int(min=1, max=100),
+                                                  redeemed,
+                                                  redeem_date)
 def load_users():
     """Load users from fake data into database."""
 
