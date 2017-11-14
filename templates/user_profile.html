@@ -38,7 +38,7 @@
     <ul>
     {% for friend in user.friends|sort(attribute='username') %}
       <li>
-        <a href='/friend_profile/{{ friend.user_id }}'>{{ friend.username }}
+        <a href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}
         <!-- TO DO: Create friend_profile.html and wrapper -->
         </a>
       </li>
@@ -54,7 +54,7 @@
     <ul>
     {% for review in user.reviews|sort(attribute='review_date') %}
       <li>
-        <a href='/business_profile/{{ review.biz_id }}'>{{ review.biz.biz_name}}</a>
+        <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
         <br>
         {% if review.revise_review %}
           <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date }}</p><br>
@@ -72,11 +72,10 @@
     <h3>My Referrals</h3>
 
     <ul>
-    {% for grouper, list in user.referees|groupby('biz_id') %}
-      <li>{{ grouper }}: <a href='/business_profile/{{ grouper }}'>{{ grouper }}</a>
-        <!-- FIXME: convert grouper from biz_id to biz_name -->
+    {% for referrals in user.referees|groupby('biz.biz_name') %}
+      <li><a href='/business-profile/{{ referrals.grouper }}'>{{ referrals.grouper }}:</a>
         <ul>
-          {% for referee in list %}
+          {% for referee in referrals.list %}
             </li>{{ referee.username }}: refer date {{ referee.refer_date|datetimeformat('%d %b %Y') }} | redeem date {{ referee.user_promo.redeem_date|datetimeformat('%d %b %Y') }} </li>
           {% endfor %}
         </ul>
@@ -89,15 +88,14 @@
     <h3>My Promotions/Redemptions</h3>
 
     <ul>
-    {% for promos in user.user_promos.promo|groupby('biz_name') %}
-      <li>{{ promos.grouper }}: <a href='/business_profile/{{ promos.grouper }}'>{{ promos.grouper }}</a>
-        <!-- FIXME: convert grouper from biz_id to biz_name -->
+    {% for promos in user.user_promos|groupby('promo.biz.biz_name') %}
+      <li><a href='/business-profile/{{ promos.grouper }}'>{{ promos.grouper }}:</a>
         <ul>
           {% for promo in promos.list %}
-            {% if promo.user_promos.redeemed %}
-              <li>{{ promo.title }}: {{ promo.user_promos.redeem_date|datetimeformat('%d %b %Y') }}</li>
+            {% if promo.redeemed %}
+              <li>Redeemed: {{ promo.promo.title }}: {{ promo.redeem_date|datetimeformat('%d %b %Y') }}</li>
             {% else %}
-              <li>Available: {{ promo.title }} | expiration date: {{ promo.end_date|datetimeformat('%d %b %Y') }}</li>
+              <li>Available: {{ promo.promo.title }} | expiration date: {{ promo.promo.end_date|datetimeformat('%d %b %Y') }}</li>
             {% endif %}
           {% endfor %}
         </ul>
@@ -111,7 +109,7 @@
 
     <ul>
     {% for biz in user.biz %}
-      <li><a href='/business_profile{{ biz.biz_id }}'>{{ biz.biz_name }}</a></li>
+      <li><a href='/business-profile{{ biz.biz_name }}'>{{ biz.biz_name }}</a></li>
     {% endfor %}
     </ul>
   {% endif %}

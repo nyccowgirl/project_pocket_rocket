@@ -6,6 +6,13 @@
   <!-- TO DO: Set each as either menu item on left panel or as scroll down from nav bar. -->
 
   <h2>{{ biz.biz_name }}</h2>
+  {% for name in session['checkin'] %}
+    {% if item != biz.biz_name %}
+      <form action='/checkin/{{ biz.biz_id }}' method='POST'>
+        <input type='submit' value='Check-In'>
+      </form>
+    {% endif %}
+  {% endfor %}
 
   TO DO: Summarize total reviews, referrals, check-ins
 
@@ -28,8 +35,20 @@
       <h4>Operation:</h4>
       <ul>
         <li>Days: {{ biz.days_open }}</li>
-        <li>Open: {{ biz.open_time }}</li>
-        <li>Close: {{ biz.close_time }}</li>
+        <li>Open:
+          {% if biz.open_time <= 12 %}
+            {{ biz.open_time }}AM
+          {% else %}
+            {{ biz.open_time - 12 }}PM
+          {% endif %}
+        </li>
+        <li>Close:
+          {% if biz.close_time <= 12 %}
+            {{ biz.close_time }}AM
+          {% else %}
+            {{ biz.close_time - 12 }}PM
+          {% endif %}
+        </li>
       </ul>
     </div>
 
@@ -50,13 +69,13 @@
     <ul>
     {% for review in biz.reviews|sort(attribute='review_date') %}
       <li>
-        <a href='/user_profile/{{ review.user_id }}'>{{ review.user.username}}</a>
+        <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
         <br>
         {% if review.revise_review %}
-          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date }}</p><br>
+          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
           <p>{{ review.new_review }}</p>
-        (% else %)
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date }}</p><br>
+        {% else %}
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
           <p>{{ review.review }}</p>
         {% endif %}
       </li>
@@ -64,23 +83,26 @@
     </ul>
   {% endif %}
 
-  {% if user.promos %}
+  {% if biz.promos %}
     <h3>Our Promotions</h3>
 
     <ul>
     {% for promo in biz.promos|sort(attribute='end_date') %}
-      {% if promo.end_date >= now %}
-        <li>{{ promo.title }}: {{ promo.descr }} | {{ promo.end_date|datetimeformat('%d %b %Y') }}</li>
+      {% if promo.end_date >= today %}
+        <li>{{ promo.title }}: {{ promo.descr }} | expiration date: {{ promo.end_date|datetimeformat('%d %b %Y') }}</li>
       {% endif %}
     {% endfor %}
     </ul>
+  {% endif %}
 
-  {% if biz.users.user_biz %}
+  {% if biz.users %}
     <h3>Business Affiliates</h3>
 
     <ul>
-    {% for biz in biz.users.user_biz %}
-      <li><a href='/business_profile{{ biz.biz_id }}'>{{ biz.biz_name }}</a></li>
+    {% for affiliate in biz.users[0].biz %}
+      {% if affiliate.biz_id != biz.biz_id %}
+        <li><a href='/business_profile{{ affiliate.biz_name }}'>{{ affiliate.biz_name }}</a></li>
+      {% endif %}
     {% endfor %}
     </ul>
   {% endif %}

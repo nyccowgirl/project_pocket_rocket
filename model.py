@@ -191,8 +191,8 @@ class Referral(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<referral_id={} biz_id={} refer_date={} redeem_date>'
-                .format(self.referral_id, self.biz_id, self.refer_date, self.redeem_date))
+        return ('<referral_id={} biz_id={} refer_date={} userpromo_id>'
+                .format(self.referral_id, self.biz_id, self.refer_date, self.userpromo_id))
 
 
 class Review(db.Model):

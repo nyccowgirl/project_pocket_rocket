@@ -1,6 +1,6 @@
 from flask import Flask, session
 
-from model import connect_to_db, User  # db, Business
+from model import connect_to_db, User, CheckIn  # db, Business
 
 app = Flask(__name__)
 
@@ -12,7 +12,7 @@ app.secret_key = "SHHHHHHIIIITTTT"
 
 def check_user_info(user_input):
     """
-    Check user input of either username or email against database.
+    Checks user input of either username or email against database.
 
     >>> check_user_info('123@abc.com')
 
@@ -27,7 +27,7 @@ def check_user_info(user_input):
 
 def calc_checkins(user_obj):
     """
-    Calculate total check-ins for gamification component.
+    Calculates total check-ins for gamification component.
 
     TO DO: Build out doctests
     """
@@ -39,7 +39,7 @@ def calc_checkins(user_obj):
 
 def calc_reviews(user_obj):
     """
-    Calculate total reviews for gamification component.
+    Calculates total reviews for gamification component.
 
     TO DO: Build out doctests
     """
@@ -51,7 +51,7 @@ def calc_reviews(user_obj):
 
 def calc_referrals(user_obj):
     """
-    Calculate total referrals for gamification component.
+    Calculates total referrals for gamification component.
 
     TO DO: Build out doctests
     """
@@ -64,6 +64,18 @@ def calc_referrals(user_obj):
             redeemed_refs += 1
 
     return total_refs, redeemed_refs
+
+
+def calc_checkins_biz(biz_id):
+    """
+    Calculates total check-ins per business for gamification component.
+
+    TO DO: Build out doctests
+    """
+
+    total = CheckIn.query.filter(CheckIn.user_id == session['user_id'], CheckIn.biz_id == biz_id).count()
+
+    return total
 
 ##############################################################################
 

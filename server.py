@@ -5,7 +5,7 @@ from flask import (Flask, render_template, request, flash, redirect,
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, db, User, Business, UserBiz
+from model import connect_to_db, db, User, Business, UserBiz, CheckIn
 
 from datetime import datetime
 
@@ -292,21 +292,60 @@ def biz_process():
         return redirect('/')
 
 
-@app.route('/business-profile/<int:biz_id>')
-def biz_profile(biz_id):
+@app.route('/business-profile/<biz_name>')
+def biz_profile(biz_name):
     """Displays business information."""
 
-    biz = Business.query.filter_by(biz_id=biz_id).first()
+    biz = Business.query.filter_by(biz_name=biz_name).first()
+    today = datetime.today()
 
     # TO DELETE
+    print '\n\n\n{}\n\n\n'.format(biz_name)
     print '\n\n\n{}\n\n\n'.format(biz.reviews)
     print '\n\n\n{}\n\n\n'.format(biz.referrals)
     print '\n\n\n{}\n\n\n'.format(biz.promos)
+    print '\n\n\n{}\n\n\n'.format(biz.users)
 
     # TO DO: build out helper functions to pull in totals to summarize;
     # format phone number and hours
 
-    return render_template('/business_profile.html', biz=biz)
+    return render_template('/business_profile.html', biz=biz, today=today)
+
+
+@app.route('/checkin/<int:biz_id>', methods=['POST'])
+def check_in(biz_id):
+    """Checks in user into business, limit one check in per day. """
+
+    today = datetime.today()
+    checkin = (CheckIn.query.filter(CheckIn.user_id == session['user_id'],
+               CheckIn.biz_id == biz_id, CheckIn.checkin_date == today).first())
+    biz = Business.query.get(biz_id)
+
+    # TO DELETE
+    print '\n\n\n{}\n\n\n'.format(biz.biz_name)
+
+    if checkin:
+        flash('You have already checked into this business today. No double dipping!')
+    else:
+        checkin = CheckIn(user_id=session['user_id'],
+                          biz_id=biz_id,
+                          checkin_date=today)
+
+        db.session.add(checkin)
+        db.session.commit()
+
+        total_checkins = buddy.calc_checkins_biz(biz_id)
+
+        flash('You have checked in a total of {} times. {} thanks you for your support!'.format(total_checkins, biz.biz_name))
+
+    session['checkin'].append(biz.biz_name)
+
+    # TO DELETE
+    print '\n\n\n{}\n\n\n'.format(biz.biz_name)
+    print '\n\n\n{}\n\n\n'.format(session['checkin'])
+
+    return redirect('/business-profile/<biz.biz_name>')
+
 
 ##############################################################################
 
