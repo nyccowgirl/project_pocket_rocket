@@ -14,7 +14,7 @@ fake = Faker()
 
 
 def create_users():
-    """Create users data from Faker."""
+    """Creates users data from Faker."""
 
     print 'Users'
 
@@ -42,7 +42,7 @@ def create_users():
 
 
 def create_biz():
-    """Create businesses data from Faker."""
+    """Creates businesses data from Faker."""
 
     print 'Businesses'
 
@@ -76,7 +76,7 @@ def create_biz():
 
 
 def create_friends():
-    """Create friends relationships from Faker."""
+    """Creates friends relationships from Faker."""
 
     print 'Friends'
 
@@ -94,7 +94,7 @@ def create_friends():
 
 
 def create_userbiz():
-    """Create user-business relationships from Faker."""
+    """Creates user-business relationships from Faker."""
 
     print 'User-Biz'
 
@@ -106,7 +106,7 @@ def create_userbiz():
 
 
 def create_promos():
-    """Create promos from Faker."""
+    """Creates promos from Faker."""
 
     print 'Promos'
 
@@ -127,7 +127,7 @@ def create_promos():
 
 
 def create_checkins():
-    """Create check-ins from Faker."""
+    """Creates check-ins from Faker."""
 
     print 'Check-Ins'
 
@@ -141,7 +141,7 @@ def create_checkins():
 
 
 def create_referrals():
-    """Create referrals relationships from Faker."""
+    """Creates referrals relationships from Faker."""
 
     print 'Referrals'
 
@@ -176,7 +176,7 @@ def create_referrals():
 
 
 def create_userpromos():
-    """Create user-promotions relationships from Faker."""
+    """Creates user-promotions relationships from Faker."""
 
     print 'User-Promos'
 
@@ -197,7 +197,7 @@ def create_userpromos():
 
 
 def create_reviews():
-    """Create reviews from Faker."""
+    """Creates reviews from Faker."""
 
     print 'Reviews'
 
@@ -237,7 +237,7 @@ def create_reviews():
 
 
 def create_likes():
-    """Create likes of reviews from Faker."""
+    """Creates likes of reviews from Faker."""
 
     print 'Likes'
 
@@ -249,7 +249,7 @@ def create_likes():
 
 
 def create_invites():
-    """Create invites from Faker."""
+    """Creates invites from Faker."""
 
     print 'Invites'
 
@@ -262,7 +262,7 @@ def create_invites():
 
 
 def load_users():
-    """Load users from fake data into database."""
+    """Loads users from fake data into database."""
 
     print "Users"
 
@@ -271,13 +271,26 @@ def load_users():
     User.query.delete()
 
     # Read user file and insert data
-    for row in open('data/users'):
+    for row in open('data/users.txt'):
         row = row.rstrip()
 
-        username, first_name, last_name, email, valid_email, password, pic, dob_str, join_date_str, biz_acct = row.split('|')
+        (username, first_name, last_name, email, valid_email, password, pic,
+         dob_str, join_date_str, biz_acct) = row.split('|')
 
+        # Convert to datetime format
         dob = datetime.strptime(dob_str, '%Y-%m-%d')
         join_date = datetime.strptime(join_date_str, '%Y-%m-%d')
+
+        # Convert from string to boolean
+        if valid_email == 'True':
+            valid_email = True
+        else:
+            valid_email = False
+
+        if biz_acct == 'True':
+            biz_acct = True
+        else:
+            biz_acct = False
 
         user = User(username=username,
                     first_name=first_name,
@@ -285,6 +298,7 @@ def load_users():
                     email=email,
                     valid_email=valid_email,
                     password=password,
+                    user_pic=pic,
                     dob=dob,
                     join_date=join_date,
                     biz_acct=biz_acct)
@@ -297,7 +311,7 @@ def load_users():
 
 
 def load_friends():
-    """Load friends relationship from fake data into database."""
+    """Loads friends relationship from fake data into database."""
 
     print "Friends"
 
@@ -306,10 +320,10 @@ def load_friends():
     Friend.query.delete()
 
     # Read user file and insert data
-    for row in open('data/friends'):
+    for row in open('data/friends.txt'):
         row = row.rstrip()
 
-        link_id, user_id, friend_id = row.split('|')
+        user_id, friend_id = row.split('|')
 
         friend = Friend(user_id=int(user_id), friend_id=int(friend_id))
 
@@ -321,7 +335,7 @@ def load_friends():
 
 
 def load_userbiz():
-    """Load user-biz relationship from fake data into database."""
+    """Loads user-biz relationship from fake data into database."""
 
     print "UserBiz"
 
@@ -330,10 +344,10 @@ def load_userbiz():
     UserBiz.query.delete()
 
     # Read user file and insert data
-    for row in open('data/userbiz'):
+    for row in open('data/userbiz.txt'):
         row = row.rstrip()
 
-        userbiz_id, user_id, biz_id = row.split('|')
+        user_id, biz_id = row.split('|')
 
         userbiz = UserBiz(user_id=int(user_id), biz_id=int(biz_id))
 
@@ -347,17 +361,33 @@ def load_userbiz():
 def load_biz():
     """Load businesses from fake data into database."""
 
-    print "Business"
+    print 'Businesses'
 
     # Delete all rows in table, so if we need to run this a second time,
     # we won't be trying to add duplicate users
     Business.query.delete()
 
     # Read user file and insert data
-    for row in open('data/biz'):
+    for row in open('data/biz.txt'):
         row = row.rstrip()
 
-        biz_id, biz_name, address, city, state, country, zipcode, email, valid_email, phone, days_open, open_time, close_time, claimed = row.split('|')
+        (biz_name, address, city, state, country, zipcode, phone, email,
+         valid_email, url, category, days_open, open_time, close_time, claimed,
+         biz_pic, longitude, latitude) = row.split('|')
+
+        # Convert phone to same format
+        re.sub('\ |\?|\.|\!|\/|\;|\:|\-|\(|\)', '', phone)
+
+        # Convert from string to boolean
+        if valid_email == 'True':
+            valid_email = True
+        else:
+            valid_email = False
+
+        if claimed == 'True':
+            claimed = True
+        else:
+            claimed = False
 
         biz = Business(biz_name=biz_name,
                        address=address,
@@ -365,36 +395,364 @@ def load_biz():
                        state=state,
                        country=country,
                        zipcode=zipcode,
+                       phone=phone,
                        email=email,
                        valid_email=valid_email,
                        url=url,
-                       phone=phone,
+                       category=category
                        days_open=days_open,
                        open_time=int(open_time),
                        close_time=int(close_time),
                        claimed=claimed,
                        biz_pic=pic,
-                       lat=latitude,
-                       lng=longitude,
-                       latlng='POINT({} {})'.format(latitude, longitude))
+                       lng=float(longitude),
+                       lat=float(latitude),
+                       location='POINT({} {})'.format(longitude, latitude))
 
         # Add each business to the session
-        db.session.add(rbiz)
+        db.session.add(biz)
 
     # Commit at end
     db.session.commit()
 
 
-def set_val_user_id():
-    """Set value for the next user_id after seeding database"""
+def load_promos():
+    """Loads promos from fake promos into database."""
 
-    # Get the Max user_id in the database
+    print 'Promos'
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    Promo.query.delete()
+
+    # Read user file and insert data
+    for row in open('data/promos.txt'):
+        row = row.rstrip()
+
+        biz_id, title, descr, start_date_str, delta, referral, birthday, redeem_count = row.split('|')
+
+        # Convert to datetime format
+        start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+        end_date = datetime.strptime((start_date + int(delta)), '%Y-%m-%d')
+
+        # Convert from string to boolean
+        if referral == 'True':
+            referral = True
+        else:
+            referral = False
+
+        if birthday == 'True':
+            birthday = True
+        else:
+            birthday = False
+
+        promo = Promo(biz_id=int(biz_id),
+                      title=title,
+                      descr=descr,
+                      start_date=start_date,
+                      end_date=end_date,
+                      referral_promo=referral,
+                      birthday_promo=birthday,
+                      redeem_count=int(redeem_count))
+
+        # Add each promo to the session
+        db.session.add(promo)
+
+    # Commit at end
+    db.session.commit()
+
+
+def load_userpromos():
+    """Loads user-promos relationship from fake data in database."""
+
+    print 'User-Promos'
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    UserPromo.query.delete()
+
+    # Read user file and insert data
+    for row in open('data/userpromos.txt'):
+        row = row.rstrip()
+
+        user_id, promo_id, redeemed, redeem_date_str = row.split('|')
+
+        # Convert to datetime format
+        redeem_date = datetime.strptime(redeem_date_str, '%Y-%m-%d')
+
+        # Convert from string to boolean
+        if redeemed == 'True':
+            redeemed = True
+        else:
+            redeemed = False
+
+        userpromo = UserPromo(user_id=user_id,
+                              promo_id=promo_id,
+                              redeemed=redeemed,
+                              redeem_date=redeem_date)
+
+        # Add each user-promo to the session
+        db.session.add(userpromo)
+
+    # Commit at end
+    db.session.commit()
+
+
+def load_checkins():
+    """Loads check-ins from fake data in database."""
+
+    print 'Check-Ins'
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    CheckIn.query.delete()
+
+    # Read user file and insert data
+    for row in open('data/checkins.txt'):
+        row = row.rstrip()
+
+        user_id, biz_id, checkin_date_str = row.split('|')
+
+        # Convert to datetime format
+        checkin_date = datetime.strptime(checkin_date_str, '%Y-%m-%d')
+
+
+        checkin = CheckIn(user_id=int(user_id),
+                      biz_id=int(biz_id),
+                      checkin_date=checkin_date)
+
+        # Add each check-in to the session
+        db.session.add(checkin)
+
+    # Commit at end
+    db.session.commit()
+
+
+def load_referrals():
+    """Loads referrals from fake data in database."""
+
+    print 'Referrals'
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    Referral.query.delete()
+
+    # Read user file and insert data
+    for row in open('data/referrals.txt'):
+        row = row.rstrip()
+
+        referer_id, referee_id, biz_id, refer_date_str, userpromo_id = row.split('|')
+
+        # Convert to datetime format
+        refer_date = datetime.strptime(refer_date_str, '%Y-%m-%d')
+
+
+        referral = Referral(referer_id=int(referer_id),
+                            referee_id=int(referee_id),
+                            biz_id=int(biz_id),
+                            refer_date=refer_date,
+                            userpromo_id=int(userpromo_id))
+
+        # Add each referral to the session
+        db.session.add(referral)
+
+    # Commit at end
+    db.session.commit()
+
+
+def load_reviews():
+    """Loads reviews from fake data in database."""
+
+    print 'Reviews'
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    Review.query.delete()
+
+    # Read user file and insert data
+    for row in open('data/reviews.txt'):
+        row = row.rstrip()
+
+        (user_id, biz_id, rating, review, review_date_str, dispute, response,
+            revise_review, new_rating, new_review, cust_svc) = row.split('|')
+
+        # Convert to datetime format
+        review_date = datetime.strptime(review_date_str, '%Y-%m-%d')
+
+        # Convert from string to boolean
+        if dispute == 'True':
+            dispute = True
+        else:
+            dispute = False
+
+        if revise_review == 'True':
+            revise_review = True
+        else:
+            revise_review = False
+
+        review = Review(user_id=int(user_id),
+                        biz_id=int(biz_id),
+                        rating=int(rating),
+                        review=review,
+                        review_date=review_date,
+                        dispute=dispute,
+                        response=response,
+                        revise_review=revise_review,
+                        new_rating=int(new_rating),
+                        new_review=new_review,
+                        cust_svc=int(cust_svc))
+
+        # Add each review to the session
+        db.session.add(review)
+
+    # Commit at end
+    db.session.commit()
+
+
+def load_likes():
+    """Loads likes of reviews from fake data into database."""
+
+    print 'Likes'
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    LikeReview.query.delete()
+
+    # Read user file and insert data
+    for row in open('data/likes.txt'):
+        row = row.rstrip()
+
+        user_id, review_id = row.split('|')
+
+        like = Like(user_id=int(user_id), review_id=int(review_id))
+
+        # Add each like transaction to the session
+        db.session.add(like)
+
+    # Commit at end
+    db.session.commit()
+
+
+def load_invites():
+    """Loads friends relationship from fake data into database."""
+
+    print 'Invites'
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    Invite.query.delete()
+
+    # Read user file and insert data
+    for row in open('data/invites.txt'):
+        row = row.rstrip()
+
+        user_id, friend_email, accepted = row.split('|')
+
+        if accepted == 'True':
+            accepted = True
+        else:
+            accepted = False
+
+        invite = Invite(user_id=int(user_id), friend_email=friend_email, accepted=accepted)
+
+        # Add each invite to the session
+        db.session.add(invite)
+
+    # Commit at end
+    db.session.commit()
+
+
+def set_val_id():
+    """Sets value for the next autoincrement after seeding database"""
+
+    # Get the Max autoincremented primary key in the database
     result = db.session.query(func.max(User.user_id)).one()
-    max_id = int(result[0])
+    user_max_id = int(result[0])
 
     # Set the value for the next user_id to be max_id + 1
     query = "SELECT setval('users_user_id_seq', :new_id)"
-    db.session.execute(query, {'new_id': max_id + 1})
+    db.session.execute(query, {'new_id': user_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Biz.biz_id)).one()
+    biz_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('biz_biz_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': biz_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Friend.link_id)).one()
+    friend_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('friends_link_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': friend_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(UserBiz.userbiz_id)).one()
+    userbiz_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('userbiz_userbiz_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': userbiz_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Promo.promo_id)).one()
+    promo_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('promos_promo_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': promo_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(UserPromo.userpromo_id)).one()
+    userpromo_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('userpromos_userpromo_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': userpromo_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(CheckIn.checkin_id)).one()
+    checkins_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('checkins_checkin_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': checkins_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Referral.referral_id)).one()
+    referral_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('referrals_referral_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': referral_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Review.review_id)).one()
+    review_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('reviews_review_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': review_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(LikeReview.like_id)).one()
+    like_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('likes_like_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': like_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Invite.invite_id)).one()
+    invites_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('invites_invite_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': invites_max_id + 1})
+
     db.session.commit()
 
 
@@ -418,15 +776,15 @@ if __name__ == "__main__":
     # create_invites()
 
     # Import different types of data
-    # load_users()
-    # load_friends()
-    # load_biz()
-    # load_userbiz()
-    # load_promos()
-    # load_userpromos()
-    # load_checkin()
-    # load_referrals()
-    # load_reviews()
-    # load_likes()
-    # load_invite()
-    # set_val_user_id()
+    load_users()
+    load_friends()
+    load_biz()
+    load_userbiz()
+    load_promos()
+    load_userpromos()
+    load_checkin()
+    load_referrals()
+    load_reviews()
+    load_likes()
+    load_invite()
+    set_val_id()

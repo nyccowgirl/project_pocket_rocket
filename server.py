@@ -126,7 +126,7 @@ def login_process():
     user_input = request.form['user-info']
     pword = request.form['pword']
 
-    user = buddy.check_user_info(user_input)
+    user = helper.check_user_info(user_input)
     # TO DO: move this to AJAX(?) to check it in html first, where if email/username
     # does not exist, then note error for user to re-input; otherwise, go to registration
 
@@ -161,7 +161,7 @@ def check_email():
 
     user_input = request.form['user']
 
-    user = buddy.check_user_info(user_input)
+    user = helper.check_user_info(user_input)
 
     if not user:
         return False
@@ -178,7 +178,7 @@ def reset_pword():
     user_input = request.form['user']
     new_pword = request.form['pword']
 
-    user = buddy.check_user_info(user_input)
+    user = helper.check_user_info(user_input)
 
     user.password = new_pword
     db.session.commit()

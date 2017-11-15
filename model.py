@@ -103,9 +103,9 @@ class Business(db.Model):
     close_time = db.Column(db.Integer, nullable=True)
     claimed = db.Column(db.Boolean, nullable=False, default=False)
     biz_pic = db.Column(db.String(64), nullable=True)
-    lat = db.Column(db.String(64), nullable=True)
-    lng = db.Column(db.String(64), nullable=True)
-    latlng = db.Column(Geometry(geometry_type='POINT', srid=4326), nullable=True)
+    lat = db.Column(db.Float, nullable=True)
+    lng = db.Column(db.Float, nullable=True)
+    location = db.Column(Geometry(geometry_type='POINT', srid=4326), nullable=True)
     __table_args__ = (db.CheckConstraint("email ~ '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'"),)
     # TO DO: add field for coordinates using postgis library
 

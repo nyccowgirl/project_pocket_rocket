@@ -26,7 +26,7 @@ CREATE EXTENSION postgis;
 
 6) create/seed your database tables
 seeding data must contain formatting like this:
-'POINT({} {})'.format(latitude, longitude)
+'POINT({0} {1})'.format(longitude, latitude)
 
 7) query using:
 for approximations of nearby distances using spherical distance, search units nearby by meters; example below searches within 1000m
@@ -42,7 +42,7 @@ point = WKTElement('POINT({0} {1})'.format(lng, lat), srid=4326)
 
 db.session.query(Class).filter(func.ST_DWithin(Class.location, point, 10))
 
-* WKTElement to be used where specific SRID should be specified
+* WKTElement to be used where specific SRID should be specified (e.g., SRID=4326 is standard GPS)
 
 
 --------------------------------------------------

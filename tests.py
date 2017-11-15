@@ -121,6 +121,8 @@ class UserProfileTests(unittest.TestCase):
         self.assertIn('hunk', result.data)
 
 
+# TO DO: Create tests for biz-profile, add biz and friend profile
+
 class DatabaseTests(unittest.TestCase):
     """Flask tests that use the database."""
 
