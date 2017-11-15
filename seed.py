@@ -21,24 +21,24 @@ def create_users():
     with open('data/users.txt', 'w+') as users:
 
         for i in range(250):
-            users.write('{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.user_name(),
-                                                           fake.first_name(),
-                                                           fake.last_name(),
-                                                           fake.free_email(),
-                                                           fake.boolean(
-                                                               chance_of_getting_true=99),
-                                                           fake.password(length=10,
-                                                               special_chars=True,
-                                                               digits=True,
-                                                               upper_case=True,
-                                                               lower_case=True),
-                                                           fake.image_url(width=None, height=None),
-                                                           fake.date(),
-                                                           fake.date_this_decade(
-                                                               before_today=True,
-                                                               after_today=False),
-                                                           fake.boolean(
-                                                               chance_of_getting_true=10)))
+            users.write('{}|{}|{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.user_name(),
+                                                                 fake.first_name(),
+                                                                 fake.last_name(),
+                                                                 fake.free_email(),
+                                                                 fake.boolean(
+                                                                     chance_of_getting_true=99),
+                                                                 fake.password(length=10,
+                                                                               special_chars=True,
+                                                                               digits=True,
+                                                                               upper_case=True,
+                                                                               lower_case=True),
+                                                                 fake.image_url(width=None, height=None),
+                                                                 fake.date(),
+                                                                 fake.date_this_decade(
+                                                                     before_today=True,
+                                                                     after_today=False),
+                                                                 fake.boolean(
+                                                                     chance_of_getting_true=10)))
 
 
 def create_biz():
@@ -113,17 +113,17 @@ def create_promos():
     with open('data/promos.txt', 'w+') as promos:
 
         for i in range(100):
-            promos.write('{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=100),
-                                                fake.word(ext_word_list=None),
-                                                fake.sentence(nb_words=5,
-                                                              variable_nb_words=True,
-                                                              ext_word_list=None),
-                                                fake.date_this_decade(before_today=True,
-                                                                      after_today=False),
-                                                fake.time_delta(end_datetime=None),
-                                                fake.boolean(chance_of_getting_true=10),
-                                                fake.boolean(chance_of_getting_true=10),
-                                                fake.random_digit_or_empty()))
+            promos.write('{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=100),
+                                                            fake.word(ext_word_list=None),
+                                                            fake.sentence(nb_words=5,
+                                                                          variable_nb_words=True,
+                                                                          ext_word_list=None),
+                                                            fake.date_this_decade(before_today=True,
+                                                                          after_today=False),
+                                                            fake.time_delta(end_datetime=None),
+                                                            fake.boolean(chance_of_getting_true=10),
+                                                            fake.boolean(chance_of_getting_true=10),
+                                                            fake.random_digit_or_empty()))
 
 
 def create_checkins():
@@ -137,7 +137,7 @@ def create_checkins():
             checkins.write('{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
                                                fake.random_int(min=1, max=100),
                                                fake.date_this_decade(before_today=True,
-                                                                   after_today=False)))
+                                                                     after_today=False)))
 
 
 def create_referrals():
@@ -146,22 +146,21 @@ def create_referrals():
     print 'Referrals'
 
     with open('data/referrals.txt', 'w+') as referrals:
+        with open('data/userpromos.txt', 'w+') as userpromos:
 
-        for i in range(100):
-            referer_id = fake.random_int(min=1, max=250)
+            for i in range(100):
+                referer_id = fake.random_int(min=1, max=250)
 
-            referee_id = fake.random_int(min=1, max=250)
-
-            while referer_id == referee_id:
                 referee_id = fake.random_int(min=1, max=250)
 
-            referrals.write('{}|{}|{}|{}\n'.format(referer_id, referee_id,
-                                                   fake.random_int(min=1, max=100),
-                                                   fake.date_this_decade(before_today=True,
-                                                                         after_today=False),
-                                                   i + 1))
+                while referer_id == referee_id:
+                    referee_id = fake.random_int(min=1, max=250)
 
-            with open('data/userpromos.txt', 'w+') as userpromos:
+                referrals.write('{}|{}|{}|{}|{}\n'.format(referer_id, referee_id,
+                                                          fake.random_int(min=1, max=100),
+                                                          fake.date_this_decade(before_today=True,
+                                                                                after_today=False),
+                                                          i + 1))
 
                 redeemed = fake.boolean(chance_of_getting_true=20)
 
@@ -174,8 +173,6 @@ def create_referrals():
                                                         fake.random_int(min=1, max=100),
                                                         redeemed,
                                                         redeem_date))
-            # each instantiation results in userpromo_id and respective referee_id
-            # into user_promo table; FIXME: to add in userpromo_id
 
 
 def create_userpromos():
@@ -183,7 +180,7 @@ def create_userpromos():
 
     print 'User-Promos'
 
-    with open('data/userpromos.txt', 'a+') as userpromos:
+    with open('data/userpromos.txt', 'a') as userpromos:
 
         for i in range(100):
             redeemed = fake.boolean(chance_of_getting_true=20)
@@ -224,19 +221,19 @@ def create_reviews():
                 new_review = None
                 cust_svc = None
 
-            reviews.write('{}|{}|{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
-                                                                   fake.random_int(min=1, max=100),
-                                                                   fake.random_int(min=1, max=5),
-                                                                   fake.text(max_nb_chars=5000,
-                                                                             ext_word_list=None),
-                                                                   fake.date_this_decade(before_today=True,
-                                                                             after_today=False),
-                                                                   dispute,
-                                                                   response,
-                                                                   revise_review,
-                                                                   new_rating,
-                                                                   new_review,
-                                                                   cust_svc))
+            reviews.write('{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
+                                                                      fake.random_int(min=1, max=100),
+                                                                      fake.random_int(min=1, max=5),
+                                                                      fake.text(max_nb_chars=5000,
+                                                                                ext_word_list=None),
+                                                                      fake.date_this_decade(before_today=True,
+                                                                                            after_today=False),
+                                                                      dispute,
+                                                                      response,
+                                                                      revise_review,
+                                                                      new_rating,
+                                                                      new_review,
+                                                                      cust_svc))
 
 
 def create_likes():
@@ -262,8 +259,6 @@ def create_invites():
             invites.write('{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
                                               fake.free_email(),
                                               fake.boolean(chance_of_getting_true=30)))
-            # if accepted is True, override email with respective email from friend_id
-            # to also match with some of the friends table data
 
 
 def load_users():
@@ -279,7 +274,7 @@ def load_users():
     for row in open('data/users'):
         row = row.rstrip()
 
-        user_id, username, first_name, last_name, email, valid_email, password, dob_str, join_date_str, biz_acct = row.split('|')
+        username, first_name, last_name, email, valid_email, password, pic, dob_str, join_date_str, biz_acct = row.split('|')
 
         dob = datetime.strptime(dob_str, '%Y-%m-%d')
         join_date = datetime.strptime(join_date_str, '%Y-%m-%d')
@@ -404,20 +399,20 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # In case tables haven't been created, create them
-    db.create_all()
+    # db.create_all()
 
     # Create fake data
-    create_users()
-    create_biz()
-    create_friends()
-    create_userbiz()
-    create_promos()
-    create_checkins()
-    create_referrals()
-    create_userpromos()
-    create_reviews()
-    create_likes()
-    create_invites()
+    # create_users()
+    # create_biz()
+    # create_friends()
+    # create_userbiz()
+    # create_promos()
+    # create_checkins()
+    # create_referrals()
+    # create_userpromos()
+    # create_reviews()
+    # create_likes()
+    # create_invites()
 
     # Import different types of data
     # load_users()

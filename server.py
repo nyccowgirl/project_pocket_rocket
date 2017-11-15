@@ -9,7 +9,7 @@ from model import connect_to_db, db, User, Business, UserBiz, CheckIn
 
 from datetime import datetime
 
-import buddy
+import helper
 
 import re
 
