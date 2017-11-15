@@ -332,6 +332,10 @@ def biz_profile(biz_name):
     # TO DO: build out helper functions to pull in totals to summarize;
     # format phone number and hours
 
+#     query using:
+# for approximations of nearby distances using spherical distance, search units nearby by meters; example below searches within 1000m
+# db.session.query(UnitDetails).filter(func.ST_Distance_Sphere("POINT(37.776164 -122.423355)",UnitDetails.latlng) < 1000).all()
+
     return render_template('/business_profile.html', biz=biz, today=today, category=category)
 
 

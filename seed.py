@@ -373,7 +373,10 @@ def load_biz():
                        open_time=int(open_time),
                        close_time=int(close_time),
                        claimed=claimed,
-                       biz_pic=pic)
+                       biz_pic=pic,
+                       lat=latitude,
+                       lng=longitude,
+                       latlng='POINT({} {})'.format(latitude, longitude))
 
         # Add each business to the session
         db.session.add(rbiz)

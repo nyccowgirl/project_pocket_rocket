@@ -1,0 +1,52 @@
+
+--------------------------------------------------
+
+POSTGIS SETUP NOTES
+
+Works with SQLAlchemy and PostgreSQL
+
+--------------------------------------------------
+
+1) install in vagrant
+sudo apt-get update (http://technobytz.com/install-postgis-postgresql-9-3-ubuntu.html)
+sudo apt-get install postgis (https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postgis-on-ubuntu-14-04)
+
+2) pip install geoalchemy2
+
+3) setup model.py with postgis column in sqlalchemy (e.g., Class)
+example: location = db.Column(Geometry(geometry_type='POINT', srid=4326),
+                              nullable=False)
+from sqlalchemy import func
+from geoalchemy2 import Geometry
+
+4) createdb
+
+5) psql [database]
+CREATE EXTENSION postgis;
+
+6) create/seed your database tables
+seeding data must contain formatting like this:
+'POINT({} {})'.format(latitude, longitude)
+
+7) query using:
+for approximations of nearby distances using spherical distance, search units nearby by meters; example below searches within 1000m
+
+db.session.query(Class).filter(func.ST_Distance_Sphere('POINT(37.776164 -122.423355)',Class.locatiom) < 1000).all()
+
+-or-
+
+lat = request.args.get('lat', None)
+lng = request.args.get('lng', None)
+
+point = WKTElement('POINT({0} {1})'.format(lng, lat), srid=4326)
+
+db.session.query(Class).filter(func.ST_DWithin(Class.location, point, 10))
+
+* WKTElement to be used where specific SRID should be specified
+
+
+--------------------------------------------------
+
+3219 meters ~ 2 miles
+
+source: https://github.com/jttyeung/investable/blob/master/postgis_setup_notes.txt
