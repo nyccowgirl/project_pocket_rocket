@@ -7,7 +7,13 @@
 
   <h2>{{ user.username }}</h2>
 
-  TO DO: Summarize total friends, reviews, referrals, check-ins
+    <div>
+      Check-Ins: {{ session['tot_checkins'] }}<br>
+      Reviews: {{ session['tot_revs'] }}<br>
+      Referrals: {{ session['tot_refs'] }}|Redeemed: {{ session['redeem_refs'] }}<br>
+      Promos Redeemed: {{ session['tot_redeem'] }}<br>
+      Friends: {{ session['tot_friends'] }}
+    </div>
 
   <h3>About Me</h3>
 

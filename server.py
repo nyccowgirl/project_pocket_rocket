@@ -1,18 +1,11 @@
 from jinja2 import StrictUndefined
-
 from flask import (Flask, render_template, request, flash, redirect,
                    session)  # jsonify
-
 from flask_debugtoolbar import DebugToolbarExtension
-
-from model import connect_to_db, db, User, Business, UserBiz, CheckIn
-
+from model import connect_to_db, db, User, Business, UserBiz, CheckIn, Review
 from datetime import datetime
-
 import helper
-
 import re
-
 import constants as c
 
 
@@ -202,7 +195,21 @@ def user_profile():
     print '\n\n\n{}\n\n\n'.format(user.referees)
     print '\n\n\n{}\n\n\n'.format(user.promos)
 
-    # TO DO: build out helper functions to pull in totals to summarize
+    friends = helper.calc_friends(user)
+    session['tot_friends'] = friends
+
+    reviews = helper.calc_reviews(user)
+    session['tot_revs'] = reviews
+
+    total_refs, redeemed_refs = helper.calc_referrals(user)
+    session['tot_refs'] = total_refs
+    session['redeem_refs'] = redeemed_refs
+
+    redemptions = helper.calc_redemptions(user)
+    session['tot_redeem'] = redemptions
+
+    checkins = helper.calc_checkins(user)
+    session['tot_checkins'] = checkins
 
     return render_template('/user_profile.html', user=user)
 
@@ -274,7 +281,7 @@ def biz_process():
     else:
         claim = False
 
-    # Check if user is already in database
+    # Check if business is already in database
     business = Business.query.filter((Business.email == email) | (Business.biz_name == name)).first()
 
     if business:
@@ -299,9 +306,6 @@ def biz_process():
 
         db.session.add(biz)
         db.session.commit()
-
-        # TO DELETE
-        print '\n\n\n{}\n\n\n'.format(claim)
 
         if claim:
             userbiz = UserBiz(user_id=session['user_id'], biz_id=biz.biz_id)
@@ -329,6 +333,26 @@ def biz_profile(biz_name):
     print '\n\n\n{}\n\n\n'.format(biz.promos)
     print '\n\n\n{}\n\n\n'.format(biz.users)
 
+    avg_score, count = helper.calc_avg_rating(biz)
+    tot_checkins = helper.calc_biz_tot_checkins(biz)
+    user_checkins = helper.calc_checkins_biz(biz.biz_id)
+    promos_redeem = helper.calc_biz_promos_redeem(biz)
+    total_refs, redeemed_refs = helper.calc_biz_referrals(biz)
+
+    user_review = Review.query.filter(Review.biz_id == biz.biz_id,
+                                      Review.user_id==session['user_id']).first()
+
+    if user_review:
+        if user_review.revise_review:
+            user_rating = user_review.new_rating
+        else:
+            user_rating = user_review.rating
+    else:
+        user_rating = 'N/A'
+
+    # TO DELETE
+    print '\n\n\n{}\n\n\n'.format(promos_redeem)
+
     # TO DO: build out helper functions to pull in totals to summarize;
     # format phone number and hours
 
@@ -336,7 +360,11 @@ def biz_profile(biz_name):
 # for approximations of nearby distances using spherical distance, search units nearby by meters; example below searches within 1000m
 # db.session.query(UnitDetails).filter(func.ST_Distance_Sphere("POINT(37.776164 -122.423355)",UnitDetails.latlng) < 1000).all()
 
-    return render_template('/business_profile.html', biz=biz, today=today, category=category)
+    return render_template('/business_profile.html', biz=biz, today=today,
+                           category=category, score=avg_score, count=count,
+                           checkins=tot_checkins, user_checkins=user_checkins,
+                           promos_redeem=promos_redeem, refs=total_refs,
+                           ref_redeem=redeemed_refs, user_score=user_rating)
 
 
 @app.route('/checkin/<int:biz_id>', methods=['POST'])
@@ -361,9 +389,9 @@ def check_in(biz_id):
         db.session.add(checkin)
         db.session.commit()
 
-        total_checkins = buddy.calc_checkins_biz(biz_id)
+        user_checkins = buddy.calc_checkins_biz(biz_id)
 
-        flash('You have checked in a total of {} times. {} thanks you for your support!'.format(total_checkins, biz.biz_name))
+        flash('You have checked in a total of {} times. {} thanks you for your support!'.format(user_checkins, biz.biz_name))
 
     session['checkin'].append(biz.biz_name)
 

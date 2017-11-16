@@ -16,7 +16,13 @@
     {% endfor %}
   {% endif %}
 
-  TO DO: Summarize total reviews, referrals, check-ins
+    <div>
+      Total Check-Ins: {{ checkins }}|Your Check_Ins: {{ user_checkins }}<br>
+      Average Rating: {{ score }}|Your Rating: {{ user_score }}<br>
+      Total Reviews: {{ count }}<br>
+      Total Referrals: {{ refs }}|Redeemed: {{ ref_redeem }}<br>
+      Promos Redeemed: {{ promos_redeem }}<br>
+    </div>
 
   <h3>About Them</h3>
 
@@ -64,10 +70,8 @@
   {% if biz.reviews %}
     <h3>Our Reviews</h3>
 
-    <div>Average Rating: </div>
-    <div>Total Reviews: </div>
 
-    <!-- TO DO: Calculate and pass in  -->
+    <!-- TO DO: Use D3 to visualize the rating  -->
 
     <ul>
     {% for review in biz.reviews|sort(attribute='review_date') %}

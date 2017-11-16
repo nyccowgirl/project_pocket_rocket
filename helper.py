@@ -1,6 +1,6 @@
+from __future__ import division
 from flask import Flask, session
-
-from model import connect_to_db, User, CheckIn  # db, Business
+from model import connect_to_db, User, CheckIn, Promo  # db
 
 app = Flask(__name__)
 
@@ -25,6 +25,18 @@ def check_user_info(user_input):
     return user
 
 
+def calc_friends(user_obj):
+    """
+    Calculates total friends for gamification component.
+
+    TO DO: Build out doctests
+    """
+
+    total = len(user_obj.friends)
+
+    return total
+
+
 def calc_checkins(user_obj):
     """
     Calculates total check-ins for gamification component.
@@ -32,7 +44,7 @@ def calc_checkins(user_obj):
     TO DO: Build out doctests
     """
 
-    total = user_obj.checkins.count()
+    total = len(user_obj.checkins)
 
     return total
 
@@ -44,19 +56,20 @@ def calc_reviews(user_obj):
     TO DO: Build out doctests
     """
 
-    total = user_obj.reviews.count()
+    total = len(user_obj.reviews)
 
     return total
 
 
 def calc_referrals(user_obj):
     """
-    Calculates total referrals for gamification component.
+    Calculates total referrals and referrals that have been redeemed for
+    gamification component.
 
     TO DO: Build out doctests
     """
 
-    total_refs = user_obj.referees.count()
+    total_refs = len(user_obj.referees)
     redeemed_refs = 0
 
     for item in user_obj.referees:
@@ -66,6 +79,22 @@ def calc_referrals(user_obj):
     return total_refs, redeemed_refs
 
 
+def calc_redemptions(user_obj):
+    """
+    Calculates total promotions redeemed for gamification component.
+
+    TO DO: Build out doctests
+    """
+
+    redeemed_promos = 0
+
+    for promo in user_obj.user_promos:
+        if promo.redeemed is True:
+            redeemed_promos += 1
+
+    return redeemed_promos
+
+
 def calc_checkins_biz(biz_id):
     """
     Calculates total check-ins per business for gamification component.
@@ -73,19 +102,79 @@ def calc_checkins_biz(biz_id):
     TO DO: Build out doctests
     """
 
-    total = CheckIn.query.filter(CheckIn.user_id == session['user_id'], CheckIn.biz_id == biz_id).count()
+    total = CheckIn.query.filter(CheckIn.user_id == session['user_id'],
+                                 CheckIn.biz_id == biz_id).count()
 
     return total
 
 
-def calc_avg_rating(biz_id):
+def calc_biz_tot_checkins(biz_obj):
+    """
+    Calculates total check-ins for the business.
+
+    TO DO: Build out doctests
+    """
+
+    total_checkins = len(biz_obj.checkins)
+
+    return total_checkins
+
+
+def calc_biz_promos_redeem(biz_obj):
+    """
+    Calculates total promotions redeemed by consumers.
+
+    TO DO: Build out doctests
+    """
+
+    redeemed_promos = 0
+
+    for promo in biz_obj.promos:
+        for item in promo.user_promos:
+            if item.redeemed is True:
+                redeemed_promos += 1
+
+    return redeemed_promos
+
+
+def calc_biz_referrals(biz_obj):
+    """
+    Calculates total referrals and referrals that have been redeemed.
+
+    TO DO: Build out doctests
+    """
+
+    total_refs = len(biz_obj.referrals)
+    redeemed_refs = 0
+
+    for item in biz_obj.referrals:
+        if item.user_promo.redeemed is True:
+            redeemed_refs += 1
+
+    return total_refs, redeemed_refs
+
+
+def calc_avg_rating(biz_obj):
     """
     Calculates average rating per business.
 
     TO DO: Build out doctests
     """
 
-    biz = Business.query.filter_by(biz_id=biz_id).all()
+    reviews = biz_obj.reviews
+
+    count = len(reviews)
+    tot_score = 0
+
+    for review in reviews:
+        if review.revise_review:
+            tot_score += review.new_rating
+        else:
+            tot_score += review.rating
+
+    avg_rating = tot_score / count
+
+    return avg_rating, count
 
 
 ##############################################################################
