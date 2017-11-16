@@ -22,7 +22,7 @@ class User(db.Model):
     email = (db.Column(db.String(64), nullable=False, unique=True))
     valid_email = db.Column(db.Boolean, nullable=False, default=False)
     password = db.Column(db.String(64), nullable=False)  # should encrypt
-    user_pic = db.Column(db.String(64), nullable=True)
+    user_pic = db.Column(db.String(100), nullable=True)
     dob = db.Column(db.DateTime, nullable=True)
     join_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     # FIXME: not sure if current_timestamp syntax is correct for SQLAlchemy
@@ -102,10 +102,10 @@ class Business(db.Model):
     open_time = db.Column(db.Integer, nullable=True)
     close_time = db.Column(db.Integer, nullable=True)
     claimed = db.Column(db.Boolean, nullable=False, default=False)
-    biz_pic = db.Column(db.String(64), nullable=True)
+    biz_pic = db.Column(db.String(100), nullable=True)
     lat = db.Column(db.Float, nullable=True)
     lng = db.Column(db.Float, nullable=True)
-    location = db.Column(Geometry(geometry_type='POINT', srid=4326), nullable=True)
+    location = db.Column(Geometry(geometry_type='POINT'), nullable=True)
     __table_args__ = (db.CheckConstraint("email ~ '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'"),)
     # TO DO: add field for coordinates using postgis library
 

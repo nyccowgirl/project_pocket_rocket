@@ -1,100 +1,200 @@
-83|aut|Quidem est recusandae est delectus in.|2012-11-23|4675 days, 11:16:38|False|False|7
-43|rem|Corporis repudiandae soluta nulla.|2016-02-06|3115 days, 6:04:03|False|False|5
-33|nostrum|Temporibus sequi ad.|2016-08-26|2591 days, 18:20:59|False|False|3
-21|inventore|Temporibus incidunt molestias odio eius repellendus.|2011-07-10|17223 days, 13:25:12|False|True|
-24|a|Beatae accusantium porro accusantium.|2015-11-23|8444 days, 10:28:23|False|False|5
-15|excepturi|Itaque eos ratione.|2015-11-18|10666 days, 21:40:00|False|False|3
-67|optio|Eaque illo aut beatae quas commodi.|2014-01-09|15282 days, 0:57:54|False|False|
-100|enim|Facilis necessitatibus aspernatur dolore.|2010-06-07|13095 days, 23:58:53|False|False|7
-40|blanditiis|Occaecati corrupti dolores mollitia placeat.|2015-07-11|5229 days, 9:43:17|True|False|6
-10|molestias|Temporibus doloribus magnam magni officiis.|2013-05-30|2563 days, 21:43:12|False|True|3
-67|suscipit|Itaque beatae doloribus quidem excepturi.|2013-07-23|14697 days, 20:37:27|False|False|6
-18|in|Ex inventore aliquam recusandae.|2013-02-25|10777 days, 21:19:10|False|False|
-33|dolor|Id voluptates deserunt reiciendis cum eos.|2010-11-23|14041 days, 16:24:10|False|True|0
-97|autem|Nostrum alias velit eaque reprehenderit vero exercitationem.|2014-07-22|4807 days, 21:41:30|False|False|
-3|ipsam|Nesciunt deserunt dolorum magni.|2015-03-25|1638 days, 12:20:41|False|False|2
-55|saepe|Aspernatur eligendi illum ea cum deleniti.|2016-02-05|9133 days, 19:17:09|False|False|7
-2|architecto|Nesciunt ducimus possimus quasi perspiciatis cum.|2014-09-06|16608 days, 10:41:33|False|False|
-58|sint|Optio labore autem.|2011-06-20|14003 days, 10:21:20|False|False|9
-75|optio|Exercitationem optio cum voluptatibus.|2011-05-18|9576 days, 19:25:22|False|False|0
-94|maiores|Esse necessitatibus corrupti.|2015-07-29|13769 days, 11:12:18|True|False|8
-89|dolor|Quae minima dolorem omnis.|2011-09-20|7063 days, 8:43:37|False|False|9
-26|ratione|Animi ab tempora eveniet impedit.|2012-12-04|2490 days, 7:47:10|False|False|7
-62|laborum|Provident debitis asperiores sunt.|2013-05-23|1779 days, 23:10:05|False|False|
-20|id|Cupiditate veniam blanditiis eius quis.|2010-04-14|10124 days, 15:55:43|True|False|
-1|ea|Eveniet quos dolorum.|2017-08-25|9424 days, 3:49:20|False|False|
-38|odit|Dolorum magnam at nulla accusamus ullam.|2013-10-28|17423 days, 18:03:44|False|False|
-73|corrupti|Natus odit officia nesciunt totam quis.|2012-09-21|4061 days, 15:32:23|False|False|6
-7|non|Expedita sequi repellendus eveniet.|2012-02-15|3248 days, 2:42:55|False|False|
-66|animi|Sed velit cupiditate occaecati.|2011-10-08|11640 days, 1:30:48|False|False|5
-34|provident|Dolorem sit ipsam reprehenderit.|2011-08-26|10461 days, 11:14:01|False|False|
-95|ea|Mollitia eum quo accusamus.|2014-04-30|9767 days, 22:10:23|False|False|2
-26|dolor|Ab velit in impedit.|2016-01-31|5780 days, 4:51:44|False|False|2
-16|minima|Officiis earum vero commodi.|2012-04-25|15795 days, 7:59:04|False|False|
-39|accusamus|Similique quaerat ab asperiores doloribus.|2015-12-01|9109 days, 12:25:39|False|True|9
-11|at|Blanditiis repellendus natus tempore perspiciatis.|2017-10-01|2673 days, 5:54:13|False|False|3
-12|quae|Ad totam ipsum optio dolores harum.|2016-10-28|11391 days, 13:06:08|False|False|4
-66|assumenda|Recusandae sit qui.|2016-01-08|2170 days, 22:19:02|False|False|
-97|sunt|Accusantium laboriosam voluptatibus quaerat.|2014-02-05|4369 days, 16:58:37|True|False|
-45|assumenda|Veniam rem laudantium dolorem.|2013-09-21|15135 days, 3:11:14|False|False|5
-60|magni|Velit incidunt ducimus occaecati rem voluptatum.|2016-09-28|11351 days, 4:53:08|False|False|6
-70|minima|Itaque dicta veniam eveniet ducimus animi.|2017-10-01|9061 days, 23:50:18|False|False|
-27|laudantium|Quaerat ab praesentium voluptatum.|2012-09-19|14924 days, 1:16:37|False|False|0
-53|sint|Corporis cumque quas.|2012-05-25|12840 days, 22:41:39|False|False|9
-96|ipsa|Sed esse iusto.|2015-08-31|1158 days, 20:53:05|False|False|4
-16|nulla|Placeat eius animi nostrum.|2012-12-01|8031 days, 4:38:15|False|False|
-37|similique|Architecto laudantium neque.|2015-02-28|2876 days, 4:06:45|False|False|5
-92|possimus|Omnis aspernatur iure eligendi quo.|2015-09-23|15837 days, 5:13:01|False|True|
-21|at|Nostrum beatae adipisci sapiente.|2012-11-25|16188 days, 9:32:38|False|False|
-42|et|Nesciunt quibusdam eos officia excepturi.|2011-09-29|364 days, 20:31:34|False|False|2
-95|vitae|Quam blanditiis expedita.|2014-02-12|15422 days, 19:20:30|False|False|8
-83|deleniti|Repudiandae velit maxime numquam repellat.|2010-08-22|9980 days, 12:10:41|False|False|5
-1|harum|Atque doloremque maxime perspiciatis illum.|2014-01-29|14643 days, 23:00:03|False|False|
-90|maxime|Deserunt unde vitae.|2017-01-17|2363 days, 7:39:11|False|False|
-1|non|Distinctio necessitatibus quis.|2012-02-17|7313 days, 23:30:11|False|False|
-84|vel|Magnam consequatur aut ut.|2017-06-05|13235 days, 2:24:49|False|False|7
-60|animi|Blanditiis deleniti quae neque.|2016-04-20|4271 days, 20:44:26|False|False|9
-91|itaque|Commodi molestias commodi ab facilis voluptatibus.|2010-11-19|4346 days, 13:35:44|True|False|
-99|quia|Quibusdam modi dolores inventore vero.|2017-09-28|12900 days, 6:22:49|False|True|2
-97|libero|Pariatur aspernatur veniam.|2017-09-18|12612 days, 5:37:35|False|False|
-42|voluptates|Dolorem fugit suscipit enim impedit.|2014-09-27|1159 days, 6:05:53|False|False|7
-66|voluptas|Labore nobis rerum aspernatur ullam.|2016-07-24|15284 days, 20:04:37|False|True|
-3|nam|Accusamus aspernatur impedit quae.|2016-04-29|16346 days, 7:46:00|False|False|4
-29|maxime|Earum sequi temporibus.|2010-03-17|8954 days, 13:55:02|False|False|6
-98|quae|Perspiciatis incidunt praesentium nobis.|2010-06-04|14398 days, 7:41:20|False|False|6
-10|optio|Nesciunt quas voluptates sit quidem blanditiis.|2012-10-08|16686 days, 22:43:39|False|False|8
-66|voluptatibus|Ipsam cum quaerat.|2017-11-01|6195 days, 3:21:58|False|False|
-42|rerum|Atque ipsam dolor iste reprehenderit debitis.|2012-07-17|6332 days, 18:54:08|False|False|7
-66|at|Neque porro nisi nostrum enim.|2010-08-08|12243 days, 1:19:56|False|False|3
-28|sunt|Similique adipisci rerum totam corporis accusamus.|2014-01-13|8191 days, 2:17:45|False|False|3
-6|accusamus|Tempore odit dolorem assumenda odio.|2015-08-17|727 days, 9:44:56|False|False|
-44|nisi|Doloribus eum quod.|2013-10-30|1596 days, 2:35:07|True|False|
-60|pariatur|Voluptate amet vero repudiandae eius unde.|2016-02-27|907 days, 23:22:23|False|False|7
-44|porro|Cumque vel soluta tempore sunt.|2011-05-01|9405 days, 12:55:22|False|False|
-60|veritatis|Voluptas dicta voluptatibus.|2016-11-17|12263 days, 15:58:10|False|False|
-77|veniam|Laudantium nulla voluptate possimus veritatis.|2015-06-07|347 days, 4:59:58|False|True|2
-7|error|Atque perferendis incidunt aut labore.|2017-05-23|13939 days, 11:36:02|False|False|
-32|ipsa|Pariatur minus autem.|2012-05-19|10231 days, 0:35:09|False|False|
-22|praesentium|Asperiores quia mollitia architecto inventore sed.|2012-08-22|3998 days, 10:40:56|False|False|9
-18|porro|Quis perferendis architecto quia tempore.|2012-02-04|8773 days, 1:54:56|False|False|
-94|deserunt|Iure autem tenetur autem.|2015-06-19|14927 days, 15:56:20|False|False|0
-95|totam|Facilis amet architecto doloremque.|2010-08-19|11105 days, 7:15:05|False|True|7
-45|ipsam|Doloribus corrupti iste eligendi.|2012-02-29|3675 days, 13:06:15|False|False|7
-43|occaecati|Recusandae exercitationem vero.|2016-02-01|11421 days, 3:40:36|False|False|
-95|accusantium|Omnis quisquam autem.|2015-04-08|12269 days, 10:45:31|False|False|0
-87|sit|Numquam quam culpa.|2016-08-07|2031 days, 5:09:25|False|False|
-10|accusamus|Cum sapiente reprehenderit quaerat adipisci magni.|2015-05-20|10919 days, 18:56:06|False|True|0
-45|itaque|Incidunt consequuntur inventore ab a non.|2013-02-24|7033 days, 11:54:36|False|False|
-64|alias|Et facilis laborum consequatur.|2014-03-17|9568 days, 23:44:57|False|False|
-12|quidem|Quidem tempora amet velit.|2012-02-09|5185 days, 23:12:59|False|False|1
-19|nihil|At vel sequi totam deleniti occaecati.|2016-02-13|12177 days, 9:21:47|False|False|
-44|iste|Suscipit temporibus sint nostrum tenetur optio.|2016-09-28|9159 days, 18:26:47|False|False|8
-33|temporibus|Voluptas eaque ipsam non totam.|2012-07-30|430 days, 16:16:34|False|False|
-49|exercitationem|Accusamus commodi et dolorum consequatur.|2014-06-27|8917 days, 18:33:32|False|False|6
-18|molestiae|Culpa asperiores commodi cupiditate.|2014-11-15|12420 days, 3:34:10|False|False|
-65|omnis|Aliquid sunt recusandae.|2017-06-17|10397 days, 12:51:29|True|False|
-5|perspiciatis|Nam dolorem ullam repellat.|2016-07-16|2991 days, 7:51:32|False|True|5
-72|repellendus|At doloremque eaque expedita cumque molestias.|2013-09-29|16248 days, 17:10:24|False|False|4
-87|numquam|Enim autem facere aliquam.|2016-03-02|14530 days, 10:46:17|False|False|4
-46|doloribus|Debitis nemo assumenda.|2014-12-19|3965 days, 5:24:28|False|False|
-65|aspernatur|Cumque corporis facere facere.|2011-06-16|6304 days, 1:55:21|False|False|
+15|a guy. I want|common sense. It's about judgment.|2013-06-14|2014-03-19|False|False|98
+85|dominion. Can you believe it?|They're negotiating deals that is a disaster.|2017-04-02|2017-06-16|False|False|7
+8|the effort to control|a politician, then there's something wrong with you.|2012-12-10|2017-04-29|False|False|89
+42|subtlety few women had|to take. So we take care of that.|2016-02-21|2017-02-16|False|False|32
+83|papers. We've been doing|something special. This is like forget it.|2011-07-19|2014-02-04|False|False|54
+58|controversial. He said, I've|overdose of opium.|2016-06-09|2017-02-14|False|False|13
+83|your powerful ally.” The|by what's happening and I've only said this|2010-05-10|2014-06-07|False|False|0
+40|tariff because it was over.|perfect to him, and he knows what's happening.|2017-06-19|2017-09-10|False|False|5
+80|be very involved very soon.|media gives me great credit as being like|2010-06-10|2016-07-23|False|False|4
+87|are raised, a lot|big question, fantasy football.|2012-09-01|2012-12-30|False|False|5
+87|In this costume, while|respected outside of the Deal, there's no leadership|2015-07-02|2017-03-11|False|False|55
+97|some very, very sad.|see there's a company in South Carolina where|2016-07-05|2016-12-09|False|False|2
+73|terminate it quicker than that.|of imbalance and suppose you brought it to her.|2017-03-31|2017-09-28|False|True|63
+8|watch them. I know|refuses to use it because those guys will|2017-05-30|2017-11-04|False|False|20
+64|you of tax because,|before but I'm seeing what's happening to the|2015-12-17|2016-11-12|False|False|34
+24|in these rooms, all|wouldn't do all of whom are not risking|2010-09-21|2015-07-19|False|False|14
+91|him, and over are|weapons right now, and the special interest and|2011-05-08|2016-08-04|True|False|36
+22|doing well go out|The problem is and I was the elite.|2014-07-27|2016-01-24|False|False|79
+46|person sent me $1000.|sued by the way, before I say he|2017-08-10|2017-08-29|False|False|84
+78|him, okay? I don't|personal basis? Anybody?|2015-01-20|2016-11-01|False|False|17
+29|rode on at the|allowed that city to be a beauty.|2015-08-31|2015-11-01|False|False|18
+34|quick. And seating himself|Mexico, both at the patches and the world|2012-12-23|2013-05-30|True|False|2
+38|he sighed, “that is|see and comes to see what they're doing.|2016-01-16|2017-01-14|False|False|45
+54|companies. Remember I said|don't care too much for her.|2010-02-06|2014-11-26|False|False|97
+51|little offense, and your|to Sharia. You know why?|2016-06-13|2017-11-01|False|False|22
+46|all? Ever? We lose|not that bad.|2011-11-21|2013-11-24|False|False|38
+30|those people. We have|theatre. Now followed the performance for which she|2014-12-22|2016-05-06|False|False|77
+12|wasn't just casual, I|she whispered, “at least until she reaches the|2013-01-11|2014-04-05|False|False|50
+95|baby. But I don't|no, they had a great business people.|2016-04-08|2016-09-15|False|False|17
+40|you do, you have|every aspect. You can keep your this, everything's|2017-08-22|2017-10-03|False|False|57
+89|that? He leaves to|Mark Cuban did one deal.|2011-10-19|2017-03-12|False|True|34
+84|no strength. She's got|they copied it.|2013-08-30|2015-01-14|False|False|60
+1|the Union and it's|Donald, you don't go into Iraq and they|2016-01-11|2017-02-27|False|False|19
+75|are fantastic people and|great. But you know I'm going to be|2016-01-16|2017-02-17|False|False|1
+23|energy. She responded to|like three. How many bases are there?|2011-10-16|2016-05-14|False|False|69
+55|leaders. They're fed up|There are all bad and lots of good|2017-04-12|2017-05-03|False|True|11
+23|devote 1000%. I couldn't sleep.|Obama didn't want to give him a little|2011-09-24|2016-06-25|False|False|46
+66|him because only does|stage prepared them for $500 million because they|2010-01-25|2015-08-04|False|False|12
+59|close again so that|care of, I don't want your money therefore|2010-12-24|2011-06-12|False|False|28
+17|have working for months,|energy, my whole being is going to take|2017-05-16|2017-08-18|False|False|91
+20|not people that look|than we'll be balancing budgets and getting them|2011-01-01|2013-09-15|False|False|93
+18|islands they're building massive|a tax. I won't mention the name, but|2014-12-26|2017-05-14|False|False|45
+5|to private doctors, private|right person is not from South America.|2017-04-04|2017-09-30|False|False|10
+2|mouth opened just a|from here to there.|2014-09-24|2015-07-31|False|False|62
+38|President. He'll never run.|use it to them when they agree.|2010-03-31|2016-08-13|False|False|18
+91|the incorrectly, they'll say,|left. He deserted.|2013-07-29|2015-04-13|False|False|47
+98|he took her little|happen, like I was.|2013-12-20|2015-07-02|False|False|9
+81|like Sgt. Bergdahl.|your house, check you out, fine.|2010-01-01|2016-08-26|True|False|41
+56|the debate. Instead, they|knowledge of many things.|2012-08-11|2017-09-28|False|False|26
+92|to poll before.|But and it's a long flight.|2016-05-16|2017-01-22|False|False|98
+76|year ago, Yemen was|cunning. They're really sharp.|2017-04-01|2017-05-25|False|False|60
+27|the 40 year old floor.|harder, and we've lost all of that at|2017-05-15|2017-07-09|False|False|26
+70|Iowa last week, $5 million.|Well, we haven't been treated fairly.|2011-11-10|2015-03-15|False|False|98
+86|so, You know him,|hair. That’s it.|2013-03-22|2013-06-18|False|True|67
+41|time you saw it,|23. You mean two.|2015-08-27|2017-08-14|False|False|54
+70|“as long as they|much easier. You'll make another deal.|2016-04-08|2017-10-04|False|False|68
+87|and China now are|the eyes of tigers, pumas and leopards, the|2013-05-27|2013-09-04|True|False|79
+48|is and I want|here's the problem.|2016-06-04|2017-11-10|False|False|56
+27|her tight sex, heard|issues. We didn't ask for extensions but he'll|2016-05-04|2016-09-03|True|False|12
+49|elected people who come|never run, and one of many things.|2013-08-09|2016-09-10|True|False|64
+77|or whatever. It's not|reading them off the record but they don't|2014-08-25|2016-10-27|False|False|63
+39|6:30 in the back|You how easy it is?|2012-03-10|2013-11-10|False|False|99
+67|the cloth, and the|Amendment. We talk freedom of religion, so important.|2010-11-28|2013-12-05|True|False|58
+79|leadership, again, no leadership|boxes. And because it was not so stupid.|2011-11-26|2017-01-31|False|False|83
+34|Israeli Day Parade at|not me in two years and years, I've|2011-11-25|2017-07-15|True|False|20
+51|to Stanford and many|where the hell, ha ha.|2017-08-25|2017-10-17|False|False|77
+60|conservative principles for which|obvious, but that is will be happy.|2017-03-17|2017-10-31|False|False|86
+28|ever had. I don't|number on all of these different places.|2013-05-20|2014-10-06|False|True|3
+20|said Let's not go.|the Court was gathered in the same deals|2012-09-16|2013-12-21|False|False|93
+80|foolish person would say|his sexual quest became stronger than the ones|2010-04-17|2010-11-25|False|False|79
+93|treat us fairly, we|members so fast your head will spin.|2017-11-08|2017-11-15|False|False|100
+63|it's through the roof.|other crimes, they found that tiny nodule of|2013-11-04|2014-10-01|True|False|96
+94|we throw them out.|was disgusting. That look there's a whole long process.|2017-02-26|2017-04-09|False|False|95
+39|calling this guy is|rains, I'll take that back.|2012-04-28|2012-05-23|True|False|23
+53|guys do to straighten|say, well, Mr.|2017-04-28|2017-08-02|False|False|34
+31|what pleases me.|tender little lips and forced them very much.|2015-01-15|2016-03-23|False|False|56
+35|, they read the|thing and we're going to let Japan rip|2016-02-14|2017-02-13|False|False|90
+21|citizens and they could|victim of horrendous attacks by people that shouldn't|2011-11-16|2017-04-03|False|False|53
+2|Prince speaks the truth,|veteran, was killed, raped, sodomized, tortured, and killed|2016-06-01|2016-08-04|False|False|38
+88|Coast of this illegal immigration.|lies, I mean like number one economic power|2012-03-13|2013-10-28|False|False|72
+50|chance of winning.|things. That's the end of our finances.|2012-07-03|2012-11-16|False|False|82
+26|buildings, these beautiful letters,Mr.|made. We get a traitor; they get attacks,|2017-04-18|2017-07-03|False|False|2
+47|powerful writer, actually.|wow, wow! Unbelievable!|2014-01-11|2017-06-15|False|False|40
+88|respected. So here's the|CNN. Trump is not prepared.|2017-08-04|2017-11-08|False|False|66
+50|said What are we doing?|unfair deductions that certain people have come and|2016-04-16|2017-03-26|False|False|1
+54|like she has no|the deficit that we have to stop illegal|2010-05-04|2012-06-29|False|False|70
+76|nor can Israel.|that got hurt fighting for her appearance in|2011-12-05|2016-02-03|True|True|58
+51|You sign your life|him total credit.|2012-06-30|2017-10-20|False|True|2
+70|a ricochet, blah, blah,|great team over here.|2014-12-06|2017-10-22|False|False|1
+36|the deep green velvet|he'll say Mr.|2010-05-30|2017-03-07|False|False|19
+3|telling me from Georgia?|50. So they'll get the greatest negotiators in|2013-04-25|2013-06-29|False|False|51
+63|also be 32 million.|imagine George Patton saying, oh, it was, you|2014-03-30|2016-12-30|False|False|99
+80|it. Forget it.|great country. We're not losing.|2012-10-11|2013-07-26|False|False|37
+73|our borders. We have|What if I run.|2013-06-24|2017-02-25|False|True|10
+70|be running. Then I|drank deeply from the Center for Security Policy,|2010-01-02|2011-11-30|False|False|98
+91|mafia's not so long|straighten this country so they do a couple|2012-05-15|2013-05-07|False|False|78
+99|known the story Trump|heard me say Trump.|2011-06-18|2015-02-01|False|True|12
+58|whatever I wanted.|things. Jeb, he lacks the quality that you want.|2015-03-07|2016-05-16|False|False|9
+21|up so their deal's|convincing people what you're doing to me?|2013-01-08|2014-04-14|False|False|30
+33|an arrow pointing to|a magazine which was really amazing.|2011-07-26|2015-09-07|False|False|39
+54|folks, I'll take it.|nobody for the next 85 years.|2013-07-25|2017-04-15|False|False|70
+91|race. He's actually in|heckler in the best equipment.|2014-03-02|2016-12-09|False|False|54
+71|to Home Depot, buy|like he'll do well.|2014-10-01|2015-05-29|False|False|34
+87|Senator Cruz who happens|leading big. A poll just came out in|2014-09-26|2017-10-25|False|False|1
+37|from 18 to 19|into your office.|2012-04-28|2013-03-25|False|False|99
+26|ago. When I have|divide, there is going to take care of them.|2013-08-11|2016-11-01|False|False|84
+78|boats you've ever seen.|now, think of this, it's embarrassing.|2016-03-18|2017-06-18|False|False|23
+99|anymore because they're so impressed.|there holding guns and people are looking for him.|2010-06-17|2013-04-10|False|False|47
+42|while ago, he said|second largest oil reserves anywhere in this room|2011-01-20|2016-05-11|False|False|93
+70|It is. It is|They're all from South Korea.|2014-06-28|2016-11-29|False|True|19
+90|hopefully, you would have|divider for this country, you have a lot|2012-04-02|2016-05-03|False|False|45
+77|impeached. Please impeach him.|this made him laugh softly to himself as|2015-06-16|2016-03-16|False|False|9
+84|take on a life|embarrassing? How do you , I swear I|2017-03-14|2017-10-30|False|False|64
+19|home. But when I|problem is you need somebody with great eagerness,|2017-01-08|2017-02-17|False|False|95
+20|the quiet majority.|paying your Security.|2015-07-07|2015-09-21|False|True|89
+13|much,Oh, the surge worked?|he needed money he married a rich woman,|2016-01-02|2016-11-27|True|False|14
+57|had his campaign ballroom.|countries. That's what's going on.|2012-03-03|2015-12-11|False|False|4
+2|money. Actually, people are|government? Way under budget.|2014-01-28|2017-05-28|False|False|69
+14|with my name, with,|respect. It's called really the first one.|2010-07-28|2016-05-10|False|False|28
+78|give myself this position.|by tremendous. We just left Iowa.|2016-03-26|2016-12-17|False|False|13
+10|them but many of|to waste money.|2015-03-24|2016-06-11|False|False|1
+52|renegotiate that. They don't|debate essentially lasted for an hour ago and|2015-07-06|2015-12-15|False|False|60
+30|ships, we're sending our fighters.|Hillary's concerned, she's going to happen.|2017-03-28|2017-06-22|False|False|0
+74|go from here?|mean, hey, in Iowa, actually, they were having|2012-03-05|2013-12-05|False|False|56
+61|did. We made the decision.|of losing their money.|2013-10-01|2014-03-08|False|False|42
+96|badly. He couldn't believe|least I have this clown, Marco Rubio.|2015-10-23|2016-04-27|False|False|100
+21|them right? So we|another. I mean, where have we had 12000|2013-07-26|2016-12-10|False|False|31
+49|whole table and you|now. It's a bank from China.|2014-08-27|2015-01-06|False|False|9
+48|not. But I will|question, questions. And then he came on, just|2014-04-17|2015-09-06|True|True|34
+55|seemed slightly sewn together|a mistake, they do a job.|2010-09-28|2015-04-12|False|False|80
+42|in here because it's|responsibility. So, number one, he shouldn't be on television.|2013-09-08|2016-05-17|False|False|56
+54|conservatives, everybody, they can't|Macy's I thought seven years ago.|2010-08-09|2016-10-07|False|False|70
+81|that difficult. I spoke|it straight, they don't even care about the weather?|2017-01-10|2017-09-19|True|False|35
+87|tiny stones. He could|their damned oil.|2010-04-24|2016-05-04|False|False|72
+18|we'd have to go|time than with any woman.|2015-06-11|2017-03-21|False|False|51
+24|It may take a|doing great, watching it on all these categories,|2013-11-09|2016-01-21|False|False|0
+28|us. Did one for us.|scholars, not television scholars but legal scholars that|2017-11-07|2017-11-11|False|False|15
+37|body up, but she|ships. Massive. And they buy my apartments.|2014-06-26|2016-12-17|False|False|29
+68|everybody sees it everyday.|that imbalance. It's an imbalance.|2017-01-31|2017-09-06|False|False|97
+30|eating Oreos. I tell|me is they will have that certified yet.|2010-02-26|2010-06-20|False|False|70
+11|we really do is|ridges. We are going to win.|2011-08-17|2015-09-29|False|False|49
+81|One, which costs you,|us so much, goods, I mean you will|2016-08-27|2017-01-16|False|False|80
+56|a Reuters article taken|Right? He's not inclusive, me.|2015-10-20|2016-01-26|False|False|24
+67|and holy mackeral, look|it's Bush, who by the environmentalist.|2013-12-20|2016-01-20|False|False|27
+55|Oh. I toss and|happen. And in each I will say this.|2015-11-01|2016-05-10|False|False|20
+75|maybe there's something wrong,|Let me give you 25 different stories.|2012-07-23|2015-12-16|False|False|78
+23|president of the things|to. My numbers went up.|2011-04-07|2011-05-04|False|False|58
+99|say Who the hell|emails. When the Baron as soon as he|2017-10-24|2017-10-26|False|False|77
+47|Now Irwin has the|we? How stupid are we?|2010-11-22|2014-01-23|False|False|59
+85|her. My daughter likes,|their camera. They're actually very soon going to|2011-02-06|2012-02-24|False|True|35
+61|lucky too, they're great people.|speak English. And I just want to see|2015-10-28|2016-05-19|False|True|80
+23|$400 billion a day.|our heart in it.|2015-05-12|2016-08-08|False|False|74
+62|about this, six, seven,|puppet. Believe me.|2011-06-26|2012-04-16|False|False|57
+47|2016, 2016. Obama is|amazing. One, their child was killed by everybody.|2015-02-01|2016-06-17|False|False|85
+25|find solutions and the|wanted more than 15% of their planes.|2013-07-06|2015-12-15|False|True|39
+46|we? No tax, no tax?|Good guy. Now if he knows this is|2011-01-23|2017-02-18|False|False|12
+33|it's bad. But we|his line because she's on a nice person.|2011-01-16|2012-12-03|True|False|43
+10|his stance on how|not she'll be allowed to run.|2016-11-03|2017-05-08|False|False|75
+13|day, has the baby|very obedient and eager to rid himself of|2014-05-08|2016-03-11|False|False|87
+89|on? You can't give|are too good.|2013-01-21|2015-01-15|False|False|86
+34|someday in the world,|Laughing, they turned over on him, treated him|2016-04-05|2017-01-23|False|False|77
+5|We're dying. We need them.|trillion now. We're soon going to be used|2010-11-15|2016-01-17|False|False|51
+75|on my side because|life known the story once before.|2017-01-10|2017-01-23|False|False|54
+64|it Qatar what the|drew it up and announces We are going|2016-08-13|2017-04-30|False|True|18
+43|pull her head and|of rhythms; the change from a magazine about|2010-11-23|2015-10-01|False|False|91
+64|Unless I don't mean|I be tied with Jeb Bush.|2015-09-19|2017-04-13|False|False|47
+30|one, what do they|like nine words.|2016-07-14|2016-08-04|False|False|3
+10|shot at for the|Katy Tur, what a group.|2011-04-16|2012-12-01|False|False|97
+81|they wouldn't have done|Having a deal like you've ever seen.|2011-01-06|2014-01-31|False|False|96
+58|her chin. “It was|Two ballrooms. One here, one here, right next|2012-10-25|2017-03-25|False|False|92
+72|to Israel and I'll|sweeping the floor and painting it battle shipment gray.|2017-09-09|2017-10-28|False|False|41
+24|capable. The answer is no.|pundits, you know, it's depressing, isn't it depressing?|2013-03-18|2016-05-30|False|False|74
+59|keep the oil.|lot so much has happened.|2012-07-03|2016-08-02|True|False|68
+27|And yet, you know,|forced him out.|2017-01-18|2017-05-12|False|False|62
+18|was an early starter.|everything else I've done.|2017-04-20|2017-11-09|False|False|76
+21|because everywhere else is controlled.|19 people for our economy.|2011-05-05|2013-06-18|True|False|6
+24|course, but these are|better. It's only $67 billion.|2014-03-26|2016-12-20|False|False|57
+43|do anything they want.|time whether it's Whitewater.|2012-03-01|2014-10-02|False|False|11
+59|Clinton, two vicious murderers,|this aloud. Rather he took one where he|2016-08-18|2016-09-29|False|False|98
+4|characters. You know, it's|gently to free the cloth, and the one|2010-03-15|2010-09-14|False|False|67
+62|damned oil. But I|her lips. And the press down there look|2016-04-22|2017-09-30|False|False|24
+6|get out because everybody,|Carson at 16 percent and Carson at 16|2015-02-04|2016-03-22|False|False|27
+72|Obama announces because he's|them disgusted me.|2016-11-07|2017-04-02|False|False|20
+15|Big poll. In another|And Romney I was right.|2013-12-26|2014-08-19|False|False|79
+84|give money. Trump doesn't|money. He wants to attack everything.|2013-01-13|2015-03-27|False|True|58
+14|servitude surprising and difficult|about what a group.|2015-08-23|2017-07-01|False|False|60
+88|so bloated. Be careful|the night here.|2015-07-16|2016-01-14|False|False|32
+89|sign of strength, right?|is serious. I said, I can't believe it.|2017-02-08|2017-03-28|False|False|82
+15|beauty, Mexico. So I|true. Remember the poll recently in Nevada.|2011-09-08|2012-08-15|False|False|5
+52|win, I will say|are unfair are gone.|2015-01-09|2017-01-12|False|False|0
+85|got good seats.|in writing. You know, they wanted badly.|2016-04-20|2017-07-12|False|False|19
+78|it down and put|known for a speech, nobody cares.|2014-10-06|2016-08-09|False|False|25
+97|is disgraceful. And you|be taken out.|2014-03-20|2015-05-01|False|False|5
+75|her being wined and|why we're here all the troops out.|2010-05-22|2012-08-20|False|False|96
+10|Congress right now and|start the preparation.|2012-01-15|2013-10-19|False|False|67
+14|are quitting the business.|might be honest.|2016-11-02|2017-09-05|False|False|46
+16|of tigers, pumas and|just not fair.|2013-03-26|2014-07-27|False|False|90
+33|I compared it to|pundits. A lot of really bad dudes in|2014-08-04|2017-01-13|False|False|14
+27|fired in the first|Internet and the problems of this does not|2013-05-07|2014-09-26|False|False|26
+51|that term, it became|place in a very friendly group of people|2013-11-18|2016-03-10|False|False|77

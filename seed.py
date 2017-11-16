@@ -3,12 +3,11 @@
 from sqlalchemy import func
 from model import (User, Business, Friend, UserPromo, UserBiz, Review, Referral,
                    Promo, CheckIn, LikeReview, Invite, connect_to_db, db)
-
 from datetime import datetime
-
 from server import app
-
 from faker import Faker
+from data.markov.markov import make_title_descr, make_text, MARKOV_CHAIN
+import re
 
 fake = Faker()
 
@@ -112,18 +111,25 @@ def create_promos():
 
     with open('data/promos.txt', 'w+') as promos:
 
-        for i in range(100):
+        for i in range(200):
+
+            title = make_title_descr(MARKOV_CHAIN, 4)
+            descr = make_title_descr(MARKOV_CHAIN, 8)
+            start_date = fake.date_this_decade(before_today=True, after_today=False)
+            end_date = fake.date_between_dates(date_start=start_date, date_end=None)
+
             promos.write('{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=100),
-                                                            fake.word(ext_word_list=None),
-                                                            fake.sentence(nb_words=5,
-                                                                          variable_nb_words=True,
-                                                                          ext_word_list=None),
-                                                            fake.date_this_decade(before_today=True,
-                                                                          after_today=False),
-                                                            fake.time_delta(end_datetime=None),
+                                                            title,
+                                                            # fake.word(ext_word_list=None),
+                                                            descr,
+                                                            # fake.sentence(nb_words=5,
+                                                            #               variable_nb_words=True,
+                                                            #               ext_word_list=None),
+                                                            start_date,
+                                                            end_date,
                                                             fake.boolean(chance_of_getting_true=10),
                                                             fake.boolean(chance_of_getting_true=10),
-                                                            fake.random_digit_or_empty()))
+                                                            fake.random_int(min=0, max=100)))
 
 
 def create_checkins():
@@ -167,7 +173,7 @@ def create_referrals():
                 if redeemed:
                     redeem_date = fake.date_this_decade(before_today=True, after_today=False)
                 else:
-                    redeem_date = None
+                    redeem_date = ''
 
                 userpromos.write('{}|{}|{}|{}\n'.format(referee_id,
                                                         fake.random_int(min=1, max=100),
@@ -188,7 +194,7 @@ def create_userpromos():
             if redeemed:
                 redeem_date = fake.date_this_decade(before_today=True, after_today=False)
             else:
-                redeem_date = None
+                redeem_date = ''
 
             userpromos.write('{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
                                                     fake.random_int(min=1, max=100),
@@ -203,29 +209,34 @@ def create_reviews():
 
     with open('data/reviews.txt', 'w+') as reviews:
 
-        for i in range(150):
+        for i in range(500):
+
+            review = make_text(MARKOV_CHAIN, 1000, 5000)
+
             dispute = fake.boolean(chance_of_getting_true=20)
 
             if dispute:
-                response = fake.text(max_nb_chars=5000, ext_word_list=None)
+                response = make_text(MARKOV_CHAIN, 1000, 5000)  # fake.text(max_nb_chars=5000, ext_word_list=None)
                 revise_review = fake.boolean(chance_of_getting_true=30)
                 if revise_review:
                     new_rating = fake.random_int(min=1, max=5)
-                    new_review = fake.text(max_nb_chars=3000, ext_word_list=None)
+                    new_review = make_text(MARKOV_CHAIN, 1000, 3000)  # fake.text(max_nb_chars=3000, ext_word_list=None)
+                    cust_svc = ''
                 else:
                     cust_svc = fake.random_int(min=1, max=5)
+                    new_rating = ''
+                    new_review = ''
             else:
-                response = None
-                revise_review = None
-                new_rating = None
-                new_review = None
-                cust_svc = None
+                response = ''
+                revise_review = ''
+                new_rating = ''
+                new_review = ''
+                cust_svc = ''
 
             reviews.write('{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
                                                                       fake.random_int(min=1, max=100),
                                                                       fake.random_int(min=1, max=5),
-                                                                      fake.text(max_nb_chars=5000,
-                                                                                ext_word_list=None),
+                                                                      review,
                                                                       fake.date_this_decade(before_today=True,
                                                                                             after_today=False),
                                                                       dispute,
@@ -399,12 +410,12 @@ def load_biz():
                        email=email,
                        valid_email=valid_email,
                        url=url,
-                       category=category
+                       category=category,
                        days_open=days_open,
                        open_time=int(open_time),
                        close_time=int(close_time),
                        claimed=claimed,
-                       biz_pic=pic,
+                       biz_pic=biz_pic,
                        lng=float(longitude),
                        lat=float(latitude),
                        location='POINT({} {})'.format(longitude, latitude))
@@ -429,11 +440,11 @@ def load_promos():
     for row in open('data/promos.txt'):
         row = row.rstrip()
 
-        biz_id, title, descr, start_date_str, delta, referral, birthday, redeem_count = row.split('|')
+        biz_id, title, descr, start_date_str, end_date_str, referral, birthday, redeem_count = row.split('|')
 
         # Convert to datetime format
         start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
-        end_date = datetime.strptime((start_date + int(delta)), '%Y-%m-%d')
+        end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
 
         # Convert from string to boolean
         if referral == 'True':
@@ -445,6 +456,8 @@ def load_promos():
             birthday = True
         else:
             birthday = False
+
+        # Convert redeem_count to
 
         promo = Promo(biz_id=int(biz_id),
                       title=title,
@@ -478,7 +491,10 @@ def load_userpromos():
         user_id, promo_id, redeemed, redeem_date_str = row.split('|')
 
         # Convert to datetime format
-        redeem_date = datetime.strptime(redeem_date_str, '%Y-%m-%d')
+        if redeem_date_str:
+            redeem_date = datetime.strptime(redeem_date_str, '%Y-%m-%d')
+        else:
+            redeem_date = None
 
         # Convert from string to boolean
         if redeemed == 'True':
@@ -516,10 +532,9 @@ def load_checkins():
         # Convert to datetime format
         checkin_date = datetime.strptime(checkin_date_str, '%Y-%m-%d')
 
-
         checkin = CheckIn(user_id=int(user_id),
-                      biz_id=int(biz_id),
-                      checkin_date=checkin_date)
+                          biz_id=int(biz_id),
+                          checkin_date=checkin_date)
 
         # Add each check-in to the session
         db.session.add(checkin)
@@ -545,7 +560,6 @@ def load_referrals():
 
         # Convert to datetime format
         refer_date = datetime.strptime(refer_date_str, '%Y-%m-%d')
-
 
         referral = Referral(referer_id=int(referer_id),
                             referee_id=int(referee_id),
@@ -590,6 +604,17 @@ def load_reviews():
         else:
             revise_review = False
 
+        # Convert from string to integer
+        if new_rating:
+            new_rating = int(new_rating)
+        else:
+            new_rating = None
+
+        if cust_svc:
+            cust_svc = int(cust_svc)
+        else:
+            cust_svc = None
+
         review = Review(user_id=int(user_id),
                         biz_id=int(biz_id),
                         rating=int(rating),
@@ -598,9 +623,9 @@ def load_reviews():
                         dispute=dispute,
                         response=response,
                         revise_review=revise_review,
-                        new_rating=int(new_rating),
+                        new_rating=new_rating,
                         new_review=new_review,
-                        cust_svc=int(cust_svc))
+                        cust_svc=cust_svc)
 
         # Add each review to the session
         db.session.add(review)
@@ -624,7 +649,7 @@ def load_likes():
 
         user_id, review_id = row.split('|')
 
-        like = Like(user_id=int(user_id), review_id=int(review_id))
+        like = LikeReview(user_id=int(user_id), review_id=int(review_id))
 
         # Add each like transaction to the session
         db.session.add(like)
@@ -674,11 +699,11 @@ def set_val_id():
     db.session.execute(query, {'new_id': user_max_id + 1})
 
     # Get the Max autoincremented primary key in the database
-    result = db.session.query(func.max(Biz.biz_id)).one()
+    result = db.session.query(func.max(Business.biz_id)).one()
     biz_max_id = int(result[0])
 
     # Set the value for the next user_id to be max_id + 1
-    query = "SELECT setval('biz_biz_id_seq', :new_id)"
+    query = "SELECT setval('businesses_biz_id_seq', :new_id)"
     db.session.execute(query, {'new_id': biz_max_id + 1})
 
     # Get the Max autoincremented primary key in the database
@@ -694,7 +719,7 @@ def set_val_id():
     userbiz_max_id = int(result[0])
 
     # Set the value for the next user_id to be max_id + 1
-    query = "SELECT setval('userbiz_userbiz_id_seq', :new_id)"
+    query = "SELECT setval('user_biz_userbiz_id_seq', :new_id)"
     db.session.execute(query, {'new_id': userbiz_max_id + 1})
 
     # Get the Max autoincremented primary key in the database
@@ -710,7 +735,7 @@ def set_val_id():
     userpromo_max_id = int(result[0])
 
     # Set the value for the next user_id to be max_id + 1
-    query = "SELECT setval('userpromos_userpromo_id_seq', :new_id)"
+    query = "SELECT setval('user_promos_userpromo_id_seq', :new_id)"
     db.session.execute(query, {'new_id': userpromo_max_id + 1})
 
     # Get the Max autoincremented primary key in the database
@@ -782,9 +807,9 @@ if __name__ == "__main__":
     load_userbiz()
     load_promos()
     load_userpromos()
-    load_checkin()
+    load_checkins()
     load_referrals()
     load_reviews()
     load_likes()
-    load_invite()
+    load_invites()
     set_val_id()
