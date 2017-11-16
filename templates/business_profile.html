@@ -26,11 +26,13 @@
 
   <h3>About Them</h3>
 
-    {% if biz.biz_pic %}
-      <div>
+    <div>
+      {% if biz.biz_pic %}
         <img src='{{ biz.biz_pic }}'>
-      </div>
-    {% endif %}
+      {% else %}
+        <img src='/static/img/dragonfly_mating.jpeg'>
+      {% endif %}
+    </div>
 
     <div>
       <address>
@@ -77,7 +79,6 @@
     {% for review in biz.reviews|sort(attribute='review_date') %}
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
-        <br>
         {% if review.revise_review %}
           <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
           <p>{{ review.new_review }}</p>

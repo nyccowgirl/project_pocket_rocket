@@ -7,21 +7,15 @@
 
   <h2>{{ user.username }}</h2>
 
-    <div>
-      Check-Ins: {{ session['tot_checkins'] }}<br>
-      Reviews: {{ session['tot_revs'] }}<br>
-      Referrals: {{ session['tot_refs'] }}|Redeemed: {{ session['redeem_refs'] }}<br>
-      Promos Redeemed: {{ session['tot_redeem'] }}<br>
-      Friends: {{ session['tot_friends'] }}
-    </div>
-
   <h3>About Me</h3>
 
-    {% if user.user_pic %}
-      <div>
+    <div>
+      {% if user.user_pic %}
         <img src='{{ user.user_pic }}'>
-      </div>
-    {% endif %}
+      {% else %}
+        <img src='/static/img/dragonfly.jpeg'>
+      {% endif %}
+    </div>
 
     <div>
       <ul>
@@ -32,12 +26,18 @@
         Password: {{ user.password }}<br>
         Birthday: {{ user.dob|datetimeformat('%d %b %Y') }}<br>
         Member Since: {{ user.join_date|datetimeformat('%b %Y') }}<br>
+      </ul>
     </div>
 
   <h3>My Digits</h3>
 
-  TO DO: Summarize total reviews, referrals, redemptions of referrals, check-ins
-
+    <div>
+      Check-Ins: {{ session['tot_checkins'] }}<br>
+      Reviews: {{ session['tot_revs'] }}<br>
+      Referrals: {{ session['tot_refs'] }}|Redeemed: {{ session['redeem_refs'] }}<br>
+      Promos Redeemed: {{ session['tot_redeem'] }}<br>
+      Friends: {{ session['tot_friends'] }}
+    </div>
 
   {% if user.friends %}
     <h3>My Friends</h3>
@@ -58,12 +58,11 @@
     {% for review in user.reviews|sort(attribute='review_date') %}
       <li>
         <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
-        <br>
         {% if review.revise_review %}
-          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p><br>
+          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
           <p>{{ review.new_review }}</p>
         {% else %}
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p><br>
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
           <p>{{ review.review }}</p>
         {% endif %}
       </li>

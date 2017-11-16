@@ -226,9 +226,19 @@ def friend_profile(friend_id):
     print '\n\n\n{}\n\n\n'.format(friend.referees)
     print '\n\n\n{}\n\n\n'.format(friend.promos)
 
-    # TO DO: build out helper functions to pull in totals to summarize
+    friends = helper.calc_friends(friend)
+    reviews = helper.calc_reviews(friend)
+    total_refs, redeemed_refs = helper.calc_referrals(friend)
+    redemptions = helper.calc_redemptions(friend)
+    checkins = helper.calc_checkins(friend)
 
-    return render_template('/friend_profile.html', user=friend)
+    return render_template('/friend_profile.html', user=friend,
+                           checkins=checkins,
+                           reviews=reviews,
+                           refs=total_refs,
+                           redeem_refs=redeemed_refs,
+                           redeem_promos=redemptions,
+                           friends=friends)
 
 
 @app.route('/add-biz')
@@ -340,7 +350,7 @@ def biz_profile(biz_name):
     total_refs, redeemed_refs = helper.calc_biz_referrals(biz)
 
     user_review = Review.query.filter(Review.biz_id == biz.biz_id,
-                                      Review.user_id==session['user_id']).first()
+                                      Review.user_id == session['user_id']).first()
 
     if user_review:
         if user_review.revise_review:
@@ -389,7 +399,7 @@ def check_in(biz_id):
         db.session.add(checkin)
         db.session.commit()
 
-        user_checkins = buddy.calc_checkins_biz(biz_id)
+        user_checkins = helper.calc_checkins_biz(biz_id)
 
         flash('You have checked in a total of {} times. {} thanks you for your support!'.format(user_checkins, biz.biz_name))
 
