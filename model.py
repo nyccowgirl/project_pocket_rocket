@@ -199,7 +199,7 @@ class Referral(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<referral_id={} biz_id={} refer_date={} userpromo_id>'
+        return ('<referral_id={} biz_id={} refer_date={} userpromo_id={}>'
                 .format(self.referral_id, self.biz_id, self.refer_date, self.userpromo_id))
 
 

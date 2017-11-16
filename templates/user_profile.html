@@ -32,11 +32,13 @@
   <h3>My Digits</h3>
 
     <div>
-      Check-Ins: {{ session['tot_checkins'] }}<br>
-      Reviews: {{ session['tot_revs'] }}<br>
-      Referrals: {{ session['tot_refs'] }}|Redeemed: {{ session['redeem_refs'] }}<br>
-      Promos Redeemed: {{ session['tot_redeem'] }}<br>
-      Friends: {{ session['tot_friends'] }}
+      <ul>
+        Check-Ins: {{ session['tot_checkins'] }}<br>
+        Reviews: {{ session['tot_revs'] }}<br>
+        Referrals: {{ session['tot_refs'] }}|Redeemed: {{ session['redeem_refs'] }}<br>
+        Promos Redeemed: {{ session['tot_redeem'] }}<br>
+        Friends: {{ session['tot_friends'] }}
+      </ul>
     </div>
 
   {% if user.friends %}
@@ -113,6 +115,20 @@
     {% for biz in user.biz %}
       <li><a href='/business-profile{{ biz.biz_name }}'>{{ biz.biz_name }}</a></li>
     {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if other_biz %}
+    <h3>Businesses to Check Out</h3>
+
+    <ul>
+      {% for ref in other_biz %}
+        {% for item in ref.user_promo %}
+          {% if not item.redeemed %}
+            <li><a href='/business-profile{{ ref.biz.biz_name }}'>{{ ref.biz.biz_name }}</li>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
     </ul>
   {% endif %}
 

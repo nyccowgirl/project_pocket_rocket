@@ -16,6 +16,10 @@
     {% endfor %}
   {% endif %}
 
+    <form action='/review/{{ biz.biz_id }}'>
+      <input type='submit' value='Review'>
+    </form>
+    <br>
     <div>
       Total Check-Ins: {{ checkins }}|Your Check_Ins: {{ user_checkins }}<br>
       Average Rating: {{ score }}|Your Rating: {{ user_score }}<br>
@@ -23,6 +27,8 @@
       Total Referrals: {{ refs }}|Redeemed: {{ ref_redeem }}<br>
       Promos Redeemed: {{ promos_redeem }}<br>
     </div>
+
+    <!-- TO DO: Use D3 to visualize the rating  -->
 
   <h3>About Them</h3>
 
@@ -72,9 +78,6 @@
   {% if biz.reviews %}
     <h3>Our Reviews</h3>
 
-
-    <!-- TO DO: Use D3 to visualize the rating  -->
-
     <ul>
     {% for review in biz.reviews|sort(attribute='review_date') %}
       <li>
@@ -112,7 +115,7 @@
     {% if biz.users[0].biz[1:] %}
       {% for affiliate in biz.users[0].biz %}
         {% if affiliate.biz_id != biz.biz_id %}
-          <li><a href='/business_profile{{ affiliate.biz_name }}'>{{ affiliate.biz_name }}</a></li>
+          <li><a href='/business_profile/{{ affiliate.biz_name }}'>{{ affiliate.biz_name }}</a></li>
         {% endif %}
       {% endfor %}
     {% else %}

@@ -2,7 +2,8 @@ from jinja2 import StrictUndefined
 from flask import (Flask, render_template, request, flash, redirect,
                    session)  # jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db, db, User, Business, UserBiz, CheckIn, Review
+from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
+                   Referral)
 from datetime import datetime
 import helper
 import re
@@ -211,7 +212,9 @@ def user_profile():
     checkins = helper.calc_checkins(user)
     session['tot_checkins'] = checkins
 
-    return render_template('/user_profile.html', user=user)
+    refer_to_user = Referral.query.filter_by(referee_id=session['user_id']).all()
+
+    return render_template('user_profile.html', user=user, other_biz=refer_to_user)
 
 
 @app.route('/friend-profile/<int:friend_id>')
@@ -232,7 +235,7 @@ def friend_profile(friend_id):
     redemptions = helper.calc_redemptions(friend)
     checkins = helper.calc_checkins(friend)
 
-    return render_template('/friend_profile.html', user=friend,
+    return render_template('friend_profile.html', user=friend,
                            checkins=checkins,
                            reviews=reviews,
                            refs=total_refs,
@@ -370,7 +373,7 @@ def biz_profile(biz_name):
 # for approximations of nearby distances using spherical distance, search units nearby by meters; example below searches within 1000m
 # db.session.query(UnitDetails).filter(func.ST_Distance_Sphere("POINT(37.776164 -122.423355)",UnitDetails.latlng) < 1000).all()
 
-    return render_template('/business_profile.html', biz=biz, today=today,
+    return render_template('business_profile.html', biz=biz, today=today,
                            category=category, score=avg_score, count=count,
                            checkins=tot_checkins, user_checkins=user_checkins,
                            promos_redeem=promos_redeem, refs=total_refs,
@@ -409,7 +412,14 @@ def check_in(biz_id):
     print '\n\n\n{}\n\n\n'.format(biz.biz_name)
     print '\n\n\n{}\n\n\n'.format(session['checkin'])
 
-    return redirect('/business-profile/<biz.biz_name>')
+    return redirect('business-profile/<biz.biz_name>')
+
+
+@app.route('/review/<int:biz_id>')
+def review_form(biz_id):
+    """Displays form to review a business."""
+
+    return render_template('review_form.html', biz_id=biz_id)
 
 
 ##############################################################################
