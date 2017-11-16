@@ -8,8 +8,6 @@ from datetime import datetime
 
 from server import app
 
-# TO DO: Need to update for additional fields added into model.py. Also need to build out functions for autoincrementing.
-
 
 def load_users():
     """Load users from mini_user into database."""
@@ -21,7 +19,7 @@ def load_users():
     User.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_user.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_user.csv', 'rU')):
         row = row.rstrip()
 
         user_id, username, first_name, last_name, email, valid_email, password, dob_str, join_date_str, biz_acct = row.split(',')
@@ -29,8 +27,7 @@ def load_users():
         dob = datetime.strptime(dob_str, '%m/%d/%y')
         join_date = datetime.strptime(join_date_str, '%m/%d/%y')
 
-        user = User(user_id=user_id,
-                    username=username,
+        user = User(username=username,
                     first_name=first_name,
                     last_name=last_name,
                     email=email,
@@ -57,13 +54,12 @@ def load_friends():
     Friend.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_friend.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_friend.csv', 'rU')):
         row = row.rstrip()
 
         link_id, user_id, friend_id = row.split(',')
 
-        friend = Friend(link_id=link_id,
-                        user_id=int(user_id),
+        friend = Friend(user_id=int(user_id),
                         friend_id=int(friend_id))
 
         # Add each friend relationship to the session
@@ -83,13 +79,12 @@ def load_userbiz():
     UserBiz.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_userbiz.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_userbiz.csv', 'rU')):
         row = row.rstrip()
 
         userbiz_id, user_id, biz_id = row.split(',')
 
-        userbiz = UserBiz(userbiz_id=userbiz_id,
-                          user_id=int(user_id),
+        userbiz = UserBiz(user_id=int(user_id),
                           biz_id=int(biz_id))
 
         # Add each user-biz relationship to the session
@@ -109,13 +104,12 @@ def load_biz():
     Business.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_biz.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_biz.csv', 'rU')):
         row = row.rstrip()
 
         biz_id, biz_name, address, city, state, country, zipcode, email, valid_email, phone, days_open, open_time, close_time, claimed = row.split(',')
 
-        biz = Business(biz_id=biz_id,
-                       biz_name=biz_name,
+        biz = Business(biz_name=biz_name,
                        address=address,
                        city=city,
                        state=state,
@@ -146,7 +140,7 @@ def load_promos():
     Promo.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_promo.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_promo.csv', 'rU')):
         row = row.rstrip()
 
         promo_id, biz_id, title, descr, start_date_str, end_date_str, referral_promo, birthday_promo, redeem_count = row.split(',')
@@ -154,8 +148,7 @@ def load_promos():
         start_date = datetime.strptime(start_date_str, '%m/%d/%y')
         end_date = datetime.strptime(end_date_str, '%m/%d/%y')
 
-        promo = Promo(promo_id=promo_id,
-                      biz_id=int(biz_id),
+        promo = Promo(biz_id=int(biz_id),
                       title=title,
                       descr=descr,
                       start_date=start_date,
@@ -181,7 +174,7 @@ def load_userpromos():
     UserPromo.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_userpromo.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_userpromo.csv', 'rU')):
         row = row.rstrip()
 
         userpromo_id, user_id, promo_id, redeem_date_str, redeemed = row.split(',')
@@ -189,8 +182,7 @@ def load_userpromos():
         if redeem_date_str:
             redeem_date = datetime.strptime(redeem_date_str, '%m/%d/%y')
 
-        userpromo = UserPromo(userpromo_id=userpromo_id,
-                              user_id=int(user_id),
+        userpromo = UserPromo(user_id=int(user_id),
                               promo_id=int(promo_id),
                               redeem_date=redeem_date,
                               redeemed=redeemed)
@@ -212,15 +204,14 @@ def load_checkin():
     CheckIn.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_checkin.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_checkin.csv', 'rU')):
         row = row.rstrip()
 
         checkin_id, user_id, biz_id, checkin_date_str = row.split(',')
 
         checkin_date = datetime.strptime(checkin_date_str, '%m/%d/%y')
 
-        checkin = CheckIn(checkin_id=checkin_id,
-                          user_id=int(user_id),
+        checkin = CheckIn(user_id=int(user_id),
                           biz_id=int(biz_id),
                           checkin_date=checkin_date)
 
@@ -241,15 +232,14 @@ def load_referrals():
     Referral.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_referral.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_referral.csv', 'rU')):
         row = row.rstrip()
 
         referral_id, referer_id, referee_id, biz_id, refer_date_str, userpromo_id = row.split(',')
 
         refer_date = datetime.strptime(refer_date_str, '%m/%d/%y')
 
-        referral = Referral(referral_id=referral_id,
-                            referer_id=int(referer_id),
+        referral = Referral(referer_id=int(referer_id),
                             referee_id=int(referee_id),
                             biz_id=int(biz_id),
                             refer_date=refer_date,
@@ -272,7 +262,7 @@ def load_reviews():
     Review.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_review.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_review.csv', 'rU')):
         row = row.rstrip()
 
         review_id, user_id, biz_id, rating, review, review_date_str, dispute, response, revise_review, new_rating, new_review, cust_svc = row.split(',')
@@ -289,8 +279,7 @@ def load_reviews():
         else:
             cust_svc = None
 
-        review = Review(review_id=review_id,
-                        user_id=int(user_id),
+        review = Review(user_id=int(user_id),
                         biz_id=int(biz_id),
                         rating=int(rating),
                         review=review,
@@ -319,13 +308,12 @@ def load_likes():
     LikeReview.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_like.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_like.csv', 'rU')):
         row = row.rstrip()
 
         like_id, review_id, user_id = row.split(',')
 
-        like = LikeReview(like_id=like_id,
-                          review_id=int(review_id),
+        like = LikeReview(review_id=int(review_id),
                           user_id=int(user_id))
 
         # Add each like per review to the session
@@ -345,13 +333,12 @@ def load_invite():
     Invite.query.delete()
 
     # Read user file and insert data
-    for i, row in enumerate(open('data/mini_invite.csv', 'rU')):
+    for i, row in enumerate(open('data/test_data/mini_invite.csv', 'rU')):
         row = row.rstrip()
 
         invite_id, user_id, friend_email, accepted = row.split(',')
 
-        invite = Invite(invite_id=invite_id,
-                        user_id=int(user_id),
+        invite = Invite(user_id=int(user_id),
                         friend_email=friend_email,
                         accepted=accepted)
 
@@ -359,19 +346,6 @@ def load_invite():
         db.session.add(invite)
 
     # Commit at end
-    db.session.commit()
-
-
-def set_val_user_id():
-    """Set value for the next user_id after seeding database"""
-
-    # Get the Max user_id in the database
-    result = db.session.query(func.max(User.user_id)).one()
-    max_id = int(result[0])
-
-    # Set the value for the next user_id to be max_id + 1
-    query = "SELECT setval('users_user_id_seq', :new_id)"
-    db.session.execute(query, {'new_id': max_id + 1})
     db.session.commit()
 
 
@@ -393,4 +367,3 @@ if __name__ == "__main__":
     load_reviews()
     load_likes()
     load_invite()
-    set_val_user_id()

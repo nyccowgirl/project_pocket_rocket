@@ -1,9 +1,8 @@
 # from selenium import webdriver
 import unittest
-
 from server import app
-from model import db, connect_to_db  # example_data
-
+from model import db, connect_to_db
+from flask import session
 from mini_seed import (load_users, load_friends, load_biz, load_userbiz,
                        load_promos, load_userpromos, load_checkin,
                        load_referrals, load_reviews, load_likes, load_invite)
@@ -140,7 +139,6 @@ class DatabaseTests(unittest.TestCase):
 
         # Create tables and add sample data
         db.create_all()
-        # example_data()
         load_users()
         load_friends()
         load_biz()
