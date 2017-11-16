@@ -6,21 +6,25 @@
   <!-- TO DO: Set each as either menu item on left panel or as scroll down from nav bar. -->
 
   <h2>{{ biz.biz_name }}</h2>
-  {% for name in session['checkin'] %}
-    {% if item != biz.biz_name %}
-      <form action='/checkin/{{ biz.biz_id }}' method='POST'>
-        <input type='submit' value='Check-In'>
-      </form>
-    {% endif %}
-  {% endfor %}
+  {% if 'checkin' in session %}
+    {% for name in session['checkin'] %}
+      {% if name != biz.biz_name %}
+        <form action='/checkin/{{ biz.biz_id }}' method='POST'>
+          <input type='submit' value='Check-In'>
+        </form>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 
   TO DO: Summarize total reviews, referrals, check-ins
 
   <h3>About Them</h3>
 
-    <div>
-      <img src='{{ biz.pic }}'>
-    </div>
+    {% if biz.biz_pic %}
+      <div>
+        <img src='{{ biz.biz_pic }}'>
+      </div>
+    {% endif %}
 
     <div>
       <address>
@@ -86,9 +90,11 @@
     <h3>Our Promotions</h3>
 
     <ul>
-    {% for promo in biz.promos|sort(attribute='end_date') %}
+    {% for promo in biz.promos|sort(attribute='end_date', reverse=True) %}
       {% if promo.end_date >= today %}
         <li>{{ promo.title }}: {{ promo.descr }} | expiration date: {{ promo.end_date|datetimeformat('%d %b %Y') }}</li>
+      {% elif loop.first and promo.end_date <= today %}
+        <li>No active promotions.</li>
       {% endif %}
     {% endfor %}
     </ul>
@@ -98,11 +104,15 @@
     <h3>Business Affiliates</h3>
 
     <ul>
-    {% for affiliate in biz.users[0].biz %}
-      {% if affiliate.biz_id != biz.biz_id %}
-        <li><a href='/business_profile{{ affiliate.biz_name }}'>{{ affiliate.biz_name }}</a></li>
-      {% endif %}
-    {% endfor %}
+    {% if biz.users[0].biz[1:] %}
+      {% for affiliate in biz.users[0].biz %}
+        {% if affiliate.biz_id != biz.biz_id %}
+          <li><a href='/business_profile{{ affiliate.biz_name }}'>{{ affiliate.biz_name }}</a></li>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <li>No other affiliations.</li>
+    {% endif %}
     </ul>
   {% endif %}
 

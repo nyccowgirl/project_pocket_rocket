@@ -349,6 +349,100 @@ def load_invite():
     db.session.commit()
 
 
+def set_val_id():
+    """Sets value for the next autoincrement after seeding database"""
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(User.user_id)).one()
+    user_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('users_user_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': user_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Business.biz_id)).one()
+    biz_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('businesses_biz_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': biz_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Friend.link_id)).one()
+    friend_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('friends_link_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': friend_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(UserBiz.userbiz_id)).one()
+    userbiz_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('user_biz_userbiz_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': userbiz_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Promo.promo_id)).one()
+    promo_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('promos_promo_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': promo_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(UserPromo.userpromo_id)).one()
+    userpromo_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('user_promos_userpromo_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': userpromo_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(CheckIn.checkin_id)).one()
+    checkins_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('checkins_checkin_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': checkins_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Referral.referral_id)).one()
+    referral_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('referrals_referral_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': referral_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Review.review_id)).one()
+    review_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('reviews_review_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': review_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(LikeReview.like_id)).one()
+    like_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('likes_like_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': like_max_id + 1})
+
+    # Get the Max autoincremented primary key in the database
+    result = db.session.query(func.max(Invite.invite_id)).one()
+    invites_max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('invites_invite_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': invites_max_id + 1})
+
+    db.session.commit()
+
+
 if __name__ == "__main__":
     connect_to_db(app)
 
@@ -367,3 +461,4 @@ if __name__ == "__main__":
     load_reviews()
     load_likes()
     load_invite()
+    set_val_id()

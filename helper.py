@@ -77,6 +77,17 @@ def calc_checkins_biz(biz_id):
 
     return total
 
+
+def calc_avg_rating(biz_id):
+    """
+    Calculates average rating per business.
+
+    TO DO: Build out doctests
+    """
+
+    biz = Business.query.filter_by(biz_id=biz_id).all()
+
+
 ##############################################################################
 
 if __name__ == "__main__":

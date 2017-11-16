@@ -11,9 +11,11 @@
 
   <h3>About Me</h3>
 
-    <div>
-      <img src='{{ user.pic }}'>
-    </div>
+    {% if user.user_pic %}
+      <div>
+        <img src='{{ user.user_pic }}'>
+      </div>
+    {% endif %}
 
     <div>
       <ul>
@@ -52,10 +54,10 @@
         <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
         <br>
         {% if review.revise_review %}
-          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date }}</p><br>
+          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p><br>
           <p>{{ review.new_review }}</p>
-        (% else %)
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date }}</p><br>
+        {% else %}
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p><br>
           <p>{{ review.review }}</p>
         {% endif %}
       </li>
