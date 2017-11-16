@@ -631,7 +631,6 @@ COPY businesses (biz_id, biz_name, address, city, state, country, zipcode, phone
 70	Mercer-Phelps	600 White Mountain	East Teresaburgh	OR	GN	12155	06395743457	rebekahrivera@allen-diaz.org	t	http://graham.biz/	spa	T-Su	19	8	f	https://dummyimage.com/719x48	86.6746559999999988	-71.5584910000000036	010100000010070951BEE351C036035C902DAB5540
 71	Martin-Smith	74688 Tammie Drives	Port Jasmine	HI	SA	03598	881.282.3013x51920	odominguez@tran-schneider.org	t	http://davis-russell.com/	nightlife	M, W, F	20	3	t	https://www.lorempixel.com/394/62	88.2853740000000045	21.4414680000000004	0101000000043BFE0B047135403D484F9143125640
 72	Williams-Perry	1414 Wendy Square Apt. 277	Lake Autumnside	NV	TR	00745	1-306-818-3370x617	khurst@kidd.com	t	http://clayton.com/	grocery	M-Su	24	22	t	https://dummyimage.com/878x104	55.4247974999999968	-34.5210560000000015	01010000003AB187F6B14241C016F6B4C35FB64B40
-73	Collins-Gibson	94238 John Springs Apt. 609	Taylorborough	KS	ZM	03537	409-506-8007	robertcampbell@lewis.com	t	https://www.robinson.com/	bar	M-F	16	4	f	https://www.lorempixel.com/0/974	35.9599419999999981	77.9593559999999997	01010000002B4EB516667D534046072461DFFA4140
 74	Nguyen-West	20758 Daniel Road Suite 849	Dawsonberg	GA	GM	84317	258-020-8292x81347	donnahart@bridges.biz	t	https://www.wolfe.org/	pet	T-S	23	5	f	https://dummyimage.com/196x49	-19.4301110000000001	7.11176799999999965	010100000012F5824F73721C405DA626C11B6E33C0
 75	Baker-Graves	8651 Amanda Isle	West Stephanieview	AR	RU	07074	043-174-8703x0631	maciaswendy@brown-hunter.com	t	https://www.garrett.net/	salon	M, W, F	11	9	f	https://placeholdit.imgix.net/~text?txtsize=55&txt=270x828&w=270&h=828	-22.0621560000000017	-74.7483679999999993	0101000000DE57E542E5AF52C00C40A374E90F36C0
 76	Williams Inc	62483 Collins Village	Brendaton	ID	ST	70942	757.324.4936	vrodriguez@hernandez.org	t	http://www.matthews.org/	florist	S-Su	4	20	f	https://placeholdit.imgix.net/~text?txtsize=55&txt=452x830&w=452&h=830	-36.3188290000000009	119.225869000000003	0101000000890B40A374CE5D4019028063CF2842C0
@@ -659,6 +658,7 @@ COPY businesses (biz_id, biz_name, address, city, state, country, zipcode, phone
 98	Buck, Edwards and Thomas	817 Adam Grove Suite 241	Port Justin	OH	IT	04776	(516)928-6220x336	davidjohnson@mata.com	t	http://www.kim.com/	florist	M-S	19	18	t	https://placeholdit.imgix.net/~text?txtsize=55&txt=559x450&w=559&h=450	48.6226534999999984	-70.1985690000000062	0101000000F73FC05AB58C51C0B69E211CB34F4840
 99	Clark Group	55604 Michelle Mill Apt. 795	Danaton	SC	SI	63214	017-229-3554x751	aalexander@whitaker.com	t	http://kirby-wright.biz/	pet	M-S	15	6	t	https://dummyimage.com/572x728	-11.7275539999999996	139.341074999999989	0101000000764F1E16EA6A6140E12538F5817427C0
 100	Hickman-Butler	554 Ralph Drive	Walshton	AL	AD	49805	752.604.8459	tonystone@rodgers.net	t	https://white.com/	cleaner	T-Su	22	15	f	https://www.lorempixel.com/703/67	2.23670800000000014	144.025992000000002	0101000000A5BE2CEDD4006240D09CF529C7E40140
+73	Collins-Gibson	94238 John Springs Apt. 609	Taylorborough	KS	ZM	03537	409-506-8007	robertcampbell@lewis.com	t	https://www.robinson.com/	bar	M-F	16	4	f	\N	35.9599419999999981	77.9593559999999997	01010000002B4EB516667D534046072461DFFA4140
 \.
 
 
@@ -1353,6 +1353,7 @@ COPY friends (link_id, user_id, friend_id) FROM stdin;
 162	34	11
 163	170	70
 164	215	111
+166	12	63
 \.
 
 
@@ -1360,7 +1361,7 @@ COPY friends (link_id, user_id, friend_id) FROM stdin;
 -- Name: friends_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('friends_link_id_seq', 165, true);
+SELECT pg_catalog.setval('friends_link_id_seq', 166, true);
 
 
 --
@@ -1664,7 +1665,6 @@ COPY promos (promo_id, biz_id, title, descr, start_date, end_date, referral_prom
 14	8	watch them. I know	refuses to use it because those guys will	2017-05-30 00:00:00	2017-11-04 00:00:00	f	f	20
 15	64	you of tax because,	before but I'm seeing what's happening to the	2015-12-17 00:00:00	2016-11-12 00:00:00	f	f	34
 16	24	in these rooms, all	wouldn't do all of whom are not risking	2010-09-21 00:00:00	2015-07-19 00:00:00	f	f	14
-17	91	him, and over are	weapons right now, and the special interest and	2011-05-08 00:00:00	2016-08-04 00:00:00	t	f	36
 18	22	doing well go out	The problem is and I was the elite.	2014-07-27 00:00:00	2016-01-24 00:00:00	f	f	79
 19	46	person sent me $1000.	sued by the way, before I say he	2017-08-10 00:00:00	2017-08-29 00:00:00	f	f	84
 20	78	him, okay? I don't	personal basis? Anybody?	2015-01-20 00:00:00	2016-11-01 00:00:00	f	f	17
@@ -1848,6 +1848,7 @@ COPY promos (promo_id, biz_id, title, descr, start_date, end_date, referral_prom
 198	33	I compared it to	pundits. A lot of really bad dudes in	2014-08-04 00:00:00	2017-01-13 00:00:00	f	f	14
 199	27	fired in the first	Internet and the problems of this does not	2013-05-07 00:00:00	2014-09-26 00:00:00	f	f	26
 200	51	that term, it became	place in a very friendly group of people	2013-11-18 00:00:00	2016-03-10 00:00:00	f	f	77
+17	61	him, and over are	weapons right now, and the special interest and	2011-05-08 00:00:00	2016-08-04 00:00:00	t	f	36
 \.
 
 
@@ -2792,7 +2793,6 @@ COPY users (user_id, username, first_name, last_name, email, valid_email, passwo
 9	narmstrong	Clarence	Martin	qhickman@yahoo.com	t	epVQMesP#5	https://placeholdit.imgix.net/~text?txtsize=55&txt=619x885&w=619&h=885	2005-04-11 00:00:00	2014-02-18 00:00:00	f
 10	meganharris	Kenneth	Merritt	juanbrown@yahoo.com	t	2HJkbX66^F	https://placeholdit.imgix.net/~text?txtsize=55&txt=679x410&w=679&h=410	1979-05-08 00:00:00	2012-09-20 00:00:00	f
 11	daviseric	Stuart	Fields	matthewcain@yahoo.com	t	kMc_KiYp_9	https://www.lorempixel.com/909/625	1993-03-27 00:00:00	2016-04-12 00:00:00	f
-12	adriana18	James	Lopez	erinneal@gmail.com	t	$AN1S+@fw9	https://placeholdit.imgix.net/~text?txtsize=55&txt=595x443&w=595&h=443	1982-09-25 00:00:00	2017-08-12 00:00:00	f
 13	vwilliams	William	Pacheco	timothy61@gmail.com	t	Rc@FE6fT%4	https://placeholdit.imgix.net/~text?txtsize=55&txt=424x150&w=424&h=150	1996-05-10 00:00:00	2010-10-03 00:00:00	f
 14	whitesteven	John	Cobb	powelllinda@gmail.com	t	MP@6dXw%*N	https://placeholdit.imgix.net/~text?txtsize=55&txt=69x441&w=69&h=441	1976-10-07 00:00:00	2017-01-03 00:00:00	f
 15	rochajustin	Terry	Mcdaniel	glennelizabeth@yahoo.com	t	^6sguuKnVk	https://placeholdit.imgix.net/~text?txtsize=55&txt=697x156&w=697&h=156	1985-07-17 00:00:00	2012-05-25 00:00:00	f
@@ -2843,7 +2843,6 @@ COPY users (user_id, username, first_name, last_name, email, valid_email, passwo
 60	hesterkaren	Courtney	Reynolds	moniquelester@yahoo.com	t	K_00e$T8Kj	https://www.lorempixel.com/416/707	1991-01-31 00:00:00	2012-05-25 00:00:00	f
 61	cainzachary	Kelly	Erickson	cynthia87@yahoo.com	t	S_9E&IZo1j	https://www.lorempixel.com/73/756	2014-09-19 00:00:00	2015-05-22 00:00:00	f
 62	sjones	Steven	Lee	rebecca45@yahoo.com	t	rx$56nVr%@	https://placeholdit.imgix.net/~text?txtsize=55&txt=258x981&w=258&h=981	1983-07-20 00:00:00	2013-07-24 00:00:00	f
-63	fishernicole	Tina	Randolph	uwolf@hotmail.com	t	7cBrlEJb+I	https://placeholdit.imgix.net/~text?txtsize=55&txt=204x373&w=204&h=373	1982-07-13 00:00:00	2014-01-25 00:00:00	f
 64	kelleyglenda	Austin	Hill	mark36@yahoo.com	f	p@0A$LKzCT	https://placeholdit.imgix.net/~text?txtsize=55&txt=664x877&w=664&h=877	2010-05-28 00:00:00	2014-02-21 00:00:00	f
 65	larry78	Marcus	Lee	wallacejavier@yahoo.com	t	Z)w0NzGgbj	https://dummyimage.com/633x1014	2007-01-05 00:00:00	2010-09-15 00:00:00	f
 66	abuchanan	Johnny	Cruz	barbaramiller@yahoo.com	t	@GPyviws!2	https://dummyimage.com/638x415	1970-02-22 00:00:00	2015-02-21 00:00:00	f
@@ -3031,6 +3030,8 @@ COPY users (user_id, username, first_name, last_name, email, valid_email, passwo
 248	johnsonjohn	Sara	Hardy	davidmcdonald@yahoo.com	t	d@R8agWdEx	https://placeholdit.imgix.net/~text?txtsize=55&txt=698x211&w=698&h=211	2012-09-08 00:00:00	2010-08-29 00:00:00	f
 249	bjackson	Steven	Rose	jacob02@gmail.com	t	ua_BA4W2#5	https://dummyimage.com/107x360	2006-11-06 00:00:00	2013-11-25 00:00:00	f
 250	barneskevin	Sandra	Clark	april21@gmail.com	t	$4zVijd5Su	https://dummyimage.com/700x499	1998-06-08 00:00:00	2014-11-20 00:00:00	f
+12	adriana18	James	Lopez	erinneal@gmail.com	t	$AN1S+@fw9	\N	1982-09-25 00:00:00	2017-08-12 00:00:00	f
+63	fishernicole	Tina	Randolph	uwolf@hotmail.com	t	7cBrlEJb+I	\N	1982-07-13 00:00:00	2014-01-25 00:00:00	f
 \.
 
 
