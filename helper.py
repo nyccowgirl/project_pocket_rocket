@@ -16,7 +16,7 @@ def check_user_info(user_input):
 
     >>> check_user_info('123@abc.com')
 
-    >>>> check_user_info('hello@hello.com')
+    >>> check_user_info('hunk')
     <user_id=...>
     """
 
@@ -66,13 +66,15 @@ def calc_referrals(user_obj):
     Calculates total referrals and referrals that have been redeemed for
     gamification component.
 
-    TO DO: Build out doctests
+    >>> calc_referrals(user_obj)
+    (6, 11)
     """
 
-    total_refs = len(user_obj.referees)
+    referrals = user_obj.referrals.all()
+    total_refs = len(referrals)
     redeemed_refs = 0
 
-    for item in user_obj.referees:
+    for item in referrals:
         for promo in item.user_promos:
             if promo.redeemed is True:
                 redeemed_refs += 1

@@ -47,7 +47,7 @@ def create_biz():
 
     with open('data/biz.txt', 'w+') as biz:
 
-        for i in range(100):
+        for i in range(200):
             biz.write('{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}\n'.
                 format(fake.company(),
                        fake.street_address(),
@@ -99,9 +99,9 @@ def create_userbiz():
 
     with open('data/userbiz.txt', 'w+') as userbiz:
 
-        for i in range(50):
+        for i in range(100):
             userbiz.write('{}|{}\n'.format(fake.random_int(min=1, max=250),
-                                           fake.random_int(min=1, max=100)))
+                                           fake.random_int(min=1, max=200)))
 
 
 def create_promos():
@@ -111,14 +111,14 @@ def create_promos():
 
     with open('data/promos.txt', 'w+') as promos:
 
-        for i in range(500):
+        for i in range(1000):
 
             title = make_title_descr(MARKOV_CHAIN, 4)
             descr = make_title_descr(MARKOV_CHAIN, 8)
             start_date = fake.date_this_decade(before_today=True, after_today=False)
             end_date = fake.date_between_dates(date_start=start_date, date_end=None)
 
-            promos.write('{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=100),
+            promos.write('{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=200),
                                                             title,
                                                             descr,
                                                             start_date,
@@ -135,9 +135,9 @@ def create_checkins():
 
     with open('data/checkins.txt', 'w+') as checkins:
 
-        for i in range(10000):
+        for i in range(15000):
             checkins.write('{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
-                                               fake.random_int(min=1, max=100),
+                                               fake.random_int(min=1, max=200),
                                                fake.date_this_decade(before_today=True,
                                                                      after_today=False)))
 
@@ -150,7 +150,7 @@ def create_referrals():
     with open('data/referrals.txt', 'w+') as referrals:
         with open('data/userpromos.txt', 'w+') as userpromos:
 
-            for i in range(1000):
+            for i in range(1500):
                 referer_id = fake.random_int(min=1, max=250)
 
                 referee_id = fake.random_int(min=1, max=250)
@@ -159,7 +159,7 @@ def create_referrals():
                     referee_id = fake.random_int(min=1, max=250)
 
                 referrals.write('{}|{}|{}|{}|{}\n'.format(referer_id, referee_id,
-                                                          fake.random_int(min=1, max=100),
+                                                          fake.random_int(min=1, max=200),
                                                           fake.date_this_decade(before_today=True,
                                                                                 after_today=False),
                                                           i + 1))
@@ -172,7 +172,7 @@ def create_referrals():
                     redeem_date = ''
 
                 userpromos.write('{}|{}|{}|{}\n'.format(referee_id,
-                                                        fake.random_int(min=1, max=100),
+                                                        fake.random_int(min=1, max=200),
                                                         redeemed,
                                                         redeem_date))
 
@@ -185,7 +185,7 @@ def create_userpromos():
     with open('data/userpromos.txt', 'a') as userpromos:
 
         for i in range(1000):
-            redeemed = fake.boolean(chance_of_getting_true=20)
+            redeemed = fake.boolean(chance_of_getting_true=35)
 
             if redeemed:
                 redeem_date = fake.date_this_decade(before_today=True, after_today=False)
@@ -193,7 +193,7 @@ def create_userpromos():
                 redeem_date = ''
 
             userpromos.write('{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
-                                                    fake.random_int(min=1, max=100),
+                                                    fake.random_int(min=1, max=200),
                                                     redeemed,
                                                     redeem_date))
 
@@ -230,7 +230,7 @@ def create_reviews():
                 cust_svc = ''
 
             reviews.write('{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
-                                                                      fake.random_int(min=1, max=100),
+                                                                      fake.random_int(min=1, max=200),
                                                                       fake.random_int(min=1, max=5),
                                                                       review,
                                                                       fake.date_this_decade(before_today=True,
@@ -250,8 +250,8 @@ def create_likes():
 
     with open('data/likes.txt', 'w+') as likes:
 
-        for i in range(3000):
-            likes.write('{}|{}\n'.format(fake.random_int(min=1, max=150),
+        for i in range(5000):
+            likes.write('{}|{}\n'.format(fake.random_int(min=1, max=1000),
                                          fake.random_int(min=1, max=250)))
 
 
@@ -262,10 +262,10 @@ def create_invites():
 
     with open('data/invites.txt', 'w+') as invites:
 
-        for i in range(100):
+        for i in range(150):
             invites.write('{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
                                               fake.free_email(),
-                                              fake.boolean(chance_of_getting_true=30)))
+                                              fake.boolean(chance_of_getting_true=20)))
 
 
 def load_users():
@@ -643,7 +643,7 @@ def load_likes():
     for row in open('data/likes.txt'):
         row = row.rstrip()
 
-        user_id, review_id = row.split('|')
+        review_id, user_id = row.split('|')
 
         like = LikeReview(user_id=int(user_id), review_id=int(review_id))
 
@@ -784,28 +784,28 @@ if __name__ == "__main__":
     # db.create_all()
 
     # Create fake data
-    create_users()
-    create_biz()
-    create_friends()
-    create_userbiz()
-    create_promos()
-    create_checkins()
-    create_referrals()
-    create_userpromos()
-    create_reviews()
-    create_likes()
-    create_invites()
+    # create_users()
+    # create_biz()
+    # create_friends()
+    # create_userbiz()
+    # create_promos()
+    # create_checkins()
+    # create_referrals()
+    # create_userpromos()
+    # create_reviews()
+    # create_likes()
+    # create_invites()
 
     # Import different types of data
-    # load_users()
-    # load_friends()
-    # load_biz()
-    # load_userbiz()
-    # load_promos()
-    # load_userpromos()
-    # load_checkins()
-    # load_referrals()
-    # load_reviews()
-    # load_likes()
-    # load_invites()
-    # set_val_id()
+    load_users()
+    load_friends()
+    load_biz()
+    load_userbiz()
+    load_promos()
+    load_userpromos()
+    load_checkins()
+    load_referrals()
+    load_reviews()
+    load_likes()
+    load_invites()
+    set_val_id()

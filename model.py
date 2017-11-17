@@ -20,7 +20,7 @@ class User(db.Model):
     username = db.Column(db.String(64), nullable=False, unique=True)
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
-    email = (db.Column(db.String(64), nullable=False, unique=True))
+    email = db.Column(db.String(64), nullable=False, unique=True)
     valid_email = db.Column(db.Boolean, nullable=False, default=False)
     password = db.Column(db.String(64), nullable=False)  # should encrypt
     user_pic = db.Column(db.String(100), nullable=True)
@@ -33,14 +33,16 @@ class User(db.Model):
 
     biz = db.relationship('Business', secondary='user_biz', backref='users')
     invites = db.relationship('Invite', backref='users')
-    friends = (db.relationship('User', secondary='friends',
-                               primaryjoin='User.user_id == Friend.user_id',
-                               secondaryjoin='User.user_id == Friend.friend_id'))
+    friends = db.relationship('User', secondary='friends',
+                              primaryjoin='User.user_id == Friend.user_id',
+                              secondaryjoin='User.user_id == Friend.friend_id')
     promos = db.relationship('Promo', secondary='user_promos', backref='users')
     checkins = db.relationship('CheckIn', backref='users')
-    referees = (db.relationship('User', secondary='referrals',
-                                primaryjoin='User.user_id == Referral.referer_id',
-                                secondaryjoin='User.user_id == Referral.referee_id'))
+    referees = db.relationship('User', secondary='referrals',
+                               primaryjoin='User.user_id == Referral.referer_id',
+                               secondaryjoin='User.user_id == Referral.referee_id',
+                               backref='referred')
+    referrals = db.relationship('Referral', backref='users')
     reviews = db.relationship('Review', backref='users')
 
     def __repr__(self):
@@ -164,7 +166,7 @@ class Promo(db.Model):
     promo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
     title = db.Column(db.String(64), nullable=False)
-    descr = db.Column(db.String(64), nullable=True)
+    descr = db.Column(db.String(100), nullable=True)
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
     referral_promo = db.Column(db.Boolean, nullable=False, default=False)
@@ -231,7 +233,6 @@ class Referral(db.Model):
     userpromo_id = db.Column(db.Integer, db.ForeignKey('user_promos.userpromo_id'))
 
     user_promo = db.relationship('UserPromo', backref='referral')
-    users = db.relationship('Users', backref='referrals')
 
     def __repr__(self):
         """ Displays info. """
@@ -302,7 +303,7 @@ class Invite(db.Model):
 
     invite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    friend_email = (db.Column(db.String(64), nullable=False))
+    friend_email = db.Column(db.String(64), nullable=False)
     accepted = db.Column(db.Boolean, nullable=False, default=False)
     __table_args__ = (db.CheckConstraint("friend_email ~ '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'"),)
     # data modeling lecture, look at many to many demo, instantiate book and user and comment link
@@ -312,9 +313,6 @@ class Invite(db.Model):
 
         return ('<invite_id={} user_id={} accepted={}'
                 .format(self.invite_id, self.user_id, self.accepted))
-
-# User.promos = association_proxy('user_promos', "user")
-# Promo.users = association_proxy('user_promos', 'promo')
 
 
 ##############################################################################
