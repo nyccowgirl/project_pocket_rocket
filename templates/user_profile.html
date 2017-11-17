@@ -72,9 +72,10 @@
     </ul>
   {% endif %}
 
+  <h3>My Referrals</h3>
+<!-- FIXME: Figure out referral mapping -->
   {% if user.referees %}
-    <h3>My Referrals</h3>
-
+    <h4>Referred by Me</h4>
     <ul>
     {% for referrals in user.referees|groupby('biz_id') %}
       {% if loop.first %}

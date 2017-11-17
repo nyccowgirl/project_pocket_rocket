@@ -42,7 +42,10 @@ class User(db.Model):
                                primaryjoin='User.user_id == Referral.referer_id',
                                secondaryjoin='User.user_id == Referral.referee_id',
                                backref='referred')
-    referrals = db.relationship('Referral', backref='users')
+    referrals = db.relationship('Referral',
+                                primaryjoin='Referral.referer_id == User.user_id',
+                                secondaryjoin='Referral.referee_id == User.user_id',
+                                backref='users')
     reviews = db.relationship('Review', backref='users')
 
     def __repr__(self):
