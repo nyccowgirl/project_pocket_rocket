@@ -1,8 +1,10 @@
 <!doctype html>
 <html>
 <head>
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/boostrap.css'>
+<!--     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/boostrap.css'> -->
     <link rel='stylesheet' type='text/css' href='/static/css/style.css'>
+<!--     <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"> -->
+
     <title>BUDdy</title>
 </head>
 <body>
@@ -12,6 +14,7 @@
 {% if 'user_id' in session %}
     <div>
         <a href='/logout'>Log Out</a> | <a href='/user-profile'>Profile</a>
+<!--         <a id='glogout' href="#" onclick="signOut();">Sign out</a> -->
     </div>
 
     <div id='search'>
@@ -42,8 +45,21 @@
 {% endblock %}
 
 <script src='http://code.jquery.com/jquery.js'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js'></script>
+{% block script %}
+    Put your script here.
+{% endblock %}
+<!-- <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js'></script>
+ --><!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
 
+<script>
+  // function signOut() {
+  //   let auth2 = gapi.auth2.getAuthInstance();
+  //   auth2.signOut().then(function () {
+  //     console.log('User signed out.');
+  //   });
+  // }
+  // $('#glogout').on('click', signOut); // not sure if duplicative with above onclick.
+</script>
 </body>
 
 

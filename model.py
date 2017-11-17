@@ -2,13 +2,14 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.associationproxy import association_proxy  # FIXME: may not need
 from sqlalchemy import func
 from geoalchemy2 import Geometry
+from datetime import datetime
 
 db = SQLAlchemy()
 
-# use func from sqlalchemy (lower case)
 
 ##############################################################################
 # Model definitions
+
 
 class User(db.Model):
     """ User model. """
@@ -107,7 +108,6 @@ class Business(db.Model):
     lng = db.Column(db.Float, nullable=True)
     location = db.Column(Geometry(geometry_type='POINT'), nullable=True)
     __table_args__ = (db.CheckConstraint("email ~ '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'"),)
-    # TO DO: add field for coordinates using postgis library
 
     checkins = db.relationship('CheckIn', backref='biz')
     referrals = db.relationship('Referral', backref='biz')
@@ -118,6 +118,42 @@ class Business(db.Model):
         """ Displays info. """
 
         return ('<biz_id={} biz_name={}>'.format(self.biz_id, self.biz_name))
+
+    def is_owned(self, user_id):
+        """ Tracks whether business has been claimed by a specific user. """
+
+        claim = UserBiz.query.filter(UserBiz.biz_id == self.biz_id, UserBiz.user_id == user_id).first()
+
+        if claim:
+            return True
+        else:
+            return False
+
+    def is_checkin(self, user_id):
+        """ Tracks whether business has been checked into by specific user for
+        that day. """
+
+        today = datetime.today().date()
+
+        checkin = CheckIn.query.filter(CheckIn.biz_id == self.biz_id,
+                                       CheckIn.user_id == user_id,
+                                       CheckIn.checkin_date == today).first()
+
+        if checkin:
+            return True
+        else:
+            return False
+
+    def has_reviewed(self, user_id):
+        """ Tracks whether business has been reviewed by a specific user. """
+
+        review = Review.query.filter(Review.biz_id == self.biz_id,
+                                     Review.user_id == user_id).first()
+
+        if review:
+            return True
+        else:
+            return False
 
 
 class Promo(db.Model):
@@ -195,6 +231,7 @@ class Referral(db.Model):
     userpromo_id = db.Column(db.Integer, db.ForeignKey('user_promos.userpromo_id'))
 
     user_promo = db.relationship('UserPromo', backref='referral')
+    users = db.relationship('Users', backref='referrals')
 
     def __repr__(self):
         """ Displays info. """
@@ -230,6 +267,17 @@ class Review(db.Model):
 
         return ('<review_id={} user_id={} biz_id={} rating={}>'
                 .format(self.review_id, self.user_id, self.biz_id, self.rating))
+
+    def has_liked(self, user_id):
+        """ Tracks whether review has been liked by a certain user. """
+
+        user_like = LikeReview.query.filter(LikeReview.review_id == self.review_id,
+                                            LikeReview.user_id == user_id).first()
+
+        if user_like:
+            return True
+        else:
+            return False
 
 
 class LikeReview(db.Model):

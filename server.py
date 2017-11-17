@@ -3,7 +3,7 @@ from flask import (Flask, render_template, request, flash, redirect,
                    session)  # jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
-                   Referral)
+                   Referral, LikeReview)
 from datetime import datetime
 import helper
 import re
@@ -95,7 +95,7 @@ def register_process():
                     password=pword,
                     user_pic=pic,
                     dob=bday,
-                    join_date=datetime.now(),
+                    join_date=datetime.today().date(),
                     biz_acct=biz)
         db.session.add(user)
         db.session.commit()
@@ -384,7 +384,7 @@ def biz_profile(biz_name):
 def check_in(biz_id):
     """Checks in user into business, limit one check in per day. """
 
-    today = datetime.today()
+    today = datetime.today().date()
     checkin = (CheckIn.query.filter(CheckIn.user_id == session['user_id'],
                CheckIn.biz_id == biz_id, CheckIn.checkin_date == today).first())
     biz = Business.query.get(biz_id)
@@ -406,8 +406,6 @@ def check_in(biz_id):
 
         flash('You have checked in a total of {} times. {} thanks you for your support!'.format(user_checkins, biz.biz_name))
 
-    session['checkin'].append(biz.biz_name)
-
     # TO DELETE
     print '\n\n\n{}\n\n\n'.format(biz.biz_name)
     print '\n\n\n{}\n\n\n'.format(session['checkin'])
@@ -415,11 +413,46 @@ def check_in(biz_id):
     return redirect('business-profile/<biz.biz_name>')
 
 
-@app.route('/review/<int:biz_id>')
+@app.route('/review/<biz_name>')
 def review_form(biz_id):
     """Displays form to review a business."""
 
     return render_template('review_form.html', biz_id=biz_id)
+
+
+@app.route('/review/<biz_name>', methods=['POST'])
+def review_process(biz_name):
+    """Processes user review of business."""
+
+    score = request.form['rating']
+    comment = request.form['review']
+    today = datetime.today().date()
+    biz = Business.query.filter_by(biz_name=biz_name).first()
+
+    review = Review(user_id=session['user_id'],
+                    biz_id=biz.biz_id,
+                    rating=int(score),
+                    review=comment,
+                    review_date=today)
+
+    db.session.add(review)
+    db.session.commit()
+
+    flash('Your review has been received. {} appreciates your feedback.'.format(biz_name))
+
+    return redirect('/business-profile/<biz_name')
+
+
+@app.route('/like-review', methods=['POST'])
+def like_process():
+    """Processes user's like of specific review."""
+
+    review_id = request.form['review_id']
+
+    like = LikeReview(review_id=review_id, user_id=session['user_id'])
+
+    db.session.add(like)
+    db.session.commit()
 
 
 ##############################################################################

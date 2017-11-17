@@ -35,7 +35,7 @@
       <ul>
         Check-Ins: {{ session['tot_checkins'] }}<br>
         Reviews: {{ session['tot_revs'] }}<br>
-        Referrals: {{ session['tot_refs'] }}|Redeemed: {{ session['redeem_refs'] }}<br>
+        Referrals: {{ session['tot_refs'] }} | Redeemed: {{ session['redeem_refs'] }}<br>
         Promos Redeemed: {{ session['tot_redeem'] }}<br>
         Friends: {{ session['tot_friends'] }}
       </ul>
@@ -76,14 +76,15 @@
     <h3>My Referrals</h3>
 
     <ul>
-    {% for referrals in user.referees|groupby('biz.biz_name') %}
-      <li><a href='/business-profile/{{ referrals.grouper }}'>{{ referrals.grouper }}:</a>
-        <ul>
-          {% for referee in referrals.list %}
-            </li>{{ referee.username }}: refer date {{ referee.refer_date|datetimeformat('%d %b %Y') }} | redeem date {{ referee.user_promo.redeem_date|datetimeformat('%d %b %Y') }} </li>
-          {% endfor %}
-        </ul>
-      </li>
+    {% for referrals in user.referees|groupby('biz_id') %}
+      {% if loop.first %}
+        <li><a href='/business-profile/{{ user.referees.biz.biz_name }}'>{{ user.referees.biz.biz_name }}:</a></li>
+      {% endif %}
+      <ul>
+      {% for referee in referrals.list %}
+        </li>{{ referee.username }}: refer date {{ referee.refer_date|datetimeformat('%d %b %Y') }} | redeem date {{ referee.user_promo.redeem_date|datetimeformat('%d %b %Y') }} </li>
+      {% endfor %}
+      </ul>
     {% endfor %}
     </ul>
   {% endif %}

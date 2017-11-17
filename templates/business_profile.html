@@ -6,29 +6,36 @@
   <!-- TO DO: Set each as either menu item on left panel or as scroll down from nav bar. -->
 
   <h2>{{ biz.biz_name }}</h2>
-  {% if 'checkin' in session %}
-    {% for name in session['checkin'] %}
-      {% if name != biz.biz_name %}
-        <form action='/checkin/{{ biz.biz_id }}' method='POST'>
-          <input type='submit' value='Check-In'>
-        </form>
-      {% endif %}
-    {% endfor %}
-  {% endif %}
+    {% if not biz.is_checkin(session['user_id']) %}
+      <form action='/checkin/{{ biz.biz_id }}' method='POST'>
+        <input type='submit' value='Check-In'>
+      </form>
+    {% endif %}
 
-    <form action='/review/{{ biz.biz_id }}'>
-      <input type='submit' value='Review'>
-    </form>
-    <br>
+    {% if not biz.has_reviewed(session['user_id']) %}
+      <form action='/review/{{ biz.biz_name }}'>
+        <input type='submit' value='Review'>
+      </form>
+    {% endif %}
+      <br>
+
     <div>
       Total Check-Ins: {{ checkins }}|Your Check_Ins: {{ user_checkins }}<br>
-      Average Rating: {{ score }}|Your Rating: {{ user_score }}<br>
+      Average Rating: {{ score }} | Your Rating: {{ user_score }}<br>
       Total Reviews: {{ count }}<br>
-      Total Referrals: {{ refs }}|Redeemed: {{ ref_redeem }}<br>
+      Total Referrals: {{ refs }} | Redeemed: {{ ref_redeem }}<br>
       Promos Redeemed: {{ promos_redeem }}<br>
     </div>
 
     <!-- TO DO: Use D3 to visualize the rating  -->
+
+    {% if biz.is_owned(session['user_id']) %}
+
+      <h4>Additional Infographics</h4>
+
+      TO DO: Build out totcl check ins, reviews, redemptions, etc. by month/year
+
+    {% endif %}
 
   <h3>About Them</h3>
 
@@ -79,14 +86,14 @@
     <h3>Our Reviews</h3>
 
     <ul>
-    {% for review in biz.reviews|sort(attribute='review_date') %}
+    {% for review in biz.reviews|sort(attribute='review_date', reverse=True) %}
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
         {% if review.revise_review %}
-          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
+          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button></p>
           <p>{{ review.new_review }}</p>
         {% else %}
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button></p></p>
           <p>{{ review.review }}</p>
         {% endif %}
       </li>
@@ -123,5 +130,29 @@
     {% endif %}
     </ul>
   {% endif %}
+
+
+{% endblock %}
+
+{% block script %}
+
+<script type='text/javascript'>
+'use strict';
+
+function disableLike(results) {
+  $(this).prop('disabled', true)
+}
+
+function handleClick(evt) {
+  evt.preventDefault();
+  let formInputs = {
+    'review_id': evt.target.id,
+  };
+
+  $.post('/like-review', formInputs, disableLike)
+}
+
+$('.like').on('click', handleClick)
+</script>
 
 {% endblock %}

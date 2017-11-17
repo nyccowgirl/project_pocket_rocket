@@ -81,7 +81,7 @@ def create_friends():
 
     with open('data/friends.txt', 'w+') as friends:
 
-        for i in range(150):
+        for i in range(300):
             user_id = fake.random_int(min=1, max=250)
 
             friend_id = fake.random_int(min=1, max=250)
@@ -111,7 +111,7 @@ def create_promos():
 
     with open('data/promos.txt', 'w+') as promos:
 
-        for i in range(200):
+        for i in range(500):
 
             title = make_title_descr(MARKOV_CHAIN, 4)
             descr = make_title_descr(MARKOV_CHAIN, 8)
@@ -120,11 +120,7 @@ def create_promos():
 
             promos.write('{}|{}|{}|{}|{}|{}|{}|{}\n'.format(fake.random_int(min=1, max=100),
                                                             title,
-                                                            # fake.word(ext_word_list=None),
                                                             descr,
-                                                            # fake.sentence(nb_words=5,
-                                                            #               variable_nb_words=True,
-                                                            #               ext_word_list=None),
                                                             start_date,
                                                             end_date,
                                                             fake.boolean(chance_of_getting_true=10),
@@ -139,7 +135,7 @@ def create_checkins():
 
     with open('data/checkins.txt', 'w+') as checkins:
 
-        for i in range(500):
+        for i in range(10000):
             checkins.write('{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
                                                fake.random_int(min=1, max=100),
                                                fake.date_this_decade(before_today=True,
@@ -154,7 +150,7 @@ def create_referrals():
     with open('data/referrals.txt', 'w+') as referrals:
         with open('data/userpromos.txt', 'w+') as userpromos:
 
-            for i in range(100):
+            for i in range(1000):
                 referer_id = fake.random_int(min=1, max=250)
 
                 referee_id = fake.random_int(min=1, max=250)
@@ -188,7 +184,7 @@ def create_userpromos():
 
     with open('data/userpromos.txt', 'a') as userpromos:
 
-        for i in range(100):
+        for i in range(1000):
             redeemed = fake.boolean(chance_of_getting_true=20)
 
             if redeemed:
@@ -209,7 +205,7 @@ def create_reviews():
 
     with open('data/reviews.txt', 'w+') as reviews:
 
-        for i in range(500):
+        for i in range(1000):
 
             review = make_text(MARKOV_CHAIN, 1000, 5000)
 
@@ -254,7 +250,7 @@ def create_likes():
 
     with open('data/likes.txt', 'w+') as likes:
 
-        for i in range(150):
+        for i in range(3000):
             likes.write('{}|{}\n'.format(fake.random_int(min=1, max=150),
                                          fake.random_int(min=1, max=250)))
 
@@ -788,28 +784,28 @@ if __name__ == "__main__":
     # db.create_all()
 
     # Create fake data
-    # create_users()
-    # create_biz()
-    # create_friends()
-    # create_userbiz()
-    # create_promos()
-    # create_checkins()
-    # create_referrals()
-    # create_userpromos()
-    # create_reviews()
-    # create_likes()
-    # create_invites()
+    create_users()
+    create_biz()
+    create_friends()
+    create_userbiz()
+    create_promos()
+    create_checkins()
+    create_referrals()
+    create_userpromos()
+    create_reviews()
+    create_likes()
+    create_invites()
 
     # Import different types of data
-    load_users()
-    load_friends()
-    load_biz()
-    load_userbiz()
-    load_promos()
-    load_userpromos()
-    load_checkins()
-    load_referrals()
-    load_reviews()
-    load_likes()
-    load_invites()
-    set_val_id()
+    # load_users()
+    # load_friends()
+    # load_biz()
+    # load_userbiz()
+    # load_promos()
+    # load_userpromos()
+    # load_checkins()
+    # load_referrals()
+    # load_reviews()
+    # load_likes()
+    # load_invites()
+    # set_val_id()

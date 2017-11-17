@@ -3,7 +3,9 @@
 
 <h1>Review</h1>
 
-<form action='/review/{{ biz_id }}' method='POST'>
+<h2>{{ biz_name }}</h2>
+
+<form action='/review/{{ biz_name }}' method='POST'>
   Rating:<select name='rating'>
     <option value='1'>1</option>
     <option value='2'>2</option>
@@ -18,21 +20,21 @@
   <input type='submit'>
 </form>
 
-{% endblock %}
 
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
 <!-- <script src='buddy.js'></script> -->
 <script>
-
+'use strict';
 // <!-- FIXME: Not sure if the prior two lines are needed. -->
-$('#text').keyup(function() {
-  let max = 5000;
+$('#text').on('keyup', (function() {
+  let maxChar = 5000;
   let len = $(this).val().length;
-  if (len >= max) {
-    $('#chars').html(max + 'characters left');
+  if (len == 0) {
+    $('#chars').html(`<i>${ maxChar } characters remaining</i>`);
   } else {
-    let charNum = max - len;
-    $('#chars').html(charNum + ' characters left');
+    let numCharLeft = maxChar - len;
+    $('#chars').html(`<i>${ numCharLeft } characters remaining</i>`);
   }
-})
+}));
 </script>
+{% endblock %}

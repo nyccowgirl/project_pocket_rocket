@@ -125,6 +125,8 @@
         <a href='/pword-reset'>Forgot password.</a>
     </div>
 
+    <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+
 <!-- TO DO: Make a pop up window and set up email message and link to reset password. -->
 <!--     <div>
         <label>
@@ -136,7 +138,8 @@
     </div> -->
 {% endblock %}
 
-<script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+{% block script %}
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src='buddy.js'></script>
 <script type='text/javascript'>
 
@@ -159,3 +162,4 @@ function sendEmail(evt) {
 
 $('#resetBtn').on('click', sendEmail)
 </script>
+{% endblock %}
