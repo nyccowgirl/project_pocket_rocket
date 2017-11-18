@@ -70,14 +70,13 @@ def calc_referrals(user_obj):
     (6, 11)
     """
 
-    referrals = user_obj.referrals.all()
+    referrals = user_obj.referrals
     total_refs = len(referrals)
     redeemed_refs = 0
 
-    for item in referrals:
-        for promo in item.user_promos:
-            if promo.redeemed is True:
-                redeemed_refs += 1
+    for referral in referrals:
+        if referral.user_promo.redeemed is True:
+            redeemed_refs += 1
 
     return total_refs, redeemed_refs
 

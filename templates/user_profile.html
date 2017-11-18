@@ -61,51 +61,83 @@
       <li>
         <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
         {% if review.revise_review %}
-          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
+          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+            {% if not review.has_liked(session['user_id']) %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+            {% endif %}
+          </p>
           <p>{{ review.new_review }}</p>
         {% else %}
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+            {% if not review.has_liked(session['user_id']) %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+            {% endif %}
+          </p>
           <p>{{ review.review }}</p>
+        {% endif %}
+        {% if review.dispute %}
+          <b>Comment from {{ review.biz.users[0].username }}, owner of {{ review.biz.biz_name }}</b>
+          <p>{{ review.response }}</p>
+          {% if review.cust_svc %}
+            <p><i>Customer Service Rating: </i>{{ review.cust_svc }}
+          {% endif %}
+          {% if review.cust_svc or revew.revise_review %}
+            <p><i>Original Rating: </i>{{ review.rating }}</p>
+            <p>{{ review.review }}</p>
+          {% endif %}
         {% endif %}
       </li>
     {% endfor %}
     </ul>
   {% endif %}
 
-  <h3>My Referrals</h3>
-<!-- FIXME: Figure out referral mapping -->
-  {% if user.referees %}
-    <h4>Referred by Me</h4>
-    <ul>
-    {% for referrals in user.referees|groupby('biz_id') %}
-      {% if loop.first %}
-        <li><a href='/business-profile/{{ user.referees.biz.biz_name }}'>{{ user.referees.biz.biz_name }}:</a></li>
-      {% endif %}
+  <!-- TO DO: Add total likes per review -->
+  {% if user.referrals %}
+    <h3>My Referrals</h3>
+
       <ul>
-      {% for referee in referrals.list %}
-        </li>{{ referee.username }}: refer date {{ referee.refer_date|datetimeformat('%d %b %Y') }} | redeem date {{ referee.user_promo.redeem_date|datetimeformat('%d %b %Y') }} </li>
+      {% for grouper, list in user.referrals|groupby('biz.biz_name') %}
+        <li><a href='/busines-profile/{{ grouper }}'>{{ grouper }}:</a></li>
+        <ul>
+          {% for each in list %}
+            </li>{{ each.referee.username }}: refer date {{ each.refer_date|datetimeformat('%d %b %Y') }}
+            {% if each.user_promo.redeemed %}
+             | redeem date {{ each.user_promo.redeem_date|datetimeformat('%d %b %Y') }}
+            {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
       {% endfor %}
       </ul>
-    {% endfor %}
-    </ul>
-  {% endif %}
+    {% endif %}
 
   {% if user.user_promos %}
     <h3>My Promotions/Redemptions</h3>
 
     <ul>
-    {% for promos in user.user_promos|groupby('promo.biz.biz_name') %}
-      <li><a href='/business-profile/{{ promos.grouper }}'>{{ promos.grouper }}:</a>
-        <ul>
-          {% for promo in promos.list %}
-            {% if promo.redeemed %}
-              <li>Redeemed: {{ promo.promo.title }}: {{ promo.redeem_date|datetimeformat('%d %b %Y') }}</li>
-            {% else %}
-              <li>Available: {{ promo.promo.title }} | expiration date: {{ promo.promo.end_date|datetimeformat('%d %b %Y') }}</li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-      </li>
+    {% for grouper, list in user.user_promos|groupby('redeemed') %}
+      {% if grouper == False %}
+        <b>Available</b>
+          <ul>
+            {% for grouper, list in list|groupby('promo.biz.biz_name') %}
+              <a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a>
+                {% for promo in list %}
+                  <li>{{ promo.promo.title }} | expiration date: {{ promo.promo.end_date|datetimeformat('%d %b %Y') }}</li>
+                {% endfor %}
+            {% endfor %}
+          </ul>
+      {% else %}
+        <br>
+        <b>Redeemed</b>
+          <ul>
+            {% for grouper, list in list|groupby('promo.biz.biz_name') %}
+              <a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a>
+                {% for promo in list %}
+                  <li>{{ promo.promo.title }}: {{ promo.redeem_date|datetimeformat('%d %b %Y') }}</li>
+                {% endfor %}
+            {% endfor %}
+          </ul>
+      {% endif %}
     {% endfor %}
     </ul>
   {% endif %}
@@ -120,18 +152,41 @@
     </ul>
   {% endif %}
 
-  {% if other_biz %}
-    <h3>Businesses to Check Out</h3>
+  {% if user.referred %}
+    <h3>Businesses Referred to Me</h3>
 
-    <ul>
-      {% for ref in other_biz %}
-        {% for item in ref.user_promo %}
-          {% if not item.redeemed %}
-            <li><a href='/business-profile{{ ref.biz.biz_name }}'>{{ ref.biz.biz_name }}</li>
-          {% endif %}
+      <ul>
+        {% for grouper, list in user.referred|groupby('biz.biz_name') %}
+          {% for referral in list %}
+            {% if not referral.user_promo.redeemed %}
+              <li><a href='/business-profile{{ grouper }}'>{{ grouper }}</a></li>
+            {% endif %}
+          {% endfor %}
         {% endfor %}
-      {% endfor %}
-    </ul>
+      </ul>
   {% endif %}
+
+{% endblock %}
+
+{% block script %}
+
+<script type='text/javascript'>
+'use strict';
+
+function disableLike(results) {
+  alert(results);
+}
+
+function handleClick(evt) {
+  evt.preventDefault();
+  let formInputs = {
+    'review_id': evt.target.id,
+  };
+  $.post('/like-review', formInputs, disableLike);
+  $(this).prop('disabled', true);
+}
+
+$('.like').on('click', handleClick)
+</script>
 
 {% endblock %}

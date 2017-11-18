@@ -41,17 +41,19 @@ class User(db.Model):
     referees = db.relationship('User', secondary='referrals',
                                primaryjoin='User.user_id == Referral.referer_id',
                                secondaryjoin='User.user_id == Referral.referee_id',
-                               backref='referred')
+                               backref='referer')
     referrals = db.relationship('Referral',
                                 primaryjoin='Referral.referer_id == User.user_id',
-                                secondaryjoin='Referral.referee_id == User.user_id',
-                                backref='users')
+                                backref='referer')
+    referred = db.relationship('Referral',
+                               primaryjoin='Referral.referee_id == User.user_id',
+                               backref='referee')
     reviews = db.relationship('Review', backref='users')
 
     def __repr__(self):
         """Displays info"""
 
-        return ('<user_id={} username={} email={}>'.format(self.user_id,
+        return (u'<user_id={} username={} email={}>'.format(self.user_id,
                 self.username, self.email))
     # TO DO: look into uploading image to flask
 
@@ -68,7 +70,7 @@ class Friend(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<user_id={} friend_id={}>'.format(self.user_id, self.friend_id))
+        return (u'<user_id={} friend_id={}>'.format(self.user_id, self.friend_id))
 
 
 class UserBiz(db.Model):
@@ -84,7 +86,7 @@ class UserBiz(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<user_id={} biz_id={}>'.format(self.user_id, self.biz_id))
+        return (u'<user_id={} biz_id={}>'.format(self.user_id, self.biz_id))
 
 
 class Business(db.Model):
@@ -122,7 +124,7 @@ class Business(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<biz_id={} biz_name={}>'.format(self.biz_id, self.biz_name))
+        return (u'<biz_id={} biz_name={}>'.format(self.biz_id, self.biz_name))
 
     def is_owned(self, user_id):
         """ Tracks whether business has been claimed by a specific user. """
@@ -179,7 +181,7 @@ class Promo(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<promo_id={} biz_id={} title={} end_date={}>'
+        return (u'<promo_id={} biz_id={} title={} end_date={}>'
                 .format(self.promo_id, self.biz_id, self.title, self.end_date))
 
 
@@ -202,7 +204,7 @@ class UserPromo(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<userpromo_id={} user_id={} promo_id={} redeemed={}>'
+        return (u'<userpromo_id={} user_id={} promo_id={} redeemed={}>'
                 .format(self.userpromo_id, self.user_id, self.promo_id, self.redeemed))
 
 
@@ -219,7 +221,7 @@ class CheckIn(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<checkin_id={} user_id={} biz_id={} checkin_date={}>'
+        return (u'<checkin_id={} user_id={} biz_id={} checkin_date={}>'
                 .format(self.checkin_id, self.user_id, self.biz_id, self.checkin_date))
 
 
@@ -240,8 +242,15 @@ class Referral(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<referral_id={} biz_id={} refer_date={} userpromo_id={}>'
+        return (u'<referral_id={} biz_id={} refer_date={} userpromo_id={}>'
                 .format(self.referral_id, self.biz_id, self.refer_date, self.userpromo_id))
+
+    def referee(self):
+        """ Tracks referees that have been referred to the specific business. """
+
+        user = User.query.filter_by(user_id=self.referee_id).first()
+
+        return user.username
 
 
 class Review(db.Model):
@@ -269,7 +278,7 @@ class Review(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<review_id={} user_id={} biz_id={} rating={}>'
+        return (u'<review_id={} user_id={} biz_id={} rating={}>'
                 .format(self.review_id, self.user_id, self.biz_id, self.rating))
 
     def has_liked(self, user_id):
@@ -296,7 +305,7 @@ class LikeReview(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<review_id={} user_id={}>'.format(self.review_id, self.user_id))
+        return (u'<review_id={} user_id={}>'.format(self.review_id, self.user_id))
 
 
 class Invite(db.Model):
@@ -314,7 +323,7 @@ class Invite(db.Model):
     def __repr__(self):
         """ Displays info. """
 
-        return ('<invite_id={} user_id={} accepted={}'
+        return (u'<invite_id={} user_id={} accepted={}'
                 .format(self.invite_id, self.user_id, self.accepted))
 
 

@@ -55,16 +55,34 @@
       <li>
         <a href='/business_profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
         {% if review.revise_review %}
-          <p>Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
+          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+            {% if not review.has_liked(session['user_id']) %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+            {% endif %}
           <p>{{ review.new_review }}</p>
         {% else %}
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }}</p>
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+            {% if not review.has_liked(session['user_id']) %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+            {% endif %}
           <p>{{ review.review }}</p>
+        {% endif %}
+        {% if review.dispute %}
+          <b>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
+          <p>{{ review.response }}</p>
+          {% if review.cust_svc %}
+            <p><i>Customer Service Rating: </i>{{ review.cust_svc }}
+          {% endif %}
+          {% if review.cust_svc or revew.revise_review %}
+            <p><i>Original Rating: </i>{{ review.rating }}</p>
+            <p>{{ review.review }}</p>
+          {% endif %}
         {% endif %}
       </li>
     {% endfor %}
     </ul>
   {% endif %}
+  <!-- TO DO: Add total likes per review -->
 
   {% if user.biz %}
     <h3>My Businesses</h3>
@@ -75,5 +93,28 @@
     {% endfor %}
     </ul>
   {% endif %}
+
+{% endblock %}
+
+{% block script %}
+
+<script type='text/javascript'>
+'use strict';
+
+function disableLike(results) {
+  alert(results);
+}
+
+function handleClick(evt) {
+  evt.preventDefault();
+  let formInputs = {
+    'review_id': evt.target.id,
+  };
+  $.post('/like-review', formInputs, disableLike);
+    $(this).prop('disabled', true);
+}
+
+$('.like').on('click', handleClick)
+</script>
 
 {% endblock %}

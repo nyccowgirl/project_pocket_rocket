@@ -1,6 +1,6 @@
 from jinja2 import StrictUndefined
 from flask import (Flask, render_template, request, flash, redirect,
-                   session)  # jsonify
+                   session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
 from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
                    Referral, LikeReview)
@@ -66,8 +66,8 @@ def register_process():
     biz = request.form['biz']
 
     # TO DELETE
-    print '\n\n\n{}\n\n\n'.format(username)
-    print '\n\n\n{}\n\n\n'.format(biz)
+    print u'\n\n\n{}\n\n\n'.format(username)
+    print u'\n\n\n{}\n\n\n'.format(biz)
 
     # Convert birthday to datetime format
     if bday_str:
@@ -191,10 +191,10 @@ def user_profile():
     user = User.query.filter_by(user_id=session['user_id']).first()
 
     # TO DELETE
-    print '\n\n\n{}\n\n\n'.format(user.reviews)
-    print '\n\n\n{}\n\n\n'.format(user.friends)
-    print '\n\n\n{}\n\n\n'.format(user.referees)
-    print '\n\n\n{}\n\n\n'.format(user.promos)
+    print u'\n\n\n{}\n\n\n'.format(user.reviews)
+    print u'\n\n\n{}\n\n\n'.format(user.friends)
+    print u'\n\n\n{}\n\n\n'.format(user.referees)
+    print u'\n\n\n{}\n\n\n'.format(user.promos)
 
     friends = helper.calc_friends(user)
     session['tot_friends'] = friends
@@ -202,6 +202,7 @@ def user_profile():
     reviews = helper.calc_reviews(user)
     session['tot_revs'] = reviews
 
+    # FIXME: update helper function once relationship mapping is solved.
     total_refs, redeemed_refs = helper.calc_referrals(user)
     session['tot_refs'] = total_refs
     session['redeem_refs'] = redeemed_refs
@@ -212,9 +213,9 @@ def user_profile():
     checkins = helper.calc_checkins(user)
     session['tot_checkins'] = checkins
 
-    refer_to_user = Referral.query.filter_by(referee_id=session['user_id']).all()
+    # refer_to_user = Referral.query.filter_by(referee_id=session['user_id']).all()
 
-    return render_template('user_profile.html', user=user, other_biz=refer_to_user)
+    return render_template('user_profile.html', user=user)
 
 
 @app.route('/friend-profile/<int:friend_id>')
@@ -224,10 +225,10 @@ def friend_profile(friend_id):
     friend = User.query.filter_by(user_id=friend_id).first()
 
     # TO DELETE
-    print '\n\n\n{}\n\n\n'.format(friend.reviews)
-    print '\n\n\n{}\n\n\n'.format(friend.friends)
-    print '\n\n\n{}\n\n\n'.format(friend.referees)
-    print '\n\n\n{}\n\n\n'.format(friend.promos)
+    print u'\n\n\n{}\n\n\n'.format(friend.reviews)
+    print u'\n\n\n{}\n\n\n'.format(friend.friends)
+    print u'\n\n\n{}\n\n\n'.format(friend.referees)
+    print u'\n\n\n{}\n\n\n'.format(friend.promos)
 
     friends = helper.calc_friends(friend)
     reviews = helper.calc_reviews(friend)
@@ -275,8 +276,8 @@ def biz_process():
     pic = request.form['pic']
 
     # TO DELETE
-    print '\n\n\n{}\n\n\n'.format(name)
-    print '\n\n\n{}\n\n\n'.format(claim)
+    print u'\n\n\n{}\n\n\n'.format(name)
+    print u'\n\n\n{}\n\n\n'.format(claim)
 
     # Convert time to military format
     if open_mil == 'pm':
@@ -340,11 +341,11 @@ def biz_profile(biz_name):
     category = c.BIZ_CATEGORY.get(biz.category)
 
     # TO DELETE
-    print '\n\n\n{}\n\n\n'.format(biz_name)
-    print '\n\n\n{}\n\n\n'.format(biz.reviews)
-    print '\n\n\n{}\n\n\n'.format(biz.referrals)
-    print '\n\n\n{}\n\n\n'.format(biz.promos)
-    print '\n\n\n{}\n\n\n'.format(biz.users)
+    print u'\n\n\n{}\n\n\n'.format(biz_name)
+    print u'\n\n\n{}\n\n\n'.format(biz.reviews)
+    print u'\n\n\n{}\n\n\n'.format(biz.referrals)
+    print u'\n\n\n{}\n\n\n'.format(biz.promos)
+    print u'\n\n\n{}\n\n\n'.format(biz.users)
 
     avg_score, count = helper.calc_avg_rating(biz)
     tot_checkins = helper.calc_biz_tot_checkins(biz)
@@ -364,7 +365,7 @@ def biz_profile(biz_name):
         user_rating = 'N/A'
 
     # TO DELETE
-    print '\n\n\n{}\n\n\n'.format(promos_redeem)
+    print u'\n\n\n{}\n\n\n'.format(promos_redeem)
 
     # TO DO: build out helper functions to pull in totals to summarize;
     # format phone number and hours
@@ -388,9 +389,10 @@ def check_in(biz_id):
     checkin = (CheckIn.query.filter(CheckIn.user_id == session['user_id'],
                CheckIn.biz_id == biz_id, CheckIn.checkin_date == today).first())
     biz = Business.query.get(biz_id)
+    biz_name = biz.biz_name
 
     # TO DELETE
-    print '\n\n\n{}\n\n\n'.format(biz.biz_name)
+    print u'\n\n\n{}\n\n\n'.format(biz.biz_name)
 
     if checkin:
         flash('You have already checked into this business today. No double dipping!')
@@ -407,17 +409,21 @@ def check_in(biz_id):
         flash('You have checked in a total of {} times. {} thanks you for your support!'.format(user_checkins, biz.biz_name))
 
     # TO DELETE
-    print '\n\n\n{}\n\n\n'.format(biz.biz_name)
-    print '\n\n\n{}\n\n\n'.format(session['checkin'])
+    print u'\n\n\n{}\n\n\n'.format(biz_name)
+    import pdb; pdb.set_trace()
 
-    return redirect('business-profile/<biz.biz_name>')
+    # return redirect('/')
+
+    return redirect('/business-profile/<biz_name>')
+
+    # FIXME: redirect isn't taking in biz_name
 
 
 @app.route('/review/<biz_name>')
-def review_form(biz_id):
+def review_form(biz_name):
     """Displays form to review a business."""
 
-    return render_template('review_form.html', biz_id=biz_id)
+    return render_template('review_form.html', biz_name=biz_name)
 
 
 @app.route('/review/<biz_name>', methods=['POST'])
@@ -440,7 +446,7 @@ def review_process(biz_name):
 
     flash('Your review has been received. {} appreciates your feedback.'.format(biz_name))
 
-    return redirect('/business-profile/<biz_name')
+    return redirect('/business-profile/<biz_name>')
 
 
 @app.route('/like-review', methods=['POST'])
@@ -453,6 +459,8 @@ def like_process():
 
     db.session.add(like)
     db.session.commit()
+
+    return 'Thanks for liking me!'
 
 
 ##############################################################################

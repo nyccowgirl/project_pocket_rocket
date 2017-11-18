@@ -61,9 +61,9 @@ def create_biz():
                        fake.url(),
                        fake.random_element(elements=('bar', 'cleaner', 'cafe',
                                                      'grocery', 'florist', 'home',
-                                                     'medicine', 'nightlife',
-                                                     'pet', 'restaurant', 'salon',
-                                                     'spa')),
+                                                     'medicine', 'legal',
+                                                     'nightlife', 'pet', 'restaurant',
+                                                     'salon', 'spa')),
                        fake.random_element(elements=('M-F', 'M-S', 'M-Su', 'T-Su',
                                                      'M, W, F', 'S-Su', 'T-S')),
                        fake.random_int(min=1, max=24),
@@ -185,7 +185,7 @@ def create_userpromos():
     with open('data/userpromos.txt', 'a') as userpromos:
 
         for i in range(1000):
-            redeemed = fake.boolean(chance_of_getting_true=35)
+            redeemed = fake.boolean(chance_of_getting_true=40)
 
             if redeemed:
                 redeem_date = fake.date_this_decade(before_today=True, after_today=False)
@@ -265,7 +265,7 @@ def create_invites():
         for i in range(150):
             invites.write('{}|{}|{}\n'.format(fake.random_int(min=1, max=250),
                                               fake.free_email(),
-                                              fake.boolean(chance_of_getting_true=20)))
+                                              fake.boolean(chance_of_getting_true=10)))
 
 
 def load_users():

@@ -1,11 +1,18 @@
 <!doctype html>
 <html>
 <head>
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/boostrap.css'>
+<!--     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/boostrap.css'> -->
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Raleway:100,700'>
+    <link rel='stylesheet' type='text/css' href='/static/css/maps.css'>
     <link rel='stylesheet' type='text/css' href='/static/css/style.css'>
 <!--     <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"> -->
 
     <title>BUDdy</title>
+
+    {% block head %}
+      <!-- Put extra CSS/JS here -->
+    {% endblock %}
+
 </head>
 <body>
 
@@ -44,9 +51,10 @@
     Put your body here.
 {% endblock %}
 
-<script src='http://code.jquery.com/jquery.js'></script>
+<script src='https://maps.googleapis.com/maps/api/js'></script>
+<script src='https://code.jquery.com/jquery.js'></script>
 {% block script %}
-    Put your script here.
+
 {% endblock %}
 <!-- <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js'></script>
  --><!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
