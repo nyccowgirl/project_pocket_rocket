@@ -1,0 +1,47 @@
+
+--------------------------------------------------
+
+BOOTSTRAP SETUP NOTES
+
+Works with v4.0, HTML5
+
+--------------------------------------------------
+
+1) setup
+
+download: https://getbootstrap.com/docs/4.0/getting-started/download/
+
+-or-
+
+bootstrap CDN:
+
+a) paste stylesheet link in <head> before other stylesheets to load CSS:
+
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' integrity='sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb' crossorigin='anonymous'>
+
+b) paste following scripts near end of page, before closing </body> but before other JavaScript that would require jQuery as well (note: jQuery must come first, then Popper, then JavaScript plugins)
+
+<script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js' integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh' crossorigin='anonymous'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js' integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ' crossorigin='anonymous'></script>
+
+NOTE: while integrity and crossorigin are not needed, they ensure that file is delivered without any third-party manipulation. for purposes of project, sometimes it resulted in unnecessary errors with local host, so removed. also while jQuery's slim build version is used, the full version is also supported.
+
+<script src='https://code.jquery.com/jquery.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
+
+
+2) bootstrap optimizes mobile devices first and scale up. to ensure proper rendering for all devices, the following meta tag is to be put in <head> before stylesheet link above
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+3) bootstrap switches box-sizing to border-box, which can cause problems with some third-party software like Google Maps. in case this needs to be overridden, the following may be needed:
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+
+
+4)
+--------------------------------------------------
+

@@ -4,7 +4,7 @@ torresyvonne|Kenneth|Graves|ucannon@gmail.com|True|78Fa4Myt&x|https://www.loremp
 anthony54|Anthony|Lopez|johnsonjoshua@gmail.com|True|)PHwtC&6E0|https://www.lorempixel.com/967/80|2002-06-08|2013-09-30|False
 walkerpaul|Sheila|Alvarado|laura29@hotmail.com|True|0qL3Xpt0#2|https://placeholdit.imgix.net/~text?txtsize=55&txt=734x717&w=734&h=717|2008-10-03|2014-04-23|False
 kenneth04|Karen|Gordon|proctorheather@yahoo.com|True|%xRTyR&_@1|https://placeholdit.imgix.net/~text?txtsize=55&txt=653x381&w=653&h=381|2002-07-31|2011-01-10|False
-waynebutler|Danielle|Delacruz|watsonvicki@yahoo.com|True|WaW&WB)0^1|https://dummyimage.com/364x936|1988-04-11|2015-09-23|False
+waynebutler|Danielle|Delacruz|watsonvicki@yahoo.com|True|WaW&WB)0^1||1988-04-11|2015-09-23|False
 randybrock|Amy|Young|laceywelch@hotmail.com|True|KYc2JGw(c!|https://dummyimage.com/87x48|1979-10-15|2010-12-27|False
 luke10|Diane|Finley|glennantonio@hotmail.com|True|%jkXILWs87|https://dummyimage.com/959x724|1978-01-30|2016-06-28|False
 doconnor|Sarah|Rodriguez|robert11@yahoo.com|True|IK2KDh8z&5|https://www.lorempixel.com/837/413|1990-07-01|2010-07-21|False

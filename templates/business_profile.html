@@ -98,6 +98,11 @@
           <p>{{ review.new_review }}</p>
         {% else %}
           <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button></p>
+
+          {% if review.cust_svc %}
+            <p>Customer Service Rating: {{ review.cust_svc }}</p>
+          {% endif %}
+
           <p>{{ review.review }}</p>
           {% if review.biz.is_owned %}
             <button id='dispute {{ review.review_id }}' class='dispute'>Respond</button>

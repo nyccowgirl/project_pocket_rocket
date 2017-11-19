@@ -3,7 +3,7 @@ from flask import (Flask, render_template, request, flash, redirect,
                    session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
 from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
-                   Referral, LikeReview)
+                   LikeReview)
 from datetime import datetime
 import helper
 import re
@@ -101,6 +101,7 @@ def register_process():
         db.session.commit()
         session['user_id'] = user.user_id
         session['username'] = user.username
+        session['biz_acct'] = user.biz_acct
         flash('{} is now registered and logged in as {}'.format(user.email, user.username))
 
         return redirect('/')
@@ -133,6 +134,7 @@ def login_process():
     else:
         session['user_id'] = user.user_id
         session['username'] = user.username
+        session['biz_acct'] = user.biz_acct
         flash('{} is now logged in.'.format(user.username))
 
         return redirect('/')

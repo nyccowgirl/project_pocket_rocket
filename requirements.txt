@@ -26,6 +26,7 @@ psycopg2==2.7.3.2
 ptyprocess==0.5.2
 Pygments==2.2.0
 python-dateutil==2.6.1
+sass==2.3
 scandir==1.6
 simplegeneric==0.8.1
 six==1.11.0
