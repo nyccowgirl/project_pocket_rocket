@@ -42,6 +42,11 @@ NOTE: while integrity and crossorigin are not needed, they ensure that file is d
 }
 
 
-4)
+4) while latest version makes it easier to customize, the docs do not easily provide the field names to customize beyond the standard color themes. the following scss docs have the details for the various features in order to customize in separate css file.
+
+https://github.com/twbs/bootstrap/tree/v4-dev/scss
+
+* create separate class names if global edits are not required
+
 --------------------------------------------------
 
