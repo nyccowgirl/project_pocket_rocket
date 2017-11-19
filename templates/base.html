@@ -21,18 +21,6 @@
 </head>
 <body>
 
-<!-- {% if 'user_id' in session %}
-    <div>
-        <a href='/logout'>Log Out</a> | <a href='/user-profile'>Profile</a>
-        <a id='glogout' href="#" onclick="signOut();">Sign out</a>
-    </div>
-
-{% else %}
-    <div>
-        <a href='/login'>Log In</a> | <a href='/register'>Sign Up</a>
-    </div>
-{% endif %} -->
-
 <nav class='navbar navbar-expand-lg navbar-dark'>
 <!-- Image and text -->
   <a class='navbar-brand' href='/'>
@@ -48,7 +36,7 @@
 
     <form class='mx-2 my-auto d-inline w-75' action='/search' method='POST'>
       <div class='input-group'>
-        <input class='form-control search' name='search' placeholder='Search Me' autocomplete='on' autofocus='autofocus' type='text'>
+        <input class='form-control search' name='search' placeholder='Where To?' autocomplete='on' autofocus='autofocus' type='text'>
         <span class='input-group-btn'>
           <button class='btn btn-outline-light' type='submit'>Search</button>
         </span>
@@ -59,8 +47,8 @@
             build out /search page and related python code -->
 
 <!-- Profile, register and login/logout -->
-    <ul class='navbar-nav ml-auto'>
-      <li class='nav-item active'>
+    <ul class='navbar-nav ml-auto' id='nav-item'>
+      <li class='nav-item'>
         <a class='nav-link' href='/'>Home <span class='sr-only'>(current)</span></a>
       </li>
 
@@ -79,20 +67,21 @@
           <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
             Profile
           </a>
-          <div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+          <div class='dropdown-menu dropdown-menu-right' aria-labelledby='navbarDropdown'>
             <a class='dropdown-item' href='/user-profile'>Account</a>
             <a class='dropdown-item' href='#'>Friends</a>
             <div class='dropdown-divider'></div>
             <a class='dropdown-item' href='#'>Reviews</a>
             <a class='dropdown-item' href='#'>Referrals</a>
-            <a class='dropdown-item' href='#'>Promotions/Redemptions</a>
-            <a class='dropdown-item' href='#'>Reviews</a>
+            <a class='dropdown-item' href='#'>Promos/Reds</a>
             {% if session['biz_acct'] == True %}
+              <div class='dropdown-divider'></div>
               <a class='dropdown-item' href='#'>Business Account</a>
             {% endif %}
           </div>
         </li>
         <!-- TO DO: Break up various components of user-profile into sections -->
+        <img src='{{ session['user_pic'] }}' width='30' height='30' class='d-inline-block align-top' alt='right'>
       {% else %}
 
         <li class='nav-item'>

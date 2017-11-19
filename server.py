@@ -102,6 +102,12 @@ def register_process():
         session['user_id'] = user.user_id
         session['username'] = user.username
         session['biz_acct'] = user.biz_acct
+
+        if user.user_pic:
+            session['user_pic'] = user.user_pic
+        else:
+            session['user_pic'] = '/static/img/dragonfly.jpeg'
+
         flash('{} is now registered and logged in as {}'.format(user.email, user.username))
 
         return redirect('/')
@@ -135,6 +141,12 @@ def login_process():
         session['user_id'] = user.user_id
         session['username'] = user.username
         session['biz_acct'] = user.biz_acct
+
+        if user.user_pic:
+            session['user_pic'] = user.user_pic
+        else:
+            session['user_pic'] = '/static/img/dragonfly.jpeg'
+
         flash('{} is now logged in.'.format(user.username))
 
         return redirect('/')
