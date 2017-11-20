@@ -7,21 +7,52 @@ $(document).ready(() => {
 
   $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
 
-// shows log-in modal
+// processes log-in modal
 
-  $('#login-modal').on('shown.bs.modal', function () {
-    $('#myInput').trigger('focus')
-  })
+  function displayMsg(results) {
+    alert();
 
-  $(function(){
-  $('#loginform').submit(function(e){
-    return false;
-  });
+    if (results.code === 'error') {
+        let text = $('#order-error');
+        text.css('color', 'red');
+    };
+    location.reload('/');
+  }
 
-  $('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
-});
+  function logIn(evt) {
+    evt.preventDefault();
+    let formInputs = {
+      'user-input': $('#login_username').val(),
+      'pword': $('$login_password'.val(),
+    };
+    $.post('/login', formInputs, displayMsg)
+  }
 
-// process like buttons on reviews
+  $('#login-form').on('submit', logIn);
+
+// Resets password
+  // <!-- FIXME: Not sure if the prior two lines are needed. -->
+
+  function checkEmail(result) {
+    if (!$('.user-input').val()) {
+        alert('Please input a user name or email');
+    } else if (result == False) {
+        alert('User name or email does not exist. Please check your input or register.');
+    };
+  }
+
+  function sendEmail(evt) {
+    evt.preventDefault();
+    checkEmail();
+    let result = $.get('/pword-reset',checkEmail);
+    // TO DO: send link to email to reset password
+    };
+  }
+
+  $('#resetBtn').on('click', sendEmail)
+
+
+// processes like buttons on reviews
 
   let $like = $('.like');
 

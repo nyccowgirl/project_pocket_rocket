@@ -126,11 +126,11 @@ def register_process():
         return redirect('/')
 
 
-@app.route('/login')
-def login_form():
-    """Displays form for user to log-in."""
+# @app.route('/login')
+# def login_form():
+#     """Displays form for user to log-in."""
 
-    return render_template('login_form.html')
+#     return render_template('login_form.html')
 
 
 @app.route('/login', methods=['POST'])
@@ -145,11 +145,11 @@ def login_process():
     # does not exist, then note error for user to re-input; otherwise, go to registration
 
     if not user:
-        flash('User name or email does not exist. Please check your input or register.')
-        return redirect('/login')
+        code = 'error'
+        results = 'User name or email does not exist. Please check your input or register.'
     elif user.password != pword:
-        flash('The password is incorrect. Please check you input or reset password.')
-        return redirect('/login')
+        code = 'error'
+        results = 'The password is incorrect. Please check you input or reset password.'
     else:
         session['user_id'] = user.user_id
         session['username'] = user.username
@@ -160,9 +160,10 @@ def login_process():
         else:
             session['user_pic'] = '/static/img/dragonfly.jpeg'
 
-        flash('{} is now logged in.'.format(user.username))
+        code = 'success'
+        results = user.username + ' is now logged in.'
 
-        return redirect('/')
+    return jsonify('code': code, 'msg': results)
 
 
 @app.route('/logout')

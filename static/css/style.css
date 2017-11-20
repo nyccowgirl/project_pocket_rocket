@@ -69,6 +69,15 @@
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px yellow;
  }
 
+ #img_logo {
+  font-style: oblique;
+  font-size: 20px;
+  color: #8e44ad;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+ }
+
 @media (max-width: 575px) {
   .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
     color: #ecf0f1;

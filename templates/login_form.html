@@ -62,7 +62,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" align="center">
-                    <img class="img-circle" id="img_logo" src="http://bootsnipp.com/img/logo.jpg">
+                    <img class="img-circle" id="img_logo" src="/static/img/pinky.jpg"> BUDdy
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     </button>
@@ -170,23 +170,6 @@
 <script src='/static/js/main.js'></script>
 <script type='text/javascript'>
 
-// <!-- FIXME: Not sure if the prior two lines are needed. -->
-function checkEmail(result) {
-    if (!$('.user-input')) {
-        alert('Please input a user name or email');
-    } else if (result == False) {
-        alert('User name or email does not exist. Please check your input or register.')
-    }
-}
 
-function sendEmail(evt) {
-    evt.preventDefault();
-    checkEmail();
-    let result = $.get('/pword-reset',checkEmail);
-    // TO DO: send link to email to reset password
-    }
-}
-
-$('#resetBtn').on('click', sendEmail)
 </script>
 {% endblock %}
