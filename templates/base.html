@@ -85,7 +85,7 @@
       {% else %}
 
         <li class='nav-item'>
-          <a class='nav-link' href='/login'>Log In</a>
+          <a class='nav-link' href='/login' data-toggle='modal' data-target='#login-modal'>Log In</a>
           <!-- nav-link disabled => if needed -->
         </li>
       {% endif %}
@@ -103,10 +103,70 @@
     Put your body here.
 {% endblock %}
 
-<div class='footer'>
-  <!-- Contact us generates email from user email program. -->
-  <a href='/about-us'>About Us</a> | <a href='mailto:balloonicorn@hackbrightacademy.com'>Contact Us</a>
-</div>
+<!--Footer-->
+<footer class="page-footer indigo center-on-small-only pt-0">
+    <!--Footer Links-->
+    <div class="container">
+        <!--Grid row-->
+        <div class="row pt-5 mb-3 text-center d-flex justify-content-center">
+            <!--Grid column-->
+            <div class="col-md-2 mb-3">
+                <h6 class="title font-bold"><a href='/about-us'>About us</a></h6>
+            </div>
+            <div class="col-md-2 mb-3">
+                <h6 class="title font-bold"><a href="#!">Help</a></h6>
+            </div>
+            <div class="col-md-2 mb-3">
+                <h6 class="title font-bold"><a href='mailto:balloonicorn@hackbrightacademy.com'>Contact</a></h6>
+            </div>
+
+        </div>
+
+        <hr class="rgba-white-light" style="margin: 0 15%;">
+
+        <div class="row pb-3">
+
+            <div class="col-md-12">
+
+                <div class="footer-socials mb-5 flex-center">
+                    <!--Facebook-->
+                    <a class="icons-sm fb-ic"><i class="fa fa-facebook fa-lg white-text mr-md-4"> </i></a>
+                    <!--Twitter-->
+                    <a class="icons-sm tw-ic"><i class="fa fa-twitter fa-lg white-text mr-md-4"> </i></a>
+                    <!--Google +-->
+                    <a class="icons-sm gplus-ic"><i class="fa fa-google-plus fa-lg white-text mr-md-4"> </i></a>
+                    <!--Linkedin-->
+                    <a class="icons-sm li-ic"><i class="fa fa-linkedin fa-lg white-text mr-md-4"> </i></a>
+                    <!--Instagram-->
+                    <a class="icons-sm ins-ic"><i class="fa fa-instagram fa-lg white-text mr-md-4"> </i></a>
+                    <!--Pinterest-->
+                    <a class="icons-sm pin-ic"><i class="fa fa-pinterest fa-lg white-text"> </i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Social buttons-->
+    <div class="social-section text-center">
+        <ul>
+
+            <li><a class="btn-floating btn-sm btn-fb"><i class="fa fa-facebook"> </i></a></li>
+            <li><a class="btn-floating btn-sm btn-tw"><i class="fa fa-twitter"> </i></a></li>
+            <li><a class="btn-floating btn-sm btn-gplus"><i class="fa fa-google-plus"> </i></a></li>
+            <li><a class="btn-floating btn-sm btn-li"><i class="fa fa-linkedin"> </i></a></li>
+            <li><a class="btn-floating btn-sm btn-dribbble"><i class="fa fa-dribbble"> </i></a></li>
+
+        </ul>
+    </div>
+    <!--/.Social buttons-->
+
+    <!--Copyright-->
+    <div class='footer-copyright'>
+        <div class='container-fluid'>
+          © 2017 Copyright: <a href='#!'> BUDdy.com </a>
+        </div>
+    </div>
+    <!--/Copyright-->
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS, then other JS -->
 

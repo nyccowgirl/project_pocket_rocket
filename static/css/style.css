@@ -138,21 +138,25 @@
 }
 
 body {
-  background-color: #f6f2f7;
+  background-color: #f3e5f5;
 }
 
 .giphy-embed {
-    text-align: center;
+  text-align: center;
 }
 
 .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-/*    background-color: lavender;*/
-    color: white;
-    text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: #8e44ad;
+  text-align: center;
+}
+
+.footer-copyright {
+  text-align: center;
+  color: #8e44ad;
 }
 
 /* #####################################################################
@@ -165,7 +169,7 @@ body {
    #
    ##################################################################### */
 
-@font-face {
+/*@font-face {
     font-family: 'Roboto', sans-serif;
     src: url('http://fonts.googleapis.com/css?family=Roboto');
 }
@@ -228,13 +232,13 @@ body {
 #img_logo {
     max-height: 100px;
     max-width: 100px;
-}
+}*/
 
 /* #########################################
    #    override the bootstrap configs     #
    ######################################### */
 
-.modal-backdrop.in {
+/*.modal-backdrop.in {
     filter: alpha(opacity=50);
     opacity: .8;
 }
@@ -301,3 +305,4 @@ body {
 .form-control {
   border-radius: 0px;
 }
+*/

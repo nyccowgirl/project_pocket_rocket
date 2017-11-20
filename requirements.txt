@@ -8,6 +8,7 @@ Faker==0.8.6
 Flask==0.12.2
 Flask-DebugToolbar==0.10.1
 Flask-SQLAlchemy==2.3.2
+Flask-Uploads==0.2.1
 GeoAlchemy2==0.4.0
 ipaddress==1.0.18
 ipython==5.5.0

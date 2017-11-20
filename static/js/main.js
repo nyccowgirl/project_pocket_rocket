@@ -5,18 +5,25 @@ $(document).ready(() => {
 
 // modifies styling of navbar items for current page
 
+  $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
 
-  $('.nav-item').on('click', (function() {
-    $('.nav-item .active').removeClass('active');
-    if (!$(this).hasClass('active')) {
-      $(this).addClass('active');
-    };
+// shows log-in modal
+
+  $('#login-modal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
+  })
+
+  $(function(){
+  $('#loginform').submit(function(e){
+    return false;
   });
 
-
-  let $like = $('.like');
+  $('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+});
 
 // process like buttons on reviews
+
+  let $like = $('.like');
 
   function disableLike(results) {
     alert(results);

@@ -2,6 +2,7 @@ from jinja2 import StrictUndefined
 from flask import (Flask, render_template, request, flash, redirect,
                    session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_uploads import UploadSet, configure_uploads, IMAGES
 from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
                    LikeReview)
 from datetime import datetime
@@ -11,6 +12,11 @@ import constants as c
 
 
 app = Flask(__name__)
+
+pics = UploadSet('pics', IMAGES)
+
+app.config['UPLOADED_PICS_DEST'] = 'static/img'
+configure_uploads(app, pics)
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "SHHHHHHIIIITTTT"
@@ -62,8 +68,15 @@ def register_process():
     email = request.form['email']
     pword = request.form['pword']
     bday_str = request.form['bday']
-    pic = request.form['pic']
     biz = request.form['biz']
+
+    # Convert picture that would be saved to static/img directory but url stored
+    # in database
+    if 'pic' in request.files:
+        filename = pics.save(request.files['pic'])
+        pic = pics.url(filename)
+    else:
+        pic = None
 
     # TO DELETE
     print u'\n\n\n{}\n\n\n'.format(username)
@@ -287,7 +300,14 @@ def biz_process():
     close_time = int(request.form['time-close'])
     close_mil = request.form['close-ampm']
     claim = request.form['claim']
-    pic = request.form['pic']
+
+    # Convert picture that would be saved to static/img directory but url stored
+    # in database
+    if 'pic' in request.files:
+        filename = pics.save(request.files['pic'])
+        pic = pics.url(filename)
+    else:
+        pic = None
 
     # TO DELETE
     print u'\n\n\n{}\n\n\n'.format(name)

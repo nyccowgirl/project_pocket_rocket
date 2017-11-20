@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container py-5">
+<!-- <div class="container py-5">
     <div class="row">
         <div class="col-md-12">
             <h2 class="text-center text-white mb-4">Log-In Form</h2>
@@ -9,7 +9,6 @@
                 <div class="col-md-6 mx-auto">
                     <span class="anchor" id="formLogin"></span>
 
-                    <!-- form card login -->
                     <div class="card rounded-0">
                         <div class="card-header">
                             <h3 class="mb-0">Login</h3>
@@ -37,35 +36,29 @@
                                 <a href='/pword-reset'>Forgot password.</a>
                             </span>
                         </div>
-                        <!--/card-block-->
                     </div>
-                    <!-- /form card login -->
 
                 </div>
 
 
             </div>
-            <!--/row-->
 
         </div>
-        <!--/col-->
     </div>
-    <!--/row-->
-</div>
-<!--/container-->
+</div> -->
 
 
 <!-- BEGIN # BOOTSNIP INFO -->
-<!-- <div class="container">
+<div class="container">
     <div class="row">
         <h1 class="text-center">Modal Login with jQuery Effects</h1>
         <p class="text-center"><a href="#" class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#login-modal">Open Login Modal</a></p>
     </div>
-</div> -->
+</div>
 <!-- END # BOOTSNIP INFO -->
 
 <!-- BEGIN # MODAL LOGIN -->
-<!-- <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" align="center">
@@ -74,12 +67,12 @@
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     </button>
                 </div>
- -->
+
                 <!-- Begin # DIV Form -->
-<!--                 <div id="div-forms">
- -->
+                <div id="div-forms">
+
                     <!-- Begin # Login Form -->
-<!--                     <form id="login-form">
+                    <form id="login-form">
                         <div class="modal-body">
                             <div id="div-login-msg">
                                 <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
@@ -102,11 +95,11 @@
                                 <button id="login_register_btn" type="button" class="btn btn-link">Register</button>
                             </div>
                         </div>
-                    </form> -->
+                    </form>
                     <!-- End # Login Form -->
 
                     <!-- Begin | Lost Password Form -->
-<!--                     <form id="lost-form" style="display:none;">
+                    <form id="lost-form" style="display:none;">
                         <div class="modal-body">
                             <div id="div-lost-msg">
                                 <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
@@ -123,11 +116,11 @@
                                 <button id="lost_register_btn" type="button" class="btn btn-link">Register</button>
                             </div>
                         </div>
-                    </form> -->
+                    </form>
                     <!-- End | Lost Password Form -->
 
                     <!-- Begin | Register Form -->
-<!--                     <form id="register-form" style="display:none;">
+                    <form id="register-form" style="display:none;">
                         <div class="modal-body">
                             <div id="div-register-msg">
                                 <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
@@ -146,15 +139,15 @@
                                 <button id="register_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
                             </div>
                         </div>
-                    </form> -->
+                    </form>
                     <!-- End | Register Form -->
 
-<!--                 </div> -->
+                </div>
                 <!-- End # DIV Form -->
 
-<!--             </div> -->
-<!--         </div> -->
-<!--     </div> -->
+            </div>
+        </div>
+    </div>
     <!-- END # MODAL LOGIN -->
 
 
@@ -174,12 +167,12 @@
 
 {% block script %}
 <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
-<script src='buddy.js'></script>
+<script src='/static/js/main.js'></script>
 <script type='text/javascript'>
 
 // <!-- FIXME: Not sure if the prior two lines are needed. -->
 function checkEmail(result) {
-    if (not 'user-info') {
+    if (!$('.user-input')) {
         alert('Please input a user name or email');
     } else if (result == False) {
         alert('User name or email does not exist. Please check your input or register.')

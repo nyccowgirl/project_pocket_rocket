@@ -3,7 +3,7 @@
 
 <h1>Business</h1>
 
-<form action='/add-biz' method='POST'>
+<form action='/add-biz' method='POST' enctype='multipart/form-data'>
 
   <div>
     <label>
@@ -77,7 +77,7 @@
       </select>
     </label>
   </div>
-  <!-- FIXME: Why is Days Open not showing on separate line -->
+
   <div>
     <label>
       Days Open (e.g., M-F): <input type='text' name='days-open'>
@@ -108,7 +108,11 @@
     </label>
   </div>
 
-<!-- TO DO: Need to add in pic. -->
+  <div>
+    <label>
+      Picture: <input type='file' name='pic' accept='image/*'>
+    </label>
+  </div>
 
   <input type='submit'>
 </form>
