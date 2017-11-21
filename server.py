@@ -4,7 +4,7 @@ from flask import (Flask, render_template, request, flash, redirect,
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
-                   LikeReview)
+                   LikeReview, Friend)
 from datetime import datetime
 import helper
 import re
@@ -256,7 +256,45 @@ def user_friends():
     # TO DELETE
     print u'\n\n\n{}\n\n\n'.format(user.friends)
 
+    print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
+
     return render_template('user_friends.html', user=user)
+
+
+@app.route('/add-friend', methods=['POST'])
+def add_friend():
+    """Processes add friend request."""
+
+    friend_email = request.form.get('friend-email')
+
+    # TO DELETE
+    print u'\n\n\n{}\n\n\n'.format(friend_email)
+
+    friend = User.query.filter_by(email=friend_email).first()
+
+    if not friend:
+        results = 'A request has been sent to ' + friend_email
+    else:
+        # Checks if already existing friends
+        am_friend = Friend.query.filter(user_id=session['user_id'],
+                                        friend_id=friend.user_id).first()
+        is_friend = Friend.query.filter(user_id=friend.user_id,
+                                        friend_id=session['user_id']).first()
+
+        if am_friend or is_friend:
+            results = 'You are already friends with ' + friend.username
+        else:
+            friend = Friend(user_id=session['user_id'],
+                            friend_id=friend.user_id)
+
+            db.session.add(friend)
+            db.session.commit()
+
+            results = friend.username + "is now your friend."
+
+    print results
+
+    return jsonify(results)
 
 
 @app.route('/friend-profile/<int:friend_id>')

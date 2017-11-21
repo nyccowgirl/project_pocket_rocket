@@ -134,14 +134,18 @@ $(document).ready(() => {
 
   let $friend = $('#modalAddFriend');
 
-
+  function friendMsg(results) {
+    alert(results);
+  }
 
   function sendFriend(evt) {
     evt.preventDefault();
+    debugger
+    console.log($('#friend-email').val());
     let formInputs = {
       'friend_email': $('#friend-email').val()
-    }
-    $.post('/add-friend', formInputs, friendMsg)
+    };
+    $.post('/add-friend', formInputs, friendMsg);
   }
 
   $friend.on('submit', sendFriend);
