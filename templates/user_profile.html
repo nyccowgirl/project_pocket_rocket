@@ -1,19 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h1>User Profile</h1>
-
-  <!-- TO DO: Set each as either menu item on left panel or as scroll down from nav bar. -->
-
   <h2>{{ user.username }}</h2>
+
+  <div class='container-fluid'>
 
   <h3>About Me</h3>
 
     <div>
       {% if user.user_pic %}
-        <img src='{{ user.user_pic }}'>
+        <img  id='user_pic' src='{{ user.user_pic }}' hspace='40'>
       {% else %}
-        <img src='/static/img/dragonfly.jpeg'>
+        <img  id='user_pic' src='/static/img/dragonfly.jpeg' hspace='40'>
       {% endif %}
     </div>
 
@@ -62,14 +60,18 @@
         <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
         {% if review.revise_review %}
           <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
-            {% if not review.has_liked(session['user_id']) %}
+            {% if review.has_liked(session['user_id']) %}
+              <button disabled>Like</button>
+            {% else %}
               <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
             {% endif %}
           </p>
           <p>{{ review.new_review }}</p>
         {% else %}
           <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
-            {% if not review.has_liked(session['user_id']) %}
+            {% if review.has_liked(session['user_id']) %}
+              <button disabled>Like</button>
+            {% else %}
               <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
             {% endif %}
           </p>
@@ -165,6 +167,8 @@
         {% endfor %}
       </ul>
   {% endif %}
+
+  </div>
 
 {% endblock %}
 

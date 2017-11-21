@@ -57,12 +57,16 @@
         {% if review.revise_review %}
           <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
             {% if not review.has_liked(session['user_id']) %}
+              <button disabled>Like</button>
+            {% else %}
               <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
             {% endif %}
           <p>{{ review.new_review }}</p>
         {% else %}
           <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
             {% if not review.has_liked(session['user_id']) %}
+              <button disabled>Like</button>
+            {% else %}
               <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
             {% endif %}
           <p>{{ review.review }}</p>

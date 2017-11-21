@@ -44,9 +44,9 @@
 
     <div>
       {% if biz.biz_pic %}
-        <img src='{{ biz.biz_pic }}'>
+        <img id='biz_pic' src='{{ biz.biz_pic }}' hspace='40'>
       {% else %}
-        <img src='/static/img/dragonfly_mating.jpeg'>
+        <img id='biz_pic' src='/static/img/dragonfly_mating.jpeg' hspace='40'>
       {% endif %}
     </div>
 
@@ -94,10 +94,20 @@
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
         {% if review.revise_review %}
-          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button></p>
+          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+            {% if not review.has_liked(session['user_id']) %}
+              <button disabled>Like</button>
+            {% else %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+            {% endif %}
           <p>{{ review.new_review }}</p>
         {% else %}
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button></p>
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+            {% if not review.has_liked(session['user_id']) %}
+              <button disabled>Like</button>
+            {% else %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+            {% endif %}
 
           {% if review.cust_svc %}
             <p>Customer Service Rating: {{ review.cust_svc }}</p>
@@ -114,7 +124,12 @@
       <b>Being Addressed</b>
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
-        <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button></p>
+        <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+          {% if not review.has_liked(session['user_id']) %}
+            <button disabled>Like</button>
+          {% else %}
+            <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+          {% endif %}
         <p>{{ review.review }}</p>
         <b>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
           <p>{{ review.response }}</p>

@@ -137,8 +137,8 @@ def register_process():
 def login_process():
     """Logs in user."""
 
-    user_input = request.form['user-info']
-    pword = request.form['pword']
+    user_input = request.form.get('user-input')
+    pword = request.form.get('pword')
 
     user = helper.check_user_info(user_input)
     # TO DO: move this to AJAX(?) to check it in html first, where if email/username
@@ -163,7 +163,7 @@ def login_process():
         code = 'success'
         results = user.username + ' is now logged in.'
 
-    return jsonify('code': code, 'msg': results)
+    return jsonify({'code': code, 'msg': results})
 
 
 @app.route('/logout')
@@ -189,6 +189,7 @@ def check_email():
         return False
     else:
         return True
+        email = user.email
 
     # TO DO: need to send link to user email to reset password
 
