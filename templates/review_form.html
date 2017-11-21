@@ -5,36 +5,42 @@
 
 <h2>{{ biz_name }}</h2>
 
-<form action='/review/{{ biz_name }}' method='POST'>
-  Rating:<select name='rating'>
-    <option value='1'>1</option>
-    <option value='2'>2</option>
-    <option value='3'>3</option>
-    <option value='4'>4</option>
-    <option value='5'>5</option>
-  </select><br>
-  <br>
-  Review:<br>
-  <textarea id='text' type='text' rows='5' cols='100' name='review' maxlength='5000'></textarea><br>
-    <div id='chars'></div>
-  <input type='submit'>
-</form>
+<div class='container-fluid'>
 
+  <form action='/review/{{ biz_name }}' method='POST'>
+    Rating:<select name='rating'>
+      <option value='1'>1</option>
+      <option value='2'>2</option>
+      <option value='3'>3</option>
+      <option value='4'>4</option>
+      <option value='5'>5</option>
+    </select><br>
+    <br>
+    Review:<br>
+      <div class="md-form">
+        <textarea class="md-textarea" id="input_text" type="text" length="5000" mdbCharCounter mdbActive></textarea>
+        <label for="input_text">Type your review</label>
+      </div>
+    <input type='submit'>
+  </form>
 
-<script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-<!-- <script src='buddy.js'></script> -->
-<script>
-'use strict';
-// <!-- FIXME: Not sure if the prior two lines are needed. -->
-$('#text').on('keyup', (function() {
-  let maxChar = 5000;
-  let len = $(this).val().length;
-  if (len == 0) {
-    $('#chars').html(`<i>${ maxChar } characters remaining</i>`);
-  } else {
-    let numCharLeft = maxChar - len;
-    $('#chars').html(`<i>${ numCharLeft } characters remaining</i>`);
-  }
-}));
-</script>
+</div>
+
+{% endblock}
+
+{% block script %}
+// <script>
+// 'use strict';
+// // <!-- FIXME: Not sure if the prior two lines are needed. -->
+// $('#text').on('keyup', (function() {
+//   let maxChar = 5000;
+//   let len = $(this).val().length;
+//   if (len == 0) {
+//     $('#chars').html(`<i>${ maxChar } characters remaining</i>`);
+//   } else {
+//     let numCharLeft = maxChar - len;
+//     $('#chars').html(`<i>${ numCharLeft } characters remaining</i>`);
+//   }
+// }));
+// </script>
 {% endblock %}

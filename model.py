@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.associationproxy import association_proxy  # FIXME: may not need
-from sqlalchemy import func
+from sqlalchemy import func, distinct
 from geoalchemy2 import Geometry
 from datetime import datetime
 
@@ -55,7 +55,44 @@ class User(db.Model):
 
         return (u'<user_id={} username={} email={}>'.format(self.user_id,
                 self.username, self.email))
-    # TO DO: look into uploading image to flask
+
+    def tot_friends(self):
+        """ Calculates total friends. """
+
+        total = len(self.friends)
+
+        return total
+
+    def tot_reviews(self):
+        """ Calculates total reviews of businesses. """
+
+        total = len(self.reviews)
+
+        return total
+
+    def tot_checkins(self):
+        """ Calculates total checkins to businesses. """
+
+        total = len(self.checkins)
+
+        return total
+
+    def tot_unique_biz(self):
+        """ Calculates total of different business that have been checked into. """
+
+        unique_biz = (db.session.query(func.count(distinct(CheckIn.biz_id)))
+                      .filter_by(user_id=self.user_id).scalar())
+
+        return unique_biz
+
+    def tot_biz_referrals(self):
+        """ Calculates total businesses that have been referred by user and redeemed by referee. """
+
+        unique_biz_refs = (db.session.query(func.count(distinct(Referral.biz_id)))
+                           .join(UserPromo).filter(UserPromo.redeemed == True,
+                           UserPromo.user_id == self.user_id).scalar())
+
+        return unique_biz_refs
 
 
 class Friend(db.Model):

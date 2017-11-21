@@ -95,18 +95,18 @@
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
         {% if review.revise_review %}
           <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
-            {% if not review.has_liked(session['user_id']) %}
-              <button disabled>Like</button>
+            {% if review.has_liked(session['user_id']) %}
+              <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
             {% else %}
-              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
             {% endif %}
           <p>{{ review.new_review }}</p>
         {% else %}
           <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
-            {% if not review.has_liked(session['user_id']) %}
-              <button disabled>Like</button>
+            {% if review.has_liked(session['user_id']) %}
+              <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
             {% else %}
-              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
             {% endif %}
 
           {% if review.cust_svc %}

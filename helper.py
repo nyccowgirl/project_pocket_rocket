@@ -1,6 +1,7 @@
 from __future__ import division
 from flask import Flask, session
 from model import connect_to_db, User, CheckIn, Promo  # db
+from sqlalchemy.sql import extract
 
 app = Flask(__name__)
 
@@ -25,40 +26,40 @@ def check_user_info(user_input):
     return user
 
 
-def calc_friends(user_obj):
-    """
-    Calculates total friends for gamification component.
+# def calc_friends(user_obj):
+#     """
+#     Calculates total friends for gamification component.
 
-    TO DO: Build out doctests
-    """
+#     TO DO: Build out doctests
+#     """
 
-    total = len(user_obj.friends)
+#     total = len(user_obj.friends)
 
-    return total
-
-
-def calc_checkins(user_obj):
-    """
-    Calculates total check-ins for gamification component.
-
-    TO DO: Build out doctests
-    """
-
-    total = len(user_obj.checkins)
-
-    return total
+#     return total
 
 
-def calc_reviews(user_obj):
-    """
-    Calculates total reviews for gamification component.
+# def calc_checkins(user_obj):
+#     """
+#     Calculates total check-ins for gamification component.
 
-    TO DO: Build out doctests
-    """
+#     TO DO: Build out doctests
+#     """
 
-    total = len(user_obj.reviews)
+#     total = len(user_obj.checkins)
 
-    return total
+#     return total
+
+
+# def calc_reviews(user_obj):
+#     """
+#     Calculates total reviews for gamification component.
+
+#     TO DO: Build out doctests
+#     """
+
+#     total = len(user_obj.reviews)
+
+#     return total
 
 
 def calc_referrals(user_obj):

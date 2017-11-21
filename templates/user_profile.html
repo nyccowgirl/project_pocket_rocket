@@ -31,11 +31,11 @@
 
     <div>
       <ul>
-        Check-Ins: {{ session['tot_checkins'] }}<br>
-        Reviews: {{ session['tot_revs'] }}<br>
+        Check-Ins: {{ user.tot_checkins }}<br>
+        Reviews: {{ user.tot_reviews }}<br>
         Referrals: {{ session['tot_refs'] }} | Redeemed: {{ session['redeem_refs'] }}<br>
         Promos Redeemed: {{ session['tot_redeem'] }}<br>
-        Friends: {{ session['tot_friends'] }}
+        Friends: {{ user.tot_friends }}
       </ul>
     </div>
 
@@ -61,18 +61,18 @@
         {% if review.revise_review %}
           <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
             {% if review.has_liked(session['user_id']) %}
-              <button disabled>Like</button>
+              <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
             {% else %}
-              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
             {% endif %}
           </p>
           <p>{{ review.new_review }}</p>
         {% else %}
           <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
             {% if review.has_liked(session['user_id']) %}
-              <button disabled>Like</button>
+              <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
             {% else %}
-              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
             {% endif %}
           </p>
           <p>{{ review.review }}</p>

@@ -20,28 +20,23 @@ $(document).ready(() => {
   }
 
   function sendEmail(evt) {
-    // evt.preventDefault();
     let formInputs = {
       'user-input': $('#lost_email').val()
-      // FIXME
     };
     $.get('/pword-reset', checkEmail);
     // TO DO: send link to email to reset password
   }
 
   function displayMsg(results) {
-    // alert();
-    // console.log(results);
-    // if (results.code === 'error') {
-    //     msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), 'error', 'glyphicon-remove', results.msg);
-    // } else {
-    //     msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), 'success', 'glyphicon-ok', results.msg);
-    // };
+    if (results.code === 'error') {
+        msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), 'error', 'glyphicon-remove', results.msg);
+    } else {
+        msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), 'success', 'glyphicon-ok', results.msg);
+    };
     location.reload('/');
   }
 
   function logIn(evt) {
-    // evt.preventDefault();
     let formInputs = {
       'user-input': $('#login_username').val(),
       'pword': $('#login_password').val()
@@ -61,14 +56,11 @@ $(document).ready(() => {
 
     $('form').on('submit', function (evt) {
       evt.preventDefault();
-
         switch(this.id) {
             case 'login-form':
-                // evt.preventDefault();
 
                 logIn(evt);
 
-                // return false;
                 break;
             case "lost-form":
                 if (!$('#lost_email')) {
@@ -77,15 +69,11 @@ $(document).ready(() => {
                 };
                 sendEmail(evt);
 
-                // return false;
                 break;
             default:
-                // return false;
         }
-        // return false;
     });
 
-  // $('#login-form').on('submit', logIn);
   $('#login_lost_btn').on('click', function () { modalAnimate($formLogin, $formLost); });
   $('#lost_login_btn').on('click', function () { modalAnimate($formLost, $formLogin); });
 
@@ -141,3 +129,19 @@ $(document).ready(() => {
   $like.on('click', handleClick);
 
 });
+
+// processes friend request
+
+  let $friend = $('#modalAddFriend');
+
+
+
+  function sendFriend(evt) {
+    evt.preventDefault();
+    let formInputs = {
+      'friend_email': $('#friend-email').val()
+    }
+    $.post('/add-friend', formInputs, friendMsg)
+  }
+
+  $friend.on('submit', sendFriend);

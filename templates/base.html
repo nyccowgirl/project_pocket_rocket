@@ -71,18 +71,18 @@
           <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
             Profile
           </a>
-          <div class='dropdown-menu dropdown-menu-right' aria-labelledby='navbarDropdown'>
-            <a class='dropdown-item' href='/user-profile'>Account</a>
-            <a class='dropdown-item' href='#'>Friends</a>
-            <div class='dropdown-divider'></div>
-            <a class='dropdown-item' href='#'>Reviews</a>
-            <a class='dropdown-item' href='#'>Referrals</a>
-            <a class='dropdown-item' href='#'>Promos/Reds</a>
-            {% if session['biz_acct'] == True %}
+            <div class='dropdown-menu dropdown-menu-right' aria-labelledby='navbarDropdown'>
+              <a class='dropdown-item' href='/user-profile'>Account</a>
+              <a class='dropdown-item' href='/user-friends'>Friends</a>
               <div class='dropdown-divider'></div>
-              <a class='dropdown-item' href='#'>Business Account</a>
-            {% endif %}
-          </div>
+              <a class='dropdown-item' href='#'>Reviews</a>
+              <a class='dropdown-item' href='#'>Referrals</a>
+              <a class='dropdown-item' href='#'>Promos/Reds</a>
+              {% if session['biz_acct'] == True %}
+                <div class='dropdown-divider'></div>
+                <a class='dropdown-item' href='#'>Business Account</a>
+              {% endif %}
+            </div>
         </li>
         <!-- TO DO: Break up various components of user-profile into sections -->
         <img src='{{ session['user_pic'] }}' width='30' height='30' class='d-inline-block align-top' alt='right'>
@@ -111,39 +111,39 @@
 <footer id='footer' class='center-on-small-only pt-0'>
     <!--Footer Links-->
         <!--Grid row-->
-        <div class="row pt-5 text-center d-flex justify-content-center">
+        <div class='row pt-3 text-center d-flex justify-content-center'>
             <!--Grid column-->
-            <div class="col-md-2">
-                <h6 class="title font-bold"><a href='/about-us'>About us</a></h6>
+            <div class='col-md-2 mb-2'>
+                <h6 class='title font-bold'><a href='/about-us'>About us</a></h6>
             </div>
-            <div class="col-md-2">
-                <h6 class="title font-bold"><a href="#!">Help</a></h6>
+            <div class='col-md-2 mb-2'>
+                <h6 class='title font-bold'><a href="#!">Help</a></h6>
             </div>
-            <div class="col-md-2">
-                <h6 class="title font-bold"><a href='mailto:balloonicorn@hackbrightacademy.com'>Contact</a></h6>
+            <div class='col-md-2 mb-2'>
+                <h6 class='title font-bold'><a href='mailto:balloonicorn@hackbrightacademy.com'>Contact</a></h6>
             </div>
 
         </div>
 
-        <hr class="rgba-white-light" style="margin: 0 15%;">
+        <hr class='rgba-white-light' style='margin: 0 15%;'>
 
-        <div class="row pb-3">
+        <div class='row pb-2'>
 
-            <div class="col-md-12">
+            <div class='col-md-12'>
 
-                <div class="footer-socials flex-center">
+                <div class='footer-socials mb-3 flex-center'>
                     <!--Facebook-->
-                    <a class="icons-sm fb-ic"><i class="fa fa-facebook fa-lg white-text mr-md-4"> </i></a>
+                    <a class='icons-sm fb-ic'><i class='fa fa-facebook fa-lg white-text mr-md-4'> </i></a>
                     <!--Twitter-->
-                    <a class="icons-sm tw-ic"><i class="fa fa-twitter fa-lg white-text mr-md-4"> </i></a>
+                    <a class='icons-sm tw-ic'><i class='fa fa-twitter fa-lg white-text mr-md-4'> </i></a>
                     <!--Google +-->
-                    <a class="icons-sm gplus-ic"><i class="fa fa-google-plus fa-lg white-text mr-md-4"> </i></a>
+                    <a class='icons-sm gplus-ic'><i class='fa fa-google-plus fa-lg white-text mr-md-4'> </i></a>
                     <!--Linkedin-->
-                    <a class="icons-sm li-ic"><i class="fa fa-linkedin fa-lg white-text mr-md-4"> </i></a>
+                    <a class='icons-sm li-ic'><i class='fa fa-linkedin fa-lg white-text mr-md-4'> </i></a>
                     <!--Instagram-->
-                    <a class="icons-sm ins-ic"><i class="fa fa-instagram fa-lg white-text mr-md-4"> </i></a>
+                    <a class='icons-sm ins-ic'><i class='fa fa-instagram fa-lg white-text mr-md-4'> </i></a>
                     <!--Pinterest-->
-                    <a class="icons-sm pin-ic"><i class="fa fa-pinterest fa-lg white-text"> </i></a>
+                    <a class='icons-sm pin-ic'><i class='fa fa-pinterest fa-lg white-text'> </i></a>
                 </div>
             </div>
         </div>

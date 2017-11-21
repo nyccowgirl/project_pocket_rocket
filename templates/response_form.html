@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Response to Review</h1>
+
+<h2>{{ biz_name }}</h2>
+
+<div class='container-fluid'>
+
+  <form action='/respond/{{ biz_name }}' method='POST'>
+    Response:<br>
+      <div class="md-form">
+        <textarea class="md-textarea" id="input_text" type="text" length="5000" mdbCharCounter mdbActive></textarea>
+        <label for="input_text">Type your response</label>
+      </div>
+    <input type='submit'>
+  </form>
+
+</div>
+
+{% endblock}

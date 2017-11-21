@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <h2>{{ user.username }}</h2>
+
+  <div class='container-fluid'>
+
+  <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' mdbRippleRadius>Add Friend</button>
+
+  <!--Modal: Login with Avatar Form-->
+  <div mdbModal #form='mdb-modal' class='modal fade' id='modalAddFriend' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog cascading-modal modal-avatar modal-sm' role='document'>
+          <!--Content-->
+          <div class='modal-content'>
+
+              <!--Header-->
+              <div class='modal-header'>
+                  <img src='/static/img/pinky.jpg' class='rounded-circle img-responsive'>
+              </div>
+              <!--Body-->
+              <div class='modal-body text-center mb-1'>
+
+                  <h5 class='mt-1 mb-2'>Friend or Foe</h5>
+
+                  <div class="md-form ml-0 mr-0">
+                      <i class="fa fa-envelope prefix"></i>
+                      <input mdbActive type='text' id='form29' class='form-control ml-0'>
+                      <label for='form29' class='ml-0'>Enter Email</label>
+                  </div>
+
+                  <div class='text-center'>
+                      <button class='btn btn-cyan mt-1 waves-light' mdbRippleRadius>Send <i class='fa fa-send ml-1'></i></button>
+                  </div>
+              </div>
+
+          </div>
+          <!--/.Content-->
+      </div>
+  </div>
+  <!--Modal: Login with Avatar Form-->
+  </div>
+
+  <div class='container-fluid'>
+
+  {% if user.friends %}
+    <h3>My Friends</h3>
+
+    {% for friend in user.friends|sort(attribute='username') %}
+    <div>
+    <!--Rotating card-->
+    <div class="col-md-6">
+        <mdb-card-rotating #cards>
+            <!--Front Side-->
+            <div class="face front tp-box_side tp-box_front">
+
+                <!-- Image-->
+                <div class="card-up">
+                    <img src='/static/img/pinky.jpg' class='img-fluid' style='opacity: 0.2'>
+                </div>
+                <!--Avatar-->
+                <div class="avatar"><img src='{{ friend.user_pic }}' class="rounded-circle img-responsive">
+                </div>
+                <!--Content-->
+                <div class="card-body">
+                    <h4><a href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a></h4>
+                    <p>{{ friend.first_name }} {{ friend.last_name }}</p>
+                    <p>Member Since: {{ friend.join_date|datetimeformat('%b %Y') }}</p>
+                    <!--Triggering button-->
+                    <a class="rotate-btn" data-card="card-1" (click)="cards.toggle()"><i class="fa fa-repeat"></i> Click here to rotate</a>
+                </div>
+            </div>
+            <!--/.Front Side-->
+
+            <!--Back Side-->
+            <div class="back tp-box_side tp-box_back">
+
+                <!--Content-->
+                <h4>About me</h4>
+                <hr>
+                <p>Total Check-Ins: {{ friend.tot_checkins() }}</p>
+                <p>Total Reviews: {{ friend.tot_reviews() }}</p>
+                <p>Total Businesses Visited: {{ friend.tot_unique_biz() }}</p>
+                <p>Total Businesses Referred to Friends: {{ friend.tot_biz_referrals }}</p>
+                <hr>
+                <!--Social Icons-->
+                <ul class="inline-ul">
+                    <li><a class="icons-sm fb-ic"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="icons-sm tw-ic"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="icons-sm gplus-ic"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a class="icons-sm li-ic"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+                <!--Triggering button-->
+                <a class="rotate-btn" data-card="card-1" (click)="cards.toggle()"><i class="fa fa-undo"></i> Click here to rotate back</a>
+
+            </div>
+            <!--/.Back Side-->
+        </mdb-card-rotating>
+    </div>
+    <!--/.Rotating card-->
+    {% endfor %}
+  {% endif %}
+
+  </div>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

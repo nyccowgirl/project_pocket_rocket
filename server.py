@@ -141,8 +141,6 @@ def login_process():
     pword = request.form.get('pword')
 
     user = helper.check_user_info(user_input)
-    # TO DO: move this to AJAX(?) to check it in html first, where if email/username
-    # does not exist, then note error for user to re-input; otherwise, go to registration
 
     if not user:
         code = 'error'
@@ -194,6 +192,8 @@ def check_email():
     # TO DO: need to send link to user email to reset password
 
 
+# The below is coming from password.html. At the moment, nothing renders the page
+# as AJAX refactoring stays on the page with email with password reset link being sent
 @app.route('/pword-reset', methods=['POST'])
 def reset_pword():
     """Resets user password."""
@@ -225,11 +225,11 @@ def user_profile():
     print u'\n\n\n{}\n\n\n'.format(user.referees)
     print u'\n\n\n{}\n\n\n'.format(user.promos)
 
-    friends = helper.calc_friends(user)
-    session['tot_friends'] = friends
+    # friends = helper.calc_friends(user)
+    # session['tot_friends'] = friends
 
-    reviews = helper.calc_reviews(user)
-    session['tot_revs'] = reviews
+    # reviews = helper.calc_reviews(user)
+    # session['tot_revs'] = reviews
 
     # FIXME: update helper function once relationship mapping is solved.
     total_refs, redeemed_refs = helper.calc_referrals(user)
@@ -239,12 +239,24 @@ def user_profile():
     redemptions = helper.calc_redemptions(user)
     session['tot_redeem'] = redemptions
 
-    checkins = helper.calc_checkins(user)
-    session['tot_checkins'] = checkins
+    # checkins = helper.calc_checkins(user)
+    # session['tot_checkins'] = checkins
 
     # refer_to_user = Referral.query.filter_by(referee_id=session['user_id']).all()
 
     return render_template('user_profile.html', user=user)
+
+
+@app.route('/user-friends')
+def user_friends():
+    """Displays user's friends list with abbreviated profile."""
+
+    user = User.query.filter_by(user_id=session['user_id']).first()
+
+    # TO DELETE
+    print u'\n\n\n{}\n\n\n'.format(user.friends)
+
+    return render_template('user_friends.html', user=user)
 
 
 @app.route('/friend-profile/<int:friend_id>')
