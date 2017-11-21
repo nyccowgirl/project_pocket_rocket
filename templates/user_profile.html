@@ -1,19 +1,99 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h2>{{ user.username }}</h2>
+  <div>
+    {% if user.user_pic %}
+      <img  id='user_pic' src='{{ user.user_pic }}' hspace='40' align='left'>
+    {% else %}
+      <img  id='user_pic' src='/static/img/dragonfly.jpeg' hspace='40' align='left'>
+    {% endif %}
+     <h2>{{ user.username }}</h2>
+  </div>
+
+  <hr>
+
+  <div class='container-fluid'>
+
+  <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalEdit' mdbRippleRadius>Edit Me</button>
+
+  <!--Modal: Login with Avatar Form-->
+  <form action='/edit-user' method='POST' mdbModal #form='mdb-modal' class='modal fade' id='modalEdit' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog cascading-modal modal-avatar modal-sm' role='document'>
+          <!--Content-->
+          <div class='modal-content'>
+
+              <!--Header-->
+              <div class='modal-header'>
+                  <img src='{{ user.user_pic }}' class='rounded-circle img-responsive'>
+                  <h4 class="title"><i class="fa fa-pencil"></i> User form</h4>
+              </div>
+              <!--Body-->
+              <div class='modal-body text-center mb-1'>
+
+                <div class='modal-body mb-0'>
+
+                    <div class='md-form form-sm'>
+                        <i class='fa fa-user prefix'></i>
+                        <input type='text' id='form15' name='form15' class='form-control'>
+                        <label for='form15'>First Name</label>
+                    </div>
+
+                    <div class='md-form form-sm'>
+                        <i class='fa fa-user prefix'></i>
+                        <input type='text' id='form16' name='form16' class='form-control'>
+                        <label for='form16'>Last Name</label>
+                    </div>
+
+                    <div class='md-form form-sm'>
+                        <i class='fa fa-envelope prefix'></i>
+                        <input type='text' id='form17' name='form17' class='form-control'>
+                        <label for='form17'>Email</label>
+                    </div>
+
+                    <div class='md-form form-sm'>
+                        <i class='fa fa-lock prefix'></i>
+                        <input type='password' id='form18' name='form18' class='form-control'>
+                        <label for='form18'>Password</label>
+                    </div>
+
+                    <div class='md-form form-sm'>
+                        <i class='fa fa-lock prefix'></i>
+                        <input type='password' id='form19' name='form19' class='form-control'>
+                        <label for='form19'>Repeat Password</label>
+                    </div>
+
+                    <div class='md-form form-sm'>
+                        <i class='fa fa-camera-retro prefix'></i>
+                        <input type='file' accept='image/*' id='form20' name='form20' class='form-control'>
+                        <label for='form20'>Picture</label>
+                    </div>
+
+                    <div class='md-form form-sm'>
+                        <i class='fa fa-building prefix'></i>
+                        <input type='radio' name='form8' value='true' class='md-textarea mb-0'>Yes
+                        <input type='radio' name='form8' value='false' class='md-textarea mb-0'>No
+                        <label for='form8'>Business Account</label>
+                    </div>
+
+                    <div class="text-center mt-1-half">
+                        <button class="btn btn-info mb-2">Send <i class="fa fa-send ml-1"></i></button>
+                    </div>
+
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!--Modal: Contact form-->
+
+  <!--Modal: Login with Avatar Form-->
+  </div>
+
+  <hr>
 
   <div class='container-fluid'>
 
   <h3>About Me</h3>
-  <hr>
-    <div>
-      {% if user.user_pic %}
-        <img  id='user_pic' src='{{ user.user_pic }}' hspace='40'>
-      {% else %}
-        <img  id='user_pic' src='/static/img/dragonfly.jpeg' hspace='40'>
-      {% endif %}
-    </div>
 
     <div>
       <ul>
@@ -39,17 +119,6 @@
       </ul>
     </div>
 
-  {% if user.friends %}
-    <h3>My Friends</h3>
-
-    <ul>
-    {% for friend in user.friends|sort(attribute='username') %}
-      <li>
-        <a href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a>
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
 
   {% if user.reviews %}
     <h3>My Reviews</h3>

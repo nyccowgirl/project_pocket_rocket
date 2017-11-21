@@ -29,9 +29,9 @@ $(document).ready(() => {
 
   function displayMsg(results) {
     if (results.code === 'error') {
-        msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), 'error', 'glyphicon-remove', results.msg);
+        toaster.error('results.msg', 'BUDdy warning')
     } else {
-        msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), 'success', 'glyphicon-ok', results.msg);
+        toaster.success('results.msg', 'Welcome back!')
     };
     location.reload('/');
   }
@@ -48,7 +48,6 @@ $(document).ready(() => {
   $(function() {
     let $formLogin = $('#login-form');
     let $formLost = $('#lost-form');
-    // let $formRegister = $('#register-form');
     let $divForms = $('#div-forms');
     let $modalAnimateTime = 300;
     let $msgAnimateTime = 150;
@@ -64,7 +63,7 @@ $(document).ready(() => {
                 break;
             case "lost-form":
                 if (!$('#lost_email')) {
-                  msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), 'error', 'glyphicon-remove', 'Please input a user name or email.');
+                  toaster.error('Please input a user name or email.', 'Did you forget something?')
                   break;
                 };
                 sendEmail(evt);
@@ -94,27 +93,12 @@ $(document).ready(() => {
       });
   }
 
-  function msgChange($divTag, $iconTag, $textTag, $divClass, $iconClass, $msgText) {
-      var $msgOld = $divTag.text();
-      msgFade($textTag, $msgText);
-      $divTag.addClass($divClass);
-      $iconTag.removeClass("glyphicon-chevron-right");
-      $iconTag.addClass($iconClass + " " + $divClass);
-      setTimeout(function() {
-          msgFade($textTag, $msgOld);
-          $divTag.removeClass($divClass);
-          $iconTag.addClass("glyphicon-chevron-right");
-          $iconTag.removeClass($iconClass + " " + $divClass);
-    }, $msgShowTime);
-  }
-});
-
 // processes like buttons on reviews
 
   let $like = $('.like');
 
   function disableLike(results) {
-    alert(results);
+    toaster['unique'](results);
   }
 
   function handleClick(evt) {
@@ -128,14 +112,13 @@ $(document).ready(() => {
 
   $like.on('click', handleClick);
 
-});
 
 // processes friend request
 
   let $friend = $('#modalAddFriend');
 
   function friendMsg(results) {
-    alert(results);
+    toaster['unique'](results);
   }
 
   function sendFriend(evt) {
@@ -149,3 +132,5 @@ $(document).ready(() => {
   }
 
   $friend.on('submit', sendFriend);
+
+});
