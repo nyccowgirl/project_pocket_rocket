@@ -363,7 +363,9 @@ def display_biz_reviews():
     """Displays search feature to find business to review and businesses recently
     checked into that have not been reviewed."""
 
-    # biz_visited = db.session.query(CheckIn.biz_id).filter(CheckIn.user_id == session['user_id'], Review.biz_id != ).group_by(CheckIn)
+    checkins = CheckIn.query.filter_by(user_id=session['user_id']).all()
+
+    return render_template('/reviews_home', checkins=checkins)
 
 
 @app.route('/friend-profile/<int:friend_id>')

@@ -199,9 +199,27 @@ class Business(db.Model):
         else:
             return False
 
+    def visit_not_reviewed(self, user_id):
+        """ Tracks whether business has been checked in but not reviewed by
+        specific user. """
+
+        checkins_not_reviewed = (db.session.query(distinct(CheckIn.biz_id))
+                                 .filter(CheckIn.user_id == user_id,
+                                 CheckIn.biz_id.notin_(db
+                                 .session.query(distinct(Review.biz_id))
+                                 .filter(Review.user_id == user_id))).all())
+
+        not_reviewed = False
+
+        for item in checkins_not_reviewed:
+            if item[0] == self.biz_id:
+                not_reviewed = True
+
+        return not_reviewed
+
 
 class Promo(db.Model):
-    """ Promotion model. """
+    """ Promotions model. """
 
     __tablename__ = 'promos'
 
