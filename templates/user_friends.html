@@ -1,135 +1,181 @@
 {% extends 'base.html' %}
+
+{% block head %}
+
+<link rel='stylesheet' type='text/css' href='/static/css/friends.css'>
+
+{% endblock %}
+
 {% block content %}
 
-  <div>
-    {% if user.user_pic %}
-      <img id='user_pic' src='{{ user.user_pic }}' hspace='40' align='left'>
-    {% else %}
-      <img id='user_pic' src='/static/img/dragonfly.jpeg' hspace='40' align='left'>
-    {% endif %}
-     <h2>{{ user.username }}</h2>
-  </div>
+<div>
+  {% if user.user_pic %}
+    <img id='user_pic' src='{{ user.user_pic }}' hspace='40' align='left'>
+  {% else %}
+    <img id='user_pic' src='/static/img/dragonfly.jpeg' hspace='40' align='left'>
+  {% endif %}
+   <h2>{{ user.username }}</h2>
+</div>
 
-  <hr>
+<hr>
 
-  <div class='container-fluid'>
+<div class='container-fluid'>
 
-  <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalAddFriend' mdbRippleRadius>Add A Friend</button>
+      <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalAddFriend' mdbRippleRadius>Add A Friend</button><p>
 
-  <!--Modal: Login with Avatar Form-->
-  <form action='/add-friend' method='POST' mdbModal #form='mdb-modal' class='modal fade' id='modalAddFriend' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-      <div class='modal-dialog cascading-modal modal-avatar modal-lg' role='document'>
-          <!--Content-->
-          <div class='modal-content'>
+</div>
 
-              <!--Header-->
-              <div class='modal-header'>
-                  <img src='/static/img/pinky.jpg' class='rounded-circle img-responsive' height='125' width='125'>
-              </div>
-              <!--Body-->
-              <div class='modal-body text-center mb-1'>
+<div class='container-fluid'>
 
-                  <h5 class='mt-1 mb-2'>My BFF</h5>
+  <!--Modal: Register Form-->
+  <form action='/edit-user' method='POST' mdbModal #form='mdb-modal' class='modal fade' id='modalEdit' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+    <div class='modal-dialog cascading-modal' role='document'>
+      <!--Content-->
+      <div class='modal-content'>
 
-                  <div class='md-form ml-0 mr-0'>
-<!--                       <i class='fa fa-envelope prefix'></i>
- -->                      <input mdbActive type='text' id='friend-email' name='friend-email' class='form-control ml-0'>
-                      <label for='friend-email' class='ml-0'>Enter Email</label>
-                  </div>
+        <!--Header-->
+        <div class='modal-header light-blue darken-3 white-text'>
+            <h4 class="title"><i class="fa fa-pencil"></i> User form</h4>
+            <button type='button' class='close waves-effect waves-light' data-dismiss='modal' aria-label='Close' (click)='form.hide()'>
+                <span aria-hidden='true'>×</span>
+            </button>
+        </div>
 
-                  <div class='text-center'>
-                      <button class='btn btn-unique mt-1 waves-light' mdbRippleRadius>Send <i class='fa fa-send ml-1'></i></button>
-                  </div>
-              </div>
+        <!--Body-->
+        <div class='modal-body'>
 
+          <div class='md-form form-sm'>
+              <i class='fa fa-user prefix'></i>
+              <input type='text' id='form15' name='form15' class='form-control'>
+              <label for='form15'>First Name</label>
           </div>
-          <!--/.Content-->
+
+          <div class='md-form form-sm'>
+              <i class='fa fa-user prefix'></i>
+              <input type='text' id='form16' name='form16' class='form-control'>
+              <label for='form16'>Last Name</label>
+          </div>
+
+          <div class='md-form form-sm'>
+              <i class='fa fa-envelope prefix'></i>
+              <input type='text' id='form17' name='form17' class='form-control'>
+              <label for='form17'>Email</label>
+          </div>
+
+          <div class='md-form form-sm'>
+              <i class='fa fa-lock prefix'></i>
+              <input type='password' id='form18' name='form18' class='form-control'>
+              <label for='form18'>Password</label>
+          </div>
+
+          <div class='md-form form-sm'>
+              <i class='fa fa-lock prefix'></i>
+              <input type='password' id='form19' name='form19' class='form-control'>
+              <label for='form19'>Repeat Password</label>
+          </div>
+
+          <div class='md-form form-sm'>
+              <i class='fa fa-camera-retro prefix'></i>
+              <input type='file' accept='image/*' id='form20' name='form20' class='form-control'>
+              <label for='form20'>Picture</label>
+          </div>
+
+          <div class='md-form form-sm'>
+              <i class='fa fa-building prefix'></i>
+              <input type='radio' name='form8' value='true' class='md-textarea mb-0'>Yes
+              <input type='radio' name='form8' value='false' class='md-textarea mb-0'>No
+              <label for='form8'>Business Account</label>
+          </div>
+
+          <div class="text-center mt-1-half">
+              <button class="btn btn-unique mb-1" mdbRippleRadius>Send <i class="fa fa-send ml-1"></i></button>
+          </div>
+        </div>
       </div>
+      <!--/.Content-->
+    </div>
   </form>
-  <!--Modal: Login with Avatar Form-->
-  </div>
+  <!--Modal: Register form-->
+</div>
 
-  <hr>
+<hr>
 
-  <div class='container-fluid'>
+<div class='container-fluid'>
 
-  {% if user.friends %}
-    <h3>My Friends</h3>
-
-    {% for friend in user.friends|sort(attribute='username') %}
-    <div>
-    <!--Rotating card-->
-    <div class='col-md-6 flip-container' ontouchstart='this.classList.toggle('hover');'>
-        <div class='flipper mainflip'>
-            <!--Front Side-->
-            <div class='face front tp-box_side tp-box_front' style='width:20rem;'>
-
-                <!-- Image-->
-                <div class='card-up card'>
-                    <img src='/static/img/pinky.jpg' class='card-img-top img-fluid' style='opacity: 0.2' alt='card-image' height='150' width='150'>
-                </div>
+      {% if user.friends %}
+        <h3>My Friends</h3>
+        <br>
+        {% for friend in user.friends|sort(attribute='username') %}
+          <!--Rotating card-->
+          <div id='myCard-{{ friend.user_id }}' class="myCard flip-container" ontouchstart="this.classList.toggle('flip');">
+            <div class='flipper'>
+              <!--Front Side-->
+              <div class='front'>
                 <!--Avatar-->
-                <div class='avatar'><img src='{{ friend.user_pic }}' class='rounded-circle img-responsive' height='125' width='125'>
-                </div>
-                <!--Content-->
+                <div class='avatar'><img src='{{ friend.user_pic }}' class='rounded-circle img-responsive' height='100' width='100'></div>
                 <div class='card-body'>
-                    <h4><a class='card-title' href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a></h4>
-                    <hr>
-                    <div class='card-text'>
-                    <p class='card-text'>{{ friend.first_name }} {{ friend.last_name }}</p>
-                    <p class='card-text'>Member Since: {{ friend.join_date|datetimeformat('%b %Y') }}</p>
-                    </div>
-                    <hr>
-                    <!--Triggering button-->
-                    <a class='flip-card' class='rotate-btn' data-card='card-1'><i class='fa fa-repeat'></i> Click here to rotate</a>
+                  <!-- front content -->
+                  <br><br>
+                  <h4><a class='card-title' href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a></h4>
+                  <hr>
+                  <div>
+                  <p>{{ friend.first_name }} {{ friend.last_name }}</p>
+                  <p>Member Since: {{ friend.join_date|datetimeformat('%b %Y') }}</p>
+                  </div>
+                  <hr>
+                  <!--Triggering button-->
+                  <a class='flip-card' class='rotate-btn'><i class='fa fa-repeat'></i> Click here to rotate</a>
                 </div>
-            </div>
-            <!--/.Front Side-->
+              </div>
+              <!--/.Front Side-->
 
-            <!--Back Side-->
-            <div class='back tp-box_side tp-box_back' style='width:20rem;'>
-
-                <!--Content-->
+              <!--Back Side-->
+              <div class='back'>
+                <!-- back content -->
                 <div>
                   <h4 class='card-title'>About me</h4>
                   <hr>
-                  <div class='card-text'>
-                  <p class='card text'>Total Check-Ins: {{ friend.tot_checkins() }}</br>
-                  <p class='card text'>Total Reviews: {{ friend.tot_reviews() }}</br>
-                  <p class='card text'>Total Businesses Visited: {{ friend.tot_unique_biz() }}</br>
-                  <p class='card text'>Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</br>
-                  </div>
-                  <hr>
+                  <div>
+                  Total Check-Ins: {{ friend.tot_checkins() }}</br>
+                  Total Reviews: {{ friend.tot_reviews() }}</br>
+                  Total Businesses Visited: {{ friend.tot_unique_biz() }}</br>
+                  Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</br>
                 </div>
-
+                <hr>
                 <!--Social Icons-->
-                 <div>
-                  <ul class="inline-ul">
-                    <li><a class="icons-sm fb-ic"><i class="fa fa-facebook"></i></a></li>
-                    <li><a class="icons-sm tw-ic"><i class="fa fa-twitter"></i></a></li>
-                    <li><a class="icons-sm gplus-ic"><i class="fa fa-google-plus"></i></a></li>
-                    <li><a class="icons-sm li-ic"><i class="fa fa-linkedin"></i></a></li>
+                <div>
+                  <ul class='inline-ul'>
+                    <li><a class='icons-sm fb-ic'><i class='fa fa-facebook'></i></a></li>
+                    <li><a class='icons-sm tw-ic'><i class='fa fa-twitter'></i></a></li>
+                    <li><a class='icons-sm gplus-ic'><i class='fa fa-google-plus'></i></a></li>
+                    <li><a class='icons-sm li-ic'><i class='fa fa-linkedin'></i></a></li>
                   </ul>
                 </div>
                 <!--Triggering button-->
-                <a class='flip-card' class='rotate-btn' data-card='card-1'><i class="fa fa-undo"></i> Click here to rotate back</a>
+                <a class='flip-card' class='rotate-btn' data-card='card-1'><i class='fa fa-undo'></i> Click here to rotate back</a>
+              </div>
+              <!--/.Back Side-->
 
             </div>
-            <!--/.Back Side-->
+          </div>
         </div>
+          <!--/.Rotating card-->
+        {% endfor %}
+      {% else %}
+      <div>You seem lonely in here, add some friends!</div>
+      {% endif %}
     </div>
-    <!--/.Rotating card-->
-    {% endfor %}
-  {% else %}
-
-  <div>You seem lonely in here, add some friends!</div>
-
-  {% endif %}
-
-  </div>
+</div>
 
 {% endblock %}
 
 {% block script %}
+<script>
 
+$('.myCard').on('click', function(evt) {
+    console.log(this);
+   this.classList.toggle("flip");
+});
+
+ </script>
 {% endblock %}

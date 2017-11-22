@@ -193,7 +193,7 @@ body {
 }
 
 .fa-fa-heart, .fa-fa-heart-o {
-  color: red;
+  color: #880e4f;
 }
 
 i::before{
@@ -212,15 +212,6 @@ border-radius: 1;
 }
 
 /*avatar*/
-.avatar {
-  height: 150;
-  width: 150;
-  left: 40%;
-  top: 20%;
-  position: absolute;
-  margin-top: -25px;
-  margin-left: -25px;
-}
 
 .avatar-top {
   height: 125;
