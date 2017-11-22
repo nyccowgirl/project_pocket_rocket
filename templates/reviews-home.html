@@ -17,6 +17,9 @@
 
 <div class='container-fluid'>
 
+    <h3>Recent Visits</h3>
+
+    {{% for group, list in checkins.biz|groupby('biz.biz_name')|sort(attribute='checkin_date') %}}
 
 
 </div>

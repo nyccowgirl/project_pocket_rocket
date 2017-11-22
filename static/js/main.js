@@ -168,4 +168,18 @@ $(document).ready(() => {
   $userEdit.on('submit', editUser);
 
 
+// flipcard on user's friend page
+  $('.flip-card').on('click', function() {
+    $(this).classList.toggle('flipped');
+  });
+
+  // $('#myCard').bind({
+  //   click: function() {
+  //       $('.flip-card .flip-container .flipper').toggleClass('flip');
+  //   },
+  //   mouseleave: function() {
+  //       $('.flip-card .flip-container .flipper').toggleClass('flip');
+  //   }
+  // });
+
 });
