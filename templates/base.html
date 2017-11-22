@@ -1,19 +1,20 @@
 <!doctype html>
 <html>
 <head>
-    <title>BUDdy</title>
+  <title>BUDdy</title>
 
-    <!-- Required meta tags -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css'>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.3/css/mdb.min.css'>
-
+  <!-- Bootstrap CSS -->
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.3/css/mdb.min.css'>
+<!--     <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto|Varela+Round'> -->
 <!--     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Raleway:100,700'>
     <link rel='stylesheet' type='text/css' href='/static/css/maps.css'> -->
-    <link rel='stylesheet' type='text/css' href='/static/css/styles.css'>
-    <script src="https://use.fontawesome.com/0bc045b751.js"></script>
+  <link rel='stylesheet' type='text/css' href='/static/css/styles.css'>
+  <script src="https://use.fontawesome.com/0bc045b751.js"></script>
 
 <!--     <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"> -->
 
@@ -25,77 +26,77 @@
 </head>
 <body>
 
-<nav class='navbar navbar-expand-lg navbar-dark'>
-<!-- Image and text -->
-  <a class='navbar-brand' href='/'>
-    <img src='/static/img/pinky.jpg' width='30' height='30' class='d-inline-block align-top' alt=''>
-    BUDdy
-  </a>
-  <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
-    <span class='navbar-toggler-icon'></span>
-  </button>
+  <nav class='navbar navbar-expand-lg navbar-dark'>
+  <!-- Image and text -->
+    <a class='navbar-brand' href='/'>
+      <img src='/static/img/pinky.jpg' width='30' height='30' class='d-inline-block align-top' alt=''>
+      BUDdy
+    </a>
+    <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+      <span class='navbar-toggler-icon'></span>
+    </button>
 
-<!-- Search bar -->
-  <div class='collapse navbar-collapse justify-content-end' id='navbarSupportedContent'>
+  <!-- Search bar -->
+    <div class='collapse navbar-collapse justify-content-end' id='navbarSupportedContent'>
 
-    <form class='mx-2 my-auto d-inline w-75' action='/search' method='POST'>
-      <div class='input-group'>
-        <input class='form-control search' name='search' placeholder='Where To?' autocomplete='on' autofocus='autofocus' type='text'>
-        <span class='input-group-btn'>
-          <button class='btn btn-outline-light' type='submit'>Search</button>
-        </span>
-      </div>
-    </form>
+      <form class='mx-2 my-auto d-inline w-75' action='/search' method='POST'>
+        <div class='input-group'>
+          <input class='form-control search' name='search' placeholder='Where To?' autocomplete='on' autofocus='autofocus' type='text'>
+          <span class='input-group-btn'>
+            <button class='btn btn-outline-light' type='submit'>Search</button>
+          </span>
+        </div>
+      </form>
 
-            <!-- TO DO: build out BUD button for submit button
-            build out /search page and related python code -->
+              <!-- TO DO: build out BUD button for submit button
+              build out /search page and related python code -->
 
-<!-- Profile, register and login/logout -->
-    <ul class='navbar-nav ml-auto' id='nav-item'>
-      <li class='nav-item'>
-        <a class='nav-link' href='/'>Home <span class='sr-only'>(current)</span></a>
-      </li>
-
-      {% if 'user_id' in session %}
+  <!-- Profile, register and login/logout -->
+      <ul class='navbar-nav ml-auto' id='nav-item'>
         <li class='nav-item'>
-          <a class='nav-link' href='/logout'>Log Out</a>
+          <a class='nav-link' href='/'>Home <span class='sr-only'>(current)</span></a>
         </li>
-      {% else %}
-        <li class='nav-item'>
-          <a class='nav-link' href='/register'>Sign Up</a>
-        </li>
-      {% endif %}
 
-      {% if 'user_id' in session %}
-        <li class='nav-item dropdown'>
-          <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-            Profile
-          </a>
-            <div class='dropdown-menu dropdown-menu-right' aria-labelledby='navbarDropdown'>
-              <a class='dropdown-item' href='/user-profile'>Account</a>
-              <a class='dropdown-item' href='/user-friends'>Friends</a>
-              <div class='dropdown-divider'></div>
-              <a class='dropdown-item' href='#'>Reviews</a>
-              <a class='dropdown-item' href='#'>Referrals</a>
-              <a class='dropdown-item' href='#'>Promos/Reds</a>
-              {% if session['biz_acct'] == True %}
+        {% if 'user_id' in session %}
+          <li class='nav-item'>
+            <a class='nav-link' href='/logout'>Log Out</a>
+          </li>
+        {% else %}
+          <li class='nav-item'>
+            <a class='nav-link' href='/register'>Sign Up</a>
+          </li>
+        {% endif %}
+
+        {% if 'user_id' in session %}
+          <li class='nav-item dropdown'>
+            <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+              Profile
+            </a>
+              <div class='dropdown-menu dropdown-menu-right' aria-labelledby='navbarDropdown'>
+                <a class='dropdown-item' href='/user-profile'>Account</a>
+                <a class='dropdown-item' href='/user-friends'>Friends</a>
                 <div class='dropdown-divider'></div>
-                <a class='dropdown-item' href='#'>Business Account</a>
-              {% endif %}
-            </div>
-        </li>
-        <!-- TO DO: Break up various components of user-profile into sections -->
-        <img src='{{ session['user_pic'] }}' width='30' height='30' class='d-inline-block align-top' alt='right'>
-      {% else %}
+                <a class='dropdown-item' href='/user-reviews'>Reviews</a>
+                <a class='dropdown-item' href='#'>Referrals</a>
+                <a class='dropdown-item' href='#'>Promos/Reds</a>
+                {% if session['biz_acct'] == True %}
+                  <div class='dropdown-divider'></div>
+                  <a class='dropdown-item' href='#'>Business Account</a>
+                {% endif %}
+              </div>
+          </li>
+          <!-- TO DO: Break up various components of user-profile into sections -->
+          <img src='{{ session['user_pic'] }}' width='30' height='30' class='d-inline-block align-top' alt='right'>
+        {% else %}
 
-        <li class='nav-item'>
-          <a class='nav-link' href='/login' data-toggle='modal' data-target='#login-modal'>Log In</a>
-          <!-- nav-link disabled => if needed -->
-        </li>
-      {% endif %}
-    </ul>
-  </div>
-</nav>
+          <li class='nav-item'>
+            <a class='nav-link' href='/login' data-toggle='modal' data-target='#login-modal'>Log In</a>
+            <!-- nav-link disabled => if needed -->
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
 
 <hr>
 
@@ -108,8 +109,9 @@
 {% endblock %}
 
 <!--Footer-->
-<footer id='footer' class='center-on-small-only pt-0'>
+<footer id='footer' class='footer center-on-small-only pt-0'>
     <!--Footer Links-->
+    <hr>
         <!--Grid row-->
         <div class='row pt-3 text-center d-flex justify-content-center'>
             <!--Grid column-->

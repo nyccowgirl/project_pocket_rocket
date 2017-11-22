@@ -3,9 +3,9 @@
 
   <div>
     {% if user.user_pic %}
-      <img  id='user_pic' src='{{ user.user_pic }}' hspace='40' align='left'>
+      <img id='user_pic' src='{{ user.user_pic }}' hspace='40' align='left'>
     {% else %}
-      <img  id='user_pic' src='/static/img/dragonfly.jpeg' hspace='40' align='left'>
+      <img id='user_pic' src='/static/img/dragonfly.jpeg' hspace='40' align='left'>
     {% endif %}
      <h2>{{ user.username }}</h2>
   </div>
@@ -14,7 +14,7 @@
 
   <div class='container-fluid'>
 
-  <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalAddFriend' mdbRippleRadius>Add Friend</button>
+  <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalAddFriend' mdbRippleRadius>Add A Friend</button>
 
   <!--Modal: Login with Avatar Form-->
   <form action='/add-friend' method='POST' mdbModal #form='mdb-modal' class='modal fade' id='modalAddFriend' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
@@ -24,7 +24,7 @@
 
               <!--Header-->
               <div class='modal-header'>
-                  <img src='/static/img/pinky.jpg' class='rounded-circle img-responsive' height=100>
+                  <img src='/static/img/pinky.jpg' class='rounded-circle img-responsive' height='125' width='125'>
               </div>
               <!--Body-->
               <div class='modal-body text-center mb-1'>
@@ -94,10 +94,10 @@
                   <h4 class='card-title'>About me</h4>
                   <hr>
                   <div class='card-text'>
-                  <p class='card text'>Total Check-Ins: {{ friend.tot_checkins() }}</p>
-                  <p class='card text'>Total Reviews: {{ friend.tot_reviews() }}</p>
-                  <p class='card text'>Total Businesses Visited: {{ friend.tot_unique_biz() }}</p>
-                  <p class='card text'>Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</p>
+                  <p class='card text'>Total Check-Ins: {{ friend.tot_checkins() }}</br>
+                  <p class='card text'>Total Reviews: {{ friend.tot_reviews() }}</br>
+                  <p class='card text'>Total Businesses Visited: {{ friend.tot_unique_biz() }}</br>
+                  <p class='card text'>Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</br>
                   </div>
                   <hr>
                 </div>

@@ -5,41 +5,85 @@
 
   <!-- TO DO: Set each as either menu item on left panel or as scroll down from nav bar. -->
 
-  <h3>About {{ user.username }}</h3>
 
     <div>
-      {% if user.user_pic %}
-        <img src='{{ user.user_pic }}'>
+      {% if friend.user_pic %}
+        <img id='user_pic' src='{{ friend.user_pic }}' hspace='40' align='left'>
       {% else %}
-        <img src='/static/img/dragonfly_friend.jpeg'>
+        <img id ='user_pic' src='/static/img/dragonfly_friend.jpeg' hspace='40' align='left'>
       {% endif %}
     </div>
+     <h2>{{ friend.username }}</h2>
+  </div>
 
+  <hr>
+
+  <div class='container-fluid'>
+
+  <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalAddFriend' mdbRippleRadius>Add A Friend</button>
+
+  <!--Modal: Login with Avatar Form-->
+  <form action='/add-friend' method='POST' mdbModal #form='mdb-modal' class='modal fade' id='modalAddFriend' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog cascading-modal modal-avatar modal-lg' role='document'>
+          <!--Content-->
+          <div class='modal-content'>
+
+              <!--Header-->
+              <div class='modal-header'>
+                  <img src='/static/img/pinky.jpg' class='rounded-circle img-responsive' height='125' width='125'>
+              </div>
+              <!--Body-->
+              <div class='modal-body text-center mb-1'>
+
+                  <h5 class='mt-1 mb-2'>My BFF</h5>
+
+                  <div class='md-form ml-0 mr-0'>
+<!--                       <i class='fa fa-envelope prefix'></i>
+ -->                      <input mdbActive type='text' id='friend-email' name='friend-email' class='form-control ml-0'>
+                      <label for='friend-email' class='ml-0'>Enter Email</label>
+                  </div>
+
+                  <div class='text-center'>
+                      <button class='btn btn-unique mt-1 waves-light' mdbRippleRadius>Send <i class='fa fa-send ml-1'></i></button>
+                  </div>
+              </div>
+
+          </div>
+          <!--/.Content-->
+      </div>
+  </form>
+  <!--Modal: Login with Avatar Form-->
+  </div>
+
+  <hr>
+  <h3>About {{ friend.username }}</h3>
     <div>
       <ul>
-        First Name: {{ user.first_name }}<br>
-        Last Name: {{ user.last_name }}<br>
-        User Name: {{ user.username }}<br>
-        Member Since: {{ user.join_date|datetimeformat('%b %Y') }}<br>
+        First Name: {{ friend.first_name }}<br>
+        Last Name: {{ friend.last_name }}<br>
+        User Name: {{ friend.username }}<br>
+        Member Since: {{ friend.join_date|datetimeformat('%b %Y') }}<br>
     </div>
 
-  <h3>My Digits</h3>
+  <h3>Zir Digits</h3>
 
     <div>
       <ul>
-        Check-Ins: {{ checkins }}<br>
-        Reviews: {{ reviews }}<br>
-        Referrals: {{ refs }} | Redeemed: {{ redeem_refs }}<br>
-        Promos Redeemed: {{ redeem_promos }}<br>
-        Friends: {{ friends }}
+        Check-Ins: {{ friend.tot_checkins() }}</br>
+        Reviews: {{ friend.tot_reviews() }}</br>
+        Referrals: {{ refs }} | Redeemed: {{ redeem_refs }}</br>
+        Promos Redeemed: {{ redeem_promos }}</br>
+        Friends: {{ friend.tot_friends() }}</br>
+        Total Businesses Visited: {{ friend.tot_unique_biz() }}</br>
+        Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</br>
       </ul>
     </div>
 
-  {% if user.friends %}
-    <h3>Friends</h3>
+  {% if friend.friends %}
+    <h3>Zir Friends</h3>
 
     <ul>
-    {% for friend in user.friends|sort(attribute='username') %}
+    {% for friend in friend.friends|sort(attribute='username') %}
       <li>
         <a href='/friend_profile/{{ friend.user_id }}'>{{ friend.username }}</a>
       </li>
@@ -47,15 +91,15 @@
     </ul>
   {% endif %}
 
-  {% if user.reviews %}
-    <h3>Reviews</h3>
+  {% if friend.reviews %}
+    <h3>Zir Reviews</h3>
 
     <ul>
-    {% for review in user.reviews|sort(attribute='review_date') %}
+    {% for review in friend.reviews|sort(attribute='review_date') %}
       <li>
         <a href='/business_profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
         {% if review.revise_review %}
-          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
             {% if review.has_liked(session['user_id']) %}
               <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
             {% else %}
@@ -63,7 +107,7 @@
             {% endif %}
           <p>{{ review.new_review }}</p>
         {% else %}
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
             {% if review.has_liked(session['user_id']) %}
               <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
             {% else %}
@@ -88,11 +132,11 @@
   {% endif %}
   <!-- TO DO: Add total likes per review -->
 
-  {% if user.biz %}
-    <h3>My Businesses</h3>
+  {% if friend.biz %}
+    <h3>Zir Business(es)</h3>
 
     <ul>
-    {% for biz in user.biz %}
+    {% for biz in friend.biz %}
       <li><a href='/business_profile{{ biz.biz_id }}'>{{ biz.biz_name }}</a></li>
     {% endfor %}
     </ul>
@@ -101,24 +145,5 @@
 {% endblock %}
 
 {% block script %}
-
-<script type='text/javascript'>
-'use strict';
-
-function disableLike(results) {
-  alert(results);
-}
-
-function handleClick(evt) {
-  evt.preventDefault();
-  let formInputs = {
-    'review_id': evt.target.id,
-  };
-  $.post('/like-review', formInputs, disableLike);
-    $(this).prop('disabled', true);
-}
-
-$('.like').on('click', handleClick)
-</script>
 
 {% endblock %}

@@ -358,6 +358,18 @@ def add_friend():
     return jsonify(results)
 
 
+@app.route('/user-reviews')
+def user_reviews():
+    """Displays user's reviews with abbreviated profile."""
+
+    user = User.query.filter_by(user_id=session['user_id']).first()
+
+    # TO DELETE
+    print u'\n\n\n{}\n\n\n'.format(user.reviews)
+
+    return render_template('user_reviews.html', user=user)
+
+
 @app.route('/reviews-home')
 def display_biz_reviews():
     """Displays search feature to find business to review and businesses recently
@@ -380,19 +392,16 @@ def friend_profile(friend_id):
     print u'\n\n\n{}\n\n\n'.format(friend.referees)
     print u'\n\n\n{}\n\n\n'.format(friend.promos)
 
-    friends = helper.calc_friends(friend)
-    reviews = helper.calc_reviews(friend)
+    # friends = helper.calc_friends(friend)
+    # reviews = helper.calc_reviews(friend)
     total_refs, redeemed_refs = helper.calc_referrals(friend)
     redemptions = helper.calc_redemptions(friend)
-    checkins = helper.calc_checkins(friend)
+    # checkins = helper.calc_checkins(friend)
 
-    return render_template('friend_profile.html', user=friend,
-                           checkins=checkins,
-                           reviews=reviews,
+    return render_template('friend_profile.html', friend=friend,
                            refs=total_refs,
                            redeem_refs=redeemed_refs,
-                           redeem_promos=redemptions,
-                           friends=friends)
+                           redeem_promos=redemptions)
 
 
 @app.route('/add-biz')
@@ -618,6 +627,11 @@ def like_process():
     db.session.commit()
 
     return 'Thanks for liking me!'
+
+@app.route('/test')
+def test():
+
+    return render_template('test.html')
 
 
 ##############################################################################

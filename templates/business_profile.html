@@ -94,7 +94,7 @@
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
         {% if review.revise_review %}
-          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
             {% if review.has_liked(session['user_id']) %}
               <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
             {% else %}
@@ -102,7 +102,7 @@
             {% endif %}
           <p>{{ review.new_review }}</p>
         {% else %}
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
             {% if review.has_liked(session['user_id']) %}
               <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
             {% else %}
@@ -124,7 +124,7 @@
       <b>Being Addressed</b>
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
-        <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} |
+        <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
           {% if not review.has_liked(session['user_id']) %}
             <button disabled>Like</button>
           {% else %}

@@ -347,6 +347,14 @@ class Review(db.Model):
         else:
             return False
 
+    def tot_likes(self):
+        """ Calculates total likes per review. """
+
+        total = (db.session.query(func.count(LikeReview.like_id))
+                 .filter_by(review_id=self.review_id).scalar())
+
+        return total
+
 
 class LikeReview(db.Model):
     """ Tracks user 'likes' of individual reviews by business. """

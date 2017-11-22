@@ -29,9 +29,9 @@ $(document).ready(() => {
 
   function displayMsg(results) {
     if (results.code === 'error') {
-        toaster.error(results.msg, 'BUDdy warning');
+        alert(results.msg);
     } else {
-        toaster.success(results.msg, 'Welcome back!');
+        alert(results.msg);
     };
     location.reload('/');
   }
@@ -167,18 +167,36 @@ $(document).ready(() => {
 
   $userEdit.on('submit', editUser);
 
+  // TO DO: Use .change to check email, etc. first b/f going to submitting
+
 
 // flipcard on user's friend page
   $('.flip-card').on('click', function() {
-    $(this).classList.toggle('flipped');
+    console.log('boo');
+    if (!this.classList.contains('on')) {
+          console.log('boo whp');
+
+      this.classList.remove('off');
+      this.classList.add('on');
+    } else {
+          console.log('boo shoo');
+
+      this.classList.remove('on');
+      this.classList.add('off');
+    }
   });
 
-  // $('#myCard').bind({
+  // $('.flip-card').bind({
+  //   console.log('boo');
   //   click: function() {
   //       $('.flip-card .flip-container .flipper').toggleClass('flip');
+  //           console.log('boo hoo');
+
   //   },
   //   mouseleave: function() {
   //       $('.flip-card .flip-container .flipper').toggleClass('flip');
+  //             console.log('pumpkin pie');
+
   //   }
   // });
 
