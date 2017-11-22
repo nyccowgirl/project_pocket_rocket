@@ -11,12 +11,12 @@ $(document).ready(() => {
 
   function checkEmail(result) {
     if (result === False) {
-      msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), 'error', 'glyphicon-remove', 'User name or email does not exist. Please check your input or register.');
+      toaster.error('User name or email does not exist. Please check your input or register.', 'BUDdy warning');
     } else if (result === True) {
-      msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), 'success', 'glyphicon-ok', 'A link has been sent to your email to reset your password.');
+      toaster['unique']('A link has been sent to your email to reset your password.');
     } else {
-      alert('Please try again.')
-    };
+      toaster['unique']('Please try again.');
+    }
   }
 
   function sendEmail(evt) {
@@ -29,9 +29,9 @@ $(document).ready(() => {
 
   function displayMsg(results) {
     if (results.code === 'error') {
-        toaster.error('results.msg', 'BUDdy warning')
+        toaster.error(results.msg, 'BUDdy warning');
     } else {
-        toaster.success('results.msg', 'Welcome back!')
+        toaster.success(results.msg, 'Welcome back!');
     };
     location.reload('/');
   }
@@ -63,7 +63,7 @@ $(document).ready(() => {
                 break;
             case "lost-form":
                 if (!$('#lost_email')) {
-                  toaster.error('Please input a user name or email.', 'Did you forget something?')
+                  toaster.error('Please input a user name or email.', 'Did you forget something?');
                   break;
                 };
                 sendEmail(evt);
@@ -72,6 +72,7 @@ $(document).ready(() => {
             default:
         }
     });
+  });
 
   $('#login_lost_btn').on('click', function () { modalAnimate($formLogin, $formLost); });
   $('#lost_login_btn').on('click', function () { modalAnimate($formLost, $formLogin); });
@@ -123,7 +124,7 @@ $(document).ready(() => {
 
   function sendFriend(evt) {
     evt.preventDefault();
-    debugger
+    debugger;
     console.log($('#friend-email').val());
     let formInputs = {
       'friend_email': $('#friend-email').val()
@@ -132,5 +133,39 @@ $(document).ready(() => {
   }
 
   $friend.on('submit', sendFriend);
+
+// processes user info edits
+
+  let $userEdit = $('#modalEdit');
+
+  function editMsg(results) {
+    if (results.code === 'error') {
+      toaster.error(results.msg);
+    } else {
+      toaster.success(results.msg);
+    }
+  }
+
+  function editUser(evt) {
+    evt.preventDefault();
+    let pword = $('#form18').val();
+    let dupPword = $('#form19').val();
+    if (pword == dupPword) {
+      let formInputs = {
+        'fname': $('#form15').val(),
+        'lname': $('#form16').val(),
+        'email': $('#form17').val(),
+        'pword': $('#form18').val(),
+        'user_pic': $('#form20').val(),
+        'biz_acct': $('#form8').val()
+      };
+      $.post('/edit-user', formInputs, editMsg);
+    } else {
+      toaster.error('The password you entered does not match.');
+    }
+  }
+
+  $userEdit.on('submit', editUser);
+
 
 });

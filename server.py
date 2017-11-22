@@ -247,6 +247,65 @@ def user_profile():
     return render_template('user_profile.html', user=user)
 
 
+@app.route('/edit-user', methods=['POST'])
+def edit_user():
+    """Processes edit user request."""
+
+    fname = request.form.get('fname')
+    lname = request.form.get('lname')
+    email = request.form.get('email')
+    pword = request.form.get('pword')
+    biz_acct = request.form.get('biz_acct')
+
+    user = User.query.filter_by(user_id=session['user_id']).first()
+
+    check_email = User.query.filter_by(email=email).first()
+
+    # Convert picture that would be saved to static/img directory but url stored
+    # in database
+    if 'pic' in request.files:
+        filename = pics.save(request.files['pic'])
+        pic = pics.url(filename)
+    else:
+        pic = None
+
+    if check_email:
+        code = 'error'
+        results = 'That email is already used.'
+    elif (user.biz_acct is True) and (biz_acct == 'false'):
+        code = 'warning'
+        results = 'This account currently has business(es) claimed to it. Do you want to unclaim?'
+        # FIXME: Move to AJAX for email check and biz confirmation using jQuery AJAX .change() event handler.
+    else:
+        if fname:
+            user.first_name = fname
+
+        if lname:
+            user.last_name = lname
+
+        if email:
+            user.email = email
+
+        if pword:
+            user.password = pword
+
+        if pic:
+            user.user_pic = pic
+
+        if biz_acct:
+            if biz_acct == 'true':
+                user.biz_acct = True
+            else:
+                user.biz_acct = False
+
+        db.session.commit()
+
+        code = 'success'
+        results = 'Your user information has been updated.'
+
+        return jsonify({'code': code, 'msg': results})
+
+
 @app.route('/user-friends')
 def user_friends():
     """Displays user's friends list with abbreviated profile."""
@@ -265,10 +324,12 @@ def user_friends():
 def add_friend():
     """Processes add friend request."""
 
-    friend_email = request.form.get('friend-email')
+    friend_email = request.form.get('friend_email')
 
     # TO DELETE
     print u'\n\n\n{}\n\n\n'.format(friend_email)
+    print request.form.get('friend-email')
+    print request.form.get('friend_email')
 
     friend = User.query.filter_by(email=friend_email).first()
 
@@ -295,6 +356,14 @@ def add_friend():
     print results
 
     return jsonify(results)
+
+
+@app.route('/reviews-home')
+def display_biz_reviews():
+    """Displays search feature to find business to review and businesses recently
+    checked into that have not been reviewed."""
+
+    # biz_visited = db.session.query(CheckIn.biz_id).filter(CheckIn.user_id == session['user_id'], Review.biz_id != ).group_by(CheckIn)
 
 
 @app.route('/friend-profile/<int:friend_id>')
