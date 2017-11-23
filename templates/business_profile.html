@@ -33,7 +33,7 @@
 
       <h4>Additional Infographics</h4>
 
-      TO DO: Build out totcl check ins, reviews, redemptions, etc. by month/year
+      TO DO: Build out total check ins, reviews, redemptions, etc. by month/year
 
     {% endif %}
 
@@ -85,6 +85,7 @@
       </ul>
     </div>
 
+<!-- TO DO: Edit business feature for owner only if claimed and others if not. -->
   {% if biz.reviews %}
     <h3>Our Reviews</h3>
 
@@ -101,6 +102,10 @@
               <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
             {% endif %}
           <p>{{ review.new_review }}</p>
+          <b style='color: #880e4f'>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
+          <p>{{ review.response }}</p>
+          <p><i>Original Rating: </i>{{ review.rating }}</p>
+          <p>{{ review.review }}</p>
         {% else %}
           <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
             {% if review.has_liked(session['user_id']) %}
@@ -109,29 +114,30 @@
               <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
             {% endif %}
 
-          {% if review.cust_svc %}
-            <p>Customer Service Rating: {{ review.cust_svc }}</p>
-          {% endif %}
-
           <p>{{ review.review }}</p>
-          {% if review.biz.is_owned %}
+          {% if review.cust_svc %}
+            <b><i>Customer Service Rating:</i> {{ review.cust_svc }}</b>
+
+            <b style='color: #880e4f'>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
+            <p>{{ review.response }}</p>
+          {% else %}
             <button id='dispute {{ review.review_id }}' class='dispute'>Respond</button>
-            <!-- TO DO: Add AJAX to process dispute -->
           {% endif %}
-        {% endif %}
+            <!-- TO DO: Add AJAX to process dispute -->
+]        {% endif %}
       </li>
       {% else %}
       <b>Being Addressed</b>
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
         <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
-          {% if not review.has_liked(session['user_id']) %}
-            <button disabled>Like</button>
+          {% if review.has_liked(session['user_id']) %}
+            <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
           {% else %}
-            <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'>Like</button>
+            <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
           {% endif %}
         <p>{{ review.review }}</p>
-        <b>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
+        <b style='color: #880e4f'>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
           <p>{{ review.response }}</p>
           {% if biz.has_reviewed %}
             <button id='revise {{ review.review_id }}' class='revise-review'>Revise Review</button>
@@ -183,22 +189,6 @@
 <script type='text/javascript'>
   'use strict';
 
-  // like buttons on reviews and related disabling if clicked
-
-  function disableLike(results) {
-    alert(results);
-  }
-
-  function handleClick(evt) {
-    evt.preventDefault();
-    let formInputs = {
-      'review_id': evt.target.id,
-    };
-    $.post('/like-review', formInputs, disableLike);
-    $(this).prop('disabled', true);
-  }
-
-  $('.like').on('click', handleClick)
 
   // display map with business marker
 

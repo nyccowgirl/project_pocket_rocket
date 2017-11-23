@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class='container-fluid'>
+
+    <form id='biz-search' class='form-inline' action='/biz-search'>
+        <input class="form-control mr-sm-2" type="text" placeholder="Who's the Lucky One?" aria-label="Search">
+        <button class="btn btn-outline-success btn-sm my-0" type="submit">Search</button>
+    </form>
+
+</div>
+
+<div class='container-fluid'>
+
+    <h3>Recent Visits</h3>
+
+    {% for group, list in checkins|groupby('biz.biz_name')|sort(attribute='checkin_date', reverse=True) %}
+    <li><a href='/busines-profile/{{ grouper }}'>{{ grouper }}:</a></li>
+      {% for biz in list %}
+        {{ biz.name }}
+        <!-- TO DO: put avg rating as method & display as flip cards-->
+      <b>{{ biz }}</b>
+      <!-- {% if biz.visit_not_reviewed() %}
+      {% endif %}-->
+      {% endfor %}
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

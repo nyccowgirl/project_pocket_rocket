@@ -377,7 +377,7 @@ def display_biz_reviews():
 
     checkins = CheckIn.query.filter_by(user_id=session['user_id']).all()
 
-    return render_template('/reviews_home', checkins=checkins)
+    return render_template('reviews_home.html', checkins=checkins)
 
 
 @app.route('/friend-profile/<int:friend_id>')
@@ -627,11 +627,6 @@ def like_process():
     db.session.commit()
 
     return 'Thanks for liking me!'
-
-@app.route('/test')
-def test():
-
-    return render_template('test.html')
 
 
 ##############################################################################

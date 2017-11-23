@@ -116,12 +116,12 @@
           <p>{{ review.review }}</p>
         {% endif %}
         {% if review.dispute %}
-          <b>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
+          <b style='color: #880e4f'>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
           <p>{{ review.response }}</p>
           {% if review.cust_svc %}
-            <p><i>Customer Service Rating: </i>{{ review.cust_svc }}
+            <b><i>Customer Service Rating: </i>{{ review.cust_svc }}</b>
           {% endif %}
-          {% if review.cust_svc or revew.revise_review %}
+          {% if revew.revise_review %}
             <p><i>Original Rating: </i>{{ review.rating }}</p>
             <p>{{ review.review }}</p>
           {% endif %}

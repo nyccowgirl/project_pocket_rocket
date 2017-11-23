@@ -2,6 +2,7 @@ from __future__ import division
 from flask import Flask, session
 from model import connect_to_db, User, CheckIn, Promo  # db
 from sqlalchemy.sql import extract
+from degrees import BinarySearchNode as bsn
 
 app = Flask(__name__)
 
@@ -97,6 +98,7 @@ def calc_redemptions(user_obj):
 
     return redeemed_promos
 
+# TO DO: turn some of bbelow to methods
 
 def calc_checkins_biz(biz_id):
     """
@@ -178,6 +180,67 @@ def calc_avg_rating(biz_obj):
     avg_rating = tot_score / count
 
     return avg_rating, count
+
+
+def tree(user_id):
+    """
+    Builds out BUDdy tree as a friend connection is instantiated.
+
+    TO DO: Build out doctests
+    """
+
+    continue
+
+def friends_lst(user_id):
+    """
+    Returns list of friends' user_id.
+
+    TO DO: Build out doctests
+    """
+
+    lst = []
+
+    friends = db.session.query(Friend.friend_id).filter_by(user_id).all()
+
+    for friend in friends:
+        lst.append(friend)
+
+    return lst
+
+def update_tree(tree=tree, friend_lst):
+    """
+    Update connections for new list of friends for degrees of separation calculation.
+
+    TO DO: Build out doctests
+    """
+
+    for friend in friend_list:
+        tree.append(friend)
+
+
+
+def deg_of_sep(user1, user2):
+    """
+    Calculates degrees of separation, if any, between two users and/or businesses,
+    if claimed.
+
+    TO DO: Build out doctets
+    """
+
+    tree = []
+    sought = user2
+    pop = user1
+    count = 0
+
+    while True:
+        #TO DELETE
+        print "checking", pop
+
+        if pop == sought:
+            return count
+        else:
+            update_tree
+
 
 
 ##############################################################################

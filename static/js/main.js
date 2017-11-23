@@ -11,7 +11,7 @@ $(document).ready(() => {
 
   function checkEmail(result) {
     if (result === False) {
-      toaster.error('User name or email does not exist. Please check your input or register.', 'BUDdy warning');
+      alert('User name or email does not exist. Please check your input or register.', 'BUDdy warning');
     } else if (result === True) {
       toaster['unique']('A link has been sent to your email to reset your password.');
     } else {
@@ -63,7 +63,7 @@ $(document).ready(() => {
                 break;
             case "lost-form":
                 if (!$('#lost_email')) {
-                  toaster.error('Please input a user name or email.', 'Did you forget something?');
+                  alert('Please input a user name or email.');
                   break;
                 };
                 sendEmail(evt);
@@ -99,17 +99,19 @@ $(document).ready(() => {
   let $like = $('.like');
 
   function disableLike(results) {
-    toaster['unique'](results);
+    console.log('boo hoo')
+    alert(results);
   }
 
   function handleClick(evt) {
     evt.preventDefault();
     let formInputs = {
-      'review_id': evt.target.id,
+      'review_id': this.id,
     };
     $.post('/like-review', formInputs, disableLike);
     $(this).prop('disabled', true);
   }
+// FIXME: Add in remove and add class for the solid heart shape
 
   $like.on('click', handleClick);
 
@@ -119,13 +121,11 @@ $(document).ready(() => {
   let $friend = $('#modalAddFriend');
 
   function friendMsg(results) {
-    toaster['unique'](results);
+    alert(results);
   }
 
   function sendFriend(evt) {
     evt.preventDefault();
-    debugger;
-    console.log($('#friend-email').val());
     let formInputs = {
       'friend_email': $('#friend-email').val()
     };
@@ -140,7 +140,7 @@ $(document).ready(() => {
 
   function editMsg(results) {
     if (results.code === 'error') {
-      toaster.error(results.msg);
+      alert(results.msg);
     } else {
       toaster.success(results.msg);
     }
@@ -161,7 +161,7 @@ $(document).ready(() => {
       };
       $.post('/edit-user', formInputs, editMsg);
     } else {
-      toaster.error('The password you entered does not match.');
+      alert('The password you entered does not match.');
     }
   }
 
@@ -170,34 +170,5 @@ $(document).ready(() => {
   // TO DO: Use .change to check email, etc. first b/f going to submitting
 
 
-// flipcard on user's friend page
-  $('.flip-card').on('click', function() {
-    console.log('boo');
-    if (!this.classList.contains('on')) {
-          console.log('boo whp');
-
-      this.classList.remove('off');
-      this.classList.add('on');
-    } else {
-          console.log('boo shoo');
-
-      this.classList.remove('on');
-      this.classList.add('off');
-    }
-  });
-
-  // $('.flip-card').bind({
-  //   console.log('boo');
-  //   click: function() {
-  //       $('.flip-card .flip-container .flipper').toggleClass('flip');
-  //           console.log('boo hoo');
-
-  //   },
-  //   mouseleave: function() {
-  //       $('.flip-card .flip-container .flipper').toggleClass('flip');
-  //             console.log('pumpkin pie');
-
-  //   }
-  // });
 
 });
