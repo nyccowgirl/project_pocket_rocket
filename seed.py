@@ -107,7 +107,7 @@ def create_userbiz():
 
         for i in range(500):
             userbiz.write('{}|{}\n'.format(fake.random_int(min=1, max=500),
-                                           fake.random_int(min=1, max=2000)))
+                                           fake.random_int(min=1, max=1000)))
 
 
 def create_promos():
@@ -120,7 +120,7 @@ def create_promos():
 
     with open('data/promos.txt', 'w+') as promos:
 
-        for i in range(3000):
+        for i in range(5000):
 
             title = make_title_descr(MARKOV_CHAIN, 4)
             descr = make_title_descr(MARKOV_CHAIN, 8)
@@ -287,7 +287,7 @@ def load_users():
     User.query.delete()
 
     # Read user file and insert data
-    for row in open('data/users.txt'):
+    for row in open('data/users.txt', 'rU'):
         row = row.rstrip()
 
         (username, first_name, last_name, email, valid_email, password, pic,
@@ -336,7 +336,7 @@ def load_friends():
     Friend.query.delete()
 
     # Read user file and insert data
-    for row in open('data/friends.txt'):
+    for row in open('data/friends.txt', 'rU'):
         row = row.rstrip()
 
         user_id, friend_id = row.split('|')
@@ -360,7 +360,7 @@ def load_userbiz():
     UserBiz.query.delete()
 
     # Read user file and insert data
-    for row in open('data/userbiz.txt'):
+    for row in open('data/userbiz.txt', 'rU'):
         row = row.rstrip()
 
         user_id, biz_id = row.split('|')
@@ -384,7 +384,7 @@ def load_biz():
     Business.query.delete()
 
     # Read user file and insert data
-    for row in open('data/biz.txt'):
+    for row in open('data/biz.txt', 'rU'):
         row = row.rstrip()
 
         (biz_name, address, city, state, country, zipcode, phone, email,
@@ -395,15 +395,18 @@ def load_biz():
         re.sub('\ |\?|\.|\!|\/|\;|\:|\-|\(|\)', '', phone)
 
         # Convert from string to boolean
-        if valid_email == 'True':
+        if valid_email == 'true':
             valid_email = True
         else:
             valid_email = False
 
-        if claimed == 'True':
+        if claimed == 'true':
             claimed = True
         else:
             claimed = False
+
+        open_time = open_time[0]
+        close_time = close_time[0]
 
         biz = Business(biz_name=biz_name,
                        address=address,
@@ -442,22 +445,24 @@ def load_promos():
     Promo.query.delete()
 
     # Read user file and insert data
-    for row in open('data/promos.txt'):
+    for row in open('data/promos.txt', 'rU'):
         row = row.rstrip()
 
         biz_id, title, descr, start_date_str, end_date_str, referral, birthday, redeem_count = row.split('|')
 
         # Convert to datetime format
         start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+        # start_date = datetime.strptime(start_date_str, '%m/%d/%y')
+        # end_date_str = end_date_str[:10]
         end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
 
         # Convert from string to boolean
-        if referral == 'True':
+        if referral == 'true':
             referral = True
         else:
             referral = False
 
-        if birthday == 'True':
+        if birthday == 'true':
             birthday = True
         else:
             birthday = False
@@ -490,7 +495,7 @@ def load_userpromos():
     UserPromo.query.delete()
 
     # Read user file and insert data
-    for row in open('data/userpromos.txt'):
+    for row in open('data/userpromos.txt', 'rU'):
         row = row.rstrip()
 
         user_id, promo_id, redeemed, redeem_date_str = row.split('|')
@@ -529,7 +534,7 @@ def load_checkins():
     CheckIn.query.delete()
 
     # Read user file and insert data
-    for row in open('data/checkins.txt'):
+    for row in open('data/checkins.txt', 'rU'):
         row = row.rstrip()
 
         user_id, biz_id, checkin_date_str = row.split('|')
@@ -558,7 +563,7 @@ def load_referrals():
     Referral.query.delete()
 
     # Read user file and insert data
-    for row in open('data/referrals.txt'):
+    for row in open('data/referrals.txt', 'rU'):
         row = row.rstrip()
 
         referer_id, referee_id, biz_id, refer_date_str, userpromo_id = row.split('|')
@@ -589,7 +594,7 @@ def load_reviews():
     Review.query.delete()
 
     # Read user file and insert data
-    for row in open('data/reviews.txt'):
+    for row in open('data/reviews.txt', 'rU'):
         row = row.rstrip()
 
         (user_id, biz_id, rating, review, review_date_str, dispute, response,
@@ -649,7 +654,7 @@ def load_likes():
     LikeReview.query.delete()
 
     # Read user file and insert data
-    for row in open('data/likes.txt'):
+    for row in open('data/likes.txt', 'rU'):
         row = row.rstrip()
 
         review_id, user_id = row.split('|')
@@ -673,7 +678,7 @@ def load_invites():
     Invite.query.delete()
 
     # Read user file and insert data
-    for row in open('data/invites.txt'):
+    for row in open('data/invites.txt', 'rU'):
         row = row.rstrip()
 
         user_id, friend_email, accepted = row.split('|')

@@ -141,7 +141,7 @@ class Business(db.Model):
     phone = db.Column(db.String(64), nullable=True)
     email = db.Column(db.String(64), nullable=True)
     valid_email = db.Column(db.Boolean, nullable=False, default=False)
-    url = db.Column(db.String(64), nullable=True)
+    url = db.Column(db.String(100), nullable=True)
     category = db.Column(db.String(64), nullable=True)
     days_open = db.Column(db.String(64), nullable=True)
     open_time = db.Column(db.Integer, nullable=True)

@@ -234,5 +234,7 @@ border-radius: 1;
   margin-left: -25px;
 }
 
-
+.lowercase {
+  text-transform: lowercase;
+}
 

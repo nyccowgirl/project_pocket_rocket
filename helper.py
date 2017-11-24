@@ -1,8 +1,8 @@
 from __future__ import division
 from flask import Flask, session
-from model import connect_to_db, User, CheckIn, Promo  # db
-from sqlalchemy.sql import extract
-from degrees import BinarySearchNode as bsn
+from model import connect_to_db, User, CheckIn, Friend, db  # Promo,
+# from sqlalchemy.sql import extract
+# from degrees import BinarySearchNode as bsn
 
 app = Flask(__name__)
 
@@ -189,7 +189,8 @@ def tree(user_id):
     TO DO: Build out doctests
     """
 
-    continue
+    pass
+
 
 def friends_lst(user_id):
     """
@@ -207,29 +208,31 @@ def friends_lst(user_id):
 
     return lst
 
-def update_tree(tree=tree, friend_lst):
+
+def update_tree(friends_lst):
     """
     Update connections for new list of friends for degrees of separation calculation.
 
     TO DO: Build out doctests
     """
 
-    for friend in friend_list:
+    for friend in friends_lst:
         tree.append(friend)
 
 
-
-def deg_of_sep(user1, user2):
+def deg_of_sep(user1, user2, degrees):
     """
     Calculates degrees of separation, if any, between two users and/or businesses,
-    if claimed.
+    if claimed. If count is none, the user2 is user1. Otherwise, count of zero
+    means no connection. Currently set to stop at count at n degrees.
 
     TO DO: Build out doctets
     """
 
-    tree = []
+    TREE = []
     sought = user2
     pop = user1
+    anchor = user1
     count = 0
 
     while True:
@@ -237,10 +240,19 @@ def deg_of_sep(user1, user2):
         print "checking", pop
 
         if pop == sought:
+            if count == 0:
+                count = None
             return count
         else:
-            update_tree
+            update_tree(friends_lst(pop))
+            if pop == anchor:
+                anchor = TREE[-1]
+                count += 1
+                if count == (degrees + 1):
+                    return count
+            pop = TREE.pop(0)
 
+    return count
 
 
 ##############################################################################

@@ -132,5 +132,6 @@ def make_text(chains, min_char, max_char):
 
 
 excerpts = ['data/markov/trump.txt', 'data/markov/nin_deltaofvenus.txt',
-            'data/markov/rice_claimingofsleepingbeauty.txt', 'data/markov/jfk_inaugural.txt']
+            'data/markov/rice_claimingofsleepingbeauty.txt', 'data/markov/jfk_inaugural.txt',
+            'data/markov/mlk_ihaveadream.txt', 'data/markov/miller_tropicofcancer']
 MARKOV_CHAIN = make_chains(open_and_read_files(excerpts), 2)
