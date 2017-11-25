@@ -298,12 +298,12 @@ def load_users():
         join_date = datetime.strptime(join_date_str, '%Y-%m-%d')
 
         # Convert from string to boolean
-        if valid_email == 'True':
+        if valid_email == 'true':
             valid_email = True
         else:
             valid_email = False
 
-        if biz_acct == 'True':
+        if biz_acct == 'true':
             biz_acct = True
         else:
             biz_acct = False

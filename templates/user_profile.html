@@ -113,8 +113,8 @@
       <ul>
         Check-Ins: {{ user.tot_checkins() }}<br>
         Reviews: {{ user.tot_reviews() }}<br>
-        Referrals: {{ session['tot_refs'] }} | Redeemed: {{ session['redeem_refs'] }}<br>
-        Promos Redeemed: {{ session['tot_redeem'] }}<br>
+        Referrals: {{ user.tot_refs() }} | Redeemed: {{ user.tot_refs_reds() }}<br>
+        Promos Redeemed: {{ user.tot_reds }}<br>
         Friends: {{ user.tot_friends() }}
         Total Businesses Visited: {{ user.tot_unique_biz() }}</p>
         Total Businesses Referred to Friends: {{ user.tot_biz_referrals() }}</p>

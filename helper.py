@@ -63,40 +63,40 @@ def check_user_info(user_input):
 #     return total
 
 
-def calc_referrals(user_obj):
-    """
-    Calculates total referrals and referrals that have been redeemed for
-    gamification component.
+# def calc_referrals(user_obj):
+#     """
+#     Calculates total referrals and referrals that have been redeemed for
+#     gamification component.
 
-    >>> calc_referrals(user_obj)
-    (6, 11)
-    """
+#     >>> calc_referrals(user_obj)
+#     (6, 11)
+#     """
 
-    referrals = user_obj.referrals
-    total_refs = len(referrals)
-    redeemed_refs = 0
+#     referrals = user_obj.referrals
+#     total_refs = len(referrals)
+#     redeemed_refs = 0
 
-    for referral in referrals:
-        if referral.user_promo.redeemed is True:
-            redeemed_refs += 1
+#     for referral in referrals:
+#         if referral.user_promo.redeemed is True:
+#             redeemed_refs += 1
 
-    return total_refs, redeemed_refs
+#     return total_refs, redeemed_refs
 
 
-def calc_redemptions(user_obj):
-    """
-    Calculates total promotions redeemed for gamification component.
+# def calc_redemptions(user_obj):
+#     """
+#     Calculates total promotions redeemed for gamification component.
 
-    TO DO: Build out doctests
-    """
+#     TO DO: Build out doctests
+#     """
 
-    redeemed_promos = 0
+#     redeemed_promos = 0
 
-    for promo in user_obj.user_promos:
-        if promo.redeemed is True:
-            redeemed_promos += 1
+#     for promo in user_obj.user_promos:
+#         if promo.redeemed is True:
+#             redeemed_promos += 1
 
-    return redeemed_promos
+#     return redeemed_promos
 
 # TO DO: turn some of bbelow to methods
 

@@ -77,6 +77,35 @@ class User(db.Model):
 
         return total
 
+    def tot_refs(self):
+        """ Calculates total referrals. """
+
+        total = len(self.referrals)
+
+        return total
+
+    def tot_refs_reds(self):
+        """ Calculates total referrals that have been redeemed. """
+
+        redeemed = 0
+
+        for referral in self.referrals:
+            if referral.user_promo.redeemed is True:
+                redeemed += 1
+
+        return redeemed
+
+    def tot_reds(self):
+        """ Calculates total promotions that have been redeemed. """
+
+        redeemed_promos = 0
+
+        for promo in self.user_promos:
+            if promo.redeemed is True:
+                redeemed_promos += 1
+
+        return redeemed_promos
+
     def tot_unique_biz(self):
         """ Calculates total of different business that have been checked into. """
 

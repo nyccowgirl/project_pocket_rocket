@@ -8,21 +8,164 @@
 
 
 <!-- BEGIN # MODAL LOGIN -->
-<div class='modal fade' id='login-modal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' style='display: none;'>
+<div class='modal fade' id='modalLRForm' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+  <div class='modal-dialog cascading-modal' role='document'>
+    <!-- Content -->
+    <div class='modal-content'>
+      <!-- Modal cascading tabs -->
+      <div class='modal-c-tabs'>
+        <!-- Nav tabs -->
+        <ul class='nav nav-tabs tabs-2 light-blue darken-3' role='tablist'>
+          <li class='nav-item'>
+            <a class='nav-link active' data-toggle='tab' href='/login' role='tab'><i class='fa fa-user mr-1'></i>Log In</a>
+          </li>
+          <li class='nav-item'>
+            <a class='nav-link' data-toggle='tab' href='/register' role='tab'><i class='fa fa-user-plus mr-1'></i>Register</a>
+          </li>
+        </ul>
+
+        <!-- Tab panels -->
+        <div class='tab-content'>
+          <!-- Log In panel -->
+          <div class='tab-pane fade in show active' id='login' role='tabpanel'>
+            <!-- Body -->
+            <div class='modal-body mb-1'>
+              <div class='md-form form-sm'>
+                <i class='fa fa-envelope prefix'></i>
+                <input type='text' id='form1' class='form-control lowercase'>
+                <label for='form1'>Username or Email</label>
+              </div>
+
+              <div class='md-form form-sm'>
+                <i class='fa fa-lock prefix'></i>
+                <input type='password' id='form2' class='form-control'>
+                <label for='form2'>Password</label>
+              </div>
+
+              <div class='text-center mt-2'>
+                <button class='btn btn-unique'>Log In<i class='fa fa-sign-in ml-1'></i></button>
+              </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class='modal-footer display-footer'>
+              <div class='options text-center text-md-right mt-1'>
+                <p>Not a member? <a href='/register' class='unique-text'>Sign Up</a></p>
+                <p>Forgot <a href='/pword-reset' class='unique-text'>Password?</a></p>
+              </div>
+
+              <button type='button' class='btn btn-outline-unique waves-effect ml-auto' data-dismiss='modal'>Close</button>
+            </div>
+          </div>
+          <!-- /.Log In panel -->
+
+          <!-- Registration Panel -->
+          <div class='tab-pane fade' id='registration' role='tabpanel'>
+
+            <!-- Body -->
+            <div class='modal-body'>
+              <div class='md-form form-sm'>
+                <i class='fa fa-user prefix'></i>
+                <input type='text' id='form3' class='form-control'>
+                <label for='form3'>First Name</label>
+              </div>
+
+              <div class='md-form form-sm'>
+                <i class='fa fa-user prefix'></i>
+                <input type='text' id='form4' class='form-control'>
+                <label for='form4'>Last Name</label>
+              </div>
+
+              <div class='md-form form-sm'>
+                <i class='fa fa-user prefix'></i>
+                <input type='text' id='form5' class='form-control'>
+                <label for='form5'>Username</label>
+              </div>
+
+              <div class='md-form form-sm'>
+                <i class='fa fa-envelope prefix'></i>
+                <input type='text' id='form6' class='form-control'>
+                <label for='form6'>Email</label>
+              </div>
+
+              <div class='md-form form-sm'>
+                <i class='fa fa-lock prefix'></i>
+                <input type='password' id='form7' class='form-control'>
+                <label for='form7'>Password</label>
+              </div>
+
+              <div class='md-form form-sm'>
+                <i class='fa fa-lock prefix'></i>
+                <input type='password' id='form8' class='form-control'>
+                <label for='form8'>Repeat Password</label>
+              </div>
+
+              <div class='md-form form-sm'>
+                <i class='fa fa-birthday-cake prefix'></i>
+                <input type='text' id='form9' class='form-control'>
+                <label for='form9'>Date of Birth</label>
+              </div>
+
+              <div class='md-form form-sm'>
+                <i class='fa fa-building prefix'></i>
+                <input type='radio' id='form10' name='biz' value='true'>Yes
+                <input type='radio' name='biz' value='false' checked>No
+                <label for='form10'>Business Account?</label>
+              </div>
+
+              <div class='md-form form-sm'>
+                <i class='fa fa-camera prefix'></i>
+                <input type='file' id='form11' name='pic' accept='image/*'>
+                <label for='form11'>Picture</label>
+              </div>
+            </div>
+
+            <!-- Footer -->
+            <div class='modal-footer'>
+              <div class='options text-right'>
+                <p class='pt-1'>Already have an account? <a href='/login' class='unique-text'>Log In</a></p>
+              </div>
+
+              <button type='button' class='btn btn-outline-unique waves-effect ml-auto' data-dismiss='modal'>Close</button>
+            </div>
+
+          </div>
+          <!-- /.Registration panel -->
+        </div>
+        <!-- /.Tab panels -->
+      </div>
+      <!-- /.Modal cascading -->
+    </div>
+    <!-- /.Content -->
+  </div>
+</div>
+<!-- Modal: Login / Regisration form -->
+
+
+
+
+
+
+
+
+<!-- BEGIN # MODAL LOGIN -->
+<!-- <div class='modal fade' id='login-modal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' style='display: none;'>
         <div class='modal-dialog'>
             <div class='modal-content'>
-                <div class='modal-header' align='center'>
+
+                 <div class='modal-header' align='center'>
                     <img class='img-circle' id='img_logo' src='/static/img/pinky.jpg'><b style='color: #8e44ad'>BUDdy</b>
                     <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
                         <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
                     </button>
-                </div>
+                </div> -->
 
                 <!-- Begin # DIV Form -->
-                <div id='div-forms'>
-
+<!--                 <div id='div-forms'>
+ -->
                     <!-- Begin # Login Form -->
-                    <form id='login-form' action='/login' method='POST'>
+<!--                     <form id='login-form' action='/login' method='POST'>
                         <div class='modal-body'>
                             <div id='div-login-msg'>
                                 <div id='icon-login-msg' class='glyphicon glyphicon-chevron-right'></div>
@@ -33,8 +176,8 @@
                             <div class='checkbox'>
                                 <label>
                                     <input type='checkbox'> Remember me
-                                    <!-- TO DO: Look into remember me as some cache -->
-                                </label>
+ -->                                    <!-- TO DO: Look into remember me as some cache -->
+<!--                                 </label>
                             </div>
                         </div>
                         <div class='modal-footer'>
@@ -44,14 +187,15 @@
                             <div>
                                 <button id='login_lost_btn' type='button' class='btn btn-link'>Lost Password?</button>
                                 <button id='login_register_btn' type='button' class='btn btn-link' href='/register'>Register</button>
-                                <!-- FIXME: Password and register are not showing up -->
-                            </div>
+ -->                                <!-- FIXME: Password and register are not showing up -->
+<!--                             </div>
                         </div>
+
                     </form>
-                    <!-- End # Login Form -->
+ -->                    <!-- End # Login Form -->
 
                     <!-- Begin | Lost Password Form -->
-                    <form id='lost-form' style='display:none;'>
+<!--                     <form id='lost-form' style='display:none;'>
                         <div class="modal-body">
                             <div id="div-lost-msg">
                                 <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
@@ -69,20 +213,29 @@
                             </div>
                         </div>
                     </form>
-                    <!-- End | Lost Password Form -->
+ -->                    <!-- End | Lost Password Form -->
 
-                </div>
-                <!-- End # DIV Form -->
+<!--                 </div>
+ -->                <!-- End # DIV Form -->
 
-            </div>
+<!--             </div>
         </div>
-    </div>
+    </div> -->
     <!-- END # MODAL LOGIN -->
+
+
 
 <div class='container-fluid'>
   <h1>BUDdy</h1>
 
   <h2>Paying it forward...</h2>
+
+  {% if 'user_id' in session %}
+    <form action='/add-biz'>
+      <button type='submit' name='add-biz'>Add a Biz!</button>
+        <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalEdit' mdbRippleRadius>Edit Me</button>
+    </form><br>
+  {% endif %}
 
   <p><a href="/trends">Trending</a></p>
   <!-- TO DO: build out trending page and features for either top key searches,
@@ -96,11 +249,6 @@
 
   <iframe src="https://giphy.com/embed/3oz8xPAA0RduEWPEKQ" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/fullerhouse-netflix-funny-3oz8xPAA0RduEWPEKQ">via GIPHY</a></p>
 
-  {% if 'user_id' in session %}
-    <form action='/add-biz'>
-      <button type='submit' name='add-biz'>Add a Biz!</button>
-    </form><br>
-  {% endif %}
 
 </div>
 

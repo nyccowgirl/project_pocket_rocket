@@ -153,6 +153,9 @@ def login_process():
         session['username'] = user.username
         session['biz_acct'] = user.biz_acct
 
+        # TO DELETE
+        print '\n\n\n{}\n\n\n'.format(user.biz_acct)
+
         if user.user_pic:
             session['user_pic'] = user.user_pic
         else:
@@ -232,12 +235,12 @@ def user_profile():
     # session['tot_revs'] = reviews
 
     # FIXME: update helper function once relationship mapping is solved.
-    total_refs, redeemed_refs = helper.calc_referrals(user)
-    session['tot_refs'] = total_refs
-    session['redeem_refs'] = redeemed_refs
+    # total_refs, redeemed_refs = helper.calc_referrals(user)
+    # session['tot_refs'] = total_refs
+    # session['redeem_refs'] = redeemed_refs
 
-    redemptions = helper.calc_redemptions(user)
-    session['tot_redeem'] = redemptions
+    # redemptions = helper.calc_redemptions(user)
+    # session['tot_redeem'] = redemptions
 
     # checkins = helper.calc_checkins(user)
     # session['tot_checkins'] = checkins
@@ -315,7 +318,7 @@ def user_friends():
     # TO DELETE
     print u'\n\n\n{}\n\n\n'.format(user.friends)
 
-    print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
+    # print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
 
     return render_template('user_friends.html', user=user)
 
