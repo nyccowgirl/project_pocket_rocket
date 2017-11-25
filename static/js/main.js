@@ -48,7 +48,7 @@ $(document).ready(() => {
         alert(results.msg);
     } else {
         alert(results.msg);
-    };
+    }
     location.reload('/');
   }
 
@@ -114,7 +114,10 @@ $(document).ready(() => {
     $('#modalLRForm .nav-link').button('toggle').addClass('active');
     $('form').on('submit', function(evt) {
       evt.preventDefault();
+      console.log(evt);
+      debugger;
     let formInputs = new formData(this);
+      console.log(formInputs);
       switch(this.id) {
         case 'login':
           // logIn(evt);
@@ -134,17 +137,15 @@ $(document).ready(() => {
             break;
           };
           sendEmail(evt);
-
           break;
         default:
-          break;
+          console.log('Something is broken. Check back later!');
       }
-
     });
   }
 
 
-  $('#modalLRForm').on('click', processForm(evt));
+  $('#modalLRForm').on('click', processForm);
 
 // $('#discountmodal').on('show.bs.modal', function () {
 // http://stackoverflow.com/questions/48239/getting-the-id-of-the-element-that-fired-an-event-using-jquery

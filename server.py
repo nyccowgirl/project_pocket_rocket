@@ -140,6 +140,9 @@ def login_process():
     user_input = request.form.get('user-input')
     pword = request.form.get('pword')
 
+    # TO DELETE
+    print '\n\n\n{}{}\n\n\n'.format(user_input, pword)
+
     user = helper.check_user_info(user_input)
 
     if not user:
