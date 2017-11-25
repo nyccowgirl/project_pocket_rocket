@@ -65,8 +65,8 @@ def register_process():
     fname = request.form['fname']
     lname = request.form['lname']
     username = request.form['username']
-    email = request.form['email']
-    pword = request.form['pword']
+    email = request.form['email-reg']
+    pword = request.form['pword-reg']
     bday_str = request.form['bday']
     biz = request.form['biz']
 
@@ -178,11 +178,11 @@ def logout():
     return redirect('/')
 
 
-@app.route('/pword-reset')
+@app.route('/email-check')
 def check_email():
     """Checks user info in database when user wants to reset password."""
 
-    user_input = request.form['user']
+    user_input = request.form['user-input']
 
     user = helper.check_user_info(user_input)
 
@@ -194,7 +194,11 @@ def check_email():
 
     # TO DO: need to send link to user email to reset password
 
+@app.route('/pword-reset')
+def pword_form():
+    """ Displays password reset form. """
 
+    return render_template('password.html')
 # The below is coming from password.html. At the moment, nothing renders the page
 # as AJAX refactoring stays on the page with email with password reset link being sent
 @app.route('/pword-reset', methods=['POST'])

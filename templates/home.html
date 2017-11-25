@@ -15,31 +15,35 @@
       <!-- Modal cascading tabs -->
       <div class='modal-c-tabs'>
         <!-- Nav tabs -->
-        <ul class='nav nav-tabs tabs-2 light-blue darken-3' role='tablist'>
+        <ul class='nav nav-tabs tabs-2 light-blue darken-3 white-text' role='tablist'>
           <li class='nav-item'>
             <a class='nav-link active' data-toggle='tab' href='/login' role='tab'><i class='fa fa-user mr-1'></i>Log In</a>
           </li>
           <li class='nav-item'>
             <a class='nav-link' data-toggle='tab' href='/register' role='tab'><i class='fa fa-user-plus mr-1'></i>Register</a>
           </li>
+          <li class='nav-item'>
+            <a class='nav-link' data-toggle='tab' href='/pword-reset' role='tab'><i class='fa fa-lock mr-1'></i>Lost Password</a>
+          </li>
         </ul>
 
         <!-- Tab panels -->
         <div class='tab-content'>
           <!-- Log In panel -->
-          <div class='tab-pane fade in show active' id='login' role='tabpanel'>
+          <form action='/login' method='POST' class='tab-pane fade in show active' id='login' role='tabpanel' enctype="multipart/form-data">
+
             <!-- Body -->
             <div class='modal-body mb-1'>
               <div class='md-form form-sm'>
                 <i class='fa fa-envelope prefix'></i>
-                <input type='text' id='form1' class='form-control lowercase'>
-                <label for='form1'>Username or Email</label>
+                <input type='text' id='user-input' class='form-control lowercase'>
+                <label for='user-input'>Username or Email</label>
               </div>
 
               <div class='md-form form-sm'>
                 <i class='fa fa-lock prefix'></i>
-                <input type='password' id='form2' class='form-control'>
-                <label for='form2'>Password</label>
+                <input type='password' id='pword' class='form-control'>
+                <label for='pword'>Password</label>
               </div>
 
               <div class='text-center mt-2'>
@@ -51,87 +55,119 @@
             <!-- Footer -->
             <div class='modal-footer display-footer'>
               <div class='options text-center text-md-right mt-1'>
-                <p>Not a member? <a href='/register' class='unique-text'>Sign Up</a></p>
-                <p>Forgot <a href='/pword-reset' class='unique-text'>Password?</a></p>
+                <p>Not a member? <a href='#registration' class='unique-text'>Sign Up</a></p>
+                <p>Forgot <a href='#pword-reset' class='unique-text'>Password?</a></p>
               </div>
 
               <button type='button' class='btn btn-outline-unique waves-effect ml-auto' data-dismiss='modal'>Close</button>
             </div>
-          </div>
+          </form>
           <!-- /.Log In panel -->
 
           <!-- Registration Panel -->
-          <div class='tab-pane fade' id='registration' role='tabpanel'>
+          <form action='/register' method='POST' class='tab-pane fade' id='registration' role='tabpanel' enctype="multipart/form-data">
 
             <!-- Body -->
             <div class='modal-body'>
               <div class='md-form form-sm'>
                 <i class='fa fa-user prefix'></i>
-                <input type='text' id='form3' class='form-control'>
-                <label for='form3'>First Name</label>
+                <input type='text' id='fname' class='form-control'>
+                <label for='fname'>First Name</label>
               </div>
 
               <div class='md-form form-sm'>
                 <i class='fa fa-user prefix'></i>
-                <input type='text' id='form4' class='form-control'>
-                <label for='form4'>Last Name</label>
+                <input type='text' id='lname' class='form-control'>
+                <label for='lname'>Last Name</label>
               </div>
 
               <div class='md-form form-sm'>
                 <i class='fa fa-user prefix'></i>
-                <input type='text' id='form5' class='form-control'>
-                <label for='form5'>Username</label>
+                <input type='text' id='username' class='form-control lowercase'>
+                <label for='username'>Username</label>
               </div>
 
               <div class='md-form form-sm'>
                 <i class='fa fa-envelope prefix'></i>
-                <input type='text' id='form6' class='form-control'>
-                <label for='form6'>Email</label>
+                <input type='text' id='email-reg' class='form-control lowercase'>
+                <label for='email-reg'>Email</label>
               </div>
 
               <div class='md-form form-sm'>
                 <i class='fa fa-lock prefix'></i>
-                <input type='password' id='form7' class='form-control'>
-                <label for='form7'>Password</label>
+                <input type='password' id='pword-reg' class='form-control'>
+                <label for='pword-reg'>Password</label>
               </div>
 
               <div class='md-form form-sm'>
                 <i class='fa fa-lock prefix'></i>
-                <input type='password' id='form8' class='form-control'>
-                <label for='form8'>Repeat Password</label>
+                <input type='password' id='pword-rep' class='form-control'>
+                <label for='pword-rep'>Repeat Password</label>
               </div>
 
               <div class='md-form form-sm'>
                 <i class='fa fa-birthday-cake prefix'></i>
-                <input type='text' id='form9' class='form-control'>
-                <label for='form9'>Date of Birth</label>
+                <input type='text' id='bday' class='form-control'>
+                <label for='bday'>Date of Birth</label>
               </div>
 
+              <!-- Radio -->
               <div class='md-form form-sm'>
                 <i class='fa fa-building prefix'></i>
-                <input type='radio' id='form10' name='biz' value='true'>Yes
-                <input type='radio' name='biz' value='false' checked>No
-                <label for='form10'>Business Account?</label>
+                <p class='text-center'><strong>Business Account?</strong></p>
+                <div class='form-group'>
+                  <input type='radio' id='biz-si' name='biz' value='true'>
+                  <label for='biz-si'>Yes</label>
+                </div>
+
+                <div class='form-group'>
+                  <input type='radio' id='biz-no' name='biz' value='false'>
+                <label for='biz-no'>No</label>
+                </div>
               </div>
+              <!-- /.Radio -->
 
               <div class='md-form form-sm'>
                 <i class='fa fa-camera prefix'></i>
-                <input type='file' id='form11' name='pic' accept='image/*'>
-                <label for='form11'>Picture</label>
+                <input type='file' id='user-pic' name='pic' accept='image/*'>
+                <label for='user-pic'>Picture</label>
               </div>
-            </div>
 
+              <div class='text-center mt-2'>
+                <button class='btn btn-unique'>Register<i class='fa fa-send ml-1'></i></button>
+              </div>
+
+            </div>
             <!-- Footer -->
             <div class='modal-footer'>
               <div class='options text-right'>
-                <p class='pt-1'>Already have an account? <a href='/login' class='unique-text'>Log In</a></p>
+                <p class='pt-1'>Already have an account? <a href='#login' class='unique-text'>Log In</a></p>
               </div>
 
               <button type='button' class='btn btn-outline-unique waves-effect ml-auto' data-dismiss='modal'>Close</button>
             </div>
 
-          </div>
+          </form>
           <!-- /.Registration panel -->
+
+          <!-- Password change panel -->
+          <form action='/pword-reset' method='POST' class='tab-pane fade' id='reset-pword' role='tabpanel' enctype="multipart/form-data">
+
+            <!-- Body -->
+            <div class='modal-body mb-1'>
+              <div class='md-form form-sm'>
+                <i class='fa fa-lock prefix'></i>
+                <input type='text' id='email-lost' class='form-control lowercase'>
+                <label for='email-lost'>Email</label>
+              </div>
+
+              <div class='text-center mt-2'>
+                <button class='btn btn-unique'>Submit<i class='fa fa-send ml-1'></i></button>
+              </div>
+            </div>
+            <!-- /.Body -->
+          </form>
+          <!-- /.Password change panel -->
         </div>
         <!-- /.Tab panels -->
       </div>
