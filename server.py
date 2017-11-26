@@ -557,6 +557,28 @@ def biz_profile(biz_name):
                            ref_redeem=redeemed_refs, user_score=user_rating)
 
 
+@app.route('/claim-biz/<int:biz_id>', methods=['POST'])
+def claim_biz(biz_id):
+    """Processes user claiming ownership of a business."""
+
+    check = UserBiz.query.filter_by(biz_id=biz_id).first()
+
+    if check:
+        code = 'error'
+        results = 'The business has already been claimed. If you believe this is in \
+              error, please submit message to administrators and provide evidence of your ownership.'
+    else:
+        userbiz = UserBiz(user_id=session['user_id'],
+                          biz_id=biz_id)
+
+        db.session.add(userbiz)
+        db.session.commit()
+        code = 'success'
+        results = 'Thanks for being part of the BUDdy community.'
+
+    return jsonify({'code': code, 'msg': results})
+
+
 @app.route('/checkin/<int:biz_id>', methods=['POST'])
 def check_in(biz_id):
     """Checks in user into business, limit one check in per day. """
@@ -571,7 +593,7 @@ def check_in(biz_id):
     print u'\n\n\n{}\n\n\n'.format(biz.biz_name)
 
     if checkin:
-        flash('You have already checked into this business today. No double dipping!')
+        results = 'You have already checked into this business today. No double dipping!'
     else:
         checkin = CheckIn(user_id=session['user_id'],
                           biz_id=biz_id,
@@ -582,15 +604,15 @@ def check_in(biz_id):
 
         user_checkins = helper.calc_checkins_biz(biz_id)
 
-        flash('You have checked in a total of {} times. {} thanks you for your support!'.format(user_checkins, biz.biz_name))
+        results = ('You have checked in a total of {} times. {} thanks you for your support!'.format(user_checkins, biz.biz_name))
 
     # TO DELETE
     print u'\n\n\n{}\n\n\n'.format(biz_name)
     import pdb; pdb.set_trace()
 
-    # return redirect('/')
+    # return redirect('/'))
 
-    return redirect('/business-profile/<biz_name>')
+    return jsonify(results)
 
     # FIXME: redirect isn't taking in biz_name
 

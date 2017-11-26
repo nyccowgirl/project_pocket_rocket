@@ -195,9 +195,22 @@ class Business(db.Model):
     def is_owned(self, user_id):
         """ Tracks whether business has been claimed by a specific user. """
 
-        claim = UserBiz.query.filter(UserBiz.biz_id == self.biz_id, UserBiz.user_id == user_id).first()
+        owned = UserBiz.query.filter(UserBiz.biz_id == self.biz_id, UserBiz.user_id == user_id).first()
 
-        if claim:
+        if owned:
+            return True
+        else:
+            return False
+
+    def is_claimed(self):
+        """
+        Tracks whether business has been claimed and therefore, is available
+        to be claimed or not.
+        """
+
+        claimed = UserBiz.query.filter_by(biz_id=self.biz_id).first()
+
+        if claimed:
             return True
         else:
             return False
@@ -245,6 +258,73 @@ class Business(db.Model):
                 not_reviewed = True
 
         return not_reviewed
+
+    def tot_checkins(self):
+        """ Tracks total check-ins to the business. """
+
+        total = len(self.checkins)
+
+        return total
+
+    def tot_user_checkins(self, user_id):
+        """ Tracks total check-ins to the business by a specific user. """
+
+        total = CheckIn.query.filter(CheckIn.user_id == user_id,
+                CheckIn.biz_id == self.biz_id).count()
+
+        return total
+
+    def tot_reviews(self):
+        """ Calculates total reviews for a business. """
+
+        count = len(self.reviews)
+
+        return count
+
+    def avg_score(self):
+        """ Calculates average rating of business. """
+
+        tot_score = 0
+
+        for review in self.reviews:
+            if review.revise_review:
+                tot_score += review.new_rating
+            else:
+                tot_score += review.rating
+
+        avg_rating = tot_score / self.tot_reviews()
+
+        return avg_rating
+
+    def tot_promos_red(self):
+        """ Calculates total promotions redeemed by consumers. """
+
+        redeemed_promos = 0
+
+        for promo in self.promos:
+            for item in promo.user_promos:
+                if item.redeemed is True:
+                    redeemed_promos += 1
+
+        return redeemed_promos
+
+    def tot_refs(self):
+        """ Calculates total referrals. """
+
+        total = len(self.referrals)
+
+        return total
+
+    def tot_refs_red(self):
+        """ Calculates total referrals that have been redeemed. """
+
+        redeemed_refs = 0
+
+        for item in self.referrals:
+            if item.user_promo.redeemed is True:
+                redeemed_refs += 1
+
+        return redeemed_refs
 
 
 class Promo(db.Model):
@@ -417,7 +497,67 @@ class Invite(db.Model):
 
         return (u'<invite_id={} user_id={} accepted={}'
                 .format(self.invite_id, self.user_id, self.accepted))
+def friends_lst(user_id):
+    """
+    Returns list of friends' user_id.
 
+    TO DO: Build out doctests
+    """
+
+    lst = []
+
+    friends = db.session.query(Friend.friend_id).filter_by(user_id).all()
+
+    for friend in friends:
+        lst.append(friend)
+
+    return lst
+
+
+def update_tree(friends_lst):
+    """
+    Update connections for new list of friends for degrees of separation calculation.
+
+    TO DO: Build out doctests
+    """
+
+    for friend in friends_lst:
+        tree.append(friend)
+
+
+def deg_of_sep(user1, user2, degrees):
+    """
+    Calculates degrees of separation, if any, between two users and/or businesses,
+    if claimed. If count is none, the user2 is user1. Otherwise, count of zero
+    means no connection. Currently set to stop at count at n degrees.
+
+    TO DO: Build out doctets
+    """
+
+    TREE = []
+    sought = user2
+    pop = user1
+    anchor = user1
+    count = 0
+
+    while True:
+        #TO DELETE
+        print "checking", pop
+
+        if pop == sought:
+            if count == 0:
+                count = None
+            return count
+        else:
+            update_tree(friends_lst(pop))
+            if pop == anchor:
+                anchor = TREE[-1]
+                count += 1
+                if count == (degrees + 1):
+                    return count
+            pop = TREE.pop(0)
+
+    return count
 
 ##############################################################################
 # Helper functions

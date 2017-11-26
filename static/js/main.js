@@ -160,24 +160,28 @@ $(document).ready(() => {
 //     $("#" + theButtonCaller).addClass("active");
 //     $("#myTabs li.li-" + theButtonCaller).addClass("active");
 // });
+
+
 // processes like buttons on reviews
 
   let $like = $('.like');
 
   function disableLike(results) {
-    console.log('boo hoo')
     alert(results);
+
   }
 
   function handleClick(evt) {
     evt.preventDefault();
     let formInputs = {
-      'review_id': this.id,
+      'review_id': this.id
     };
     $.post('/like-review', formInputs, disableLike);
     $(this).prop('disabled', true);
+    $(this).removeClass('.fa-heart-o');
+    $(this).addClass('.fa-heart');
   }
-// FIXME: Add in remove and add class for the solid heart shape
+// FIXME: Add in remove and add class for the solid heart shape - need to test
 
   $like.on('click', handleClick);
 
@@ -200,6 +204,31 @@ $(document).ready(() => {
 
   $friend.on('submit', sendFriend);
 
+
+// processes claim of biz
+
+  let $claim = $('.claim-biz');
+
+  function claimMsg(results) {
+    if (results.code === 'error') {
+      alert(results.msg);
+    } else {
+      alert(results.msg);
+      location.reload('/business-profile/<biz_name>');
+    }
+  }
+
+  function claimBiz(evt) {
+    evt.preventDefault();
+    let formInputs = {
+      'biz_id': this.id
+    };
+    $.post('/claim-biz/<biz-id>', formInputs, claimMsg);
+  }
+
+  $claim.on('click', claimBiz);
+
+
 // processes user info edits
 
   let $userEdit = $('#modalEdit');
@@ -208,7 +237,8 @@ $(document).ready(() => {
     if (results.code === 'error') {
       alert(results.msg);
     } else {
-      toaster.success(results.msg);
+      alert(results.msg);
+      location.reload('/user-profile');
     }
   }
 
@@ -235,6 +265,25 @@ $(document).ready(() => {
 
   // TO DO: Use .change to check email, etc. first b/f going to submitting
 
+
+// processes check ins into biz
+
+  let $checkIn = $('.check-in');
+
+  function checkinMsg(results) {
+    alert(results.msg);
+    location.reload('/business-profile/<biz_name>');
+  }
+
+  function checkBiz(evt) {
+    evt.preventDefault();
+    let formInputs = {
+      'biz_id': this.id
+    };
+    $.post('/checkin/<biz-id>', formInputs, checkinMsg);
+  }
+
+  $checkIn.on('click', checkBiz);
 
 
 });

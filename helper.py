@@ -100,86 +100,86 @@ def check_user_info(user_input):
 
 # TO DO: turn some of bbelow to methods
 
-def calc_checkins_biz(biz_id):
-    """
-    Calculates total check-ins per business for gamification component.
+# def calc_checkins_biz(biz_id):
+#     """
+#     Calculates total check-ins per business for gamification component.
 
-    TO DO: Build out doctests
-    """
+#     TO DO: Build out doctests
+#     """
 
-    total = CheckIn.query.filter(CheckIn.user_id == session['user_id'],
-                                 CheckIn.biz_id == biz_id).count()
+#     total = CheckIn.query.filter(CheckIn.user_id == session['user_id'],
+#                                  CheckIn.biz_id == biz_id).count()
 
-    return total
-
-
-def calc_biz_tot_checkins(biz_obj):
-    """
-    Calculates total check-ins for the business.
-
-    TO DO: Build out doctests
-    """
-
-    total_checkins = len(biz_obj.checkins)
-
-    return total_checkins
+#     return total
 
 
-def calc_biz_promos_redeem(biz_obj):
-    """
-    Calculates total promotions redeemed by consumers.
+# def calc_biz_tot_checkins(biz_obj):
+#     """
+#     Calculates total check-ins for the business.
 
-    TO DO: Build out doctests
-    """
+#     TO DO: Build out doctests
+#     """
 
-    redeemed_promos = 0
+#     total_checkins = len(biz_obj.checkins)
 
-    for promo in biz_obj.promos:
-        for item in promo.user_promos:
-            if item.redeemed is True:
-                redeemed_promos += 1
-
-    return redeemed_promos
+#     return total_checkins
 
 
-def calc_biz_referrals(biz_obj):
-    """
-    Calculates total referrals and referrals that have been redeemed.
+# def calc_biz_promos_redeem(biz_obj):
+#     """
+#     Calculates total promotions redeemed by consumers.
 
-    TO DO: Build out doctests
-    """
+#     TO DO: Build out doctests
+#     """
 
-    total_refs = len(biz_obj.referrals)
-    redeemed_refs = 0
+#     redeemed_promos = 0
 
-    for item in biz_obj.referrals:
-        if item.user_promo.redeemed is True:
-            redeemed_refs += 1
+#     for promo in biz_obj.promos:
+#         for item in promo.user_promos:
+#             if item.redeemed is True:
+#                 redeemed_promos += 1
 
-    return total_refs, redeemed_refs
+#     return redeemed_promos
 
 
-def calc_avg_rating(biz_obj):
-    """
-    Calculates average rating per business.
+# def calc_biz_referrals(biz_obj):
+#     """
+#     Calculates total referrals and referrals that have been redeemed.
 
-    TO DO: Build out doctests
-    """
+#     TO DO: Build out doctests
+#     """
 
-    reviews = biz_obj.reviews
+#     total_refs = len(biz_obj.referrals)
+#     redeemed_refs = 0
 
-    count = len(reviews)
-    tot_score = 0
+#     for item in biz_obj.referrals:
+#         if item.user_promo.redeemed is True:
+#             redeemed_refs += 1
 
-    for review in reviews:
-        if review.revise_review:
-            tot_score += review.new_rating
-        else:
-            tot_score += review.rating
+#     return total_refs, redeemed_refs
 
-    avg_rating = tot_score / count
 
-    return avg_rating, count
+# def calc_avg_rating(biz_obj):
+#     """
+#     Calculates average rating per business.
+
+#     TO DO: Build out doctests
+#     """
+
+#     reviews = biz_obj.reviews
+
+#     count = len(reviews)
+#     tot_score = 0
+
+#     for review in reviews:
+#         if review.revise_review:
+#             tot_score += review.new_rating
+#         else:
+#             tot_score += review.rating
+
+#     avg_rating = tot_score / count
+
+#     return avg_rating, count
 
 
 def tree(user_id):

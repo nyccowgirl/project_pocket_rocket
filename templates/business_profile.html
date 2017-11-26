@@ -4,27 +4,47 @@
   <h1>Business Profile</h1>
 
   <!-- TO DO: Set each as either menu item on left panel or as scroll down from nav bar. -->
+  <div>
+    {% if biz.biz_pic %}
+      <img  id='biz_pic' src='{{ biz.biz_pic }}' hspace='40' align='left'>
+    {% else %}
+      <img  id='biz_pic' src='/static/img/dragonfly_mating.jpeg' hspace='40' align='left'>
+    {% endif %}
 
-  <h2>{{ biz.biz_name }}</h2>
+    <h2>{{ biz.biz_name }}</h2>
+  </div>
+
+  <hr>
+
+  <div class='container-fluid'>
+
     {% if not biz.is_checkin(session['user_id']) %}
-      <form action='/checkin/{{ biz.biz_id }}' method='POST'>
-        <input type='submit' value='Check-In'>
-      </form>
+
+      <button type='button' class='btn btn-unique btn-rounded waves-light check-in' data-review-id='{{ biz.biz_id }}' href='/checkin/{{ biz.biz_id }}' mdbRippleRadius>Check-In</button>
+
     {% endif %}
 
     {% if not biz.has_reviewed(session['user_id']) %}
-      <form action='/review/{{ biz.biz_name }}'>
-        <input type='submit' value='Review'>
-      </form>
+      <button type='button' class='btn btn-unique btn-rounded waves-light' href='/review/{{ biz.biz_name }}' mdbRippleRadius>Review Business</button>
     {% endif %}
+
+    {% if not biz.is_claimed() }}
+      <button type='button' class='btn btn-unique btn-rounded waves-light claim-biz' data-review-id='{{ biz.biz_id }}' href='/review/{{ biz.biz_name }}' mdbRippleRadius>Claim Business</button>
+    {% endif %}
+
       <br>
 
+  <!-- TO DO: Need to build out -->
+
+  </div>
+
+
     <div>
-      Total Check-Ins: {{ checkins }}|Your Check_Ins: {{ user_checkins }}<br>
-      Average Rating: {{ score }} | Your Rating: {{ user_score }}<br>
-      Total Reviews: {{ count }}<br>
-      Total Referrals: {{ refs }} | Redeemed: {{ ref_redeem }}<br>
-      Promos Redeemed: {{ promos_redeem }}<br>
+      Total Check-Ins: {{ biz.tot_checkins() }}|Your Check_Ins: {{ biz.tot_user_checkins() }}<br>
+      Average Rating: {{ biz.avg_score() }} | Your Rating: {{ user_score }}<br>
+      Total Reviews: {{ biz.tot_reviews() }}<br>
+      Total Referrals: {{ biz.tot_refs() }} | Redeemed: {{ biz.tot_refs_red() }}<br>
+      Promos Redeemed: {{ biz.tot_promos_red() }}<br>
     </div>
 
     <!-- TO DO: Use D3 to visualize the rating  -->
@@ -41,14 +61,6 @@
 
 <!-- TO DO: Add map -->
 <!--     <div id='biz-map'></div> -->
-
-    <div>
-      {% if biz.biz_pic %}
-        <img id='biz_pic' src='{{ biz.biz_pic }}' hspace='40'>
-      {% else %}
-        <img id='biz_pic' src='/static/img/dragonfly_mating.jpeg' hspace='40'>
-      {% endif %}
-    </div>
 
     <div>
       <address>
