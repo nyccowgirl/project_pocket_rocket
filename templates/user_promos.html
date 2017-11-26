@@ -40,7 +40,12 @@
         <b>Available</b>
           <ul>
             {% for grouper, list in list|groupby('promo.biz.biz_name') %}
-              <a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a>
+              <a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a>|
+                {% if promo.biz.deg_of_sep(session['user_id']) %}
+                  <i class='fa fa-chain prefix'></i>{{ promo.biz.deg_of_sep(session['user_id']) }}
+                {% else %}
+                  <i class='fa fa-chain-broken prefix'></i>
+                {% endif %}
                 {% for promo in list %}
                   <li>{{ promo.promo.title }}: {{ promo.promo.descr }} | expiration date: {{ promo.promo.end_date|datetimeformat('%d %b %Y') }}</li>
                 {% endfor %}
@@ -51,7 +56,12 @@
         <b>Redeemed</b>
           <ul>
             {% for grouper, list in list|groupby('promo.biz.biz_name') %}
-              <a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a>
+              <a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a>|
+                {% if promo.biz.deg_of_sep(session['user_id']) %}
+                  <i class='fa fa-chain prefix'></i>{{ promo.biz.deg_of_sep(session['user_id']) }}
+                {% else %}
+                  <i class='fa fa-chain-broken prefix'></i>
+                {% endif %}
                 {% for promo in list %}
                   <li>{{ promo.promo.title }}: {{ promo.redeem_date|datetimeformat('%d %b %Y') }}</li>
                 {% endfor %}

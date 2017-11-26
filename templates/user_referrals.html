@@ -37,14 +37,29 @@
 
       <ul>
       {% for grouper, list in user.referrals|groupby('biz.biz_name') %}
-        <li><a href='/busines-profile/{{ grouper }}'>{{ grouper }}:</a></li>
+        <li><a href='/busines-profile/{{ grouper }}'>{{ grouper }}:</a> |
+          {% if referrals.biz.deg_of_sep(session['user_id']) %}
+          <!-- FIXME: Not sure if that is right syntax -->
+            <i class='fa fa-chain prefix'></i>{{ referrals.biz.deg_of_sep(session['user_id']) }}
+          {% else %}
+            <i class='fa fa-chain-broken prefix'></i>
+          {% endif %}</li>
         <ul>
           {% for each in list %}
-            </li>{{ each.referee.username }}: refer date {{ each.refer_date|datetimeformat('%d %b %Y') }}
-            {% if each.user_promo.redeemed %}
-             | redeem date {{ each.user_promo.redeem_date|datetimeformat('%d %b %Y') }}
-            {% endif %}
+            <li>{{ each.referee.username }} | {{ each.referee.tot_friends() }} |
+              {% if each.referee.deg_of_sep(session['user_id']) %}
+                <i class='fa fa-chain prefix'></i>{{ each.referee.deg_of_sep(session['user_id']) }}
+              {% else %}
+                <i class='fa fa-chain-broken prefix'></i>
+              {% endif %}
             </li>
+              <ul>
+                <li>refer date {{ each.refer_date|datetimeformat('%d %b %Y') }}
+                {% if each.user_promo.redeemed %}
+                 | redeem date {{ each.user_promo.redeem_date|datetimeformat('%d %b %Y') }}
+                {% endif %}
+                </li>
+              </ul>
           {% endfor %}
         </ul>
       {% endfor %}
@@ -64,7 +79,8 @@
         {% for grouper, list in user.referred|groupby('biz.biz_name') %}
           {% for referral in list %}
             {% if not referral.user_promo.redeemed %}
-              <li><a href='/business-profile{{ grouper }}'>{{ grouper }}</a></li>
+              <li><a href='/business-profile{{ grouper }}'>{{ grouper }}</a>
+              </li>
             {% endif %}
           {% endfor %}
         {% endfor %}

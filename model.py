@@ -123,6 +123,35 @@ class User(db.Model):
 
         return unique_biz_refs
 
+    def deg_of_sep(self, user2_id, degrees=100):
+        """
+        Calculates degrees of separation, if any, between two users. If count is none, the user2 is user1. Otherwise, count of zero
+        means no connection. Currently set to stop at count at n degrees.
+        """
+
+        TREE = []
+        sought = user2_id
+        pop = self.user_id
+        anchor = self.user_id
+        count = 0
+
+        while True:
+
+            if pop == sought:
+                if count == 0:
+                    count = None
+                return count
+            else:
+                update_tree(friends_lst(pop))
+                if pop == anchor:
+                    anchor = TREE[-1]
+                    count += 1
+                    if count == (degrees + 1):
+                        return count
+                pop = TREE.pop(0)
+
+        return count
+
 
 class Friend(db.Model):
     """ Relationship information between user profiles. """
@@ -327,6 +356,39 @@ class Business(db.Model):
         return redeemed_refs
 
 
+    def deg_of_sep(self, user2_id, degrees=100):
+        """
+        Calculates degrees of separation, if any, between a user and business,
+        if claimed. If count is none, the user2 is user1. Otherwise, count of zero
+        means no connection. Currently set to stop at count at n degrees.
+        """
+
+        if not self.users:
+            return None
+        else:
+            TREE = []
+            sought = user2_id
+            pop = self.users[0].user_id
+            anchor = self.users[0].user_id
+            count = 0
+
+            while True:
+
+                if pop == sought:
+                    if count == 0:
+                        count = None
+                    return count
+                else:
+                    update_tree(friends_lst(pop))
+                    if pop == anchor:
+                        anchor = TREE[-1]
+                        count += 1
+                        if count == (degrees + 1):
+                            return count
+                    pop = TREE.pop(0)
+
+            return count
+
 class Promo(db.Model):
     """ Promotions model. """
 
@@ -497,6 +559,8 @@ class Invite(db.Model):
 
         return (u'<invite_id={} user_id={} accepted={}'
                 .format(self.invite_id, self.user_id, self.accepted))
+
+
 def friends_lst(user_id):
     """
     Returns list of friends' user_id.
@@ -524,40 +588,6 @@ def update_tree(friends_lst):
     for friend in friends_lst:
         tree.append(friend)
 
-
-def deg_of_sep(user1, user2, degrees):
-    """
-    Calculates degrees of separation, if any, between two users and/or businesses,
-    if claimed. If count is none, the user2 is user1. Otherwise, count of zero
-    means no connection. Currently set to stop at count at n degrees.
-
-    TO DO: Build out doctets
-    """
-
-    TREE = []
-    sought = user2
-    pop = user1
-    anchor = user1
-    count = 0
-
-    while True:
-        #TO DELETE
-        print "checking", pop
-
-        if pop == sought:
-            if count == 0:
-                count = None
-            return count
-        else:
-            update_tree(friends_lst(pop))
-            if pop == anchor:
-                anchor = TREE[-1]
-                count += 1
-                if count == (degrees + 1):
-                    return count
-            pop = TREE.pop(0)
-
-    return count
 
 ##############################################################################
 # Helper functions

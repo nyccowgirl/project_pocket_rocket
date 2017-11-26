@@ -523,11 +523,11 @@ def biz_profile(biz_name):
     print u'\n\n\n{}\n\n\n'.format(biz.promos)
     print u'\n\n\n{}\n\n\n'.format(biz.users)
 
-    avg_score, count = helper.calc_avg_rating(biz)
-    tot_checkins = helper.calc_biz_tot_checkins(biz)
-    user_checkins = helper.calc_checkins_biz(biz.biz_id)
-    promos_redeem = helper.calc_biz_promos_redeem(biz)
-    total_refs, redeemed_refs = helper.calc_biz_referrals(biz)
+    # avg_score, count = helper.calc_avg_rating(biz)
+    # tot_checkins = helper.calc_biz_tot_checkins(biz)
+    # user_checkins = helper.calc_checkins_biz(biz.biz_id)
+    # promos_redeem = helper.calc_biz_promos_redeem(biz)
+    # total_refs, redeemed_refs = helper.calc_biz_referrals(biz)
 
     user_review = Review.query.filter(Review.biz_id == biz.biz_id,
                                       Review.user_id == session['user_id']).first()
@@ -551,10 +551,7 @@ def biz_profile(biz_name):
 # db.session.query(UnitDetails).filter(func.ST_Distance_Sphere("POINT(37.776164 -122.423355)",UnitDetails.latlng) < 1000).all()
 
     return render_template('business_profile.html', biz=biz, today=today,
-                           category=category, score=avg_score, count=count,
-                           checkins=tot_checkins, user_checkins=user_checkins,
-                           promos_redeem=promos_redeem, refs=total_refs,
-                           ref_redeem=redeemed_refs, user_score=user_rating)
+                           category=category, user_score=user_rating)
 
 
 @app.route('/claim-biz/<int:biz_id>', methods=['POST'])
