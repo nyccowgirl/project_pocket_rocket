@@ -2,6 +2,8 @@
 
 {% block head %}
 
+<link rel='stylesheet' type='text/css' href='/static/css/modular.css'>
+
 {% endblock %}
 
 {% block content %}
@@ -17,20 +19,20 @@
         <!-- Nav tabs -->
         <ul class='nav nav-tabs tabs-2 light-blue darken-1' role='tablist'>
           <li class='nav-item'>
-            <a class='nav-link active unique-text' data-toggle='tab' href='#login' role='tab'><i class='fa fa-user mr-1'></i>Log In</a>
+            <a class='nav-link active unique-text' data-toggle='tab' href='#login-form' role='tab'><i class='fa fa-user mr-1'></i>Log In</a>
           </li>
           <li class='nav-item'>
-            <a class='nav-link unique-text' data-toggle='tab' href='#registration' role='tab'><i class='fa fa-user-plus mr-1'></i>Register</a>
+            <a class='nav-link unique-text' data-toggle='tab' href='#register-form' role='tab'><i class='fa fa-user-plus mr-1'></i>Register</a>
           </li>
           <li class='nav-item'>
-            <a class='nav-link unique-text' data-toggle='tab' href='#reset-pword' role='tab'><i class='fa fa-lock mr-1'></i>Lost Password</a>
+            <a class='nav-link unique-text' data-toggle='tab' href='#lost-form' role='tab'><i class='fa fa-lock mr-1'></i>Lost Password</a>
           </li>
         </ul>
 
         <!-- Tab panels -->
-        <div class='tab-content'>
+        <div id='div-forms' class='tab-content'>
           <!-- Log In panel -->
-          <form action='/login' method='POST' class='tab-pane fade in show active' id='login' role='tabpanel' enctype="multipart/form-data">
+          <form action='/login' method='POST' class='tab-pane fade in show active' id='login-form' role='tabpanel' enctype='multipart/form-data'>
 
             <!-- Body -->
             <div class='modal-body mb-1'>
@@ -47,7 +49,11 @@
               </div>
 
               <div class='text-center mt-2'>
-                <button class='btn btn-unique'>Log In<i class='fa fa-sign-in ml-1'></i></button>
+                <button type='submit' class='btn btn-unique'>Log In<i class='fa fa-sign-in ml-1'></i></button>
+              </div>
+
+              <div class='checkbox'>
+                <label><input type='checkbox' name='remember'> Remember me</label>
               </div>
 
             </div>
@@ -55,8 +61,8 @@
             <!-- Footer -->
             <div class='modal-footer display-footer'>
               <div class='options text-center text-md-right mt-1'>
-                <p>Not a member? <a href='#registration' class='unique-text'>Sign Up</a></p>
-                <p>Forgot <a href='#pword-reset' class='unique-text'>Password?</a></p>
+                <p>Not a member? <a href='#register-form' class='unique-text' id='login_register_btn'>Sign Up</a></p>
+                <p>Forgot <a href='#lost-form' class='unique-text' id='login_lost_btn'>Password?</a></p>
               </div>
 
               <button type='button' class='btn btn-outline-unique waves-effect ml-auto' data-dismiss='modal'>Close</button>
@@ -65,7 +71,7 @@
           <!-- /.Log In panel -->
 
           <!-- Registration Panel -->
-          <form action='/register' method='POST' class='tab-pane fade' id='registration' role='tabpanel' enctype="multipart/form-data">
+          <form action='/register' method='POST' class='tab-pane fade' id='register-form' role='tabpanel' enctype='multipart/form-data'>
 
             <!-- Body -->
             <div class='modal-body'>
@@ -134,14 +140,14 @@
               </div>
 
               <div class='text-center mt-2'>
-                <button class='btn btn-unique'>Register<i class='fa fa-send ml-1'></i></button>
+                <button type='submit' class='btn btn-unique'>Register<i class='fa fa-send ml-1'></i></button>
               </div>
 
             </div>
             <!-- Footer -->
             <div class='modal-footer'>
               <div class='options text-right'>
-                <p class='pt-1'>Already have an account? <a href='#login' class='unique-text'>Log In</a></p>
+                <p class='pt-1'>Already have an account? <a href='#login-form' class='unique-text' id='register_login_btn'>Log In</a></p>
               </div>
 
               <button type='button' class='btn btn-outline-unique waves-effect ml-auto' data-dismiss='modal'>Close</button>
@@ -151,7 +157,7 @@
           <!-- /.Registration panel -->
 
           <!-- Password change panel -->
-          <form action='/pword-reset' method='POST' class='tab-pane fade' id='reset-pword' role='tabpanel' enctype="multipart/form-data">
+          <form action='/pword-reset' method='POST' class='tab-pane fade' id='lost-form' role='tabpanel' enctype='multipart/form-data'>
 
             <!-- Body -->
             <div class='modal-body mb-1'>
@@ -162,10 +168,21 @@
               </div>
 
               <div class='text-center mt-2'>
-                <button class='btn btn-unique'>Submit<i class='fa fa-send ml-1'></i></button>
+                <button type='submit' class='btn btn-unique'>Submit<i class='fa fa-send ml-1'></i></button>
               </div>
             </div>
             <!-- /.Body -->
+
+            <!-- Footer -->
+            <div class='modal-footer display-footer'>
+              <div class='options text-center text-md-right mt-1'>
+                <p>Not a member? <a href='#register-form' class='unique-text' id='lost_register_btn'>Sign Up</a></p>
+                <p>Remembered! <a href='#login-form' class='unique-text' id='lost_login_btn'>Log In</a></p>
+              </div>
+
+              <button type='button' class='btn btn-outline-unique waves-effect ml-auto' data-dismiss='modal'>Close</button>
+            </div>
+          </form>
           </form>
           <!-- /.Password change panel -->
         </div>

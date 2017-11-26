@@ -9,25 +9,25 @@ $(document).ready(() => {
 
 // processes log-in and password reset modal
 
-  function checkEmail(result) {
-    if (result === False) {
-      alert('User name or email does not exist. Please check your input or register.');
-    } else if (result === True) {
-      alert('A link has been sent to your email to reset your password.');
-      location.reload('/pword-reset')
+  // function checkEmail(result) {
+  //   if (result === False) {
+  //     alert('User name or email does not exist. Please check your input or register.');
+  //   } else if (result === True) {
+  //     alert('A link has been sent to your email to reset your password.');
+  //     location.reload('/pword-reset');
       // FIXME: send url to email to click to take to password reset form
-    } else {
-      alert('Please try again.');
-    }
-  }
+  //   } else {
+  //     alert('Please try again.');
+  //   }
+  // }
 
-  function sendEmail(evt) {
-    let formInputs = {
-      'user-input': $('#email-lost').val()
-    };
-    $.get('/email-check', checkEmail);
+  // function sendEmail(evt) {
+  //   let formInputs = {
+  //     'user-input': $('#email-lost').val()
+  //   };
+  //   $.get('/email-check', checkEmail);
     // TO DO: send link to email to reset password
-  }
+  // }
 
   // function register(evt) {
   //   let formInputs = {
@@ -43,14 +43,14 @@ $(document).ready(() => {
   //   $.post('/register'), formInputs, displayMsg);
   // }
 
-  function displayMsg(results) {
-    if (results.code === 'error') {
-        alert(results.msg);
-    } else {
-        alert(results.msg);
-    }
-    location.reload('/');
-  }
+  // function displayMsg(results) {
+  //   if (results.code === 'error') {
+  //       alert(results.msg);
+  //   } else {
+  //       alert(results.msg);
+  //   }
+  //   location.reload('/');
+  // }
 
   // function logIn(evt) {
   //   let formInputs = {
@@ -110,42 +110,43 @@ $(document).ready(() => {
   //     });
   // }
 
-  function processForm(evt) {
-    $('#modalLRForm .nav-link').button('toggle').addClass('active');
-    $('form').on('submit', function(evt) {
-      evt.preventDefault();
-      console.log(evt);
-      debugger;
-    let formInputs = new formData(this);
-      console.log(formInputs);
-      switch(this.id) {
-        case 'login':
-          // logIn(evt);
-          $.post('/login', formInputs, displayMsg);
-          break;
-        case 'registration':
-          if $('#pword-reg').val() != $('#pword-rep').val()) {
-              alert('The password does not match. Try again.')
-          } else {
-          // register(evt);
-          $.post('/register', formInputs, displayMsg);
-          };
-          break;
-        case 'reset-pword':
-          if (!$('#email-lost')) {
-            alert('Please input a user name or email.');
-            break;
-          };
-          sendEmail(evt);
-          break;
-        default:
-          console.log('Something is broken. Check back later!');
-      }
-    });
-  }
+  // function processForm(evt) {
+  //   $('#modalLRForm .nav-link').button('toggle').addClass('active');
+  //   $('form').on('submit', function(evt) {
+  //     evt.preventDefault();
+  //     console.log(evt);
+  //     debugger;
+  //   let formInputs = new formData(this);
+  //     console.log(formInputs);
+  //     switch(this.id) {
+  //       case 'login':
+  //         // logIn(evt);
+  //         $.post('/login', formInputs, displayMsg);
+  //         break;
+  //       case 'registration':
+  //         if $('#pword-reg').val() != $('#pword-rep').val()) {
+  //             alert('The password does not match. Try again.')
+  //         } else {
+  //         // register(evt);
+  //         $.post('/register', formInputs, displayMsg);
+  //         };
+  //         break;
+  //       case 'reset-pword':
+  //         if (!$('#email-lost')) {
+  //           alert('Please input a user name or email.');
+  //           break;
+  //         };
+  //         sendEmail(evt);
+  //         break;
+  //       default:
+  //         console.log('Something is broken. Check back later!');
+  //     }
+  //   });
+  // }
 
 
-  $('#modalLRForm').on('click', processForm);
+  // $('#modalLRForm').on('click', processForm);
+
 
 // $('#discountmodal').on('show.bs.modal', function () {
 // http://stackoverflow.com/questions/48239/getting-the-id-of-the-element-that-fired-an-event-using-jquery

@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+
+{% block head %}
+
+
+{% endblock %}
+
 {% block content %}
 
   <div>
@@ -89,7 +95,7 @@
 
   <hr>
 
-  <div class='container-fluid'>
+  <div class='container-fluid'>zws
 
   <h3>About Me</h3>
 
@@ -101,8 +107,6 @@
         Email: {{ user.email }}<br>
         Password: {{ user.password }}<br>
         Birthday: {{ user.dob|datetimeformat('%d %b %Y') }}<br>
-        Member Since: {{ user.join_date|datetimeformat('%b %Y') }}<br>
-      </ul>
     </div>
 
 <hr>
@@ -114,92 +118,14 @@
         Check-Ins: {{ user.tot_checkins() }}<br>
         Reviews: {{ user.tot_reviews() }}<br>
         Referrals: {{ user.tot_refs() }} | Redeemed: {{ user.tot_refs_reds() }}<br>
-        Promos Redeemed: {{ user.tot_reds }}<br>
+        Promos Redeemed: {{ user.tot_reds() }}<br>
         Friends: {{ user.tot_friends() }}
         Total Businesses Visited: {{ user.tot_unique_biz() }}</p>
         Total Businesses Referred to Friends: {{ user.tot_biz_referrals() }}</p>
       </ul>
     </div>
 
-
-  {% if user.referrals %}
-  <hr>
-
-    <h3>My Referrals</h3>
-
-      <ul>
-      {% for grouper, list in user.referrals|groupby('biz.biz_name') %}
-        <li><a href='/busines-profile/{{ grouper }}'>{{ grouper }}:</a></li>
-        <ul>
-          {% for each in list %}
-            </li>{{ each.referee.username }}: refer date {{ each.refer_date|datetimeformat('%d %b %Y') }}
-            {% if each.user_promo.redeemed %}
-             | redeem date {{ each.user_promo.redeem_date|datetimeformat('%d %b %Y') }}
-            {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-      {% endfor %}
-      </ul>
-    {% endif %}
-
-  {% if user.user_promos %}
-  <hr>
-    <h3>My Promotions/Redemptions</h3>
-
-    <ul>
-    {% for grouper, list in user.user_promos|groupby('redeemed') %}
-      {% if grouper == False %}
-        <b>Available</b>
-          <ul>
-            {% for grouper, list in list|groupby('promo.biz.biz_name') %}
-              <a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a>
-                {% for promo in list %}
-                  <li>{{ promo.promo.title }}: {{ promo.promo.descr }} | expiration date: {{ promo.promo.end_date|datetimeformat('%d %b %Y') }}</li>
-                {% endfor %}
-            {% endfor %}
-          </ul>
-      {% else %}
-        <br>
-        <b>Redeemed</b>
-          <ul>
-            {% for grouper, list in list|groupby('promo.biz.biz_name') %}
-              <a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a>
-                {% for promo in list %}
-                  <li>{{ promo.promo.title }}: {{ promo.redeem_date|datetimeformat('%d %b %Y') }}</li>
-                {% endfor %}
-            {% endfor %}
-          </ul>
-      {% endif %}
-    {% endfor %}
-    </ul>
-  {% endif %}
-
-  {% if user.biz %}
-  <hr>
-
-    <h3>My Businesses</h3>
-
-    <ul>
-    {% for biz in user.biz %}
-      <li><a href='/business-profile{{ biz.biz_name }}'>{{ biz.biz_name }}</a></li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-
-  {% if user.referred %}
-    <h3>Businesses Referred to Me</h3>
-
-      <ul>
-        {% for grouper, list in user.referred|groupby('biz.biz_name') %}
-          {% for referral in list %}
-            {% if not referral.user_promo.redeemed %}
-              <li><a href='/business-profile{{ grouper }}'>{{ grouper }}</a></li>
-            {% endif %}
-          {% endfor %}
-        {% endfor %}
-      </ul>
-  {% endif %}
+    <!-- TO DO: Build out D3 Interactive Network Visualization. http://flowingdata.com/2012/08/02/how-to-make-an-interactive-network-visualization/ -->
 
   </div>
 

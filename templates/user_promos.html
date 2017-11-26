@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+
+{% endblock %}
+
+{% block content %}
+
+
+  <div>
+    {% if user.user_pic %}
+      <img  id='user_pic' src='{{ user.user_pic }}' hspace='40' align='left'>
+    {% else %}
+      <img  id='user_pic' src='/static/img/dragonfly.jpeg' hspace='40' align='left'>
+    {% endif %}
+     <h2>{{ user.username }}</h2>
+  </div>
+
+  <hr>
+
+  <div class='container-fluid'>
+
+  <button type='button' class='btn btn-unique btn-rounded waves-light' href='#' mdbRippleRadius>Redeem a Promo</button>
+
+  <!-- TO DO: Need to build out -->
+
+  </div class='container-fluid'>
+
+  <hr>
+  <div>
+
+  {% if user.user_promos %}
+  <hr>
+    <h3>My Promotions/Redemptions</h3>
+
+    <ul>
+    {% for grouper, list in user.user_promos|groupby('redeemed') %}
+      {% if grouper == False %}
+        <b>Available</b>
+          <ul>
+            {% for grouper, list in list|groupby('promo.biz.biz_name') %}
+              <a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a>
+                {% for promo in list %}
+                  <li>{{ promo.promo.title }}: {{ promo.promo.descr }} | expiration date: {{ promo.promo.end_date|datetimeformat('%d %b %Y') }}</li>
+                {% endfor %}
+            {% endfor %}
+          </ul>
+      {% else %}
+        <br>
+        <b>Redeemed</b>
+          <ul>
+            {% for grouper, list in list|groupby('promo.biz.biz_name') %}
+              <a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a>
+                {% for promo in list %}
+                  <li>{{ promo.promo.title }}: {{ promo.redeem_date|datetimeformat('%d %b %Y') }}</li>
+                {% endfor %}
+            {% endfor %}
+          </ul>
+      {% endif %}
+    {% endfor %}
+    </ul>
+  {% else %}
+
+  <p>Many small businesses have promotions for new and repeat customers and/or referrals. Please check out a local business near you and redeem one of their promotions or refer friends to unlock special promotions. <a href='/user-referrals'>Refer a business.</a></p>
+
+  {% endif %}
+
+  </div>
+
+{% endblock %}
+
+{% block script %}
+
+
+{% endblock %}
