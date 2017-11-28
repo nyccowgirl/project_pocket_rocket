@@ -192,67 +192,67 @@ def tree(user_id):
     pass
 
 
-def friends_lst(user_id):
-    """
-    Returns list of friends' user_id.
+# def friends_lst(user_id):
+#     """
+#     Returns list of friends' user_id.
 
-    TO DO: Build out doctests
-    """
+#     TO DO: Build out doctests
+#     """
 
-    lst = []
+#     lst = []
 
-    friends = db.session.query(Friend.friend_id).filter_by(user_id).all()
+#     friends = db.session.query(Friend.friend_id).filter_by(user_id).all()
 
-    for friend in friends:
-        lst.append(friend)
+#     for friend in friends:
+#         lst.append(friend)
 
-    return lst
-
-
-def update_tree(friends_lst):
-    """
-    Update connections for new list of friends for degrees of separation calculation.
-
-    TO DO: Build out doctests
-    """
-
-    for friend in friends_lst:
-        tree.append(friend)
+#     return lst
 
 
-def deg_of_sep(user1, user2, degrees):
-    """
-    Calculates degrees of separation, if any, between two users and/or businesses,
-    if claimed. If count is none, the user2 is user1. Otherwise, count of zero
-    means no connection. Currently set to stop at count at n degrees.
+# def update_tree(friends_lst):
+#     """
+#     Update connections for new list of friends for degrees of separation calculation.
 
-    TO DO: Build out doctets
-    """
+#     TO DO: Build out doctests
+#     """
 
-    TREE = []
-    sought = user2
-    pop = user1
-    anchor = user1
-    count = 0
+#     for friend in friends_lst:
+#         tree.append(friend)
 
-    while True:
-        #TO DELETE
-        print "checking", pop
 
-        if pop == sought:
-            if count == 0:
-                count = None
-            return count
-        else:
-            update_tree(friends_lst(pop))
-            if pop == anchor:
-                anchor = TREE[-1]
-                count += 1
-                if count == (degrees + 1):
-                    return count
-            pop = TREE.pop(0)
+# def deg_of_sep(user1, user2, degrees):
+#     """
+#     Calculates degrees of separation, if any, between two users and/or businesses,
+#     if claimed. If count is none, the user2 is user1. Otherwise, count of zero
+#     means no connection. Currently set to stop at count at n degrees.
 
-    return count
+#     TO DO: Build out doctets
+#     """
+
+#     TREE = []
+#     sought = user2
+#     pop = user1
+#     anchor = user1
+#     count = 0
+
+#     while True:
+#         #TO DELETE
+#         print "checking", pop
+
+#         if pop == sought:
+#             if count == 0:
+#                 count = None
+#             return count
+#         else:
+#             update_tree(friends_lst(pop))
+#             if pop == anchor:
+#                 anchor = TREE[-1]
+#                 count += 1
+#                 if count == (degrees + 1):
+#                     return count
+#             pop = TREE.pop(0)
+
+#     return count
 
 
 ##############################################################################

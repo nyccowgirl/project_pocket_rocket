@@ -39,7 +39,7 @@
   <!-- Search bar -->
     <div class='collapse navbar-collapse justify-content-end' id='navbarSupportedContent'>
 
-      <form class='mx-2 my-auto d-inline w-75' action='/search' method='POST'>
+      <form class='mx-2 my-auto d-inline w-75' id='biz-search' action='/search' method='POST' enctype="multipart/form-data">
         <div class='input-group'>
           <input class='form-control search' name='search' placeholder='Where To?' autocomplete='on' autofocus='autofocus' type='text'>
           <span class='input-group-btn'>
@@ -60,10 +60,6 @@
         {% if 'user_id' in session %}
           <li class='nav-item'>
             <a class='nav-link' href='/logout'>Log Out</a>
-          </li>
-        {% else %}
-          <li class='nav-item'>
-            <a class='nav-link' href='/register' data-toggle='modal' data-target='#modalLRForm'>Sign Up</a>
           </li>
         {% endif %}
 
@@ -90,7 +86,7 @@
         {% else %}
 
           <li class='nav-item'>
-            <a class='nav-link' href='/login' data-toggle='modal' data-target='#modalLRForm'>Log In</a>
+            <a class='nav-link modal-toggle' href='#login-div' data-toggle='modal' data-target='#modalLRForm'>Log In/Register</a>
             <!-- nav-link disabled => if needed -->
           </li>
         {% endif %}
@@ -195,6 +191,7 @@
   // }
   // $('#glogout').on('click', signOut); // not sure if duplicative with above onclick.
 </script>
+
 
 </body>
 

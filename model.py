@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.ext.associationproxy import association_proxy  # FIXME: may not need
+# from sqlalchemy.ext.associationproxy import association_proxy  # FIXME: may not need
 from sqlalchemy import func, distinct
 from geoalchemy2 import Geometry
 from datetime import datetime
@@ -129,7 +129,7 @@ class User(db.Model):
         means no connection. Currently set to stop at count at n degrees.
         """
 
-        TREE = []
+        tree = []
         sought = user2_id
         pop = self.user_id
         anchor = self.user_id
@@ -142,13 +142,17 @@ class User(db.Model):
                     count = None
                 return count
             else:
-                update_tree(friends_lst(pop))
+                update_tree(friends_lst(pop), tree)
                 if pop == anchor:
-                    anchor = TREE[-1]
-                    count += 1
-                    if count == (degrees + 1):
+                    if tree = []:
+                        count = 0
                         return count
-                pop = TREE.pop(0)
+                    else:
+                        anchor = tree[-1]
+                        count += 1
+                        if count == (degrees + 1):
+                            return count
+                pop = tree.pop(0)
 
         return count
 
@@ -355,7 +359,6 @@ class Business(db.Model):
 
         return redeemed_refs
 
-
     def deg_of_sep(self, user2_id, degrees=100):
         """
         Calculates degrees of separation, if any, between a user and business,
@@ -366,7 +369,7 @@ class Business(db.Model):
         if not self.users:
             return None
         else:
-            TREE = []
+            tree = []
             sought = user2_id
             pop = self.users[0].user_id
             anchor = self.users[0].user_id
@@ -379,15 +382,20 @@ class Business(db.Model):
                         count = None
                     return count
                 else:
-                    update_tree(friends_lst(pop))
+                    update_tree(friends_lst(pop), tree)
                     if pop == anchor:
-                        anchor = TREE[-1]
-                        count += 1
-                        if count == (degrees + 1):
+                        if tree = []:
+                            count = 0
                             return count
-                    pop = TREE.pop(0)
+                        else:
+                            anchor = tree[-1]
+                            count += 1
+                            if count == (degrees + 1):
+                                return count
+                    pop = tree.pop(0)
 
-            return count
+                return count
+
 
 class Promo(db.Model):
     """ Promotions model. """
@@ -570,7 +578,7 @@ def friends_lst(user_id):
 
     lst = []
 
-    friends = db.session.query(Friend.friend_id).filter_by(user_id).all()
+    friends = db.session.query(Friend.friend_id).filter_by(user_id=user_id).all()
 
     for friend in friends:
         lst.append(friend)
@@ -578,7 +586,7 @@ def friends_lst(user_id):
     return lst
 
 
-def update_tree(friends_lst):
+def update_tree(friends_lst, tree):
     """
     Update connections for new list of friends for degrees of separation calculation.
 
@@ -587,6 +595,8 @@ def update_tree(friends_lst):
 
     for friend in friends_lst:
         tree.append(friend)
+
+    return tree
 
 
 ##############################################################################

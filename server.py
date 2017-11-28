@@ -9,7 +9,7 @@ from datetime import datetime
 import helper
 import re
 import constants as c
-
+from sqlalchemy import or_
 
 app = Flask(__name__)
 
@@ -60,7 +60,7 @@ def register_form():
 @app.route('/register', methods=['POST'])
 def register_process():
     """Processes registration form."""
-
+    # import pdb; pdb.set_trace()
     # Get form variables
     fname = request.form['fname']
     lname = request.form['lname']
@@ -70,10 +70,19 @@ def register_process():
     bday_str = request.form['bday']
     biz = request.form['biz']
 
+        # TO DELETE
+    print u'\n\n\n{}\n\n\n'.format(fname)
+    print u'\n\n\n{}\n\n\n'.format(lname)
+    print u'\n\n\n{}\n\n\n'.format(username)
+    print u'\n\n\n{}\n\n\n'.format(email)
+    print u'\n\n\n{}\n\n\n'.format(pword)
+    print u'\n\n\n{}\n\n\n'.format(bday_str)
+    print u'\n\n\n{}\n\n\n'.format(biz)
+
     # Convert picture that would be saved to static/img directory but url stored
     # in database
-    if 'pic' in request.files:
-        filename = pics.save(request.files['pic'])
+    if 'user-pic' in request.files:
+        filename = pics.save(request.files['user-pic'])
         pic = pics.url(filename)
     else:
         pic = None
@@ -98,8 +107,8 @@ def register_process():
     user = User.query.filter((User.email == email) | (User.username == username)).first()
 
     if user:
-        flash('The user name or email provided already has an account. Please log-in.')
-        return redirect('/login')
+        code = 'error'
+        results = 'The user name or email provided already has an account. Please log-in.'
     else:
         user = User(username=username,
                     first_name=fname,
@@ -121,10 +130,11 @@ def register_process():
         else:
             session['user_pic'] = '/static/img/dragonfly.jpeg'
 
-        flash('{} is now registered and logged in as {}'.format(user.email, user.username))
 
-        return redirect('/')
+        code = 'success'
+        results = '{} is now registered and logged in as {}'.format(user.email, user.username)
 
+    return jsonify({'code': code, 'msg': results})
 
 # @app.route('/login')
 # def login_form():
@@ -358,7 +368,10 @@ def add_friend():
             friend = Friend(user_id=session['user_id'],
                             friend_id=friend.user_id)
 
-            db.session.add(friend)
+            friend_rev = Friend(user_id=friend.user_id,
+                                friend_id=session['user_id'])
+
+            db.session.add(friend, friend_rev)
             db.session.commit()
 
             results = friend.username + "is now your friend."
@@ -656,6 +669,29 @@ def like_process():
     db.session.commit()
 
     return 'Thanks for liking me!'
+
+
+@app.route('/search-biz')
+def search():
+    """Searches business table based on user provided keywords."""
+
+    # TO DO: Convert to full text searchability via https://sqlalchemy-searchable.readthedocs.io/en/latest/index.html
+
+    keywords = request.args.get('search')
+
+    search = db.session.query(Business).filter(or_(Business.biz_name.like(keywords),
+                                                   Business.category.like(keywords))).all()
+
+    return render_template('search_results.html', search=search)
+
+
+@app.route('/review-home')
+def review_home():
+    """Displays review home page."""
+
+    user = User.query.filter_by(user_id=session['user_id']).first()
+
+    return render_template('reviews_home.html', user=user)
 
 
 ##############################################################################

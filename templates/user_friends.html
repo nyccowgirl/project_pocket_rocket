@@ -64,76 +64,73 @@
 
 <div class='container-fluid'>
 
-      {% if user.friends %}
-        <h3>My Friends</h3>
-        <br>
-        {% for friend in user.friends|sort(attribute='username') %}
-          <!--Rotating card-->
-          <div id='myCard-{{ friend.user_id }}' class="myCard flip-container" ontouchstart="this.classList.toggle('flip');">
-            <div class='flipper'>
-              <!--Front Side-->
-              <div class='front'>
-                <!--Avatar-->
-                <div class='avatar'><img src='{{ friend.user_pic }}' class='rounded-circle img-responsive' height='100' width='100'></div>
-                <div class='card-body'>
-                  <!-- front content -->
-                  <br><br>
-                  <h4><a class='card-title' href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a></h4>
-                  <hr>
-                  <div>
-                  <p>{{ friend.first_name }} {{ friend.last_name }}</p>
-                  <i class='fa fa-users prefix'></i>{{ friend.tot_friends() }} |
-                  {% if friend.deg_of_sep(session['user_id']) %}
-                    <i class='fa fa-chain prefix'></i>{{ friend.deg_of_sep(session['user_id']) }}
-                  {% else %}
-                    <i class='fa fa-chain-broken prefix'></i>
-                  {% endif %}
+  {% if user.friends %}
+    <h3>My Friends</h3>
+    <br>
+    {% for friend in user.friends|sort(attribute='username') %}
+      <!--Rotating card-->
+      <div id='myCard-{{ friend.user_id }}' class="myCard flip-container" ontouchstart="this.classList.toggle('flip');">
+        <div class='flipper'>
+          <!--Front Side-->
+          <div class='front'>
+            <!--Avatar-->
+            <div class='avatar'><img src='{{ friend.user_pic }}' class='rounded-circle img-responsive' height='100' width='100'></div>
+            <div class='card-body'>
+              <!-- front content -->
+              <br><br>
+              <h4><a class='card-title' href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a></h4>
+              <hr>
+              <div>
+              <p>{{ friend.first_name }} {{ friend.last_name }}</p>
+              <i class='fa fa-users prefix'></i>{{ friend.tot_friends() }} |
+              {% if friend.deg_of_sep(session['user_id']) %}
+                <i class='fa fa-chain prefix'></i>{{ friend.deg_of_sep(session['user_id']) }}
+              {% else %}
+                <i class='fa fa-chain-broken prefix'></i>
+              {% endif %}
 
-                  <p>Member Since: {{ friend.join_date|datetimeformat('%b %Y') }}</p>
-                  </div>
-                  <hr>
-                  <!--Triggering button-->
-                  <a class='flip-card' class='rotate-btn'><i class='fa fa-repeat'></i> Click here to rotate</a>
-                </div>
+              <p>Member Since: {{ friend.join_date|datetimeformat('%b %Y') }}</p>
               </div>
-              <!--/.Front Side-->
-
-              <!--Back Side-->
-              <div class='back'>
-                <!-- back content -->
-                <div>
-                  <h4 class='card-title'>About me</h4>
-                  <hr>
-                  <div>
-                  Total Check-Ins: {{ friend.tot_checkins() }}</br>
-                  Total Reviews: {{ friend.tot_reviews() }}</br>
-                  Total Businesses Visited: {{ friend.tot_unique_biz() }}</br>
-                  Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</br>
-                </div>
-                <hr>
-                <!--Social Icons-->
-                <div>
-                  <ul class='inline-ul'>
-                    <li><a class='icons-sm fb-ic'><i class='fa fa-facebook'></i></a></li>
-                    <li><a class='icons-sm tw-ic'><i class='fa fa-twitter'></i></a></li>
-                    <li><a class='icons-sm gplus-ic'><i class='fa fa-google-plus'></i></a></li>
-                    <li><a class='icons-sm li-ic'><i class='fa fa-linkedin'></i></a></li>
-                  </ul>
-                </div>
-                <!--Triggering button-->
-                <a class='flip-card' class='rotate-btn' data-card='card-1'><i class='fa fa-undo'></i> Click here to rotate back</a>
-              </div>
-              <!--/.Back Side-->
-
+              <hr>
+              <!--Triggering button-->
+              <a class='flip-card' class='rotate-btn'><i class='fa fa-repeat'></i> Click here to rotate</a>
             </div>
           </div>
+          <!--/.Front Side-->
+
+          <!--Back Side-->
+          <div class='back'>
+            <!-- back content -->
+            <div>
+              <h4 class='card-title'>About me</h4>
+              <hr>
+              Total Check-Ins: {{ friend.tot_checkins() }}</br>
+              Total Reviews: {{ friend.tot_reviews() }}</br>
+              Total Businesses Visited: {{ friend.tot_unique_biz() }}</br>
+              Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</br>
+            </div>
+            <hr>
+            <!--Social Icons-->
+            <div>
+              <ul class='inline-ul'>
+                <li><a class='icons-sm fb-ic'><i class='fa fa-facebook'></i></a></li>
+                <li><a class='icons-sm tw-ic'><i class='fa fa-twitter'></i></a></li>
+                <li><a class='icons-sm gplus-ic'><i class='fa fa-google-plus'></i></a></li>
+                <li><a class='icons-sm li-ic'><i class='fa fa-linkedin'></i></a></li>
+              </ul>
+            </div>
+            <!--Triggering button-->
+            <a class='flip-card' class='rotate-btn' data-card='card-1'><i class='fa fa-undo'></i> Click here to rotate back</a>
+          </div>
+          <!--/.Back Side-->
+
         </div>
-          <!--/.Rotating card-->
-        {% endfor %}
-      {% else %}
-      <div>You seem lonely in here, add some friends!</div>
-      {% endif %}
-    </div>
+      </div>
+      <!--/.Rotating card-->
+    {% endfor %}
+  {% else %}
+  <div>You seem lonely in here, add some friends!</div>
+  {% endif %}
 </div>
 
 {% endblock %}

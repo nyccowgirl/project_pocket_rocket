@@ -2,44 +2,126 @@
 
 {% block head %}
 
+<link rel='stylesheet' type='text/css' href='/static/css/flipper.css'>
+
 {% endblock %}
 
 {% block content %}
 
 <div class='container-fluid'>
 
-  <form id='biz-search' class='form-inline' action='/biz-search'>
+  <form id='biz-search' class='form-inline' action='/search-biz'>
     <input class="form-control mr-sm-2" type="text" placeholder="Who's the Lucky One?" aria-label="Search">
     <button class="btn btn-outline-success btn-sm my-0" type="submit">Search</button>
   </form>
 
 </div>
 
-<div class='container-fluid'>
+<hr>
+
+<!--  <div class='container-fluid'>
 
   <h3>Recent Visits</h3>
 
-    {% for group, list in checkins|groupby('biz.biz_name')|sort(attribute='checkin_date', reverse=True) %}
-    {% if biz.visit_not_reviewed() %}
-    <li><a href='/busines-profile/{{ grouper }}'>{{ grouper }}:</a>
-      {% if biz.deg_of_sep(session['user_id']) %}
-        <i class='fa fa-chain prefix'></i>{{ biz.deg_of_sep(session['user_id']) }}
-      {% else %}
-        <i class='fa fa-chain-broken prefix'></i>
+    {% for group, list in user.checkins|groupby('biz.biz_name')|sort(attribute='checkin_date', reverse=True) %}
+      {% if loop.first and biz.visit_not_reviewed() %}
+        <li><a href='/busines-profile/{{ grouper }}'>{{ grouper }}:</a>
+          {% if biz.deg_of_sep(session['user_id']) %}
+            <i class='fa fa-chain prefix'></i>{{ biz.deg_of_sep(session['user_id']) }}
+          {% else %}
+            <i class='fa fa-chain-broken prefix'></i>
+          {% endif %}
+        </li>|
+          {% for biz in list %}
+            {{ biz.biz_name }}
+          <b>{{ biz.tot_checkins() }}</b>
+          {% endfor %}
       {% endif %}
-    </li>|
-      {% for biz in list %}
-        {{ biz.biz_name }}
-        <!-- TO DO: put avg rating as method & display as flip cards-->
-      <b>{{ biz.tot_checkins() }}</b>
-      {% endfor %}
-    {% endif %}
     {% endfor %}
 
+</div>
+
+<hr> -->
+
+<div class='container-fluid'>
+
+  <h3>Recent Visits</h3>
+  <br>
+    {% for group, list in user.checkins|groupby('biz.biz_name')|sort(attribute='checkin_date', reverse=True) %}
+      {% for biz in list %}
+        {% if loop.first and biz.visit_not_reviewed() %}
+          <!--Rotating card-->
+          <div id='myCard-{{ biz.biz.biz_id }}' class="myCard flip-container" ontouchstart="this.classList.toggle('flip');">
+            <div class='flipper'>
+              <!--Front Side-->
+              <div class='front'>
+                <!--Avatar-->
+                <div class='avatar'><img src='{{ biz.biz.biz_pic }}' class='rounded-circle img-responsive' height='100' width='100'></div>
+                <div class='card-body'>
+                  <!-- front content -->
+                  <br><br>
+                  <h4><a class='card-title' href='/business-profile/{{ biz.biz.biz_name }}'>{{ biz.biz.biz_name }}</a></h4>
+                  <hr>
+                  <div>
+                    <i class='fa fa-check-square-o prefix'></i>{{ biz.biz.tot_user_checkins() }} |
+                    {% if biz.biz.deg_of_sep(session['user_id']) %}
+                      <i class='fa fa-chain prefix'></i>{{ friend.deg_of_sep(session['user_id']) }}
+                    {% else %}
+                      <i class='fa fa-chain-broken prefix'></i>
+                    {% endif %}
+                    <p>Category: {{ biz.biz.category }} | Rating: {{ biz.biz.avg_score() }}</p>
+                    <p>Address: {{ biz.biz.address }}, {{ biz.biz.city }}, {{ biz.biz.state }}
+                  </div>
+                  <hr>
+                  <!--Triggering button-->
+                  <a class='flip-card' class='rotate-btn'><i class='fa fa-repeat'></i> Click here to rotate</a>
+                </div>
+              </div>
+              <!--/.Front Side-->
+
+              <!--Back Side-->
+              <div class='back'>
+                <!-- back content -->
+                <div>
+                  <h4 class='card-title'>About me</h4>
+                  <hr>
+                  Total Check-Ins: {{ biz.biz.tot_checkins() }}</br>
+                  Total Reviews: {{ biz.biz.tot_reviews() }}</br>
+                  Total Referrals: {{ biz.biz.tot_refs () }}</br>
+                </div>
+                <hr>
+                <!--Social Icons-->
+                <div>
+                  <ul class='inline-ul'>
+                    <li><a class='icons-sm fb-ic'><i class='fa fa-facebook'></i></a></li>
+                    <li><a class='icons-sm tw-ic'><i class='fa fa-twitter'></i></a></li>
+                    <li><a class='icons-sm gplus-ic'><i class='fa fa-google-plus'></i></a></li>
+                    <li><a class='icons-sm li-ic'><i class='fa fa-linkedin'></i></a></li>
+                  </ul>
+                </div>
+                <!--Triggering button-->
+                <a class='flip-card' class='rotate-btn' data-card='card-1'><i class='fa fa-undo'></i> Click here to rotate back</a>
+              </div>
+              <!--/.Back Side-->
+
+        </div>
+      </div>
+      <!--/.Rotating card-->
+    {% endfor %}
+  {% else %}
+  <div>You haven't visited any business lately. Please supporting a budding business!</div>
+  {% endif %}
 </div>
 
 {% endblock %}
 
 {% block script %}
+<script>
 
+$('.myCard').on('click', function(evt) {
+    console.log(this);
+   this.classList.toggle("flip");
+});
+
+ </script>
 {% endblock %}

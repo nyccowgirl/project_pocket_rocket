@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- <div class='container-fluid'>
+
+  <form id='biz-search' class='form-inline' action='/biz-search'>
+    <input class="form-control mr-sm-2" type="text" placeholder="Who's the Lucky One?" aria-label="Search">
+    <button class="btn btn-outline-success btn-sm my-0" type="submit">Search</button>
+  </form>
+
+</div> -->
+
+<div class='container-fluid'>
+
+  <h3>Search Results</h3>
+
+    {% for item in search %}
+
+    <ul>
+      <a href='{{ item.biz_name }}'><b>{{ item.biz_name }}</b></a>:
+      <li>Category: {{ item.biz_cateogry }} | Rating: {{ item.avg_score }}</li>
+      <li>Address: {{ item.address }}, {{ item.city }}, {{ item.state}} {{ item.zipcode }} {{ item.country }}</li>
+    </ul>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
