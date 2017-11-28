@@ -144,7 +144,7 @@ class User(db.Model):
             else:
                 update_tree(friends_lst(pop), tree)
                 if pop == anchor:
-                    if tree = []:
+                    if tree == []:
                         count = 0
                         return count
                     else:
@@ -367,7 +367,8 @@ class Business(db.Model):
         """
 
         if not self.users:
-            return None
+            count = 0
+            return count
         else:
             tree = []
             sought = user2_id
@@ -384,7 +385,7 @@ class Business(db.Model):
                 else:
                     update_tree(friends_lst(pop), tree)
                     if pop == anchor:
-                        if tree = []:
+                        if tree == []:
                             count = 0
                             return count
                         else:
@@ -394,7 +395,7 @@ class Business(db.Model):
                                 return count
                     pop = tree.pop(0)
 
-                return count
+        return count
 
 
 class Promo(db.Model):
