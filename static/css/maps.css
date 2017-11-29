@@ -1,0 +1,11 @@
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+
+#googleMap {
+    width: 100%; /* Span the entire width of the screen */
+    height: 400px; /* Set the height to 400 pixels */
+    /*-webkit-filter: grayscale(100%);*/
+    filter: grayscale(50%); /* Change the color of the map to black and white */
+}

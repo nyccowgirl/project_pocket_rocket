@@ -36,21 +36,27 @@
         {% for review in user.reviews|sort(attribute='review_date', reverse=True) %}
           <li>
             <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
+            {% if review.biz.deg_of_sep(session['user_id']) %}
+              <i class='fa fa-chain prefix'></i> {{ review.biz.deg_of_sep(session['user_id']) }}
+            {% else %}
+              <i class='fa fa-chain-broken prefix'></i>
+            {% endif %}</li>
+
             {% if review.revise_review %}
               <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
                 {% if review.has_liked(session['user_id']) %}
-                  <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
+                  <button disabled><i class='fa fa-heart' aria-hidden='true'></i></button>
                 {% else %}
-                  <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                  <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden='true'></i></button>
                 {% endif %}
               </p>
               <p>{{ review.new_review }}</p>
             {% else %}
               <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
                 {% if review.has_liked(session['user_id']) %}
-                  <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
+                  <button disabled><i class='fa fa-heart' aria-hidden='true'></i></button>
                 {% else %}
-                  <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                  <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden='true'></i></button>
                 {% endif %}
               </p>
               <p>{{ review.review }}</p>

@@ -11,7 +11,12 @@
       <img  id='biz_pic' src='/static/img/dragonfly_mating.jpeg' hspace='40' align='left'>
     {% endif %}
 
-    <h2>{{ biz.biz_name }}</h2>
+    <h2>{{ biz.biz_name }}
+      {% if biz.deg_of_sep(session['user_id']) %}
+        <i class='fa fa-chain prefix'></i> {{ biz.deg_of_sep(session['user_id']) }}
+      {% else %}
+        <i class='fa fa-chain-broken prefix'></i>
+      {% endif %}</li></h2>
   </div>
 
   <hr>
@@ -39,12 +44,12 @@
   </div>
 
   <!-- Add Google Maps -->
-  <div id="googleMap"></div>
+  <div id='googleMap'></div>
 
   <div class='container-fluid'>
 
     <div>
-      Total Check-Ins: {{ biz.tot_checkins() }}|Your Check_Ins: {{ biz.tot_user_checkins() }}<br>
+      Total Check-Ins: {{ biz.tot_checkins() }}| Your Check_Ins: {{ biz.tot_user_checkins() }}<br>
       Average Rating: {{ biz.avg_score() }} | Your Rating: {{ user_score }}<br>
       Total Reviews: {{ biz.tot_reviews() }}<br>
       Total Referrals: {{ biz.tot_refs() }} | Redeemed: {{ biz.tot_refs_red() }}<br>
@@ -110,6 +115,12 @@
       {% if (review.dispute and (review.revise_review or review.cust_svc)) or not review.dispute %}
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
+        {% if review.users.deg_of_sep(session['user_id']) %}
+          <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(session['user_id']) }}
+        {% else %}
+          <i class='fa fa-chain-broken prefix'></i>
+        {% endif %}</li>
+
         {% if review.revise_review %}
           <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
             {% if review.has_liked(session['user_id']) %}
@@ -148,6 +159,12 @@
       <b>Being Addressed</b>
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
+        {% if review.users.deg_of_sep(session['user_id']) %}
+          <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(session['user_id']) }}
+        {% else %}
+          <i class='fa fa-chain-broken prefix'></i>
+        {% endif %}</li>
+
         <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
           {% if review.has_liked(session['user_id']) %}
             <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
@@ -209,7 +226,7 @@
 
 {% block script %}
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>
+<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap'></script>
 
 <!-- FIXME: Update key -->
 
@@ -242,7 +259,27 @@ function myMap() {
   // }
 
   // google.maps.event.addDomListener(window, 'load', initialize);
+<script>
+$(document).ready(function(){
+  $('#myInputAvail, #myInputRed').on('keyup', function() {
+    let value = $(this).val().toLowerCase();
+    $('#myTable tr').filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 
+<script>
+function myMap() {
+let myCenter = new google.maps.LatLng(41.878114, -87.629798);
+let mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
+let map = new google.maps.Map(document.getElementById('googleMap'),mapProp);
+let marker = new google.maps.Marker({position:myCenter});
+marker.setMap(map);
+}
+
+</script>
 </script>
 
 {% endblock %}

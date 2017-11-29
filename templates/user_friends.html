@@ -83,9 +83,9 @@
               <hr>
               <div>
               <p>{{ friend.first_name }} {{ friend.last_name }}</p>
-              <i class='fa fa-users prefix'></i>{{ friend.tot_friends() }} |
+              <i class='fa fa-users prefix'></i> {{ friend.tot_friends() }} |
               {% if friend.deg_of_sep(session['user_id']) %}
-                <i class='fa fa-chain prefix'></i>{{ friend.deg_of_sep(session['user_id']) }}
+                <i class='fa fa-chain prefix'></i> {{ friend.deg_of_sep(session['user_id']) }}
               {% else %}
                 <i class='fa fa-chain-broken prefix'></i>
               {% endif %}

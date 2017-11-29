@@ -81,13 +81,13 @@ def register_process():
     biz = request.form['biz']
 
         # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(fname)
-    print u'\n\n\n{}\n\n\n'.format(lname)
-    print u'\n\n\n{}\n\n\n'.format(username)
-    print u'\n\n\n{}\n\n\n'.format(email)
-    print u'\n\n\n{}\n\n\n'.format(pword)
-    print u'\n\n\n{}\n\n\n'.format(bday_str)
-    print u'\n\n\n{}\n\n\n'.format(biz)
+    # print u'\n\n\n{}\n\n\n'.format(fname)
+    # print u'\n\n\n{}\n\n\n'.format(lname)
+    # print u'\n\n\n{}\n\n\n'.format(username)
+    # print u'\n\n\n{}\n\n\n'.format(email)
+    # print u'\n\n\n{}\n\n\n'.format(pword)
+    # print u'\n\n\n{}\n\n\n'.format(bday_str)
+    # print u'\n\n\n{}\n\n\n'.format(biz)
 
     # Convert picture that would be saved to static/img directory but url stored
     # in database
@@ -98,8 +98,8 @@ def register_process():
         pic = None
 
     # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(username)
-    print u'\n\n\n{}\n\n\n'.format(biz)
+    # print u'\n\n\n{}\n\n\n'.format(username)
+    # print u'\n\n\n{}\n\n\n'.format(biz)
 
     # Convert birthday to datetime format
     if bday_str:
@@ -161,7 +161,7 @@ def login_process():
     pword = request.form.get('pword')
 
     # TO DELETE
-    print '\n\n\n{}{}\n\n\n'.format(user_input, pword)
+    # print '\n\n\n{}{}\n\n\n'.format(user_input, pword)
 
     user = helper.check_user_info(user_input)
 
@@ -177,7 +177,7 @@ def login_process():
         session['biz_acct'] = user.biz_acct
 
         # TO DELETE
-        print '\n\n\n{}\n\n\n'.format(user.biz_acct)
+        # print '\n\n\n{}\n\n\n'.format(user.biz_acct)
 
         if user.user_pic:
             session['user_pic'] = user.user_pic
@@ -250,10 +250,10 @@ def user_profile():
     user = User.query.filter_by(user_id=session['user_id']).first()
 
     # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(user.reviews)
-    print u'\n\n\n{}\n\n\n'.format(user.friends)
-    print u'\n\n\n{}\n\n\n'.format(user.referees)
-    print u'\n\n\n{}\n\n\n'.format(user.promos)
+    # print u'\n\n\n{}\n\n\n'.format(user.reviews)
+    # print u'\n\n\n{}\n\n\n'.format(user.friends)
+    # print u'\n\n\n{}\n\n\n'.format(user.referees)
+    # print u'\n\n\n{}\n\n\n'.format(user.promos)
 
     # friends = helper.calc_friends(user)
     # session['tot_friends'] = friends
@@ -343,7 +343,7 @@ def user_friends():
     user = User.query.filter_by(user_id=session['user_id']).first()
 
     # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(user.friends)
+    # print u'\n\n\n{}\n\n\n'.format(user.friends)
 
     # print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
 
@@ -357,9 +357,9 @@ def add_friend():
     friend_email = request.form.get('friend_email')
 
     # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(friend_email)
-    print request.form.get('friend-email')
-    print request.form.get('friend_email')
+    # print u'\n\n\n{}\n\n\n'.format(friend_email)
+    # print request.form.get('friend-email')
+    # print request.form.get('friend_email')
 
     friend = User.query.filter_by(email=friend_email).first()
 
@@ -398,7 +398,7 @@ def user_reviews():
     user = User.query.filter_by(user_id=session['user_id']).first()
 
     # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(user.reviews)
+    # print u'\n\n\n{}\n\n\n'.format(user.reviews)
 
     return render_template('user_reviews.html', user=user)
 
@@ -420,11 +420,11 @@ def friend_profile(friend_id):
     friend = User.query.filter_by(user_id=friend_id).first()
 
     # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(friend)
-    print u'\n\n\n{}\n\n\n'.format(friend.reviews)
-    print u'\n\n\n{}\n\n\n'.format(friend.friends)
-    print u'\n\n\n{}\n\n\n'.format(friend.referees)
-    print u'\n\n\n{}\n\n\n'.format(friend.promos)
+    # print u'\n\n\n{}\n\n\n'.format(friend)
+    # print u'\n\n\n{}\n\n\n'.format(friend.reviews)
+    # print u'\n\n\n{}\n\n\n'.format(friend.friends)
+    # print u'\n\n\n{}\n\n\n'.format(friend.referees)
+    # print u'\n\n\n{}\n\n\n'.format(friend.promos)
 
     # friends = helper.calc_friends(friend)
     # reviews = helper.calc_reviews(friend)
@@ -433,6 +433,48 @@ def friend_profile(friend_id):
     # checkins = helper.calc_checkins(friend)
 
     return render_template('friend_profile.html', friend=friend)
+
+
+@app.route('/user-promos')
+def user_promos():
+    """Displays user's available promotions and redemptions."""
+
+    user = User.query.filter_by(user_id=session['user_id']).first()
+
+    # TO DELETE
+    # print u'\n\n\n{}\n\n\n'.format(user.promos)
+
+    # print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
+
+    return render_template('user_promos.html', user=user)
+
+
+@app.route('/user-referrals')
+def user_referrals():
+    """Displays user's referrals and related redemptions."""
+
+    user = User.query.filter_by(user_id=session['user_id']).first()
+
+    # TO DELETE
+    # print u'\n\n\n{}\n\n\n'.format(user.referrals)
+
+    # print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
+
+    return render_template('user_referrals.html', user=user)
+
+
+@app.route('/user-biz')
+def user_biz():
+    """Displays user's businesses and related analytics."""
+
+    user = User.query.filter_by(user_id=session['user_id']).first()
+
+    # TO DELETE
+    # print u'\n\n\n{}\n\n\n'.format(user.biz)
+
+    # print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
+
+    return render_template('user_biz.html', user=user)
 
 
 @app.route('/add-biz')
@@ -473,8 +515,8 @@ def biz_process():
         pic = None
 
     # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(name)
-    print u'\n\n\n{}\n\n\n'.format(claim)
+    # print u'\n\n\n{}\n\n\n'.format(name)
+    # print u'\n\n\n{}\n\n\n'.format(claim)
 
     # Convert time to military format
     if open_mil == 'pm':
@@ -562,7 +604,7 @@ def biz_profile(biz_name):
         user_rating = 'N/A'
 
     # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(promos_redeem)
+    # print u'\n\n\n{}\n\n\n'.format(promos_redeem)
 
     # TO DO: build out helper functions to pull in totals to summarize;
     # format phone number and hours
@@ -608,7 +650,7 @@ def check_in(biz_id):
     biz_name = biz.biz_name
 
     # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(biz.biz_name)
+    # print u'\n\n\n{}\n\n\n'.format(biz.biz_name)
 
     if checkin:
         results = 'You have already checked into this business today. No double dipping!'
@@ -625,7 +667,7 @@ def check_in(biz_id):
         results = ('You have checked in a total of {} times. {} thanks you for your support!'.format(user_checkins, biz.biz_name))
 
     # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(biz_name)
+    # print u'\n\n\n{}\n\n\n'.format(biz_name)
     import pdb; pdb.set_trace()
 
     # return redirect('/'))

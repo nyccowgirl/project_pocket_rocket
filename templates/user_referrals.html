@@ -38,17 +38,17 @@
       <ul>
       {% for grouper, list in user.referrals|groupby('biz.biz_name') %}
         <li><a href='/busines-profile/{{ grouper }}'>{{ grouper }}:</a> |
-          {% if referrals.biz.deg_of_sep(session['user_id']) %}
-          <!-- FIXME: Not sure if that is right syntax -->
-            <i class='fa fa-chain prefix'></i>{{ referrals.biz.deg_of_sep(session['user_id']) }}
-          {% else %}
-            <i class='fa fa-chain-broken prefix'></i>
-          {% endif %}</li>
-        <ul>
           {% for each in list %}
-            <li>{{ each.referee.username }} | {{ each.referee.tot_friends() }} |
+            {% if loop.first and each.biz.deg_of_sep(session['user_id']) %}
+            <!-- FIXME: Not sure if that is right syntax -->
+              <i class='fa fa-chain prefix'></i> {{ each.biz.deg_of_sep(session['user_id']) }}
+            {% else %}
+              <i class='fa fa-chain-broken prefix'></i>
+            {% endif %}</li>
+        <ul>
+            <li>{{ each.referee.username }} | <i class='fa fa-users prefix'></i> {{ each.referee.tot_friends() }} |
               {% if each.referee.deg_of_sep(session['user_id']) %}
-                <i class='fa fa-chain prefix'></i>{{ each.referee.deg_of_sep(session['user_id']) }}
+                <i class='fa fa-chain prefix'></i> {{ each.referee.deg_of_sep(session['user_id']) }}
               {% else %}
                 <i class='fa fa-chain-broken prefix'></i>
               {% endif %}
