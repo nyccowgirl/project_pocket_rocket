@@ -95,7 +95,7 @@
 
   <hr>
 
-  <div class='container-fluid'>zws
+  <div class='container-fluid'>
 
   <h3>About Me</h3>
 
@@ -115,13 +115,13 @@
 
     <div>
       <ul>
-        Check-Ins: {{ user.tot_checkins() }}<br>
-        Reviews: {{ user.tot_reviews() }}<br>
-        Referrals: {{ user.tot_refs() }} | Redeemed: {{ user.tot_refs_reds() }}<br>
-        Promos Redeemed: {{ user.tot_reds() }}<br>
-        Friends: {{ user.tot_friends() }}
-        Total Businesses Visited: {{ user.tot_unique_biz() }}</p>
-        Total Businesses Referred to Friends: {{ user.tot_biz_referrals() }}</p>
+        Total Check-Ins: {{ user.tot_checkins() }}<br>
+        Total Reviews: {{ user.tot_reviews() }}<br>
+        Total Referrals: {{ user.tot_refs() }} | Referrals Redeemed: {{ user.tot_refs_reds() }}<br>
+        Total Promos Redeemed: {{ user.tot_reds() }}<br>
+        Total Friends: {{ user.tot_friends() }}<br>
+        Total Businesses Visited: {{ user.tot_unique_biz() }}<br>
+        Total Businesses Referred to Friends: {{ user.tot_biz_referrals() }}<br>
       </ul>
     </div>
 

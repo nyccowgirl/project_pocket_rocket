@@ -168,7 +168,7 @@ $(document).ready(() => {
 
   function disableLike(results) {
     alert(results);
-
+    location.reload(true);
   }
 
   function handleClick(evt) {
@@ -176,10 +176,10 @@ $(document).ready(() => {
     let formInputs = {
       'review_id': this.id
     };
-    $.post('/like-review', formInputs, disableLike);
-    $(this).prop('disabled', true);
     $(this).removeClass('.fa-heart-o');
     $(this).addClass('.fa-heart');
+    $(this).prop('disabled', true);
+    $.post('/like-review', formInputs, disableLike);
   }
 // FIXME: Add in remove and add class for the solid heart shape - need to test
 
@@ -214,7 +214,7 @@ $(document).ready(() => {
       alert(results.msg);
     } else {
       alert(results.msg);
-      location.reload('/business-profile/<biz_name>');
+      location.reload(true);
     }
   }
 
@@ -238,7 +238,7 @@ $(document).ready(() => {
       alert(results.msg);
     } else {
       alert(results.msg);
-      location.reload('/user-profile');
+      location.reload(true);
     }
   }
 
@@ -272,7 +272,7 @@ $(document).ready(() => {
 
   function checkinMsg(results) {
     alert(results.msg);
-    location.reload('/business-profile/<biz_name>');
+    location.reload(true);
   }
 
   function checkBiz(evt) {
@@ -285,5 +285,8 @@ $(document).ready(() => {
 
   $checkIn.on('click', checkBiz);
 
+  // $('#search-btn').on('click', function() {
+  //   $('#biz-search').submit();
+  // })
 
 });

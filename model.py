@@ -123,36 +123,36 @@ class User(db.Model):
 
         return unique_biz_refs
 
-    def deg_of_sep(self, user2_id, degrees=100):
+    def deg_of_sep(self, user2_id, degrees=6):
         """
         Calculates degrees of separation, if any, between two users. If count is none, the user2 is user1. Otherwise, count of zero
         means no connection. Currently set to stop at count at n degrees.
         """
 
-        tree = []
+        visit = []
+        seen = set()
+        visit.append(self.user_id)
         sought = user2_id
-        pop = self.user_id
         anchor = self.user_id
         count = 0
 
-        while True:
-
-            if pop == sought:
+        while visit:
+            current = visit.pop(0)
+            if current == sought:
                 if count == 0:
                     count = None
                 return count
             else:
-                update_tree(friends_lst(pop), tree)
-                if pop == anchor:
-                    if tree == []:
+                if current not in seen:
+                    seen.add(current)
+                    for friend in friends_lst(current, seen):
+                        visit.append(friend)
+                if current == anchor:
+                    anchor = visit[-1]
+                    count += 1
+                    if count == (degrees + 1):
                         count = 0
                         return count
-                    else:
-                        anchor = tree[-1]
-                        count += 1
-                        if count == (degrees + 1):
-                            return count
-                pop = tree.pop(0)
 
         return count
 
@@ -359,7 +359,7 @@ class Business(db.Model):
 
         return redeemed_refs
 
-    def deg_of_sep(self, user2_id, degrees=100):
+    def deg_of_sep(self, user2_id, degrees=6):
         """
         Calculates degrees of separation, if any, between a user and business,
         if claimed. If count is none, the user2 is user1. Otherwise, count of zero
@@ -370,30 +370,30 @@ class Business(db.Model):
             count = 0
             return count
         else:
-            tree = []
+            visit = []
+            seen = set()
+            visit.append(self.users[0].user_id)
             sought = user2_id
-            pop = self.users[0].user_id
             anchor = self.users[0].user_id
             count = 0
 
-            while True:
-
-                if pop == sought:
+            while visit:
+                current = visit.pop(0)
+                if current == sought:
                     if count == 0:
                         count = None
                     return count
                 else:
-                    update_tree(friends_lst(pop), tree)
-                    if pop == anchor:
-                        if tree == []:
+                    if current not in seen:
+                        seen.add(current)
+                        for friend in friends_lst(current, seen):
+                            visit.append(friend)
+                    if current == anchor:
+                        anchor = visit[-1]
+                        count += 1
+                        if count == (degrees + 1):
                             count = 0
                             return count
-                        else:
-                            anchor = tree[-1]
-                            count += 1
-                            if count == (degrees + 1):
-                                return count
-                    pop = tree.pop(0)
 
         return count
 
@@ -570,7 +570,7 @@ class Invite(db.Model):
                 .format(self.invite_id, self.user_id, self.accepted))
 
 
-def friends_lst(user_id):
+def friends_lst(user_id, seen):
     """
     Returns list of friends' user_id.
 
@@ -582,22 +582,11 @@ def friends_lst(user_id):
     friends = db.session.query(Friend.friend_id).filter_by(user_id=user_id).all()
 
     for friend in friends:
-        lst.append(friend)
+        if friend[0] not in seen:
+            lst.append(friend[0])
 
     return lst
 
-
-def update_tree(friends_lst, tree):
-    """
-    Update connections for new list of friends for degrees of separation calculation.
-
-    TO DO: Build out doctests
-    """
-
-    for friend in friends_lst:
-        tree.append(friend)
-
-    return tree
 
 
 ##############################################################################

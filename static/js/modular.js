@@ -16,26 +16,34 @@ $(document).ready(() => {
     let $msgShowTime = 2000;
 
     $('form').on('submit', function(evt) {
-      evt.preventDefault();
+      // evt.preventDefault();
       let test = {};
       let formInputs = new FormData(this);
-      for (var [key, value] of formInputs.entries()) {
+      for (let [key, value] of formInputs.entries()) {
         test[key] = value;
       };
+      console.log('test');
       // may be same as formInputs.serialize()
       switch(this.id) {
         case 'biz-search':
-
+          console.log(test);
+          $('#biz-search').submit();
+          return false;
+          // FIXME: Runs in a loop for a long time before it renders but had to move
+          // evt.preventDefault() to each case rather than at top
         case 'login-form':
+          evt.preventDefault();
           $.post('/login', test, displayMsg);
           break;
         case 'lost-form':
+          evt.preventDefault();
           if (!$('#email-lost')) {
             alert('Please input your email.');
           }
           $.get('/email-check', test, checkEmail);
           break;
         case 'register-form':
+          evt.preventDefault();
           let pword1 = $('#pword-reg').val();
           let pword2 = $('#pword-rep').val();
           if (pword1 != pword2) {

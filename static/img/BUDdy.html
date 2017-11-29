@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)http://localhost:5000/user-friends -->
+<html class="fa-events-icons-ready"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>BUDdy</title>
+
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./BUDdy_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./BUDdy_files/mdb.min.css">
+
+<!--     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Raleway:100,700'>
+    <link rel='stylesheet' type='text/css' href='/static/css/maps.css'> -->
+    <link rel="stylesheet" type="text/css" href="./BUDdy_files/styles.css">
+    <script src="./BUDdy_files/0bc045b751.js"></script><link href="./BUDdy_files/0bc045b751.css" media="all" rel="stylesheet">
+
+<!--     <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"> -->
+
+
+    
+      <!-- Put extra CSS/JS here -->
+    
+
+<link rel="stylesheet" href="./BUDdy_files/toolbar.css" type="text/css"></head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+<!-- Image and text -->
+  <a class="navbar-brand" href="http://localhost:5000/">
+    <img src="./BUDdy_files/pinky.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+    BUDdy
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<!-- Search bar -->
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+
+    <form class="mx-2 my-auto d-inline w-75 waves-effect waves-light" action="http://localhost:5000/search" method="POST">
+      <div class="input-group">
+        <input class="form-control search" name="search" placeholder="Where To?" autocomplete="on" autofocus="autofocus" type="text">
+        <span class="input-group-btn">
+          <button class="btn btn-outline-light waves-effect waves-light" type="submit">Search</button>
+        </span>
+      </div>
+    </form>
+
+            <!-- TO DO: build out BUD button for submit button
+            build out /search page and related python code -->
+
+<!-- Profile, register and login/logout -->
+    <ul class="navbar-nav ml-auto" id="nav-item">
+      <li class="nav-item">
+        <a class="nav-link waves-effect waves-light" href="http://localhost:5000/">Home <span class="sr-only">(current)</span></a>
+      </li>
+
+      
+        <li class="nav-item">
+          <a class="nav-link waves-effect waves-light" href="http://localhost:5000/logout">Log Out</a>
+        </li>
+      
+
+      
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle waves-effect waves-light" href="http://localhost:5000/user-friends#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Profile
+          </a>
+            <div class="dropdown-menu dropdown-menu-right active" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item waves-effect waves-light" href="http://localhost:5000/user-profile">Account</a>
+              <a class="dropdown-item waves-effect waves-light" href="http://localhost:5000/user-friends">Friends</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item waves-effect waves-light" href="http://localhost:5000/user-friends#">Reviews</a>
+              <a class="dropdown-item waves-effect waves-light" href="http://localhost:5000/user-friends#">Referrals</a>
+              <a class="dropdown-item waves-effect waves-light" href="http://localhost:5000/user-friends#">Promos/Reds</a>
+              
+            </div>
+        </li>
+        <!-- TO DO: Break up various components of user-profile into sections -->
+        <img src="./BUDdy_files/_text" width="30" height="30" class="d-inline-block align-top" alt="right">
+      
+    </ul>
+  </div>
+</nav>
+
+<hr>
+
+
+
+
+
+  <div>
+    
+      <img id="user_pic" src="./BUDdy_files/_text" hspace="40" align="left">
+    
+     <h2>cantrellsherry</h2>
+  </div>
+
+  <hr>
+
+  <div class="container-fluid">
+
+  <button type="button" class="btn btn-unique btn-rounded waves-light waves-effect waves-light" (click)="form.show()" data-toggle="modal" data-target="#modalAddFriend" mdbrippleradius="">Add Friend</button>
+
+  <!--Modal: Login with Avatar Form-->
+  <form action="http://localhost:5000/add-friend" method="POST" mdbmodal="" #form="mdb-modal" class="modal fade" id="modalAddFriend" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog cascading-modal modal-avatar modal-lg" role="document">
+          <!--Content-->
+          <div class="modal-content">
+
+              <!--Header-->
+              <div class="modal-header">
+                  <img src="./BUDdy_files/pinky.jpg" class="rounded-circle img-responsive" height="100">
+              </div>
+              <!--Body-->
+              <div class="modal-body text-center mb-1">
+
+                  <h5 class="mt-1 mb-2">My BFF</h5>
+
+                  <div class="md-form ml-0 mr-0">
+<!--                       <i class='fa fa-envelope prefix'></i>
+ -->                      <input mdbactive="" type="text" id="friend-email" name="friend-email" class="form-control ml-0">
+                      <label for="friend-email" class="ml-0">Enter Email</label>
+                  </div>
+
+                  <div class="text-center">
+                      <button class="btn btn-unique mt-1 waves-light waves-effect waves-light" mdbrippleradius="">Send <i class="fa fa-send ml-1"></i></button>
+                  </div>
+              </div>
+
+          </div>
+          <!--/.Content-->
+      </div>
+  </form>
+  <!--Modal: Login with Avatar Form-->
+  </div>
+
+  <hr>
+
+  <div class="container-fluid">
+
+  
+    <h3>My Friends</h3>
+
+    
+    <div>
+    <!--Rotating card-->
+    <div class="col-md-6 flip-container" ontouchstart="this.classList.toggle(" hover');'="">
+        <mdb-card-rotating #cards="">
+        <div class="flipper">
+            <!--Front Side-->
+            <div class="face front tp-box_side tp-box_front">
+
+                <!-- Image-->
+                <div class="card-up">
+                    <img src="./BUDdy_files/pinky.jpg" class="img-fluid" style="opacity: 0.2" height="150" width="150">
+                </div>
+                <!--Avatar-->
+                <div class="avatar"><img src="./BUDdy_files/_text(1)" class="rounded-circle img-responsive">
+                </div>
+                <!--Content-->
+                <div class="card-body">
+                    <h4><a href="http://localhost:5000/friend-profile/41">alicia73</a></h4>
+                    <p>Samantha Oconnell</p>
+                    <p>Member Since: Jul 2015</p>
+                    <!--Triggering button-->
+                    <a class="rotate-btn" data-card="card-1" (click)="cards.toggle()"><i class="fa fa-repeat"></i> Click here to rotate</a>
+                </div>
+            </div>
+            <!--/.Front Side-->
+
+            <!--Back Side-->
+            <div class="back tp-box_side tp-box_back">
+
+                <!--Content-->
+                <h4>About me</h4>
+                <hr>
+                <p>Total Check-Ins: 63</p>
+                <p>Total Reviews: 5</p>
+                <p>Total Businesses Visited: 49</p>
+                <p>Total Businesses Referred to Friends: 0</p>
+                <hr>
+                <!--Social Icons-->
+                <ul class="inline-ul">
+                    <li><a class="icons-sm fb-ic"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="icons-sm tw-ic"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="icons-sm gplus-ic"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a class="icons-sm li-ic"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+                <!--Triggering button-->
+                <a class="rotate-btn" data-card="card-1" (click)="cards.toggle()"><i class="fa fa-undo"></i> Click here to rotate back</a>
+
+            </div>
+            <!--/.Back Side-->
+        </div>
+        </mdb-card-rotating>
+    </div>
+    <!--/.Rotating card-->
+    
+    <div>
+    <!--Rotating card-->
+    <div class="col-md-6 flip-container" ontouchstart="this.classList.toggle(" hover');'="">
+        <mdb-card-rotating #cards="">
+        <div class="flipper">
+            <!--Front Side-->
+            <div class="face front tp-box_side tp-box_front">
+
+                <!-- Image-->
+                <div class="card-up">
+                    <img src="./BUDdy_files/pinky.jpg" class="img-fluid" style="opacity: 0.2" height="150" width="150">
+                </div>
+                <!--Avatar-->
+                <div class="avatar"><img src="./BUDdy_files/959x880" class="rounded-circle img-responsive">
+                </div>
+                <!--Content-->
+                <div class="card-body">
+                    <h4><a href="http://localhost:5000/friend-profile/228">pkelly</a></h4>
+                    <p>Claudia Kim</p>
+                    <p>Member Since: Mar 2012</p>
+                    <!--Triggering button-->
+                    <a class="rotate-btn" data-card="card-1" (click)="cards.toggle()"><i class="fa fa-repeat"></i> Click here to rotate</a>
+                </div>
+            </div>
+            <!--/.Front Side-->
+
+            <!--Back Side-->
+            <div class="back tp-box_side tp-box_back">
+
+                <!--Content-->
+                <h4>About me</h4>
+                <hr>
+                <p>Total Check-Ins: 48</p>
+                <p>Total Reviews: 7</p>
+                <p>Total Businesses Visited: 44</p>
+                <p>Total Businesses Referred to Friends: 1</p>
+                <hr>
+                <!--Social Icons-->
+                <ul class="inline-ul">
+                    <li><a class="icons-sm fb-ic"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="icons-sm tw-ic"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="icons-sm gplus-ic"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a class="icons-sm li-ic"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+                <!--Triggering button-->
+                <a class="rotate-btn" data-card="card-1" (click)="cards.toggle()"><i class="fa fa-undo"></i> Click here to rotate back</a>
+
+            </div>
+            <!--/.Back Side-->
+        </div>
+        </mdb-card-rotating>
+    </div>
+    <!--/.Rotating card-->
+    
+    <div>
+    <!--Rotating card-->
+    <div class="col-md-6 flip-container" ontouchstart="this.classList.toggle(" hover');'="">
+        <mdb-card-rotating #cards="">
+        <div class="flipper">
+            <!--Front Side-->
+            <div class="face front tp-box_side tp-box_front">
+
+                <!-- Image-->
+                <div class="card-up">
+                    <img src="./BUDdy_files/pinky.jpg" class="img-fluid" style="opacity: 0.2" height="150" width="150">
+                </div>
+                <!--Avatar-->
+                <div class="avatar"><img src="./BUDdy_files/_text(2)" class="rounded-circle img-responsive">
+                </div>
+                <!--Content-->
+                <div class="card-body">
+                    <h4><a href="http://localhost:5000/friend-profile/230">willislindsay</a></h4>
+                    <p>Kristy Brown</p>
+                    <p>Member Since: Jun 2015</p>
+                    <!--Triggering button-->
+                    <a class="rotate-btn" data-card="card-1" (click)="cards.toggle()"><i class="fa fa-repeat"></i> Click here to rotate</a>
+                </div>
+            </div>
+            <!--/.Front Side-->
+
+            <!--Back Side-->
+            <div class="back tp-box_side tp-box_back">
+
+                <!--Content-->
+                <h4>About me</h4>
+                <hr>
+                <p>Total Check-Ins: 55</p>
+                <p>Total Reviews: 4</p>
+                <p>Total Businesses Visited: 48</p>
+                <p>Total Businesses Referred to Friends: 2</p>
+                <hr>
+                <!--Social Icons-->
+                <ul class="inline-ul">
+                    <li><a class="icons-sm fb-ic"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="icons-sm tw-ic"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="icons-sm gplus-ic"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a class="icons-sm li-ic"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+                <!--Triggering button-->
+                <a class="rotate-btn" data-card="card-1" (click)="cards.toggle()"><i class="fa fa-undo"></i> Click here to rotate back</a>
+
+            </div>
+            <!--/.Back Side-->
+        </div>
+        </mdb-card-rotating>
+    </div>
+    <!--/.Rotating card-->
+    
+  
+
+  </div>
+
+
+
+<!--Footer-->
+<footer id="footer" class="center-on-small-only pt-0">
+    <!--Footer Links-->
+        <!--Grid row-->
+        <div class="row pt-3 text-center d-flex justify-content-center">
+            <!--Grid column-->
+            <div class="col-md-2 mb-2">
+                <h6 class="title font-bold"><a href="http://localhost:5000/about-us">About us</a></h6>
+            </div>
+            <div class="col-md-2 mb-2">
+                <h6 class="title font-bold"><a href="http://localhost:5000/user-friends#!">Help</a></h6>
+            </div>
+            <div class="col-md-2 mb-2">
+                <h6 class="title font-bold"><a href="mailto:balloonicorn@hackbrightacademy.com">Contact</a></h6>
+            </div>
+
+        </div>
+
+        <hr class="rgba-white-light" style="margin: 0 15%;">
+
+        <div class="row pb-2">
+
+            <div class="col-md-12">
+
+                <div class="footer-socials mb-3 flex-center">
+                    <!--Facebook-->
+                    <a class="icons-sm fb-ic"><i class="fa fa-facebook fa-lg white-text mr-md-4"> </i></a>
+                    <!--Twitter-->
+                    <a class="icons-sm tw-ic"><i class="fa fa-twitter fa-lg white-text mr-md-4"> </i></a>
+                    <!--Google +-->
+                    <a class="icons-sm gplus-ic"><i class="fa fa-google-plus fa-lg white-text mr-md-4"> </i></a>
+                    <!--Linkedin-->
+                    <a class="icons-sm li-ic"><i class="fa fa-linkedin fa-lg white-text mr-md-4"> </i></a>
+                    <!--Instagram-->
+                    <a class="icons-sm ins-ic"><i class="fa fa-instagram fa-lg white-text mr-md-4"> </i></a>
+                    <!--Pinterest-->
+                    <a class="icons-sm pin-ic"><i class="fa fa-pinterest fa-lg white-text"> </i></a>
+                </div>
+            </div>
+        </div>
+
+    <!--Social buttons-->
+<!--     <div class="social-section text-center">
+        <ul>
+
+            <li><a class="btn-floating btn-sm btn-fb"><i class="fa fa-facebook"> </i></a></li>
+            <li><a class="btn-floating btn-sm btn-tw"><i class="fa fa-twitter"> </i></a></li>
+            <li><a class="btn-floating btn-sm btn-gplus"><i class="fa fa-google-plus"> </i></a></li>
+            <li><a class="btn-floating btn-sm btn-li"><i class="fa fa-linkedin"> </i></a></li>
+
+        </ul>
+    </div> -->
+    <!--/.Social buttons-->
+
+    <!--Copyright-->
+    <div class="footer-copyright">
+        <div class="container-fluid">
+          © 2017 Copyright: <a href="http://localhost:5000/user-friends#!"> BUDdy.com </a>
+        </div>
+    </div>
+    <!--/Copyright-->
+</footer>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS, then other JS -->
+
+<script src="./BUDdy_files/jquery.js"></script>
+<script src="./BUDdy_files/popper.min.js"></script>
+<script src="./BUDdy_files/bootstrap.min.js"></script>
+<script src="./BUDdy_files/mdb.min.js"></script>
+<script type="text/javascript" src="./BUDdy_files/main.js"></script>
+<!-- <script src='https://maps.googleapis.com/maps/api/js'></script> -->
+<!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+
+
+
+
+
+<script>
+  // function signOut() {
+  //   let auth2 = gapi.auth2.getAuthInstance();
+  //   auth2.signOut().then(function () {
+  //     console.log('User signed out.');
+  //   });
+  // }
+  // $('#glogout').on('click', signOut); // not sure if duplicative with above onclick.
+</script>
+
+<div id="flDebug" style="">
+  <script type="text/javascript">var DEBUG_TOOLBAR_STATIC_PATH = '/_debug_toolbar/static/'</script>
+  <script type="text/javascript" src="./BUDdy_files/jquery(1).js"></script>
+  <script type="text/javascript" src="./BUDdy_files/jquery.tablesorter.js"></script>
+  <script type="text/javascript" src="./BUDdy_files/toolbar.js"></script>
+
+  <div style="display: none;" id="flDebugToolbar">
+    <ol id="flDebugPanelList">
+      
+      <li><a id="flHideToolBarButton" href="http://localhost:5000/user-friends#" title="Hide Toolbar">Hide »</a></li>
+      
+
+      
+      <li id="flDebugVersionPanel">
+        
+        <a href="http://localhost:5000/user-friends" title="Versions" class="flDebugVersionPanel">
+        
+
+        Versions
+        <br><small>Flask 0.12.2</small>
+
+        
+        </a>
+        
+        
+      </li>
+      
+      <li id="flDebugTimerPanel">
+        
+        <a href="http://localhost:5000/user-friends" title="Resource Usage" class="flDebugTimerPanel">
+        
+
+        Time
+        <br><small>CPU: 24.00ms (40.21ms)</small>
+
+        
+        </a>
+        
+        
+      </li>
+      
+      <li id="flDebugHeaderPanel">
+        
+        <a href="http://localhost:5000/user-friends" title="HTTP Headers" class="flDebugHeaderPanel">
+        
+
+        HTTP Headers
+        
+
+        
+        </a>
+        
+        
+      </li>
+      
+      <li id="flDebugRequestVarsPanel">
+        
+        <a href="http://localhost:5000/user-friends" title="Request Vars" class="flDebugRequestVarsPanel">
+        
+
+        Request Vars
+        
+
+        
+        </a>
+        
+        
+      </li>
+      
+      <li id="flDebugConfigVarsPanel">
+        
+        <a href="http://localhost:5000/user-friends" title="Config" class="flDebugConfigVarsPanel">
+        
+
+        Config
+        
+
+        
+        </a>
+        
+        
+      </li>
+      
+      <li id="flDebugTemplatePanel">
+        
+        <a href="http://localhost:5000/user-friends" title="Templates" class="flDebugTemplatePanel">
+        
+
+        Templates
+        <br><small>1 rendered</small>
+
+        
+        </a>
+        
+        
+      </li>
+      
+      <li id="flDebugSQLAlchemyPanel">
+        
+        <a href="http://localhost:5000/user-friends" title="SQLAlchemy queries" class="flDebugSQLAlchemyPanel">
+        
+
+        SQLAlchemy
+        <br><small>14 queries</small>
+
+        
+        </a>
+        
+        
+      </li>
+      
+      <li id="flDebugLoggingPanel">
+        
+        <a href="http://localhost:5000/user-friends" title="Log Messages" class="flDebugLoggingPanel">
+        
+
+        Logging
+        <br><small>0 messages</small>
+
+        
+        </a>
+        
+        
+      </li>
+      
+      <li id="flDebugRouteListPanel">
+        
+        <a href="http://localhost:5000/user-friends" title="Route List" class="flDebugRouteListPanel">
+        
+
+        Route List
+        <br><small>29 routes</small>
+
+        
+        </a>
+        
+        
+      </li>
+      
+      <li id="flDebugProfilerPanel">
+        
+        <a href="http://localhost:5000/user-friends" title="Profiler not active" class="flDebugProfilerPanel">
+        
+
+        Profiler
+        <br><small>in-active</small>
+
+        
+        </a>
+        
+        
+        <span class="switch inactive" title="Enable or disable the panel"></span>
+        
+      </li>
+      
+    </ol>
+  </div>
+  <div style="" id="flDebugToolbarHandle">
+    <a title="Show Toolbar" id="flShowToolBarButton" href="http://localhost:5000/user-friends#">«</a>
+  </div>
+  
+    
+    <div id="flDebugVersionPanel-content" class="panelContent" style="display: none;">
+      <div class="flDebugPanelTitle">
+        <a href="http://localhost:5000/user-friends" class="flDebugClose">Close</a>
+        <h3>Versions</h3>
+      </div>
+      <div class="flDebugPanelContent">
+        <div class="scroll">
+          <h4>Installed Packages</h4>
+
+<p>
+  Installation paths relative to:
+</p>
+<pre>/home/vagrant/src/project/env/lib/python2.7/site-packages
+</pre>
+
+<table>
+  <thead>
+    <tr>
+      <th>Package</th>
+      <th>Version</th>
+      <th>Installed Path</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      <tr class="flDebugOdd">
+        <td>argparse</td>
+        <td>1.2.1</td>
+        <td>/usr/lib/python2.7</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>backports.shutil-get-terminal-size</td>
+        <td>1.0.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>blinker</td>
+        <td>1.4</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>click</td>
+        <td>6.7</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>coverage</td>
+        <td>4.4.2</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>decorator</td>
+        <td>4.1.2</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>enum34</td>
+        <td>1.1.6</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>Faker</td>
+        <td>0.8.6</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>Flask</td>
+        <td>0.12.2</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>Flask-DebugToolbar</td>
+        <td>0.10.1</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>Flask-SQLAlchemy</td>
+        <td>2.3.2</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>Flask-Uploads</td>
+        <td>0.2.1</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>GeoAlchemy2</td>
+        <td>0.4.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>ipaddress</td>
+        <td>1.0.18</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>ipython</td>
+        <td>5.5.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>ipython-genutils</td>
+        <td>0.2.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>itsdangerous</td>
+        <td>0.24</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>Jinja</td>
+        <td>1.2</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>Jinja2</td>
+        <td>2.9.6</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>MarkupSafe</td>
+        <td>1.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>pathlib2</td>
+        <td>2.3.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>pexpect</td>
+        <td>4.2.1</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>pickleshare</td>
+        <td>0.7.4</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>pip</td>
+        <td>9.0.1</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>pkg-resources</td>
+        <td>0.0.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>postgis</td>
+        <td>1.0.4</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>prompt-toolkit</td>
+        <td>1.0.15</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>psycopg2</td>
+        <td>2.7.3.2</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>ptyprocess</td>
+        <td>0.5.2</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>Pygments</td>
+        <td>2.2.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>Python</td>
+        <td>2.7.12</td>
+        <td>/usr/lib/python2.7/lib-dynload</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>python-dateutil</td>
+        <td>2.6.1</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>sass</td>
+        <td>2.3</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>scandir</td>
+        <td>1.6</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>setuptools</td>
+        <td>36.6.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>simplegeneric</td>
+        <td>0.8.1</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>six</td>
+        <td>1.11.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>SQLAlchemy</td>
+        <td>1.1.14</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>text-unidecode</td>
+        <td>1.1</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>traitlets</td>
+        <td>4.3.2</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>wcwidth</td>
+        <td>0.1.7</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>Werkzeug</td>
+        <td>0.12.2</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>wheel</td>
+        <td>0.30.0</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>wsgiref</td>
+        <td>0.1.2</td>
+        <td>/usr/lib/python2.7</td>
+      </tr>
+    
+  </tbody>
+</table>
+        </div>
+      </div>
+    </div>
+    
+  
+    
+    <div id="flDebugTimerPanel-content" class="panelContent" style="display: none;">
+      <div class="flDebugPanelTitle">
+        <a href="http://localhost:5000/user-friends" class="flDebugClose">Close</a>
+        <h3>Resource Usage</h3>
+      </div>
+      <div class="flDebugPanelContent">
+        <div class="scroll">
+          <table>
+  <colgroup>
+    <col style="width:20%">
+    <col>
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      <tr class="flDebugOdd">
+        <td>User CPU time</td>
+        <td>24.000 msec</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>System CPU time</td>
+        <td>0.000 msec</td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>Total CPU time</td>
+        <td>24.000 msec</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>Elapsed time</td>
+        <td>40.211 msec</td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>Context switches</td>
+        <td>7 voluntary, 31 involuntary</td>
+      </tr>
+    
+  </tbody>
+</table>
+
+        </div>
+      </div>
+    </div>
+    
+  
+    
+    <div id="flDebugHeaderPanel-content" class="panelContent" style="display: none;">
+      <div class="flDebugPanelTitle">
+        <a href="http://localhost:5000/user-friends" class="flDebugClose">Close</a>
+        <h3>HTTP Headers</h3>
+      </div>
+      <div class="flDebugPanelContent">
+        <div class="scroll">
+          <table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      <tr class="flDebugOdd">
+        <td>HTTP_ACCEPT</td>
+        <td>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>HTTP_ACCEPT_ENCODING</td>
+        <td>gzip, deflate, br</td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>HTTP_ACCEPT_LANGUAGE</td>
+        <td>en-US,en;q=0.9</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>HTTP_CACHE_CONTROL</td>
+        <td>no-cache</td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>HTTP_CONNECTION</td>
+        <td>keep-alive</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>HTTP_HOST</td>
+        <td>localhost:5000</td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>HTTP_REFERER</td>
+        <td>http://localhost:5000/user-profile</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>HTTP_USER_AGENT</td>
+        <td>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36</td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>QUERY_STRING</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>REMOTE_ADDR</td>
+        <td>10.0.2.2</td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>REQUEST_METHOD</td>
+        <td>GET</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>SCRIPT_NAME</td>
+        <td></td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>SERVER_NAME</td>
+        <td>0.0.0.0</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>SERVER_PORT</td>
+        <td>5000</td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>SERVER_PROTOCOL</td>
+        <td>HTTP/1.1</td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>SERVER_SOFTWARE</td>
+        <td>Werkzeug/0.12.2</td>
+      </tr>
+    
+  </tbody>
+</table>
+        </div>
+      </div>
+    </div>
+    
+  
+    
+    <div id="flDebugRequestVarsPanel-content" class="panelContent" style="display: none;">
+      <div class="flDebugPanelTitle">
+        <a href="http://localhost:5000/user-friends" class="flDebugClose">Close</a>
+        <h3>Request Vars</h3>
+      </div>
+      <div class="flDebugPanelContent">
+        <div class="scroll">
+          
+<h4>View information</h4>
+<table>
+  <thead>
+    <tr>
+      <th>View Function</th>
+      <th>args</th>
+      <th>kwargs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>__main__.user_friends</td>
+      <td>[]</td>
+      <td>
+        
+          None
+        
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+<h4>COOKIES Variables</h4>
+
+  
+<table>
+  <colgroup>
+    <col style="width:20%">
+    <col>
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr class="flDebugOdd">
+      <td>'fldt'</td>
+      <td>u'hide'</td>
+    </tr>
+    
+    <tr class="flDebugEven">
+      <td>'session'</td>
+      <td>u'.eJxNjEEKwjAQRe8yi65Kq9hADRSPEmI6NYNpWpJRY0XPbqQK7t778P4DjrQobQyDHLSLWELAHnFUAYcIclMCT6yMRXMmnwfRrMsQCH2fh93qa_Wnn1r85Jolh5eIQVEPcvvlmQxIsMxzlHU9O23QTq4nrmg8Uao8cv1iTHzgxJEW7IQoMnZNm_atKG4ZCttlhPXR6xHzo9GeAzoXLYZwh-cb5EpPIw.DPaHVQ.mLIbno-VC656tnNNYFjOl8tGXLQ'</td>
+    </tr>
+    
+  </tbody>
+</table>
+
+
+
+<h4>SESSION Variables</h4>
+
+  
+<table>
+  <colgroup>
+    <col style="width:20%">
+    <col>
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr class="flDebugOdd">
+      <td>u'tot_checkins'</td>
+      <td>54</td>
+    </tr>
+    
+    <tr class="flDebugEven">
+      <td>u'username'</td>
+      <td>u'cantrellsherry'</td>
+    </tr>
+    
+    <tr class="flDebugOdd">
+      <td>u'user_id'</td>
+      <td>1</td>
+    </tr>
+    
+    <tr class="flDebugEven">
+      <td>u'tot_redeem'</td>
+      <td>3</td>
+    </tr>
+    
+    <tr class="flDebugOdd">
+      <td>u'biz_acct'</td>
+      <td>False</td>
+    </tr>
+    
+    <tr class="flDebugEven">
+      <td>u'tot_friends'</td>
+      <td>3</td>
+    </tr>
+    
+    <tr class="flDebugOdd">
+      <td>u'tot_refs'</td>
+      <td>5</td>
+    </tr>
+    
+    <tr class="flDebugEven">
+      <td>u'user_pic'</td>
+      <td>u'https://placeholdit.imgix.net/~text?txtsize=55&amp;txt=48x985&amp;w=48&amp;h=985'</td>
+    </tr>
+    
+    <tr class="flDebugOdd">
+      <td>u'redeem_refs'</td>
+      <td>0</td>
+    </tr>
+    
+    <tr class="flDebugEven">
+      <td>u'tot_revs'</td>
+      <td>4</td>
+    </tr>
+    
+  </tbody>
+</table>
+
+
+
+
+
+
+
+<h4>GET Variables</h4>
+
+  <p>No GET data</p>
+
+
+<h4>POST Variables</h4>
+
+  <p>No POST data</p>
+
+        </div>
+      </div>
+    </div>
+    
+  
+    
+    <div id="flDebugConfigVarsPanel-content" class="panelContent" style="display: none;">
+      <div class="flDebugPanelTitle">
+        <a href="http://localhost:5000/user-friends" class="flDebugClose">Close</a>
+        <h3>Config</h3>
+      </div>
+      <div class="flDebugPanelContent">
+        <div class="scroll">
+          <table>
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            <tr class="flDebugOdd">
+                <td>APPLICATION_ROOT</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>DEBUG</td>
+                <td><code>True</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>DEBUG_TB_ENABLED</td>
+                <td><code>True</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>DEBUG_TB_HOSTS</td>
+                <td><code>()</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>DEBUG_TB_INTERCEPT_REDIRECTS</td>
+                <td><code>True</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>DEBUG_TB_PANELS</td>
+                <td><code>('flask_debugtoolbar.panels.versions.VersionDebugPanel', 'flask_debugtoolbar.panels.timer.TimerDebugPanel', 'flask_debugtoolbar.panels.headers.HeaderDebugPanel', 'flask_debugtoolbar.panels.request_vars.RequestVarsDebugPanel', 'flask_debugtoolbar.panels.config_vars.ConfigVarsDebugPanel', 'flask_debugtoolbar.panels.template.TemplateDebugPanel', 'flask_debugtoolbar.panels.sqlalchemy.SQLAlchemyDebugPanel', 'flask_debugtoolbar.panels.logger.LoggingPanel', 'flask_debugtoolbar.panels.route_list.RouteListDebugPanel', 'flask_debugtoolbar.panels.profiler.ProfilerDebugPanel')</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>EXPLAIN_TEMPLATE_LOADING</td>
+                <td><code>False</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>JSON_AS_ASCII</td>
+                <td><code>True</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>JSON_SORT_KEYS</td>
+                <td><code>True</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>JSONIFY_MIMETYPE</td>
+                <td><code>'application/json'</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>JSONIFY_PRETTYPRINT_REGULAR</td>
+                <td><code>True</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>LOGGER_HANDLER_POLICY</td>
+                <td><code>'always'</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>LOGGER_NAME</td>
+                <td><code>'__main__'</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>MAX_CONTENT_LENGTH</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>PERMANENT_SESSION_LIFETIME</td>
+                <td><code>datetime.timedelta(31)</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>PREFERRED_URL_SCHEME</td>
+                <td><code>'http'</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>PRESERVE_CONTEXT_ON_EXCEPTION</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>PROPAGATE_EXCEPTIONS</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>SECRET_KEY</td>
+                <td><code>'SHHHHHHIIIITTTT'</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>SEND_FILE_MAX_AGE_DEFAULT</td>
+                <td><code>datetime.timedelta(0, 43200)</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>SERVER_NAME</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>SESSION_COOKIE_DOMAIN</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>SESSION_COOKIE_HTTPONLY</td>
+                <td><code>True</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>SESSION_COOKIE_NAME</td>
+                <td><code>'session'</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>SESSION_COOKIE_PATH</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>SESSION_COOKIE_SECURE</td>
+                <td><code>False</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>SESSION_REFRESH_EACH_REQUEST</td>
+                <td><code>True</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>SQLALCHEMY_BINDS</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>SQLALCHEMY_COMMIT_ON_TEARDOWN</td>
+                <td><code>False</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>SQLALCHEMY_DATABASE_URI</td>
+                <td><code>'postgresql:///buddy'</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>SQLALCHEMY_ECHO</td>
+                <td><code>False</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>SQLALCHEMY_MAX_OVERFLOW</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>SQLALCHEMY_NATIVE_UNICODE</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>SQLALCHEMY_POOL_RECYCLE</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>SQLALCHEMY_POOL_SIZE</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>SQLALCHEMY_POOL_TIMEOUT</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>SQLALCHEMY_RECORD_QUERIES</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>SQLALCHEMY_TRACK_MODIFICATIONS</td>
+                <td><code>False</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>TEMPLATES_AUTO_RELOAD</td>
+                <td><code>None</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>TESTING</td>
+                <td><code>False</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>TRAP_BAD_REQUEST_ERRORS</td>
+                <td><code>False</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>TRAP_HTTP_EXCEPTIONS</td>
+                <td><code>False</code></td>
+            </tr>
+        
+            <tr class="flDebugOdd">
+                <td>UPLOADED_PICS_DEST</td>
+                <td><code>'static/img'</code></td>
+            </tr>
+        
+            <tr class="flDebugEven">
+                <td>USE_X_SENDFILE</td>
+                <td><code>False</code></td>
+            </tr>
+        
+    </tbody>
+</table>
+        </div>
+      </div>
+    </div>
+    
+  
+    
+    <div id="flDebugTemplatePanel-content" class="panelContent" style="display: none;">
+      <div class="flDebugPanelTitle">
+        <a href="http://localhost:5000/user-friends" class="flDebugClose">Close</a>
+        <h3>Templates</h3>
+      </div>
+      <div class="flDebugPanelContent">
+        <div class="scroll">
+          
+  
+  
+    <h4>user_friends.html</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr class="flDebugOdd">
+          <td>g</td>
+          <td>&lt;flask.g of 'server'&gt;</td>
+        </tr>
+        
+        <tr class="flDebugEven">
+          <td>request</td>
+          <td>&lt;Request 'http://localhost:5000/user-friends' [GET]&gt;</td>
+        </tr>
+        
+        <tr class="flDebugOdd">
+          <td>session</td>
+          <td>&lt;SecureCookieSession {u'tot_checkins': 54, u'username': u'cantrellsherry', u'user_id': 1, u'tot_redeem': 3, u'biz_acct': False, u'tot_friends': 3, u'tot_refs': 5, u'user_pic': u'https://placeholdit.imgix.net/~text?txtsize=55&amp;txt=48x985&amp;w=48&amp;h=985', u'redeem_refs': 0, u'tot_revs': 4}&gt;</td>
+        </tr>
+        
+        <tr class="flDebugEven">
+          <td>user</td>
+          <td>&lt;user_id=1 username=cantrellsherry email=jennifer10@yahoo.com&gt;</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  
+
+        </div>
+      </div>
+    </div>
+    
+  
+    
+    <div id="flDebugSQLAlchemyPanel-content" class="panelContent" style="display: none;">
+      <div class="flDebugPanelTitle">
+        <a href="http://localhost:5000/user-friends" class="flDebugClose">Close</a>
+        <h3>SQLAlchemy queries</h3>
+      </div>
+      <div class="flDebugPanelContent">
+        <div class="scroll">
+          <table class="tablesorter">
+  <thead>
+    <tr>
+      <th class="header">&nbsp;(ms)</th>
+      <th class="header">Action</th>
+      <th class="header">Context</th>
+      <th class="header">Query</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      <tr class="flDebugOdd">
+        <td>0.3989</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJxlkV0LgjAUhv-KDIICCbwNuohYJCiBCl1UjKMzWPjFZgVF_72ZHp12M877vM_Ny04kpB7dRtZdpVItm5cJbm3CFrAO2EZfQJ6OhYagcRVS1WzsDAytDP6kHqGT5iCyof9F7B6QCc4mhgHRq0CpZymNQUjMRawSyWSyJmjwMh5KHZDfSlEwDrWxoUfoxOLFIEnqQenJudgFB7-lOhz3NKCTX1hbs3l3M2fRWJbn-m6kcQUS8gYS-016h6wcm3SVvj-XL2D8rJI.o06lJwXxSQ0oEifSOHBmN06FUJI&amp;duration=0.000398874282837">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJxlkV0LgjAUhv-KDIICCbwNuohYJCiBCl1UjKMzWPjFZgVF_72ZHp12M877vM_Ny04kpB7dRtZdpVItm5cJbm3CFrAO2EZfQJ6OhYagcRVS1WzsDAytDP6kHqGT5iCyof9F7B6QCc4mhgHRq0CpZymNQUjMRawSyWSyJmjwMh5KHZDfSlEwDrWxoUfoxOLFIEnqQenJudgFB7-lOhz3NKCTX1hbs3l3M2fRWJbn-m6kcQUS8gYS-016h6wcm3SVvj-XL2D8rJI.o06lJwXxSQ0oEifSOHBmN06FUJI&amp;duration=0.000398874282837">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:313 (user_friends)">
+                    ./server.py:313 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> users.user_id <span style="color: #008800; font-weight: bold">AS</span> users_user_id, users.username <span style="color: #008800; font-weight: bold">AS</span> users_username, users.first_name <span style="color: #008800; font-weight: bold">AS</span> users_first_name, users.last_name <span style="color: #008800; font-weight: bold">AS</span> users_last_name, users.email <span style="color: #008800; font-weight: bold">AS</span> users_email, users.valid_email <span style="color: #008800; font-weight: bold">AS</span> users_valid_email, users.password <span style="color: #008800; font-weight: bold">AS</span> users_password, users.user_pic <span style="color: #008800; font-weight: bold">AS</span> users_user_pic, users.dob <span style="color: #008800; font-weight: bold">AS</span> users_dob, users.join_date <span style="color: #008800; font-weight: bold">AS</span> users_join_date, users.biz_acct <span style="color: #008800; font-weight: bold">AS</span> users_biz_acct 
+<span style="color: #008800; font-weight: bold">FROM</span> users 
+<span style="color: #008800; font-weight: bold">WHERE</span> users.user_id <span style="color: #333333">=</span> <span style="color: #333333">%</span>(user_id_1)s 
+ <span style="color: #008800; font-weight: bold">LIMIT</span> <span style="color: #333333">%</span>(param_1)s
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>0.3941</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJxlkcsKwjAQRX8lBASFInQruBCtuPABreBCJUybFiJ9kVQFxX83tZ0mrZsMc-4hcJkzDbyttzySu4qlmtYvE5wsggawFjhWnkMW94WaoJEIqSrWdwxDK4U_qUPoxBmI1OS_FbMHpIKzgWFB9EpQ6llIqxASuxErRTSorAkavAhNqBfkt0LkjENldegQOqF4MYiiyigdueRr_7BrqEMSKeKcK01PG8_3yGhcgoSMuRNF5pia8-xXg4MZp5maUedN20_ozP1cv9vtsrc.3pgHZkrMxq6BmaLkW4qH7M5_sJ8&amp;duration=0.000394105911255">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJxlkcsKwjAQRX8lBASFInQruBCtuPABreBCJUybFiJ9kVQFxX83tZ0mrZsMc-4hcJkzDbyttzySu4qlmtYvE5wsggawFjhWnkMW94WaoJEIqSrWdwxDK4U_qUPoxBmI1OS_FbMHpIKzgWFB9EpQ6llIqxASuxErRTSorAkavAhNqBfkt0LkjENldegQOqF4MYiiyigdueRr_7BrqEMSKeKcK01PG8_3yGhcgoSMuRNF5pia8-xXg4MZp5maUedN20_ozP1cv9vtsrc.3pgHZkrMxq6BmaLkW4qH7M5_sJ8&amp;duration=0.000394105911255">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:316 (user_friends)">
+                    ./server.py:316 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> users.user_id <span style="color: #008800; font-weight: bold">AS</span> users_user_id, users.username <span style="color: #008800; font-weight: bold">AS</span> users_username, users.first_name <span style="color: #008800; font-weight: bold">AS</span> users_first_name, users.last_name <span style="color: #008800; font-weight: bold">AS</span> users_last_name, users.email <span style="color: #008800; font-weight: bold">AS</span> users_email, users.valid_email <span style="color: #008800; font-weight: bold">AS</span> users_valid_email, users.password <span style="color: #008800; font-weight: bold">AS</span> users_password, users.user_pic <span style="color: #008800; font-weight: bold">AS</span> users_user_pic, users.dob <span style="color: #008800; font-weight: bold">AS</span> users_dob, users.join_date <span style="color: #008800; font-weight: bold">AS</span> users_join_date, users.biz_acct <span style="color: #008800; font-weight: bold">AS</span> users_biz_acct 
+<span style="color: #008800; font-weight: bold">FROM</span> users, friends 
+<span style="color: #008800; font-weight: bold">WHERE</span> <span style="color: #333333">%</span>(param_1)s <span style="color: #333333">=</span> friends.user_id <span style="color: #008800; font-weight: bold">AND</span> users.user_id <span style="color: #333333">=</span> friends.friend_id
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>2.0859</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlFIzkhNzs7MK9aDMuIzUxQcg-HC8QhhHYTa0uLUInSFUDEkVUmZVeiKIEI6mLamJJakYrUXLBGT5xbk7wuXBPLDPVyDXBVUNQoSixJz4w01ixVsMZynpFOtBJVXsjIxrI0FAFuhVv4.61cbe00JdjlJQ9CRPo0wRCaQdSI&amp;duration=0.00208592414856">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlFIzkhNzs7MK9aDMuIzUxQcg-HC8QhhHYTa0uLUInSFUDEkVUmZVeiKIEI6mLamJJakYrUXLBGT5xbk7wuXBPLDPVyDXBVUNQoSixJz4w01ixVsMZynpFOtBJVXsjIxrI0FAFuhVv4.61cbe00JdjlJQ9CRPo0wRCaQdSI&amp;duration=0.00208592414856">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> checkins.checkin_id <span style="color: #008800; font-weight: bold">AS</span> checkins_checkin_id, checkins.user_id <span style="color: #008800; font-weight: bold">AS</span> checkins_user_id, checkins.biz_id <span style="color: #008800; font-weight: bold">AS</span> checkins_biz_id, checkins.checkin_date <span style="color: #008800; font-weight: bold">AS</span> checkins_checkin_date 
+<span style="color: #008800; font-weight: bold">FROM</span> checkins 
+<span style="color: #008800; font-weight: bold">WHERE</span> <span style="color: #333333">%</span>(param_1)s <span style="color: #333333">=</span> checkins.user_id
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>0.5419</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlEoSi3LTC0v1oPQ8ZkpCo7BMMF4uKAOXF1pcWoRmiqoEEJNUmYVmhKICEJFUWJJZl46ilVgER0092A6Bl1FfEpiSSoWN4OEEWpTMosLSlHVQYWQzSsuyM8rRjMMIoZqa3FqPHbnwSUQ6vOAbsH0LUIUTSWGsQhRhMrk0uKS-OKyZGR1cLGYPLcgf1-YOJAb7uEa5KqgqlGQWJSYG2-oWaxgix6bSjrVSlBpJSsTw9pYAND5yrg.0632nAeqRBzvP8S93ILQUucXkGE&amp;duration=0.000541925430298">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlEoSi3LTC0v1oPQ8ZkpCo7BMMF4uKAOXF1pcWoRmiqoEEJNUmYVmhKICEJFUWJJZl46ilVgER0092A6Bl1FfEpiSSoWN4OEEWpTMosLSlHVQYWQzSsuyM8rRjMMIoZqa3FqPHbnwSUQ6vOAbsH0LUIUTSWGsQhRhMrk0uKS-OKyZGR1cLGYPLcgf1-YOJAb7uEa5KqgqlGQWJSYG2-oWaxgix6bSjrVSlBpJSsTw9pYAND5yrg.0632nAeqRBzvP8S93ILQUucXkGE&amp;duration=0.000541925430298">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> reviews.review_id <span style="color: #008800; font-weight: bold">AS</span> reviews_review_id, reviews.user_id <span style="color: #008800; font-weight: bold">AS</span> reviews_user_id, reviews.biz_id <span style="color: #008800; font-weight: bold">AS</span> reviews_biz_id, reviews.rating <span style="color: #008800; font-weight: bold">AS</span> reviews_rating, reviews.review <span style="color: #008800; font-weight: bold">AS</span> reviews_review, reviews.review_date <span style="color: #008800; font-weight: bold">AS</span> reviews_review_date, reviews.dispute <span style="color: #008800; font-weight: bold">AS</span> reviews_dispute, reviews.response <span style="color: #008800; font-weight: bold">AS</span> reviews_response, reviews.revise_review <span style="color: #008800; font-weight: bold">AS</span> reviews_revise_review, reviews.new_rating <span style="color: #008800; font-weight: bold">AS</span> reviews_new_rating, reviews.new_review <span style="color: #008800; font-weight: bold">AS</span> reviews_new_review, reviews.cust_svc <span style="color: #008800; font-weight: bold">AS</span> reviews_cust_svc 
+<span style="color: #008800; font-weight: bold">FROM</span> reviews 
+<span style="color: #008800; font-weight: bold">WHERE</span> <span style="color: #333333">%</span>(param_1)s <span style="color: #333333">=</span> reviews.user_id
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>1.8790</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcTNSk7Mz84r1kjKr4jNTNBUcgyFK4g0VYvLcgvx94UqA_HAP1yBXhJ7S4tQioCYFWwVVDSg73lCzWEmnWgnOVbIyMayNBQB9dioc.VdQ63ZcsVUr_p3oqyrA5YapbLGc&amp;duration=0.0018789768219">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcTNSk7Mz84r1kjKr4jNTNBUcgyFK4g0VYvLcgvx94UqA_HAP1yBXhJ7S4tQioCYFWwVVDSg73lCzWEmnWgnOVbIyMayNBQB9dioc.VdQ63ZcsVUr_p3oqyrA5YapbLGc&amp;duration=0.0018789768219">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> <span style="color: #008800; font-weight: bold">count</span>(<span style="color: #008800; font-weight: bold">DISTINCT</span> checkins.biz_id) <span style="color: #008800; font-weight: bold">AS</span> count_1 
+<span style="color: #008800; font-weight: bold">FROM</span> checkins 
+<span style="color: #008800; font-weight: bold">WHERE</span> checkins.user_id <span style="color: #333333">=</span> <span style="color: #333333">%</span>(user_id_1)s
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>0.5822</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcotS01KLihJzivWSMqviM1M0FRyDIWriDRVi8tyC_H0RahS8_D39FEqLU4viC4ryc_OLFfxRuHogNpgJNEnBFslwFImYvHAP1yBXFJ1FqSmpqbmpIF0lRaWpCo5-LhgmQwxV1YCy4w01i5V0qpXgXCUrE8PaWADNalKd._GahOsLKe7I950A0yIJQ0ecMhfA&amp;duration=0.000582218170166">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcotS01KLihJzivWSMqviM1M0FRyDIWriDRVi8tyC_H0RahS8_D39FEqLU4viC4ryc_OLFfxRuHogNpgJNEnBFslwFImYvHAP1yBXFJ1FqSmpqbmpIF0lRaWpCo5-LhgmQwxV1YCy4w01i5V0qpXgXCUrE8PaWADNalKd._GahOsLKe7I950A0yIJQ0ecMhfA&amp;duration=0.000582218170166">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> <span style="color: #008800; font-weight: bold">count</span>(<span style="color: #008800; font-weight: bold">DISTINCT</span> referrals.biz_id) <span style="color: #008800; font-weight: bold">AS</span> count_1 
+<span style="color: #008800; font-weight: bold">FROM</span> referrals <span style="color: #008800; font-weight: bold">JOIN</span> user_promos <span style="color: #008800; font-weight: bold">ON</span> user_promos.userpromo_id <span style="color: #333333">=</span> referrals.userpromo_id 
+<span style="color: #008800; font-weight: bold">WHERE</span> user_promos.redeemed <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">true</span> <span style="color: #008800; font-weight: bold">AND</span> user_promos.user_id <span style="color: #333333">=</span> <span style="color: #333333">%</span>(user_id_1)s
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>1.5910</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlFIzkhNzs7MK9aDMuIzUxQcg-HC8QhhHYTa0uLUInSFUDEkVUmZVeiKIEI6mLamJJakYrUXLBGT5xbk7wuXBPLDPVyDXBVUNQoSixJz4w01ixVsMZynpFOtBJVXsjIysqiNBQCyZ1c1.uspaXBLDd-wKY5SG-57A3XG1Fcg&amp;duration=0.00159096717834">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlFIzkhNzs7MK9aDMuIzUxQcg-HC8QhhHYTa0uLUInSFUDEkVUmZVeiKIEI6mLamJJakYrUXLBGT5xbk7wuXBPLDPVyDXBVUNQoSixJz4w01ixVsMZynpFOtBJVXsjIysqiNBQCyZ1c1.uspaXBLDd-wKY5SG-57A3XG1Fcg&amp;duration=0.00159096717834">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> checkins.checkin_id <span style="color: #008800; font-weight: bold">AS</span> checkins_checkin_id, checkins.user_id <span style="color: #008800; font-weight: bold">AS</span> checkins_user_id, checkins.biz_id <span style="color: #008800; font-weight: bold">AS</span> checkins_biz_id, checkins.checkin_date <span style="color: #008800; font-weight: bold">AS</span> checkins_checkin_date 
+<span style="color: #008800; font-weight: bold">FROM</span> checkins 
+<span style="color: #008800; font-weight: bold">WHERE</span> <span style="color: #333333">%</span>(param_1)s <span style="color: #333333">=</span> checkins.user_id
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>0.6671</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlEoSi3LTC0v1oPQ8ZkpCo7BMMF4uKAOXF1pcWoRmiqoEEJNUmYVmhKICEJFUWJJZl46ilVgER0092A6Bl1FfEpiSSoWN4OEEWpTMosLSlHVQYWQzSsuyM8rRjMMIoZqa3FqPHbnwSUQ6vOAbsH0LUIUTSWGsQhRhMrk0uKS-OKyZGR1cLGYPLcgf1-YOJAb7uEa5KqgqlGQWJSYG2-oWaxgix6bSjrVSlBpJSsjI4vaWACbiMrv.La3zqZT-Yso6m-NUlfLhtg7Xiok&amp;duration=0.000667095184326">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlEoSi3LTC0v1oPQ8ZkpCo7BMMF4uKAOXF1pcWoRmiqoEEJNUmYVmhKICEJFUWJJZl46ilVgER0092A6Bl1FfEpiSSoWN4OEEWpTMosLSlHVQYWQzSsuyM8rRjMMIoZqa3FqPHbnwSUQ6vOAbsH0LUIUTSWGsQhRhMrk0uKS-OKyZGR1cLGYPLcgf1-YOJAb7uEa5KqgqlGQWJSYG2-oWaxgix6bSjrVSlBpJSsjI4vaWACbiMrv.La3zqZT-Yso6m-NUlfLhtg7Xiok&amp;duration=0.000667095184326">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> reviews.review_id <span style="color: #008800; font-weight: bold">AS</span> reviews_review_id, reviews.user_id <span style="color: #008800; font-weight: bold">AS</span> reviews_user_id, reviews.biz_id <span style="color: #008800; font-weight: bold">AS</span> reviews_biz_id, reviews.rating <span style="color: #008800; font-weight: bold">AS</span> reviews_rating, reviews.review <span style="color: #008800; font-weight: bold">AS</span> reviews_review, reviews.review_date <span style="color: #008800; font-weight: bold">AS</span> reviews_review_date, reviews.dispute <span style="color: #008800; font-weight: bold">AS</span> reviews_dispute, reviews.response <span style="color: #008800; font-weight: bold">AS</span> reviews_response, reviews.revise_review <span style="color: #008800; font-weight: bold">AS</span> reviews_revise_review, reviews.new_rating <span style="color: #008800; font-weight: bold">AS</span> reviews_new_rating, reviews.new_review <span style="color: #008800; font-weight: bold">AS</span> reviews_new_review, reviews.cust_svc <span style="color: #008800; font-weight: bold">AS</span> reviews_cust_svc 
+<span style="color: #008800; font-weight: bold">FROM</span> reviews 
+<span style="color: #008800; font-weight: bold">WHERE</span> <span style="color: #333333">%</span>(param_1)s <span style="color: #333333">=</span> reviews.user_id
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>1.6961</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcTNSk7Mz84r1kjKr4jNTNBUcgyFK4g0VYvLcgvx94UqA_HAP1yBXhJ7S4tQioCYFWwVVDSg73lCzWEmnWgnOVbIyMrKojQUAp1oqUw.XA-1VvsbyjtT-0JPaWOpn7gEaes&amp;duration=0.00169610977173">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcTNSk7Mz84r1kjKr4jNTNBUcgyFK4g0VYvLcgvx94UqA_HAP1yBXhJ7S4tQioCYFWwVVDSg73lCzWEmnWgnOVbIyMrKojQUAp1oqUw.XA-1VvsbyjtT-0JPaWOpn7gEaes&amp;duration=0.00169610977173">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> <span style="color: #008800; font-weight: bold">count</span>(<span style="color: #008800; font-weight: bold">DISTINCT</span> checkins.biz_id) <span style="color: #008800; font-weight: bold">AS</span> count_1 
+<span style="color: #008800; font-weight: bold">FROM</span> checkins 
+<span style="color: #008800; font-weight: bold">WHERE</span> checkins.user_id <span style="color: #333333">=</span> <span style="color: #333333">%</span>(user_id_1)s
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>0.7961</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcotS01KLihJzivWSMqviM1M0FRyDIWriDRVi8tyC_H0RahS8_D39FEqLU4viC4ryc_OLFfxRuHogNpgJNEnBFslwFImYvHAP1yBXFJ1FqSmpqbmpIF0lRaWpCo5-LhgmQwxV1YCy4w01i5V0qpXgXCUrIyOL2lgAH95S1A.IDfCxBN-YlZdpqeiUZCc6VjdBdA&amp;duration=0.00079607963562">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcotS01KLihJzivWSMqviM1M0FRyDIWriDRVi8tyC_H0RahS8_D39FEqLU4viC4ryc_OLFfxRuHogNpgJNEnBFslwFImYvHAP1yBXFJ1FqSmpqbmpIF0lRaWpCo5-LhgmQwxV1YCy4w01i5V0qpXgXCUrIyOL2lgAH95S1A.IDfCxBN-YlZdpqeiUZCc6VjdBdA&amp;duration=0.00079607963562">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> <span style="color: #008800; font-weight: bold">count</span>(<span style="color: #008800; font-weight: bold">DISTINCT</span> referrals.biz_id) <span style="color: #008800; font-weight: bold">AS</span> count_1 
+<span style="color: #008800; font-weight: bold">FROM</span> referrals <span style="color: #008800; font-weight: bold">JOIN</span> user_promos <span style="color: #008800; font-weight: bold">ON</span> user_promos.userpromo_id <span style="color: #333333">=</span> referrals.userpromo_id 
+<span style="color: #008800; font-weight: bold">WHERE</span> user_promos.redeemed <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">true</span> <span style="color: #008800; font-weight: bold">AND</span> user_promos.user_id <span style="color: #333333">=</span> <span style="color: #333333">%</span>(user_id_1)s
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>1.6649</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlFIzkhNzs7MK9aDMuIzUxQcg-HC8QhhHYTa0uLUInSFUDEkVUmZVeiKIEI6mLamJJakYrUXLBGT5xbk7wuXBPLDPVyDXBVUNQoSixJz4w01ixVsMZynpFOtBJVXsjIyNqiNBQCyU1cu.H9Yf_z-Ty_MLkgFdc3g9Kyd2P6I&amp;duration=0.00166487693787">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlFIzkhNzs7MK9aDMuIzUxQcg-HC8QhhHYTa0uLUInSFUDEkVUmZVeiKIEI6mLamJJakYrUXLBGT5xbk7wuXBPLDPVyDXBVUNQoSixJz4w01ixVsMZynpFOtBJVXsjIyNqiNBQCyU1cu.H9Yf_z-Ty_MLkgFdc3g9Kyd2P6I&amp;duration=0.00166487693787">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> checkins.checkin_id <span style="color: #008800; font-weight: bold">AS</span> checkins_checkin_id, checkins.user_id <span style="color: #008800; font-weight: bold">AS</span> checkins_user_id, checkins.biz_id <span style="color: #008800; font-weight: bold">AS</span> checkins_biz_id, checkins.checkin_date <span style="color: #008800; font-weight: bold">AS</span> checkins_checkin_date 
+<span style="color: #008800; font-weight: bold">FROM</span> checkins 
+<span style="color: #008800; font-weight: bold">WHERE</span> <span style="color: #333333">%</span>(param_1)s <span style="color: #333333">=</span> checkins.user_id
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>0.4969</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlEoSi3LTC0v1oPQ8ZkpCo7BMMF4uKAOXF1pcWoRmiqoEEJNUmYVmhKICEJFUWJJZl46ilVgER0092A6Bl1FfEpiSSoWN4OEEWpTMosLSlHVQYWQzSsuyM8rRjMMIoZqa3FqPHbnwSUQ6vOAbsH0LUIUTSWGsQhRhMrk0uKS-OKyZGR1cLGYPLcgf1-YOJAb7uEa5KqgqlGQWJSYG2-oWaxgix6bSjrVSlBpJSsjY4PaWACbdMro.KiLMT5-YQlQcjbO0dV2PHLVnvVs&amp;duration=0.000496864318848">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlEoSi3LTC0v1oPQ8ZkpCo7BMMF4uKAOXF1pcWoRmiqoEEJNUmYVmhKICEJFUWJJZl46ilVgER0092A6Bl1FfEpiSSoWN4OEEWpTMosLSlHVQYWQzSsuyM8rRjMMIoZqa3FqPHbnwSUQ6vOAbsH0LUIUTSWGsQhRhMrk0uKS-OKyZGR1cLGYPLcgf1-YOJAb7uEa5KqgqlGQWJSYG2-oWaxgix6bSjrVSlBpJSsjY4PaWACbdMro.KiLMT5-YQlQcjbO0dV2PHLVnvVs&amp;duration=0.000496864318848">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> reviews.review_id <span style="color: #008800; font-weight: bold">AS</span> reviews_review_id, reviews.user_id <span style="color: #008800; font-weight: bold">AS</span> reviews_user_id, reviews.biz_id <span style="color: #008800; font-weight: bold">AS</span> reviews_biz_id, reviews.rating <span style="color: #008800; font-weight: bold">AS</span> reviews_rating, reviews.review <span style="color: #008800; font-weight: bold">AS</span> reviews_review, reviews.review_date <span style="color: #008800; font-weight: bold">AS</span> reviews_review_date, reviews.dispute <span style="color: #008800; font-weight: bold">AS</span> reviews_dispute, reviews.response <span style="color: #008800; font-weight: bold">AS</span> reviews_response, reviews.revise_review <span style="color: #008800; font-weight: bold">AS</span> reviews_revise_review, reviews.new_rating <span style="color: #008800; font-weight: bold">AS</span> reviews_new_rating, reviews.new_review <span style="color: #008800; font-weight: bold">AS</span> reviews_new_review, reviews.cust_svc <span style="color: #008800; font-weight: bold">AS</span> reviews_cust_svc 
+<span style="color: #008800; font-weight: bold">FROM</span> reviews 
+<span style="color: #008800; font-weight: bold">WHERE</span> <span style="color: #333333">%</span>(param_1)s <span style="color: #333333">=</span> reviews.user_id
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugOdd">
+        <td>1.5440</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcTNSk7Mz84r1kjKr4jNTNBUcgyFK4g0VYvLcgvx94UqA_HAP1yBXhJ7S4tQioCYFWwVVDSg73lCzWEmnWgnOVbIyMjaojQUAp0YqTA.ujEegUJJJa_ADwK7I_Ac1LaqhX4&amp;duration=0.00154399871826">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcTNSk7Mz84r1kjKr4jNTNBUcgyFK4g0VYvLcgvx94UqA_HAP1yBXhJ7S4tQioCYFWwVVDSg73lCzWEmnWgnOVbIyMjaojQUAp0YqTA.ujEegUJJJa_ADwK7I_Ac1LaqhX4&amp;duration=0.00154399871826">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> <span style="color: #008800; font-weight: bold">count</span>(<span style="color: #008800; font-weight: bold">DISTINCT</span> checkins.biz_id) <span style="color: #008800; font-weight: bold">AS</span> count_1 
+<span style="color: #008800; font-weight: bold">FROM</span> checkins 
+<span style="color: #008800; font-weight: bold">WHERE</span> checkins.user_id <span style="color: #333333">=</span> <span style="color: #333333">%</span>(user_id_1)s
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="flDebugEven">
+        <td>0.6561</td>
+        <td>
+        
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_select?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcotS01KLihJzivWSMqviM1M0FRyDIWriDRVi8tyC_H0RahS8_D39FEqLU4viC4ryc_OLFfxRuHogNpgJNEnBFslwFImYvHAP1yBXFJ1FqSmpqbmpIF0lRaWpCo5-LhgmQwxV1YCy4w01i5V0qpXgXCUrI2OD2lgAH8pSzQ.R5bWdNd_JHUD6bsYIZD2AOrXTKE&amp;duration=0.000656127929688">SELECT</a><br>
+          <a class="remoteCall" href="http://localhost:5000/_debug_toolbar/views/sqlalchemy/sql_explain?query=.eJyLVgp29XF1DlFIzi_NK9Fw8QwO8fQDcotS01KLihJzivWSMqviM1M0FRyDIWriDRVi8tyC_H0RahS8_D39FEqLU4viC4ryc_OLFfxRuHogNpgJNEnBFslwFImYvHAP1yBXFJ1FqSmpqbmpIF0lRaWpCo5-LhgmQwxV1YCy4w01i5V0qpXgXCUrI2OD2lgAH8pSzQ.R5bWdNd_JHUD6bsYIZD2AOrXTKE&amp;duration=0.000656127929688">EXPLAIN</a><br>
+        
+        </td>
+        <td title="server.py:320 (user_friends)">
+                    ./server.py:320 (user_friends)
+        </td>
+        <td class="syntax">
+          <div class="flDebugSqlWrap">
+            <div class="flDebugSql"><div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-weight: bold">SELECT</span> <span style="color: #008800; font-weight: bold">count</span>(<span style="color: #008800; font-weight: bold">DISTINCT</span> referrals.biz_id) <span style="color: #008800; font-weight: bold">AS</span> count_1 
+<span style="color: #008800; font-weight: bold">FROM</span> referrals <span style="color: #008800; font-weight: bold">JOIN</span> user_promos <span style="color: #008800; font-weight: bold">ON</span> user_promos.userpromo_id <span style="color: #333333">=</span> referrals.userpromo_id 
+<span style="color: #008800; font-weight: bold">WHERE</span> user_promos.redeemed <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">true</span> <span style="color: #008800; font-weight: bold">AND</span> user_promos.user_id <span style="color: #333333">=</span> <span style="color: #333333">%</span>(user_id_1)s
+</pre></div>
+</div>
+          </div>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+        </div>
+      </div>
+    </div>
+    
+  
+    
+    <div id="flDebugLoggingPanel-content" class="panelContent" style="display: none;">
+      <div class="flDebugPanelTitle">
+        <a href="http://localhost:5000/user-friends" class="flDebugClose">Close</a>
+        <h3>Log Messages</h3>
+      </div>
+      <div class="flDebugPanelContent">
+        <div class="scroll">
+          
+  <p>No messages logged.</p>
+
+
+
+        </div>
+      </div>
+    </div>
+    
+  
+    
+    <div id="flDebugRouteListPanel-content" class="panelContent" style="display: none;">
+      <div class="flDebugPanelTitle">
+        <a href="http://localhost:5000/user-friends" class="flDebugClose">Close</a>
+        <h3>Route List</h3>
+      </div>
+      <div class="flDebugPanelContent">
+        <div class="scroll">
+          <table>
+  <thead>
+    <tr>
+      <th>URL route</th>
+      <th>Endpoint name</th>
+      <th>HTTP methods</th>
+      <th>Is alias</th>
+      <th>Redirect to</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      
+        <tr>
+          <td>/</td>
+          <td>index</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/_debug_toolbar/static/&lt;path:filename&gt;</td>
+          <td>_debug_toolbar.static</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/_debug_toolbar/views/sqlalchemy/sql_explain</td>
+          <td>debugtoolbar.sql_select</td>
+          <td>GET, HEAD, OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/_debug_toolbar/views/sqlalchemy/sql_select</td>
+          <td>debugtoolbar.sql_select</td>
+          <td>GET, HEAD, OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/_debug_toolbar/views/template/&lt;key&gt;</td>
+          <td>debugtoolbar.template_editor</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/_debug_toolbar/views/template/&lt;key&gt;</td>
+          <td>debugtoolbar.template_preview</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/_debug_toolbar/views/template/&lt;key&gt;/save</td>
+          <td>debugtoolbar.save_template</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/_uploads/&lt;setname&gt;/&lt;path:filename&gt;</td>
+          <td>_uploads.uploaded_file</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/about-us</td>
+          <td>about</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/add-biz</td>
+          <td>biz_form</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/add-biz</td>
+          <td>biz_process</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/add-friend</td>
+          <td>add_friend</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/business-profile/&lt;biz_name&gt;</td>
+          <td>biz_profile</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/checkin/&lt;int:biz_id&gt;</td>
+          <td>check_in</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/edit-user</td>
+          <td>edit_user</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/friend-profile/&lt;int:friend_id&gt;</td>
+          <td>friend_profile</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/like-review</td>
+          <td>like_process</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/login</td>
+          <td>login_process</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/logout</td>
+          <td>logout</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/pword-reset</td>
+          <td>check_email</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/pword-reset</td>
+          <td>reset_pword</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/register</td>
+          <td>register_form</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/register</td>
+          <td>register_process</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/review/&lt;biz_name&gt;</td>
+          <td>review_form</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/review/&lt;biz_name&gt;</td>
+          <td>review_process</td>
+          <td>OPTIONS, POST</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/reviews-home</td>
+          <td>display_biz_reviews</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/static/&lt;path:filename&gt;</td>
+          <td>static</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/user-friends</td>
+          <td>user_friends</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+        <tr>
+          <td>/user-profile</td>
+          <td>user_profile</td>
+          <td>GET, HEAD, OPTIONS</td>
+          <td>False</td>
+          <td>None</td>
+        </tr>
+      
+    
+  </tbody>
+</table>
+        </div>
+      </div>
+    </div>
+    
+  
+    
+    <div id="flDebugProfilerPanel-content" class="panelContent" style="display: none;">
+      <div class="flDebugPanelTitle">
+        <a href="http://localhost:5000/user-friends" class="flDebugClose">Close</a>
+        <h3>Profiler not active</h3>
+      </div>
+      <div class="flDebugPanelContent">
+        <div class="scroll">
+          The profiler is not activated, activate it to use it
+        </div>
+      </div>
+    </div>
+    
+  
+  <div id="flDebugWindow" class="panelContent" style="display: none;"></div>
+</div>
+
+</div></div></div><div class="hiddendiv common"></div></body></html>

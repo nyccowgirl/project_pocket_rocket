@@ -1,6 +1,6 @@
 from __future__ import division
-from flask import Flask, session
-from model import connect_to_db, User, CheckIn, Friend, db  # Promo,
+from flask import Flask  # session
+from model import connect_to_db, User  # CheckIn, Friend, db, Promo,
 # from sqlalchemy.sql import extract
 # from degrees import BinarySearchNode as bsn
 
@@ -253,6 +253,8 @@ def tree(user_id):
 #             pop = TREE.pop(0)
 
 #     return count
+
+
 
 
 ##############################################################################

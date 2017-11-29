@@ -71,8 +71,8 @@
       <ul>
         Check-Ins: {{ friend.tot_checkins() }}</br>
         Reviews: {{ friend.tot_reviews() }}</br>
-        Referrals: {{ refs }} | Redeemed: {{ redeem_refs }}</br>
-        Promos Redeemed: {{ redeem_promos }}</br>
+        Referrals: {{ friend.tot_refs() }} | Redeemed: {{ friend.tot_refs_reds() }}</br>
+        Promos Redeemed: {{ friend.tot_reds() }}</br>
         Friends: {{ friend.tot_friends() }}</br>
         Total Businesses Visited: {{ friend.tot_unique_biz() }}</br>
         Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</br>
@@ -85,7 +85,11 @@
     <ul>
     {% for friend in friend.friends|sort(attribute='username') %}
       <li>
-        <a href='/friend_profile/{{ friend.user_id }}'>{{ friend.username }}</a>
+        {% if friend.user_id == session['user_id'] %}
+          <a href='/user-profile'> {{ friend.username }}</a>
+        {% else %}
+          <a href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a>
+        {% endif %}
       </li>
     {% endfor %}
     </ul>
@@ -116,12 +120,16 @@
           <p>{{ review.review }}</p>
         {% endif %}
         {% if review.dispute %}
-          <b style='color: #880e4f'>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
+          <b style='color: #880e4f'>Comment from
+            {% if review.biz.users %}
+              {{ review.biz.users[0].username }},
+            {% endif %}
+             owner of {{ review.biz.biz_name }}</b>
           <p>{{ review.response }}</p>
           {% if review.cust_svc %}
             <b><i>Customer Service Rating: </i>{{ review.cust_svc }}</b>
           {% endif %}
-          {% if revew.revise_review %}
+          {% if review.revise_review %}
             <p><i>Original Rating: </i>{{ review.rating }}</p>
             <p>{{ review.review }}</p>
           {% endif %}

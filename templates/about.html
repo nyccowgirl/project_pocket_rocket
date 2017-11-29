@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
 {% block content %}
 
-  <h1>BUDdy</h1>
+<h1>BUDdy</h1>
+
+<div class='container-fluid'>
 
   <div>
     <img src='/static/img/world.jpeg'>
@@ -17,5 +24,11 @@
     <p>Small businesses with consistent low ratings and/or unethical practices will be removed from BUDdy.</p>
     <p>Pay It Forward!</p>
   </div>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
 
 {% endblock %}

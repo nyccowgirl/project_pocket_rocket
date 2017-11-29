@@ -44,12 +44,13 @@
 <hr> -->
 
 <div class='container-fluid'>
-
+  {% if user.checkins %}
   <h3>Recent Visits</h3>
   <br>
     {% for group, list in user.checkins|groupby('biz.biz_name')|sort(attribute='checkin_date', reverse=True) %}
       {% for biz in list %}
         {% if loop.first and biz.visit_not_reviewed() %}
+        <div class='col-sm-3'>
           <!--Rotating card-->
           <div id='myCard-{{ biz.biz.biz_id }}' class="myCard flip-container" ontouchstart="this.classList.toggle('flip');">
             <div class='flipper'>
@@ -70,7 +71,7 @@
                       <i class='fa fa-chain-broken prefix'></i>
                     {% endif %}
                     <p>Category: {{ biz.biz.category }} | Rating: {{ biz.biz.avg_score() }}</p>
-                    <p>Address: {{ biz.biz.address }}, {{ biz.biz.city }}, {{ biz.biz.state }}
+                    <p>Address: {{ biz.biz.address }}, {{ biz.biz.city }}, {{ biz.biz.state }}</p>
                   </div>
                   <hr>
                   <!--Triggering button-->
@@ -103,10 +104,12 @@
                 <a class='flip-card' class='rotate-btn' data-card='card-1'><i class='fa fa-undo'></i> Click here to rotate back</a>
               </div>
               <!--/.Back Side-->
-
+            </div>
+          </div>
         </div>
-      </div>
-      <!--/.Rotating card-->
+        <!--/.Rotating card-->
+        {% endif %}
+      {% endfor %}
     {% endfor %}
   {% else %}
   <div>You haven't visited any business lately. Please supporting a budding business!</div>

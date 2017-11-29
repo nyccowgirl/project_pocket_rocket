@@ -160,6 +160,7 @@
 /*Home page*/
 
 body {
+  font: 400 15px/1.8 Lato, sans-serif;
   background-color: #f3e5f5;
 }
 

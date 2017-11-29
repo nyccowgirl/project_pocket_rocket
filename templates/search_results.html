@@ -23,8 +23,8 @@
 
     <ul>
       <a href='{{ item.biz_name }}'><b>{{ item.biz_name }}</b></a>:
-      <li>Category: {{ item.biz_cateogry }} | Rating: {{ item.avg_score }}</li>
-      <li>Address: {{ item.address }}, {{ item.city }}, {{ item.state}} {{ item.zipcode }} {{ item.country }}</li>
+      <li>Category: {{ item.category }} | Rating: {{ item.avg_score() }}</li>
+      <li>Address: {{ item.address }}, {{ item.city }}, {{ item.state }} {{ item.zipcode }} {{ item.country }}</li>
     </ul>
     {% endfor %}
 

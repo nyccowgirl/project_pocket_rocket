@@ -8,8 +8,9 @@ from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
 from datetime import datetime
 import helper
 import re
-import constants as c
+# import constants as c
 from sqlalchemy import or_
+from bubble import bubble_data
 
 app = Flask(__name__)
 
@@ -40,7 +41,16 @@ def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
 def index():
     """Displays homepage."""
 
+    bubble_data()
+
     return render_template('home.html')
+
+
+@app.route('/bubble')
+def bubble():
+    """Displays bubble chart."""
+
+    return render_template('bubble.html')
 
 
 @app.route('/about-us')
@@ -410,6 +420,7 @@ def friend_profile(friend_id):
     friend = User.query.filter_by(user_id=friend_id).first()
 
     # TO DELETE
+    print u'\n\n\n{}\n\n\n'.format(friend)
     print u'\n\n\n{}\n\n\n'.format(friend.reviews)
     print u'\n\n\n{}\n\n\n'.format(friend.friends)
     print u'\n\n\n{}\n\n\n'.format(friend.referees)
@@ -417,14 +428,11 @@ def friend_profile(friend_id):
 
     # friends = helper.calc_friends(friend)
     # reviews = helper.calc_reviews(friend)
-    total_refs, redeemed_refs = helper.calc_referrals(friend)
-    redemptions = helper.calc_redemptions(friend)
+    # total_refs, redeemed_refs = helper.calc_referrals(friend)
+    # redemptions = helper.calc_redemptions(friend)
     # checkins = helper.calc_checkins(friend)
 
-    return render_template('friend_profile.html', friend=friend,
-                           refs=total_refs,
-                           redeem_refs=redeemed_refs,
-                           redeem_promos=redemptions)
+    return render_template('friend_profile.html', friend=friend)
 
 
 @app.route('/add-biz')
@@ -527,14 +535,14 @@ def biz_profile(biz_name):
 
     biz = Business.query.filter_by(biz_name=biz_name).first()
     today = datetime.today()
-    category = c.BIZ_CATEGORY.get(biz.category)
+    # category = c.BIZ_CATEGORY.get(biz.category)
 
-    # TO DELETE
-    print u'\n\n\n{}\n\n\n'.format(biz_name)
-    print u'\n\n\n{}\n\n\n'.format(biz.reviews)
-    print u'\n\n\n{}\n\n\n'.format(biz.referrals)
-    print u'\n\n\n{}\n\n\n'.format(biz.promos)
-    print u'\n\n\n{}\n\n\n'.format(biz.users)
+    # # TO DELETE
+    # print u'\n\n\n{}\n\n\n'.format(biz_name)
+    # print u'\n\n\n{}\n\n\n'.format(biz.reviews)
+    # print u'\n\n\n{}\n\n\n'.format(biz.referrals)
+    # print u'\n\n\n{}\n\n\n'.format(biz.promos)
+    # print u'\n\n\n{}\n\n\n'.format(biz.users)
 
     # avg_score, count = helper.calc_avg_rating(biz)
     # tot_checkins = helper.calc_biz_tot_checkins(biz)
@@ -564,7 +572,7 @@ def biz_profile(biz_name):
 # db.session.query(UnitDetails).filter(func.ST_Distance_Sphere("POINT(37.776164 -122.423355)",UnitDetails.latlng) < 1000).all()
 
     return render_template('business_profile.html', biz=biz, today=today,
-                           category=category, user_score=user_rating)
+                           user_score=user_rating)
 
 
 @app.route('/claim-biz/<int:biz_id>', methods=['POST'])
@@ -677,10 +685,10 @@ def search():
 
     # TO DO: Convert to full text searchability via https://sqlalchemy-searchable.readthedocs.io/en/latest/index.html
 
-    keywords = request.args.get('search')
+    keywords = '%' + request.args.get('search') + '%'
 
-    search = db.session.query(Business).filter(or_(Business.biz_name.like(keywords),
-                                                   Business.category.like(keywords))).all()
+    search = Business.query.filter(or_(Business.biz_name.ilike(keywords),
+                                       Business.category.ilike(keywords))).all()
 
     return render_template('search_results.html', search=search)
 

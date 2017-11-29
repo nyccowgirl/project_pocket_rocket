@@ -8,33 +8,92 @@
 {% block content %}
 
 
-  <div>
-    {% if user.user_pic %}
-      <img  id='user_pic' src='{{ user.user_pic }}' hspace='40' align='left'>
-    {% else %}
-      <img  id='user_pic' src='/static/img/dragonfly.jpeg' hspace='40' align='left'>
-    {% endif %}
-     <h2>{{ user.username }}</h2>
-  </div>
+<div>
+  {% if user.user_pic %}
+    <img  id='user_pic' src='{{ user.user_pic }}' hspace='40' align='left'>
+  {% else %}
+    <img  id='user_pic' src='/static/img/dragonfly.jpeg' hspace='40' align='left'>
+  {% endif %}
+   <h2>{{ user.username }}</h2>
+</div>
 
-  <hr>
+<hr>
 
-  <div class='container-fluid'>
+<div class='container-fluid'>
 
-  <button type='button' class='btn btn-unique btn-rounded waves-light' href='#' mdbRippleRadius>Redeem a Promo</button>
+  <button type='button' class='btn btn-unique btn-rounded waves-light' mdbRippleRadius><a href='#'>Redeem a Promo</a></button>
 
-  <!-- TO DO: Need to build out -->
+  <!-- TO DO: Need to build out redeem -->
 
-  </div class='container-fluid'>
+</div>
 
-  <hr>
-  <div>
+<hr>
+
+<div class='container-fluid'>
 
   {% if user.user_promos %}
-  <hr>
-    <h3>My Promotions/Redemptions</h3>
 
-    <ul>
+    <h2>My Promotions/Redemptions</h2>
+
+
+    {% for grouper, list in user.user_promos|groupby('redeemed')|sort(attribute='promo.end_date') %}
+      {% if grouper == False %}
+        <p>The following are promotions that are available to be redeemed:</p>
+        <input class='form-control' id='myInputAvail' type='text' placeholder='Search..'>
+        <br>
+        <table class='table table-hover table-responsive table-striped table-bordered' id='myTable'>
+        <thead>
+          <tr>
+            <th>Business Name</th>
+            <th>Promo Title</th>
+            <th>Promo Description</th>
+            <th>Promo End Date</th>
+            <th>Redeem</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for promo in list %}
+            <tr class='success'>
+              <td><a href="/business-profile/{{ promo.biz.biz_name }}">{{ promo.biz.biz_name }}</a></td>
+              <td>{{ promo.promo.title }}</td>
+              <td>{{ promo.promo.descr }}</td>
+              <td>{{ promo.promo.end_date|datetimeformat('%d %b %Y') }}</td>
+              <td><button type='button' class='btn-xs btn-unique btn-rounded'><a href='#'>Redeem</a></button></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        </table>
+
+      {% else %}
+        <p>The following are promotions have been redeemed:</p>
+        <input class='form-control' id='myInputRed' type='text' placeholder='Search..'>
+        <br>
+        <table class='table table-hover table-responsive table-striped table-bordered'>
+        <thead>
+          <tr>
+            <th>Business Name</th>
+            <th>Promo Title</th>
+            <th>Promo Description</th>
+            <th>Promo Redeem Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for promo in list %}
+            <tr class='danger'>
+              <td><a href="/business-profile/{{ promo.biz.biz_name }}">{{ promo.biz.biz_name }}</a></td>
+              <td>{{ promo.promo.title }}</td>
+              <td>{{ promo.promo.descr }}</td>
+              <td>{{ promo.redeem_date|datetimeformat('%d %b %Y') }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        </table>
+      {% endif %}
+    {% endfor %}
+
+<!--     <ul>
     {% for grouper, list in user.user_promos|groupby('redeemed') %}
       {% if grouper == False %}
         <b>Available</b>
@@ -69,18 +128,43 @@
           </ul>
       {% endif %}
     {% endfor %}
-    </ul>
+    </ul> -->
   {% else %}
 
-  <p>Many small businesses have promotions for new and repeat customers and/or referrals. Please check out a local business near you and redeem one of their promotions or refer friends to unlock special promotions. <a href='/user-referrals'>Refer a business.</a></p>
+  <p>Many small businesses have promotions for new and repeat customers and/or referrals. Please check out a local business near you and redeem one of their promotions or refer friends to unlock special promotions.
+
+  <button type='button' class='btn-sm btn-unique btn-rounded waves-light' mdbRippleRadius><a href='#'>Refer a business.</a></button>
+
+  <!-- TO DO: Build out user referrals -->
 
   {% endif %}
 
-  </div>
+</div>
 
 {% endblock %}
 
 {% block script %}
 
+<script>
+$(document).ready(function(){
+  $('#myInputAvail, #myInputRed').on('keyup', function() {
+    let value = $(this).val().toLowerCase();
+    $('#myTable tr').filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+<script>
+function myMap() {
+let myCenter = new google.maps.LatLng(41.878114, -87.629798);
+let mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
+let map = new google.maps.Map(document.getElementById('googleMap'),mapProp);
+let marker = new google.maps.Marker({position:myCenter});
+marker.setMap(map);
+}
+
+</script>
 
 {% endblock %}

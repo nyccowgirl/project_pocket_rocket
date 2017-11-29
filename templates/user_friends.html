@@ -62,12 +62,13 @@
 
 <hr>
 
-<div class='container-fluid'>
+<div class='container'>
 
   {% if user.friends %}
     <h3>My Friends</h3>
     <br>
     {% for friend in user.friends|sort(attribute='username') %}
+<!--     <div class='col-sm-3'> -->
       <!--Rotating card-->
       <div id='myCard-{{ friend.user_id }}' class="myCard flip-container" ontouchstart="this.classList.toggle('flip');">
         <div class='flipper'>
@@ -127,6 +128,7 @@
         </div>
       </div>
       <!--/.Rotating card-->
+<!--     </div> -->
     {% endfor %}
   {% else %}
   <div>You seem lonely in here, add some friends!</div>

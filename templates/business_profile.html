@@ -25,19 +25,23 @@
     {% endif %}
 
     {% if not biz.has_reviewed(session['user_id']) %}
-      <button type='button' class='btn btn-unique btn-rounded waves-light' href='/review/{{ biz.biz_name }}' mdbRippleRadius>Review Business</button>
+      <button type='button' class='btn btn-unique btn-rounded waves-light' mdbRippleRadius><a href='/review/{{ biz.biz_name }}'>Review Business</a></button>
     {% endif %}
 
     {% if not biz.is_claimed() }}
-      <button type='button' class='btn btn-unique btn-rounded waves-light claim-biz' data-review-id='{{ biz.biz_id }}' href='/review/{{ biz.biz_name }}' mdbRippleRadius>Claim Business</button>
+      <button type='button' class='btn btn-unique btn-rounded waves-light claim-biz' data-review-id='{{ biz.biz_id }}' href='/claim-biz/{{ biz.biz_id }}' mdbRippleRadius>Claim Business</button>
     {% endif %}
 
-      <br>
+      <hr>
 
   <!-- TO DO: Need to build out -->
 
   </div>
 
+  <!-- Add Google Maps -->
+  <div id="googleMap"></div>
+
+  <div class='container-fluid'>
 
     <div>
       Total Check-Ins: {{ biz.tot_checkins() }}|Your Check_Ins: {{ biz.tot_user_checkins() }}<br>
@@ -72,7 +76,7 @@
         Zip/Country Code: {{ biz.zipcode }}<br>
         Email: {{ biz.email }}<br>
         Phone: {{ biz.phone }}<br>
-        Category: {{ category }}<br>
+        Category: {{ biz.category }}<br>
       </address>
     </div>
 
@@ -133,10 +137,12 @@
             <b style='color: #880e4f'>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
             <p>{{ review.response }}</p>
           {% else %}
-            <button id='dispute {{ review.review_id }}' class='dispute'>Respond</button>
+            {% if biz.is_owned(session['user_id']) %}
+              <button id='dispute {{ review.review_id }}' class='dispute'>Respond</button>
+            {% endif %}
           {% endif %}
             <!-- TO DO: Add AJAX to process dispute -->
-]        {% endif %}
+        {% endif %}
       </li>
       {% else %}
       <b>Being Addressed</b>
@@ -149,7 +155,11 @@
             <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
           {% endif %}
         <p>{{ review.review }}</p>
-        <b style='color: #880e4f'>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
+        <b style='color: #880e4f'>Comment from
+          {% if review.biz.users %}
+            {{ review.biz.users[0].username }},
+          {% endif %}
+           owner of {{ review.biz.biz_name }}</b>
           <p>{{ review.response }}</p>
           {% if biz.has_reviewed %}
             <button id='revise {{ review.review_id }}' class='revise-review'>Revise Review</button>
@@ -193,33 +203,45 @@
     </ul>
   {% endif %}
 
+  </div>
 
 {% endblock %}
 
 {% block script %}
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>
+
+<!-- FIXME: Update key -->
+
 <script type='text/javascript'>
   'use strict';
 
+function myMap() {
+  let myCenter = new google.maps.LatLng({{biz.lat, biz.lng);
+  let mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
+  let map = new google.maps.Map(document.getElementById('googleMap'),mapProp);
+  let marker = new google.maps.Marker({position:myCenter});
+  marker.setMap(map);
+}
 
   // display map with business marker
 
-  let map;
+  // let map;
 
-  function initialize() {
-    let lat = //pull from database
-    let lng = //pull from database
+  // function initialize() {
+  //   let lat = //pull from database
+  //   let lng = //pull from database
 
-    let mapOptions = {
-      zoom: 8,
-      center: new google.maps.LatLng(lat, lng)
-    };
+  //   let mapOptions = {
+  //     zoom: 8,
+  //     center: new google.maps.LatLng(lat, lng)
+  //   };
 
-    map = new google.maps.Map(document.querySelector('#biz-map'),
-          mapOptions);
-  }
+  //   map = new google.maps.Map(document.querySelector('#biz-map'),
+  //         mapOptions);
+  // }
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+  // google.maps.event.addDomListener(window, 'load', initialize);
 
 </script>
 
