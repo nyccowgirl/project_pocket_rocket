@@ -588,7 +588,6 @@ def friends_lst(user_id, seen):
     return lst
 
 
-
 ##############################################################################
 # Helper functions
 

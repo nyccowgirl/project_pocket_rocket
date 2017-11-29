@@ -11,6 +11,7 @@ import re
 # import constants as c
 from sqlalchemy import or_
 from bubble import bubble_data
+from friend_network import make_nodes_and_paths
 
 app = Flask(__name__)
 
@@ -46,11 +47,11 @@ def index():
     return render_template('home.html')
 
 
-@app.route('/bubble')
-def bubble():
-    """Displays bubble chart."""
+# @app.route('/bubble')
+# def bubble():
+#     """Displays bubble chart."""
 
-    return render_template('bubble.html')
+#     return render_template('bubble.html')
 
 
 @app.route('/about-us')
@@ -743,6 +744,21 @@ def review_home():
 
     return render_template('reviews_home.html', user=user)
 
+
+@app.route("/data.json")
+def get_graph_data():
+    """ Create nodes and paths from friends table and jsonify for force layout."""
+
+    nodes, paths = make_nodes_and_paths()
+
+    return jsonify({'nodes': nodes, 'paths': paths})
+
+
+@app.route('/network')
+def index_advanced():
+    """Return homepage."""
+
+    return render_template('friend_network.html')
 
 ##############################################################################
 

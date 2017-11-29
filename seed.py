@@ -53,7 +53,7 @@ def create_biz():
 
     with open('data/biz.txt', 'w+') as biz:
 
-        for i in range(2000):
+        for i in range(1000):
             biz.write('{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}\n'.
                 format(fake.company(),
                        fake.street_address(),
@@ -144,7 +144,7 @@ def create_checkins():
 
     with open('data/checkins.txt', 'w+') as checkins:
 
-        for i in range(30000):
+        for i in range(300000):
             checkins.write('{}|{}|{}\n'.format(fake.random_int(min=1, max=500),
                                                fake.random_int(min=1, max=1000),
                                                fake.date_this_decade(before_today=True,
@@ -159,7 +159,7 @@ def create_referrals():
     with open('data/referrals.txt', 'w+') as referrals:
         with open('data/userpromos.txt', 'w+') as userpromos:
 
-            for i in range(10000):
+            for i in range(75000):
                 referer_id = fake.random_int(min=1, max=500)
 
                 referee_id = fake.random_int(min=1, max=500)
@@ -181,7 +181,7 @@ def create_referrals():
                     redeem_date = ''
 
                 userpromos.write('{}|{}|{}|{}\n'.format(referee_id,
-                                                        fake.random_int(min=1, max=3000),
+                                                        fake.random_int(min=1, max=5000),
                                                         redeemed,
                                                         redeem_date))
 
@@ -259,7 +259,7 @@ def create_likes():
 
     with open('data/likes.txt', 'w+') as likes:
 
-        for i in range(20000):
+        for i in range(50000):
             likes.write('{}|{}\n'.format(fake.random_int(min=1, max=7500),
                                          fake.random_int(min=1, max=500)))
 
@@ -405,8 +405,8 @@ def load_biz():
         else:
             claimed = False
 
-        open_time = open_time[0]
-        close_time = close_time[0]
+        open_time = open_time[:-3]
+        close_time = close_time[:-3]
 
         biz = Business(biz_name=biz_name,
                        address=address,

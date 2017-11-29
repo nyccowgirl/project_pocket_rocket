@@ -49,8 +49,8 @@ def bubble_data():
 
     # Create dictionary with key of categories and various data fields needed for bubble graph.
 
-    # cat_dict = {'Bar': ['total1', 'older1', 'perc1', 'tag1'], 'Cleaners': ['total2', 'older2', 'perc2', 'tag2'], 'Coffee/Cafe/Tea': ['total3', 'older3', 'perc3', 'tag3'], 'Deli/Grocery': ['total4', 'older4', 'perc4', 'tag4'], 'Florist': ['total5', 'older5', 'perc5', 'tag5'], 'Home Services': ['total6', 'older6', 'perc6', 'tag6'], 'Medical Services': ['total7', 'older7', 'perc7', 'tag7'], 'Legal Services': ['total8', 'older8', 'perc8', 'tag8'], 'Nightlife': ['total9', 'older9', 'perc9', 'tag9'], 'Pets': ['total10', 'older10', 'perc10', 'tag10'], 'Restaurant': ['total11', 'older11', 'perc11', 'tag11'], 'Salon': ['total12', 'older12', 'perc12', 'tag12'], 'Spa': ['total13', 'older13', 'perc13', 'tag13']}
-    cat_dict = {'bar': ['total1', 'older1', 'perc1', 'tag1'], 'cleaner': ['total2', 'older2', 'perc2', 'tag2'], 'cafe': ['total3', 'older3', 'perc3', 'tag3'], 'grocery': ['total4', 'older4', 'perc4', 'tag4'], 'florist': ['total5', 'older5', 'perc5', 'tag5'], 'home': ['total6', 'older6', 'perc6', 'tag6'], 'medicine': ['total7', 'older7', 'perc7', 'tag7'], 'legal': ['total8', 'older8', 'perc8', 'tag8'], 'nightlife': ['total9', 'older9', 'perc9', 'tag9'], 'pet': ['total10', 'older10', 'perc10', 'tag10'], 'restaurant': ['total11', 'older11', 'perc11', 'tag11'], 'salon': ['total12', 'older12', 'perc12', 'tag12'], 'spa': ['total13', 'older13', 'perc13', 'tag13']}
+    cat_dict = {'Bar': ['total1', 'older1', 'perc1', 'tag1'], 'Cleaners': ['total2', 'older2', 'perc2', 'tag2'], 'Coffee/Cafe/Tea': ['total3', 'older3', 'perc3', 'tag3'], 'Deli/Grocery': ['total4', 'older4', 'perc4', 'tag4'], 'Florist': ['total5', 'older5', 'perc5', 'tag5'], 'Home Services': ['total6', 'older6', 'perc6', 'tag6'], 'Medical Services': ['total7', 'older7', 'perc7', 'tag7'], 'Legal Services': ['total8', 'older8', 'perc8', 'tag8'], 'Nightlife': ['total9', 'older9', 'perc9', 'tag9'], 'Pets': ['total10', 'older10', 'perc10', 'tag10'], 'Restaurant': ['total11', 'older11', 'perc11', 'tag11'], 'Salon': ['total12', 'older12', 'perc12', 'tag12'], 'Spa': ['total13', 'older13', 'perc13', 'tag13']}
+    # cat_dict = {'bar': ['total1', 'older1', 'perc1', 'tag1'], 'cleaner': ['total2', 'older2', 'perc2', 'tag2'], 'cafe': ['total3', 'older3', 'perc3', 'tag3'], 'grocery': ['total4', 'older4', 'perc4', 'tag4'], 'florist': ['total5', 'older5', 'perc5', 'tag5'], 'home': ['total6', 'older6', 'perc6', 'tag6'], 'medicine': ['total7', 'older7', 'perc7', 'tag7'], 'legal': ['total8', 'older8', 'perc8', 'tag8'], 'nightlife': ['total9', 'older9', 'perc9', 'tag9'], 'pet': ['total10', 'older10', 'perc10', 'tag10'], 'restaurant': ['total11', 'older11', 'perc11', 'tag11'], 'salon': ['total12', 'older12', 'perc12', 'tag12'], 'spa': ['total13', 'older13', 'perc13', 'tag13']}
 
     # Sort dictionary by descending older based on total checkins and then total referrals, using keys in a list
 
@@ -58,7 +58,7 @@ def bubble_data():
 
     # Gather data for top 100 businesses
 
-    top_rank = rank_lst[:100]
+    top_rank = rank_lst[:200]
 
     # Create list of individual dictionary of each business data
 

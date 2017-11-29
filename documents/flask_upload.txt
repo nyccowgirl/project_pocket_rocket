@@ -1,0 +1,81 @@
+
+--------------------------------------------------
+
+FLASK UPLOAD SETUP NOTES - To do Source: http://www.patricksoftwareblog.com/tag/flask-uploads/
+- with Material Design
+
+Works with Angular CLI 1.5.x, Angular 5.0.x., HTML5
+
+Requires Node6.9.0+ and NPM 3+
+
+--------------------------------------------------
+
+1) prerequisites
+
+>>> npm i -g @angular/cli
+>>> npm i -g typescript
+
+
+2) either manually installation or NPM installation
+
+NPM installation:
+
+    a) create new angular project
+
+    >>> ng new your-angular-project --style=scss
+
+    b) go into your-angular-project directory
+
+    >>> cd your-angular-project
+
+    c) install from github
+
+    >>> npm i angular-bootstrap-md --save
+
+    d) in app.module.ts file, add the following to existing info (note: replace any NgModule import with the following and add relevant parts into @NgModule - be mindful of missing/trailing commas or semi-colons)
+
+    import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+    import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
+    @NgModule({
+        imports: [
+            MDBBootstrapModule.forRoot()
+        ],
+        schemas: [ NO_ERRORS_SCHEMA ]
+    })
+
+    e) make sure that styleExt is set to "scss" in angular-cli.json file, if not change:
+
+    "styleExt": "css" to "styleExt": "scss"
+
+    * also, if you have src/styles.css instead, rename it to .scss. if you want to change styles in existing project you can use ng set defaults.styleExt scss
+
+    f) in angular-cli.json, add the following to existing info (note: similar to step d, be mindful of syntax and placement within {})
+
+    "styles": [
+        "../node_modules/font-awesome/scss/font-awesome.scss",
+        "../node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
+        "../node_modules/angular-bootstrap-md/scss/mdb-free.scss",
+        "./styles.scss"
+    ],
+    "scripts": [
+         "../node_modules/chart.js/dist/Chart.js",
+        "../node_modules/hammerjs/hammer.min.js"
+    ]
+
+    g) in tsconfig.json within root folder, add the following to existing info (note: similar to step d, be mindful of syntax and placement within {})
+
+    "include": ["node_modules/angular-bootstrap-md/**/*.ts", "src/**/*.ts"]
+
+    h) install external libraries
+
+    >>> npm install -–save chart.js@2.5.0 font-awesome hammerjs
+
+    i) run server
+
+    >>> ng serve --o
+
+
+
+--------------------------------------------------
+
