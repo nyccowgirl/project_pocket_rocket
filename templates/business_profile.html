@@ -43,9 +43,6 @@
 
   </div>
 
-  <!-- Add Google Maps -->
-  <div id='googleMap'></div>
-
   <div class='container-fluid'>
 
     <div>
@@ -70,48 +67,51 @@
 
   <h3>About Them</h3>
 
-<!-- TO DO: Add map -->
-<!--     <div id='biz-map'></div> -->
+    <div class='container'>
 
-    <div>
-      <address>
-        Business Name: {{ biz.biz_name }}<br>
-        Address: {{ biz.address }}<br>
-        City: {{ biz.city }}<br>
-        State: {{ biz.state }}<br>
-        Country: {{ biz.country }}<br>
-        Zip/Country Code: {{ biz.zipcode }}<br>
-        Email: {{ biz.email }}<br>
-        Phone: {{ biz.phone }}<br>
-        Category: {{ biz.category }}<br>
-      </address>
-    </div>
+      <div>
+        <address>
+          Business Name: {{ biz.biz_name }}<br>
+          Address: {{ biz.address }}<br>
+          City: {{ biz.city }}<br>
+          State: {{ biz.state }}<br>
+          Country: {{ biz.country }}<br>
+          Zip/Country Code: {{ biz.zipcode }}<br>
+          Email: {{ biz.email }}<br>
+          Phone: {{ biz.phone }}<br>
+          Category: {{ biz.category }}<br>
+        </address>
+      </div>
 
-    <div>
-      <h5>Operation:</h5>
-      <ul>
-        <li>Days: {{ biz.days_open }}</li>
-        <li>Open:
-          {% if biz.open_time <= 12 %}
-            {{ biz.open_time }}AM
-          {% else %}
-            {{ biz.open_time - 12 }}PM
-          {% endif %}
-        </li>
-        <li>Close:
-          {% if biz.close_time <= 12 %}
-            {{ biz.close_time }}AM
-          {% else %}
-            {{ biz.close_time - 12 }}PM
-          {% endif %}
-        </li>
-      </ul>
+      <div>
+        <h5>Operation:</h5>
+        <ul>
+          <li>Days: {{ biz.days_open }}</li>
+          <li>Open:
+            {% if biz.open_time <= 12 %}
+              {{ biz.open_time }}AM
+            {% else %}
+              {{ biz.open_time - 12 }}PM
+            {% endif %}
+          </li>
+          <li>Close:
+            {% if biz.close_time <= 12 %}
+              {{ biz.close_time }}AM
+            {% else %}
+              {{ biz.close_time - 12 }}PM
+            {% endif %}
+          </li>
+        </ul>
+      </div>
     </div>
 
 <!-- TO DO: Edit business feature for owner only if claimed and others if not. -->
+    <!-- Add Google Maps -->
 
-<!-- TO DO: degrees of sep should be based on view of business so user can see relatiobship with reviewers -->
+    <div id='googleMap' class='container' style='width:400px;height:300px;'></div>
+
   <hr>
+
 
   {% if biz.reviews %}
     <h3>Our Reviews</h3>
@@ -126,7 +126,7 @@
           <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(review.user_id) }}
         {% else %}
           <i class='fa fa-chain-broken prefix'></i>
-        {% endif %}</li>
+        {% endif %}
 
         {% if review.revise_review %}
           <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
@@ -135,6 +135,7 @@
             {% else %}
               <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
             {% endif %}
+          </p>
           <p>{{ review.new_review }}</p>
           <b style='color: #880e4f'>Comment from
             {% if review.biz.users %}
@@ -151,7 +152,7 @@
             {% else %}
               <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
             {% endif %}
-
+          </p>
           <p>{{ review.review }}</p>
           {% if review.cust_svc %}
             <b><i>Customer Service Rating:</i> {{ review.cust_svc }}</b>
@@ -179,7 +180,7 @@
             <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(review.user_id) }}
           {% else %}
             <i class='fa fa-chain-broken prefix'></i>
-          {% endif %}</li>
+          {% endif %}
 
         <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
           {% if review.has_liked(session['user_id']) %}
@@ -187,6 +188,7 @@
           {% else %}
             <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
           {% endif %}
+        </p>
         <p>{{ review.review }}</p>
         <b style='color: #880e4f'>Comment from
           {% if review.biz.users %}
@@ -246,58 +248,33 @@
 
 <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap'></script>
 
-<!-- FIXME: Update key -->
-
 <script type='text/javascript'>
   'use strict';
 
-function myMap() {
-  let myCenter = new google.maps.LatLng({{biz.lat}}, {{biz.lng}});
-  let mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
-  let map = new google.maps.Map(document.getElementById('googleMap'),mapProp);
-  let marker = new google.maps.Marker({position:myCenter});
-  marker.setMap(map);
-}
+  function myMap() {
+    let myCenter = new google.maps.LatLng({{ biz.lat }}, {{ biz.lng }});
+    let mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.TERRAIN};
+    let map = new google.maps.Map(document.getElementById('#googleMap'),mapProp);
+    let marker = new google.maps.Marker({position:myCenter, icon: 'pinkball.png', title: 'Hover text', animation: google.maps.Animation.BOUNCE});
+    google.maps.event.addListener(marker,'click', function() {
+      let infowindow = new google.maps.InfoWindow({
+        content:{{ biz.biz_name }}
+      });
+    infowindow.open(map,marker);
+    });
+    marker.setMap(map);
+  }
+</script>
 
-  // display map with business marker
-
-  // let map;
-
-  // function initialize() {
-  //   let lat = //pull from database
-  //   let lng = //pull from database
-
-  //   let mapOptions = {
-  //     zoom: 8,
-  //     center: new google.maps.LatLng(lat, lng)
-  //   };
-
-  //   map = new google.maps.Map(document.querySelector('#biz-map'),
-  //         mapOptions);
-  // }
-
-  // google.maps.event.addDomListener(window, 'load', initialize);
 <script>
-$(document).ready(function(){
-  $('#myInputAvail, #myInputRed').on('keyup', function() {
-    let value = $(this).val().toLowerCase();
-    $('#myTable tr').filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  $(document).ready(function(){
+    $('#myInputAvail, #myInputRed').on('keyup', function() {
+      let value = $(this).val().toLowerCase();
+      $('#myTable tr').filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
     });
   });
-});
-</script>
-
-<script>
-function myMap() {
-let myCenter = new google.maps.LatLng(41.878114, -87.629798);
-let mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
-let map = new google.maps.Map(document.getElementById('googleMap'),mapProp);
-let marker = new google.maps.Marker({position:myCenter});
-marker.setMap(map);
-}
-
-</script>
 </script>
 
 {% endblock %}

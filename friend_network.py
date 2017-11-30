@@ -56,11 +56,12 @@ def six_degrees(user_id, degree=6):
     queue = set()
     seen = set()
 
-    while count <=6:
+    while count <= degree:
+        count += 1
         for friend in person.friends:
-            network.add((person.username, friend.username))
-            queue.add(friend.username)
-            seen.add(user.username)
+            network.add((person.username, friend.username, 'group ' + str(count)))
+            queue.add(friend.user_id)
+            seen.add(user.user_id)
         queue_len = len(queue)
 
 
