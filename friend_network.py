@@ -43,6 +43,30 @@ def make_nodes_and_paths():
 
     return nodes, paths
 
+def six_degrees(user_id, degree=6):
+    """ Create bidirectional graph for a specific user based on a specified
+    degree of separation, with default of 6."""
+
+    person = User.query.get(user_id)
+
+    head = person.username
+
+    count = 0
+    network = set()
+    queue = set()
+    seen = set()
+
+    while count <=6:
+        for friend in person.friends:
+            network.add((person.username, friend.username))
+            queue.add(friend.username)
+            seen.add(user.username)
+        queue_len = len(queue)
+
+
+
+
+
 ##############################################################################
 
 if __name__ == "__main__":

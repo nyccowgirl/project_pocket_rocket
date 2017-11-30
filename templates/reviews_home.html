@@ -11,43 +11,46 @@
 <div class='container-fluid'>
 
   <form id='biz-search' class='form-inline' action='/search-biz'>
-    <input class="form-control mr-sm-2" type="text" placeholder="Who's the Lucky One?" aria-label="Search">
-    <button class="btn btn-outline-success btn-sm my-0" type="submit">Search</button>
+    <input class='form-control' type='text' placeholder="Who's the Lucky One?" aria-label='Search'>
+    <button class='btn btn-outline-success btn-sm my-0' type='submit'>Search</button>
   </form>
+
+  <!-- FIXME: search bar is now truncated -->
 
 </div>
 
 <hr>
 
-<div class='container-fluid'>
+<div class='container'>
   {% if user.checkins %}
   <h3>Recent Visits</h3>
   <br>
     {% for grouper, list in user.checkins|sort(attribute='checkin_date', reverse=True)|groupby('biz.biz_name') %}
-      {% for biz in list %}
-        {% if loop.first and biz.biz.visit_not_reviewed(session['user_id']) %}
+      {% for i in grouper[:10] %}
+      {% for item in list %}
+        {% if loop.first and item.biz.visit_not_reviewed(session['user_id']) %}
         <div class='col-sm-3'>
           <!--Rotating card-->
-          <div id='myCard-{{ biz.biz.biz_id }}' class="myCard flip-container" ontouchstart="this.classList.toggle('flip');">
+          <div id='myCard-{{ item.biz.biz_id }}' class='myCard flip-container' ontouchstart="this.classList.toggle('flip');">
             <div class='flipper'>
               <!--Front Side-->
               <div class='front'>
                 <!--Avatar-->
-                <div class='avatar'><img src='{{ biz.biz.biz_pic }}' class='rounded-circle img-responsive' height='100' width='100'></div>
+                <div class='avatar'><img src='{{ item.biz.biz_pic }}' class='rounded-circle img-responsive' height='100' width='100'></div>
                 <div class='card-body'>
                   <!-- front content -->
                   <br><br>
-                  <h4><a class='card-title' href='/business-profile/{{ biz.biz.biz_name }}'>{{ biz.biz.biz_name }}</a></h4>
+                  <h4><a class='card-title' href='/business-profile/{{ item.biz.biz_name }}'>{{ item.biz.biz_name }}</a></h4>
                   <hr>
                   <div>
-                    <i class='fa fa-check-square-o prefix'></i> {{ biz.biz.tot_user_checkins(session['user_id']) }} |
-                    {% if biz.biz.deg_of_sep(session['user_id']) %}
-                      <i class='fa fa-chain prefix'></i> {{ biz.biz.deg_of_sep(session['user_id']) }}
+                    <i class='fa fa-check-square-o prefix'></i> {{ item.biz.tot_user_checkins(session['user_id']) }} |
+                    {% if item.biz.deg_of_sep(session['user_id']) %}
+                      <i class='fa fa-chain prefix'></i> {{ item.biz.deg_of_sep(session['user_id']) }}
                     {% else %}
                       <i class='fa fa-chain-broken prefix'></i>
                     {% endif %}
-                    <p>Category: {{ biz.biz.category }} | Rating: {{ biz.biz.avg_score() }}</p>
-                    <p>Address: {{ biz.biz.address }}, {{ biz.biz.city }}, {{ biz.biz.state }}</p>
+                    <p>Category: {{ item.biz.category }} | Rating: {{ item.biz.avg_score() }}</p>
+                    <p>Address: {{ item.biz.address }}, {{ item.biz.city }}, {{ item.biz.state }}  {{ item.biz.zipcode }}</p>
                   </div>
                   <hr>
                   <!--Triggering button-->
@@ -62,9 +65,10 @@
                 <div>
                   <h4 class='card-title'>About us</h4>
                   <hr>
-                  Total Check-Ins: {{ biz.biz.tot_checkins() }}</br>
-                  Total Reviews: {{ biz.biz.tot_reviews() }}</br>
-                  Total Referrals: {{ biz.biz.tot_refs () }}</br>
+                  Total Check-Ins: {{ item.biz.tot_checkins() }}</br>
+                  Total Reviews: {{ item.biz.tot_reviews() }}</br>
+                  Total Referrals: {{ item.biz.tot_refs () }}</br>
+                  Total Redemptions: {{ item.biz.tot_promos_red() }}</br>
                 </div>
                 <hr>
                 <!--Social Icons-->
@@ -87,6 +91,7 @@
         {% endif %}
       {% endfor %}
     {% endfor %}
+    {% endfor %}
   {% else %}
   <div>You haven't visited any business lately. Please supporting a budding business!</div>
   {% endif %}
@@ -99,7 +104,7 @@
 
 $('.myCard').on('click', function(evt) {
     console.log(this);
-   this.classList.toggle("flip");
+   this.classList.toggle('flip');
 });
 
  </script>

@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
+<style>
+  .container-fluid {
+    height: 1000px;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -41,21 +45,17 @@
 
   <script>
   $(document).ready(function() {
-    // $('#input-review').characterCounter();
 
     let maxLength = 5000;
     $('#input-review, textarea').keyup(function() {
       let length = $(this).val().length;
-      let length = maxLength-length;
-      $('#chars').text(length);
+      let charLeft = maxLength-length;
+      $('#chars').text(charLeft);
     });
-
-    // $('#input-review').prop('maxlength', '5000');
 
   });
 
   </script>
 
-  <!-- FIXME: character counter isn't working. -->
 
 {% endblock %}
