@@ -7,16 +7,16 @@ $(document).ready(() => {
   function makeForceGraph(error, data) {
     let dataNodes = data.nodes;
     let links = data.paths;
-    let width = 960;
-    let height = 500;
+    let width = 1700;
+    let height = 1000;
 
     let force = d3.forceSimulation(d3.values(dataNodes))
-        .force('link', d3.forceLink(links).distance(75))
+        .force('link', d3.forceLink(links).distance(60).strength(0.25))
         .force('center', d3.forceCenter(width / 2, height/ 2))
         .force('charge', d3.forceManyBody())
         .on('tick', tick);
 
-    let svg = d3.select('body')
+    let svg = d3.select('#network')
         .append('svg')
         .attr('width', width)
         .attr('height', height);
@@ -44,7 +44,7 @@ $(document).ready(() => {
     let color = d3.scaleOrdinal(d3.schemeCategory10);
 
     node.append('circle')
-        .attr('r', 15)
+        .attr('r', 7)
         .style('fill', function (d) {
           console.log(d.source);
           return color(d.adviser);
@@ -74,7 +74,7 @@ $(document).ready(() => {
             return d.target.y;
           });
 
-      node.attr("transform", function (d) {
+      node.attr('transform', function (d) {
         return 'translate(' + d.x + ',' + d.y + ')';
       });
     }
@@ -98,6 +98,8 @@ $(document).ready(() => {
       d.fx = null;
       d.fy = null;
     }
+
+
 
   }
 });

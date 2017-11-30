@@ -19,35 +19,11 @@
 
 <hr>
 
-<!--  <div class='container-fluid'>
-
-  <h3>Recent Visits</h3>
-
-    {% for group, list in user.checkins|groupby('biz.biz_name')|sort(attribute='checkin_date', reverse=True) %}
-      {% if loop.first and biz.visit_not_reviewed() %}
-        <li><a href='/busines-profile/{{ grouper }}'>{{ grouper }}:</a>
-          {% if biz.deg_of_sep(session['user_id']) %}
-            <i class='fa fa-chain prefix'></i>{{ biz.deg_of_sep(session['user_id']) }}
-          {% else %}
-            <i class='fa fa-chain-broken prefix'></i>
-          {% endif %}
-        </li>|
-          {% for biz in list %}
-            {{ biz.biz_name }}
-          <b>{{ biz.tot_checkins() }}</b>
-          {% endfor %}
-      {% endif %}
-    {% endfor %}
-
-</div>
-
-<hr> -->
-
 <div class='container-fluid'>
   {% if user.checkins %}
   <h3>Recent Visits</h3>
   <br>
-    {% for group, list in user.checkins|groupby('biz.biz_name')|sort(attribute='checkin_date', reverse=True) %}
+    {% for group, list in user.checkins|sort(attribute='checkin_date', reverse=True) %}|groupby('biz.biz_name')
       {% for biz in list %}
         {% if loop.first and biz.visit_not_reviewed() %}
         <div class='col-sm-3'>

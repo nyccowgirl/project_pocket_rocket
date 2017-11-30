@@ -148,7 +148,8 @@ class User(db.Model):
                     for friend in friends_lst(current, seen):
                         visit.append(friend)
                 if current == anchor:
-                    anchor = visit[-1]
+                    if visit:
+                        anchor = visit[-1]
                     count += 1
                     if count == (degrees + 1):
                         count = 0
@@ -389,7 +390,8 @@ class Business(db.Model):
                         for friend in friends_lst(current, seen):
                             visit.append(friend)
                     if current == anchor:
-                        anchor = visit[-1]
+                        if visit:
+                            anchor = visit[-1]
                         count += 1
                         if count == (degrees + 1):
                             count = 0

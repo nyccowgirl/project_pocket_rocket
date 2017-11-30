@@ -25,7 +25,7 @@
 
     {% if not biz.is_checkin(session['user_id']) %}
 
-      <button type='button' class='btn btn-unique btn-rounded waves-light check-in' data-review-id='{{ biz.biz_id }}' href='/checkin/{{ biz.biz_id }}' mdbRippleRadius>Check-In</button>
+      <button type='button' class='btn btn-unique btn-rounded waves-light check-in' data-review-id='{{ biz.biz_id }}' mdbRippleRadius><a href='/checkin/{{ biz.biz_id }}'>Check-In</a></button>
 
     {% endif %}
 
@@ -33,8 +33,8 @@
       <button type='button' class='btn btn-unique btn-rounded waves-light' mdbRippleRadius><a href='/review/{{ biz.biz_name }}'>Review Business</a></button>
     {% endif %}
 
-    {% if not biz.is_claimed() }}
-      <button type='button' class='btn btn-unique btn-rounded waves-light claim-biz' data-review-id='{{ biz.biz_id }}' href='/claim-biz/{{ biz.biz_id }}' mdbRippleRadius>Claim Business</button>
+    {% if not biz.is_claimed() %}
+      <button type='button' class='btn btn-unique btn-rounded waves-light claim-biz' data-review-id='{{ biz.biz_id }}' mdbRippleRadius><a href='/claim-biz/{{ biz.biz_id }}'>Claim Business</a></button>
     {% endif %}
 
       <hr>
@@ -49,7 +49,7 @@
   <div class='container-fluid'>
 
     <div>
-      Total Check-Ins: {{ biz.tot_checkins() }}| Your Check_Ins: {{ biz.tot_user_checkins() }}<br>
+      Total Check-Ins: {{ biz.tot_checkins() }}| Your Check_Ins: {{ biz.tot_user_checkins(biz.biz_id) }}<br>
       Average Rating: {{ biz.avg_score() }} | Your Rating: {{ user_score }}<br>
       Total Reviews: {{ biz.tot_reviews() }}<br>
       Total Referrals: {{ biz.tot_refs() }} | Redeemed: {{ biz.tot_refs_red() }}<br>
@@ -65,6 +65,8 @@
       TO DO: Build out total check ins, reviews, redemptions, etc. by month/year
 
     {% endif %}
+
+  <hr>
 
   <h3>About Them</h3>
 
@@ -86,7 +88,7 @@
     </div>
 
     <div>
-      <h4>Operation:</h4>
+      <h5>Operation:</h5>
       <ul>
         <li>Days: {{ biz.days_open }}</li>
         <li>Open:
@@ -107,6 +109,10 @@
     </div>
 
 <!-- TO DO: Edit business feature for owner only if claimed and others if not. -->
+
+<!-- TO DO: degrees of sep should be based on view of business so user can see relatiobship with reviewers -->
+  <hr>
+
   {% if biz.reviews %}
     <h3>Our Reviews</h3>
 
@@ -115,6 +121,7 @@
       {% if (review.dispute and (review.revise_review or review.cust_svc)) or not review.dispute %}
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
+        <i class='fa fa-users prefix'></i> {{ review.users.tot_friends() }} |
         {% if review.users.deg_of_sep(session['user_id']) %}
           <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(session['user_id']) }}
         {% else %}
@@ -129,7 +136,11 @@
               <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
             {% endif %}
           <p>{{ review.new_review }}</p>
-          <b style='color: #880e4f'>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
+          <b style='color: #880e4f'>Comment from
+            {% if review.biz.users %}
+              {{ review.biz.users[0].username }},
+            {% endif %}
+             owner of {{ review.biz.biz_name }}</b>
           <p>{{ review.response }}</p>
           <p><i>Original Rating: </i>{{ review.rating }}</p>
           <p>{{ review.review }}</p>
@@ -145,7 +156,11 @@
           {% if review.cust_svc %}
             <b><i>Customer Service Rating:</i> {{ review.cust_svc }}</b>
 
-            <b style='color: #880e4f'>Comment from {{ review.biz.users.username }}, owner of {{ review.biz.biz_name }}</b>
+            <b style='color: #880e4f'>Comment from
+              {% if review.biz.users %}
+                 {{ review.biz.users[0].username }},
+              {% endif %}
+               owner of {{ review.biz.biz_name }}</b>
             <p>{{ review.response }}</p>
           {% else %}
             {% if biz.is_owned(session['user_id']) %}
@@ -159,11 +174,12 @@
       <b>Being Addressed</b>
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
-        {% if review.users.deg_of_sep(session['user_id']) %}
-          <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(session['user_id']) }}
-        {% else %}
-          <i class='fa fa-chain-broken prefix'></i>
-        {% endif %}</li>
+          <i class='fa fa-users prefix'></i> {{ review.users.tot_friends() }} |
+          {% if review.users.deg_of_sep(session['user_id']) %}
+            <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(session['user_id']) }}
+          {% else %}
+            <i class='fa fa-chain-broken prefix'></i>
+          {% endif %}</li>
 
         <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
           {% if review.has_liked(session['user_id']) %}
@@ -174,7 +190,7 @@
         <p>{{ review.review }}</p>
         <b style='color: #880e4f'>Comment from
           {% if review.biz.users %}
-            {{ review.biz.users[0].username }},
+             {{ review.biz.users[0].username }},
           {% endif %}
            owner of {{ review.biz.biz_name }}</b>
           <p>{{ review.response }}</p>
@@ -182,13 +198,15 @@
             <button id='revise {{ review.review_id }}' class='revise-review'>Revise Review</button>
             <button id='cust-svc {{ review.review_id }}' class='cust-svc'>Rate Customer Svc</button>
 
-          <!-- TO DO: Add AJAX to update review or rate customer svc. Add total likes per review-->
+          <!-- TO DO: Add AJAX to update review or rate customer svc. -->
           {% endif %}
       </li>
       {% endif %}
     {% endfor %}
     </ul>
   {% endif %}
+
+  <hr>
 
   {% if biz.promos %}
     <h3>Our Promotions</h3>
@@ -211,7 +229,7 @@
     {% if biz.users[0].biz[1:] %}
       {% for affiliate in biz.users[0].biz %}
         {% if affiliate.biz_id != biz.biz_id %}
-          <li><a href='/business_profile/{{ affiliate.biz_name }}'>{{ affiliate.biz_name }}</a></li>
+          <li><a href='/business-profile/{{ affiliate.biz_name }}'>{{ affiliate.biz_name }}</a></li>
         {% endif %}
       {% endfor %}
     {% else %}
@@ -234,7 +252,7 @@
   'use strict';
 
 function myMap() {
-  let myCenter = new google.maps.LatLng({{biz.lat, biz.lng);
+  let myCenter = new google.maps.LatLng({{biz.lat}}, {{biz.lng}});
   let mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
   let map = new google.maps.Map(document.getElementById('googleMap'),mapProp);
   let marker = new google.maps.Marker({position:myCenter});

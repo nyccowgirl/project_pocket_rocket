@@ -101,7 +101,7 @@
     <ul>
     {% for review in friend.reviews|sort(attribute='review_date') %}
       <li>
-        <a href='/business_profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
+        <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
         {% if review.revise_review %}
           <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
             {% if review.has_liked(session['user_id']) %}
@@ -145,7 +145,7 @@
 
     <ul>
     {% for biz in friend.biz %}
-      <li><a href='/business_profile{{ biz.biz_id }}'>{{ biz.biz_name }}</a></li>
+      <li><a href='/business-profile/{{ biz.biz_name }}'>{{ biz.biz_name }}</a></li>
     {% endfor %}
     </ul>
   {% endif %}

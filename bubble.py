@@ -4,7 +4,7 @@ from model import CheckIn, Referral, Promo, Business, db, connect_to_db  # Promo
 # from sqlalchemy.sql import extract
 # from degrees import BinarySearchNode as bsn
 from sqlalchemy import func
-import json
+# import json
 
 app = Flask(__name__)
 

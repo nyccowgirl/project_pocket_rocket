@@ -2,16 +2,17 @@
 
 .node {
   fill: #ccc;
-  stroke-width: 2px;
+  stroke: #ccc;
+  stroke-width: 1px;
 }
 
 .link {
   stroke: #777;
-  stroke-width: 2px;
+  stroke-width: 1px;
 }
 
 text {
   fill: #000;
-  font: 10px sans-serif;
+  font: 10px Lato, sans-serif;
   pointer-events: none;
 }

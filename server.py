@@ -745,7 +745,7 @@ def review_home():
     return render_template('reviews_home.html', user=user)
 
 
-@app.route("/data.json")
+@app.route('/data.json')
 def get_graph_data():
     """ Create nodes and paths from friends table and jsonify for force layout."""
 
@@ -754,11 +754,11 @@ def get_graph_data():
     return jsonify({'nodes': nodes, 'paths': paths})
 
 
-@app.route('/network')
-def index_advanced():
-    """Return homepage."""
+# @app.route('/network')
+# def index_advanced():
+#     """Return homepage."""
 
-    return render_template('friend_network.html')
+#     return render_template('friend_network.html')
 
 ##############################################################################
 

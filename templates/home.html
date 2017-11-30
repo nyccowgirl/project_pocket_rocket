@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/17.2.3/css/dx.spa.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/17.2.3/css/dx.common.css" />
-    <link rel="dx-theme" data-theme="generic.light" href="https://cdn3.devexpress.com/jslib/17.2.3/css/dx.light.css" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+    <link rel='stylesheet' type='text/css' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.spa.css' />
+    <link rel='stylesheet' type='text/css' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.common.css' />
+    <link rel='dx-theme' data-theme='generic.light' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.light.css' />
 
-    <link rel="stylesheet" type ="text/css" href ="/static/css/bubble.css" />
+    <link rel='stylesheet' type='text/css' href='/static/css/bubble.css' />
+    <link rel='stylesheet' type='text/css' href='/static/css/friend_network.css'>
 
     <style>
     a {
@@ -40,11 +41,17 @@
         <div id='chart'></div>
     </div>
 
-  <p><a href="/trends">Feature</a></p>
+  <br><br><br>
 
-  Perhaps use D3 to visualize a business and its referrals/network or a user's referrals/network<br>
+  <h2>What a wicked web we weave...</h2>
 
-  <iframe src="https://giphy.com/embed/3oz8xPAA0RduEWPEKQ" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/fullerhouse-netflix-funny-3oz8xPAA0RduEWPEKQ">via GIPHY</a></p>
+  <br>
+
+    <div id='network'>
+
+
+    </div>
+
 
 
 </div>
@@ -244,9 +251,11 @@
 
 {% block script %}
 
-  <script src="https://cdn3.devexpress.com/jslib/17.2.3/js/dx.all.js"></script>
-  <script src="/static/js/bubble_data.js"></script>
-  <script defer src="/static/js/bubble.js"></script>
+  <script src='https://cdn3.devexpress.com/jslib/17.2.3/js/dx.all.js'></script>
+  <script src='/static/js/bubble_data.js'></script>
+  <script src='/static/js/bubble.js'></script>
+  <script src='https://d3js.org/d3.v4.min.js'></script>
+  <script type='text/javascript' src='/static/js/friend_network.js'></script>
   <script type='text/javascript' src='/static/js/modular.js'></script>
 
 {% endblock %}

@@ -289,4 +289,17 @@ $(document).ready(() => {
   //   $('#biz-search').submit();
   // })
 
+  $("#myInputAvail").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+  $("#myInputRed").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTableRed tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 });
