@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
-{% block content
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
 
 
 <!-- TO DO: Make the below a modal on individual biz page -->
@@ -20,17 +25,37 @@
     </select><br>
     <br>
     Review:<br>
-      <div class="md-form">
-        <textarea class="md-textarea" id="input_text" type="text" length="5000" mdbCharCounter mdbActive></textarea>
-        <label for="input_text">Type your review</label>
+      <div class='md-form'>
+        <textarea class='md-textarea' id='input-review' type='text' length='5000' mdbCharCounter mdbActive></textarea>
+        <label for='input-review'>Type your review</label>
+        Remaining characters: <i id='chars'></i>
       </div>
     <input type='submit'>
   </form>
 
 </div>
 
-{% endblock}
+{% endblock %}
 
 {% block script %}
+
+  <script>
+  $(document).ready(function() {
+    // $('#input-review').characterCounter();
+
+    let maxLength = 5000;
+    $('#input-review, textarea').keyup(function() {
+      let length = $(this).val().length;
+      let length = maxLength-length;
+      $('#chars').text(length);
+    });
+
+    // $('#input-review').prop('maxlength', '5000');
+
+  });
+
+  </script>
+
+  <!-- FIXME: character counter isn't working. -->
 
 {% endblock %}

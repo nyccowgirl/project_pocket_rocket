@@ -29,7 +29,7 @@
 
     {% endif %}
 
-    {% if not biz.has_reviewed(session['user_id']) %}
+    {% if (not biz.has_reviewed(session['user_id'])) or (not biz.is_claimed) %}
       <button type='button' class='btn btn-unique btn-rounded waves-light' mdbRippleRadius><a href='/review/{{ biz.biz_name }}'>Review Business</a></button>
     {% endif %}
 
@@ -122,8 +122,8 @@
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
         <i class='fa fa-users prefix'></i> {{ review.users.tot_friends() }} |
-        {% if review.users.deg_of_sep(session['user_id']) %}
-          <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(session['user_id']) }}
+        {% if review.users.deg_of_sep(review.user_id) %}
+          <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(review.user_id) }}
         {% else %}
           <i class='fa fa-chain-broken prefix'></i>
         {% endif %}</li>
@@ -175,8 +175,8 @@
       <li>
         <a href='/user_profile/{{ review.user_id }}'>{{ review.users.username}}</a>
           <i class='fa fa-users prefix'></i> {{ review.users.tot_friends() }} |
-          {% if review.users.deg_of_sep(session['user_id']) %}
-            <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(session['user_id']) }}
+          {% if review.users.deg_of_sep(review.user_id) %}
+            <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(review.user_id) }}
           {% else %}
             <i class='fa fa-chain-broken prefix'></i>
           {% endif %}</li>

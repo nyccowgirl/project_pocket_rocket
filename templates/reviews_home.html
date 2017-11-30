@@ -23,9 +23,9 @@
   {% if user.checkins %}
   <h3>Recent Visits</h3>
   <br>
-    {% for group, list in user.checkins|sort(attribute='checkin_date', reverse=True) %}|groupby('biz.biz_name')
+    {% for grouper, list in user.checkins|sort(attribute='checkin_date', reverse=True)|groupby('biz.biz_name') %}
       {% for biz in list %}
-        {% if loop.first and biz.visit_not_reviewed() %}
+        {% if loop.first and biz.biz.visit_not_reviewed(session['user_id']) %}
         <div class='col-sm-3'>
           <!--Rotating card-->
           <div id='myCard-{{ biz.biz.biz_id }}' class="myCard flip-container" ontouchstart="this.classList.toggle('flip');">
@@ -40,9 +40,9 @@
                   <h4><a class='card-title' href='/business-profile/{{ biz.biz.biz_name }}'>{{ biz.biz.biz_name }}</a></h4>
                   <hr>
                   <div>
-                    <i class='fa fa-check-square-o prefix'></i>{{ biz.biz.tot_user_checkins() }} |
+                    <i class='fa fa-check-square-o prefix'></i> {{ biz.biz.tot_user_checkins(session['user_id']) }} |
                     {% if biz.biz.deg_of_sep(session['user_id']) %}
-                      <i class='fa fa-chain prefix'></i>{{ friend.deg_of_sep(session['user_id']) }}
+                      <i class='fa fa-chain prefix'></i> {{ biz.biz.deg_of_sep(session['user_id']) }}
                     {% else %}
                       <i class='fa fa-chain-broken prefix'></i>
                     {% endif %}
@@ -60,7 +60,7 @@
               <div class='back'>
                 <!-- back content -->
                 <div>
-                  <h4 class='card-title'>About me</h4>
+                  <h4 class='card-title'>About us</h4>
                   <hr>
                   Total Check-Ins: {{ biz.biz.tot_checkins() }}</br>
                   Total Reviews: {{ biz.biz.tot_reviews() }}</br>
