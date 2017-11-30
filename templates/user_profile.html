@@ -22,6 +22,45 @@
 
   <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalEdit' mdbRippleRadius>Edit Me</button>
 
+  </div>
+
+  <hr>
+
+  <div class='container-fluid'>
+
+  <h3>About Me</h3>
+
+    <div>
+      <ul>
+        First Name: {{ user.first_name }}<br>
+        Last Name: {{ user.last_name }}<br>
+        User Name: {{ user.username }}<br>
+        Email: {{ user.email }}<br>
+        Password: {{ user.password }}<br>
+        Birthday: {{ user.dob|datetimeformat('%d %b %Y') }}<br>
+      </ul>
+    </div>
+
+  <hr>
+
+  <h3>My Digits</h3>
+
+    <div>
+      <ul>
+        Total Check-Ins: {{ user.tot_checkins() }}<br>
+        Total Reviews: {{ user.tot_reviews() }}<br>
+        Total Referrals: {{ user.tot_refs() }} | Referrals Redeemed: {{ user.tot_refs_reds() }}<br>
+        Total Promos Redeemed: {{ user.tot_reds() }}<br>
+        Total Friends: {{ user.tot_friends() }}<br>
+        Total Businesses Visited: {{ user.tot_unique_biz() }}<br>
+        Total Businesses Referred to Friends: {{ user.tot_biz_referrals() }}<br>
+      </ul>
+    </div>
+
+    <!-- TO DO: Build out D3 Interactive Network Visualization. http://flowingdata.com/2012/08/02/how-to-make-an-interactive-network-visualization/ -->
+
+  </div>
+
   <!--Modal: Register Form-->
   <form action='/edit-user' method='POST' mdbModal #form='mdb-modal' class='modal fade' id='modalEdit' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
     <div class='modal-dialog cascading-modal' role='document'>
@@ -91,43 +130,6 @@
     </div>
   </form>
   <!--Modal: Register form-->
-  </div>
-
-  <hr>
-
-  <div class='container-fluid'>
-
-  <h3>About Me</h3>
-
-    <div>
-      <ul>
-        First Name: {{ user.first_name }}<br>
-        Last Name: {{ user.last_name }}<br>
-        User Name: {{ user.username }}<br>
-        Email: {{ user.email }}<br>
-        Password: {{ user.password }}<br>
-        Birthday: {{ user.dob|datetimeformat('%d %b %Y') }}<br>
-    </div>
-
-<hr>
-
-  <h3>My Digits</h3>
-
-    <div>
-      <ul>
-        Total Check-Ins: {{ user.tot_checkins() }}<br>
-        Total Reviews: {{ user.tot_reviews() }}<br>
-        Total Referrals: {{ user.tot_refs() }} | Referrals Redeemed: {{ user.tot_refs_reds() }}<br>
-        Total Promos Redeemed: {{ user.tot_reds() }}<br>
-        Total Friends: {{ user.tot_friends() }}<br>
-        Total Businesses Visited: {{ user.tot_unique_biz() }}<br>
-        Total Businesses Referred to Friends: {{ user.tot_biz_referrals() }}<br>
-      </ul>
-    </div>
-
-    <!-- TO DO: Build out D3 Interactive Network Visualization. http://flowingdata.com/2012/08/02/how-to-make-an-interactive-network-visualization/ -->
-
-  </div>
 
 {% endblock %}
 

@@ -99,7 +99,5 @@ $(document).ready(() => {
       d.fy = null;
     }
 
-
-
   }
 });

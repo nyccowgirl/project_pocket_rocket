@@ -37,31 +37,32 @@
 
       <ul>
       {% for grouper, list in user.referrals|groupby('biz.biz_name') %}
-        <li><a href='/busines-profile/{{ grouper }}'>{{ grouper }}:</a> |
+        <li><a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a> |
           {% for each in list %}
             {% if loop.first and each.biz.deg_of_sep(session['user_id']) %}
             <!-- FIXME: Not sure if that is right syntax -->
               <i class='fa fa-chain prefix'></i> {{ each.biz.deg_of_sep(session['user_id']) }}
             {% else %}
               <i class='fa fa-chain-broken prefix'></i>
-            {% endif %}</li>
+            {% endif %}
+        </li>
         <ul>
-            <li>{{ each.referee.username }} | <i class='fa fa-users prefix'></i> {{ each.referee.tot_friends() }} |
-              {% if each.referee.deg_of_sep(session['user_id']) %}
-                <i class='fa fa-chain prefix'></i> {{ each.referee.deg_of_sep(session['user_id']) }}
-              {% else %}
-                <i class='fa fa-chain-broken prefix'></i>
+          <li>{{ each.referee.username }} | <i class='fa fa-users prefix'></i> {{ each.referee.tot_friends() }} |
+            {% if each.referee.deg_of_sep(session['user_id']) %}
+              <i class='fa fa-chain prefix'></i> {{ each.referee.deg_of_sep(session['user_id']) }}
+            {% else %}
+              <i class='fa fa-chain-broken prefix'></i>
+            {% endif %}
+          </li>
+        </ul>
+          <ul>
+            <li>refer date {{ each.refer_date|datetimeformat('%d %b %Y') }}
+              {% if each.user_promo.redeemed %}
+               | redeem date {{ each.user_promo.redeem_date|datetimeformat('%d %b %Y') }}
               {% endif %}
             </li>
-              <ul>
-                <li>refer date {{ each.refer_date|datetimeformat('%d %b %Y') }}
-                {% if each.user_promo.redeemed %}
-                 | redeem date {{ each.user_promo.redeem_date|datetimeformat('%d %b %Y') }}
-                {% endif %}
-                </li>
-              </ul>
+          </ul>
           {% endfor %}
-        </ul>
       {% endfor %}
       </ul>
   {% else %}

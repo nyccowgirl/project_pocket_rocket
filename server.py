@@ -9,7 +9,7 @@ from datetime import datetime
 import helper
 import re
 # import constants as c
-from sqlalchemy import or_
+from sqlalchemy import or_, desc
 from bubble import bubble_data
 from friend_network import make_nodes_and_paths
 
@@ -738,11 +738,14 @@ def search():
 
 @app.route('/review-home')
 def review_home():
-    """Displays review home page."""
+    """Displays review home page with list of businesses that have been checked into
+    but not reviewed by user, limited to most recent 10."""
 
-    user = User.query.filter_by(user_id=session['user_id']).first()
+    # user = User.query.filter_by(user_id=session['user_id']).first()
 
-    return render_template('reviews_home.html', user=user)
+    recent_checkins = CheckIn.query.filter_by(user_id=session['user_id']).order_by(desc(CheckIn.checkin_date)).group_by(CheckIn.checkin_id, CheckIn.biz_id).limit(10).all()
+
+    return render_template('reviews_home.html', checkins=recent_checkins)
 
 
 @app.route('/data.json')

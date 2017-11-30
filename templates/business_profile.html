@@ -67,7 +67,9 @@
 
   <h3>About Them</h3>
 
-    <div class='container'>
+    <div class='row'>
+
+      <div class='col-md-3'>
 
       <div>
         <address>
@@ -103,12 +105,14 @@
           </li>
         </ul>
       </div>
+
     </div>
 
 <!-- TO DO: Edit business feature for owner only if claimed and others if not. -->
     <!-- Add Google Maps -->
 
-    <div id='googleMap' class='container' style='width:400px;height:300px;'></div>
+    <div id='googleMap' class='col-md-9' style='width:1000px;height:400px;'></div>
+    </div>
 
   <hr>
 
@@ -225,6 +229,7 @@
   {% endif %}
 
   {% if biz.users %}
+    <hr>
     <h3>Business Affiliates</h3>
 
     <ul>
@@ -246,7 +251,6 @@
 
 {% block script %}
 
-<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap'></script>
 
 <script type='text/javascript'>
   'use strict';
@@ -254,17 +258,19 @@
   function myMap() {
     let myCenter = new google.maps.LatLng({{ biz.lat }}, {{ biz.lng }});
     let mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.TERRAIN};
-    let map = new google.maps.Map(document.getElementById('#googleMap'),mapProp);
-    let marker = new google.maps.Marker({position:myCenter, icon: 'pinkball.png', title: 'Hover text', animation: google.maps.Animation.BOUNCE});
+    let map = new google.maps.Map(document.getElementById('googleMap'),mapProp);
+    let marker = new google.maps.Marker({position:myCenter, icon: '/static/img/chartreuse_marker.png', title: 'Hover text', animation: google.maps.Animation.BOUNCE});
     google.maps.event.addListener(marker,'click', function() {
       let infowindow = new google.maps.InfoWindow({
-        content:{{ biz.biz_name }}
+        content: '{{ biz.biz_name }}'
       });
     infowindow.open(map,marker);
     });
     marker.setMap(map);
   }
 </script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrYJl6Axgb5VRkVnx64MOTBtXr7OFTfDc&callback=myMap"></script>
 
 <script>
   $(document).ready(function(){

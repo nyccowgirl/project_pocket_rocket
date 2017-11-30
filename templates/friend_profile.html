@@ -14,13 +14,119 @@
       {% endif %}
     </div>
      <h2>{{ friend.username }}</h2>
-  </div>
 
   <hr>
 
   <div class='container-fluid'>
 
   <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalAddFriend' mdbRippleRadius>Add A Friend</button>
+
+  </div>
+
+  <div class='container-fluid'>
+
+  <hr>
+  <h3>About {{ friend.username }}</h3>
+    <div>
+      <ul>
+        First Name: {{ friend.first_name }}<br>
+        Last Name: {{ friend.last_name }}<br>
+        User Name: {{ friend.username }}<br>
+        Member Since: {{ friend.join_date|datetimeformat('%b %Y') }}<br>
+      </ul>
+    </div>
+
+  <h3>Zir Digits</h3>
+
+    <div>
+      <ul>
+        Check-Ins: {{ friend.tot_checkins() }}</br>
+        Reviews: {{ friend.tot_reviews() }}</br>
+        Referrals: {{ friend.tot_refs() }} | Redeemed: {{ friend.tot_refs_reds() }}</br>
+        Promos Redeemed: {{ friend.tot_reds() }}</br>
+        Friends: {{ friend.tot_friends() }}</br>
+        Total Businesses Visited: {{ friend.tot_unique_biz() }}</br>
+        Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</br>
+      </ul>
+    </div>
+
+  {% if friend.friends %}
+    <hr>
+    <h3>Zir Friends</h3>
+
+    <ul>
+    {% for friend in friend.friends|sort(attribute='username') %}
+      <li>
+        {% if friend.user_id == session['user_id'] %}
+          <a href='/user-profile'> {{ friend.username }}</a>
+        {% else %}
+          <a href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a>
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if friend.reviews %}
+    <hr>
+    <h3>Zir Reviews</h3>
+
+    <ul>
+    {% for review in friend.reviews|sort(attribute='review_date') %}
+      <li>
+        <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
+        {% if review.revise_review %}
+          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
+            {% if review.has_liked(session['user_id']) %}
+              <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
+            {% else %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
+            {% endif %}
+          </p>
+          <p>{{ review.new_review }}</p>
+        {% else %}
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
+            {% if review.has_liked(session['user_id']) %}
+              <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
+            {% else %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
+            {% endif %}
+          </p>
+          <p>{{ review.review }}</p>
+        {% endif %}
+        {% if review.dispute %}
+          <b style='color: #880e4f'>Comment from
+            {% if review.biz.users %}
+              {{ review.biz.users[0].username }},
+            {% endif %}
+             owner of {{ review.biz.biz_name }}</b>
+          <p>{{ review.response }}</p>
+          {% if review.cust_svc %}
+            <b><i>Customer Service Rating: </i>{{ review.cust_svc }}</b>
+          {% endif %}
+          {% if review.revise_review %}
+            <p><i>Original Rating: </i>{{ review.rating }}</p>
+            <p>{{ review.review }}</p>
+          {% endif %}
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <!-- TO DO: Add total likes per review -->
+
+  {% if friend.biz %}
+    <hr>
+    <h3>Zir Business(es)</h3>
+
+    <ul>
+    {% for biz in friend.biz %}
+      <li><a href='/business-profile/{{ biz.biz_name }}'>{{ biz.biz_name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+</div>
 
   <!--Modal: Login with Avatar Form-->
   <form action='/add-friend' method='POST' mdbModal #form='mdb-modal' class='modal fade' id='modalAddFriend' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
@@ -53,102 +159,6 @@
       </div>
   </form>
   <!--Modal: Login with Avatar Form-->
-  </div>
-
-  <hr>
-  <h3>About {{ friend.username }}</h3>
-    <div>
-      <ul>
-        First Name: {{ friend.first_name }}<br>
-        Last Name: {{ friend.last_name }}<br>
-        User Name: {{ friend.username }}<br>
-        Member Since: {{ friend.join_date|datetimeformat('%b %Y') }}<br>
-    </div>
-
-  <h3>Zir Digits</h3>
-
-    <div>
-      <ul>
-        Check-Ins: {{ friend.tot_checkins() }}</br>
-        Reviews: {{ friend.tot_reviews() }}</br>
-        Referrals: {{ friend.tot_refs() }} | Redeemed: {{ friend.tot_refs_reds() }}</br>
-        Promos Redeemed: {{ friend.tot_reds() }}</br>
-        Friends: {{ friend.tot_friends() }}</br>
-        Total Businesses Visited: {{ friend.tot_unique_biz() }}</br>
-        Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</br>
-      </ul>
-    </div>
-
-  {% if friend.friends %}
-    <h3>Zir Friends</h3>
-
-    <ul>
-    {% for friend in friend.friends|sort(attribute='username') %}
-      <li>
-        {% if friend.user_id == session['user_id'] %}
-          <a href='/user-profile'> {{ friend.username }}</a>
-        {% else %}
-          <a href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a>
-        {% endif %}
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-
-  {% if friend.reviews %}
-    <h3>Zir Reviews</h3>
-
-    <ul>
-    {% for review in friend.reviews|sort(attribute='review_date') %}
-      <li>
-        <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
-        {% if review.revise_review %}
-          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
-            {% if review.has_liked(session['user_id']) %}
-              <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
-            {% else %}
-              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
-            {% endif %}
-          <p>{{ review.new_review }}</p>
-        {% else %}
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
-            {% if review.has_liked(session['user_id']) %}
-              <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
-            {% else %}
-              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
-            {% endif %}
-          <p>{{ review.review }}</p>
-        {% endif %}
-        {% if review.dispute %}
-          <b style='color: #880e4f'>Comment from
-            {% if review.biz.users %}
-              {{ review.biz.users[0].username }},
-            {% endif %}
-             owner of {{ review.biz.biz_name }}</b>
-          <p>{{ review.response }}</p>
-          {% if review.cust_svc %}
-            <b><i>Customer Service Rating: </i>{{ review.cust_svc }}</b>
-          {% endif %}
-          {% if review.revise_review %}
-            <p><i>Original Rating: </i>{{ review.rating }}</p>
-            <p>{{ review.review }}</p>
-          {% endif %}
-        {% endif %}
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-  <!-- TO DO: Add total likes per review -->
-
-  {% if friend.biz %}
-    <h3>Zir Business(es)</h3>
-
-    <ul>
-    {% for biz in friend.biz %}
-      <li><a href='/business-profile/{{ biz.biz_name }}'>{{ biz.biz_name }}</a></li>
-    {% endfor %}
-    </ul>
-  {% endif %}
 
 {% endblock %}
 

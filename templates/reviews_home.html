@@ -22,13 +22,12 @@
 <hr>
 
 <div class='container'>
-  {% if user.checkins %}
+  {% if checkins %}
   <h3>Recent Visits</h3>
   <br>
-    {% for grouper, list in user.checkins|sort(attribute='checkin_date', reverse=True)|groupby('biz.biz_name') %}
-      {% for i in grouper[:10] %}
-      {% for item in list %}
-        {% if loop.first and item.biz.visit_not_reviewed(session['user_id']) %}
+
+    {% for item in checkins %}
+        {% if item.biz.visit_not_reviewed(session['user_id']) %}
         <div class='col-sm-3'>
           <!--Rotating card-->
           <div id='myCard-{{ item.biz.biz_id }}' class='myCard flip-container' ontouchstart="this.classList.toggle('flip');">
