@@ -21,14 +21,13 @@
 
 <hr>
 
-<div class='container'>
+<div class='container-fluid'>
   {% if checkins %}
   <h3>Recent Visits</h3>
   <br>
 
     {% for item in checkins %}
         {% if item.biz.visit_not_reviewed(session['user_id']) %}
-        <div class='col-sm-3'>
           <!--Rotating card-->
           <div id='myCard-{{ item.biz.biz_id }}' class='myCard flip-container' ontouchstart="this.classList.toggle('flip');">
             <div class='flipper'>
@@ -85,11 +84,8 @@
               <!--/.Back Side-->
             </div>
           </div>
-        </div>
         <!--/.Rotating card-->
         {% endif %}
-      {% endfor %}
-    {% endfor %}
     {% endfor %}
   {% else %}
   <div>You haven't visited any business lately. Please supporting a budding business!</div>
