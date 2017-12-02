@@ -1,17 +1,31 @@
 {% extends 'base.html' %}
+
+{% block head %}
+<style>
+  .container-fluid {
+    height: 1000px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+<!-- TO DO: Make the below a modal on individual biz page -->
 {% block content %}
 
 <div class='container-fluid'>
 
 <h1>Response to Review</h1>
 
-<h2>{{ biz_name }}</h2>
+<h2>{{ review.biz.biz_name }} to {{ review.users.username }}</h2>
 
-  <form action='/respond/{{ biz_name }}' method='POST'>
+  <form action='/respond/{{ review.review_id }}' method='POST'>
     Response:<br>
-      <div class="md-form">
-        <textarea class="md-textarea" id="input_text" type="text" length="5000" mdbCharCounter mdbActive></textarea>
-        <label for="input_text">Type your response</label>
+      <div class='md-form'>
+        <textarea class='md-textarea' id='input-response' type='text' length='5000' name='rev-response' mdbCharCounter mdbActive></textarea>
+        <label for='input-response'>Type your response</label>
+        Remaining characters: <i id='charsResponse'></i>
       </div>
     <input type='submit'>
   </form>
@@ -19,3 +33,22 @@
 </div>
 
 {% endblock}
+
+{% block script %}
+
+  <script>
+  $(document).ready(function() {
+
+    let maxLength = 5000;
+    $('#input-response, textarea').keyup(function() {
+      let length = $(this).val().length;
+      let charLeft = maxLength-length;
+      $('#charsResponse').text(charLeft);
+    });
+
+  });
+
+  </script>
+
+
+{% endblock %}

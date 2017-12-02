@@ -44,6 +44,17 @@
   <br><br><br>
 
   <h2>What a wicked web we weave...</h2>
+    <form id='degree' action='/data.json' method='POST' enctype='multipart/form-data'>
+<!--         Degree(s) of Separation:<select name='degree'>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='3'>3</option>
+          <option value='4'>4</option>
+          <option value='5'>5</option>
+          <option value='6'>6</option>
+        </select>
+      <input type='submit'>
+    </form> -->
 
   <br>
 
@@ -61,6 +72,7 @@
   <div class='modal-dialog cascading-modal' role='document'>
     <!-- Content -->
     <div class='modal-content'>
+      <!-- FIXME: move body div b/f panes -->
       <!-- Modal cascading tabs -->
       <div class='modal-c-tabs'>
         <!-- Nav tabs -->
@@ -121,7 +133,7 @@
 
           <!-- Registration Panel -->
           <div id='register-div' class='tab-pane fade'>
-            <form action='/register' method='POST'  role='tabpanel' id='register-form'enctype='multipart/form-data'>
+            <form action='/register' method='POST'  role='tabpanel' id='register-form' enctype='multipart/form-data'>
 
               <!-- Body -->
               <div class='modal-body'>

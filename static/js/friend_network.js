@@ -12,6 +12,7 @@ $(document).ready(() => {
 
     let force = d3.forceSimulation(d3.values(dataNodes))
         .force('link', d3.forceLink(links).distance(60).strength(0.25))
+        // .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(60))
         .force('center', d3.forceCenter(width / 2, height/ 2))
         .force('charge', d3.forceManyBody())
         .on('tick', tick);
@@ -41,13 +42,16 @@ $(document).ready(() => {
               .on('drag', dragged)
               .on('end', dragended));
 
-    let color = d3.scaleOrdinal(d3.schemeCategory10);
+    let color = d3.scaleOrdinal(d3.schemeCategory20);
 
     node.append('circle')
         .attr('r', 7)
+        .attr('fill', function(d) { return color(d.group); })
+        // .style("fill", function(d) { return d.id; });
         .style('fill', function (d) {
-          console.log(d.source);
-          return color(d.adviser);
+          // console.log(d.source);
+          // return color(d.group(getRandomInt(0, 19)));
+          return color(d.group);
         });
 
     // add the text
@@ -97,6 +101,10 @@ $(document).ready(() => {
 
       d.fx = null;
       d.fy = null;
+    }
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
   }

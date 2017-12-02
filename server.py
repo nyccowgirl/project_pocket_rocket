@@ -4,14 +4,14 @@ from flask import (Flask, render_template, request, flash, redirect,
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
-                   LikeReview, Friend)
+                   LikeReview, Friend, Invite)
 from datetime import datetime
 import helper
 import re
 # import constants as c
 from sqlalchemy import or_, desc
 from bubble import bubble_data
-from friend_network import make_nodes_and_paths
+from friend_network import make_nodes_and_paths, see_friends
 
 app = Flask(__name__)
 
@@ -355,7 +355,7 @@ def user_friends():
 def add_friend():
     """Processes add friend request."""
 
-    friend_email = request.form.get('friend_email')
+    friend_email = request.form.get('friend-email')
 
     # TO DELETE
     # print u'\n\n\n{}\n\n\n'.format(friend_email)
@@ -365,6 +365,14 @@ def add_friend():
     friend = User.query.filter_by(email=friend_email).first()
 
     if not friend:
+        # TO DO: Use third party API like MailChimp/Mandrill to generate registration
+        # friend request email
+
+        invite = Invite(user_id=session['user_id'], friend_email=friend_email)
+
+        db.session.add(invite)
+        db.session.commit()
+
         results = 'A request has been sent to ' + friend_email
     else:
         # Checks if already existing friends
@@ -665,11 +673,11 @@ def check_in(biz_id):
 
         user_checkins = helper.calc_checkins_biz(biz_id)
 
-        results = ('You have checked in a total of {} times. {} thanks you for your support!'.format(user_checkins, biz.biz_name))
+        results = ('You have checked in a total of {} times. {} thanks you for your support!'.format(user_checkins, biz_name))
 
     # TO DELETE
     # print u'\n\n\n{}\n\n\n'.format(biz_name)
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
 
     # return redirect('/'))
 
@@ -752,8 +760,12 @@ def review_home():
 def get_graph_data():
     """ Create nodes and paths from friends table and jsonify for force layout."""
 
-    nodes, paths = make_nodes_and_paths()
+    # degree = request.form.get('degree')
+    # print degree
 
+    # nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], int(degree)))
+    nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], 2))
+    # print nodes
     return jsonify({'nodes': nodes, 'paths': paths})
 
 
@@ -762,6 +774,30 @@ def get_graph_data():
 #     """Return homepage."""
 
 #     return render_template('friend_network.html')
+
+@app.route('/respond/<int:review_id>')
+def response_form(review_id):
+    """ Displays response form to a specific user review for business. """
+
+    review = Review.query.filter_by(review_id=review_id).first()
+
+    return render_template('response_form.html', review=review)
+
+
+@app.route('/respond/<int:review_id>', methods=['POST'])
+def rev_resp_process(review_id):
+
+    response = request.form.get('ref-response')
+
+    rev_resp = Review(dispute=True, response=response)
+
+    db.session.add(rev_resp)
+    db.session.commit()
+
+    flash("Your response has been posted. Thanks for addressing the reviewer's comments.")
+
+    return redirect('/user-biz')
+
 
 ##############################################################################
 

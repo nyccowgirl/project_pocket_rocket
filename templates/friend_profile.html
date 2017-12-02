@@ -29,6 +29,12 @@
   <h3>About {{ friend.username }}</h3>
     <div>
       <ul>
+        <i class='fa fa-users prefix'></i> {{ friend.tot_friends() }} |
+        {% if friend.deg_of_sep(session['user_id']) %}
+          <i class='fa fa-chain prefix'></i> {{ friend.deg_of_sep(session['user_id']) }}
+        {% else %}
+          <i class='fa fa-chain-broken prefix'></i>
+        {% endif %}
         First Name: {{ friend.first_name }}<br>
         Last Name: {{ friend.last_name }}<br>
         User Name: {{ friend.username }}<br>

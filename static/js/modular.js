@@ -7,9 +7,9 @@ $(document).ready(() => {
 
   $(function() {
 
-    let $formLogin = $('#login-form');
-    let $formLost = $('#lost-form');
-    let $formRegister = $('#register-form');
+    let $formLogin = $('#login-div');
+    let $formLost = $('#lost-div');
+    let $formRegister = $('#register-div');
     let $divForms = $('#div-forms');
     let $modalAnimateTime = 300;
     let $msgAnimateTime = 150;
@@ -36,6 +36,15 @@ $(document).ready(() => {
           // return false;
           // FIXME: Runs in a loop for a long time before it renders but had to move
           // evt.preventDefault() to each case rather than at top
+        // case 'degree':
+        //   evt.preventDefault();
+        //   console.log(test);
+        //   debugger;
+        //   $.post('/data.json', test, () => {
+        //     // return false;
+        //     location.reload(true);
+        //   });
+          break;
         case 'login-form':
           evt.preventDefault();
           $.post('/login', test, displayMsg);
