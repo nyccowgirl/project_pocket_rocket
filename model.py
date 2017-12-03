@@ -470,6 +470,7 @@ class Referral(db.Model):
     biz_id = db.Column(db.Integer, db.ForeignKey('businesses.biz_id'))
     refer_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     userpromo_id = db.Column(db.Integer, db.ForeignKey('user_promos.userpromo_id'))
+    redeemed = db.Column(db.Boolean, nullable=True, default=False)
 
     user_promo = db.relationship('UserPromo', backref='referral')
 

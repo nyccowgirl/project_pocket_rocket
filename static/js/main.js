@@ -65,6 +65,26 @@ $(document).ready(() => {
   $friend.on('submit', sendFriend);
 
 
+// processes biz referral
+
+  let $referral = $('$modalReferFriend');
+
+  function referMsg(results) {
+    alert(results);
+  }
+
+  function referFriend(evt) {
+    evt.preventDefault();
+    let formInputs = {'friend-ref[]': []};
+    $(':checked').each(function() {
+      formInputs['friend-ref[]'].push($(this).val());
+    });
+    $.post('/refer/{{ biz.biz_id }}', formInputs, referMsg);
+  }
+
+  $referral.on('submit', referFriend);
+
+
 // processes claim of biz
 
   let $claim = $('.claim-biz');

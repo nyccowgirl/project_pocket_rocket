@@ -37,13 +37,15 @@
 
       <ul>
       {% for grouper, list in user.referrals|groupby('biz.biz_name') %}
-        <li><a href='/business-profile/{{ grouper }}'>{{ grouper }}:</a> |
+        <li><a href='/business-profile/{{ grouper }}'>{{ grouper }}</a> |
           {% for each in list %}
-            {% if loop.first and each.biz.deg_of_sep(session['user_id']) %}
-            <!-- FIXME: Not sure if that is right syntax -->
-              <i class='fa fa-chain prefix'></i> {{ each.biz.deg_of_sep(session['user_id']) }}
-            {% else %}
-              <i class='fa fa-chain-broken prefix'></i>
+            {% if loop.first %}
+              {% if each.biz.deg_of_sep(session['user_id']) %}
+              <!-- FIXME: Not sure if that is right syntax -->
+                <i class='fa fa-chain prefix'></i> {{ each.biz.deg_of_sep(session['user_id']) }}
+              {% else %}
+                <i class='fa fa-chain-broken prefix'></i>
+              {% endif %}
             {% endif %}
         </li>
         <ul>
@@ -54,15 +56,15 @@
               <i class='fa fa-chain-broken prefix'></i>
             {% endif %}
           </li>
+            <ul>
+              <li>refer date: {{ each.refer_date|datetimeformat('%d %b %Y') }}
+                {% if each.user_promo.redeemed %}
+                | redeem date: {{ each.user_promo.redeem_date|datetimeformat('%d %b %Y') }}
+                {% endif %}
+              </li>
+            </ul>
         </ul>
-          <ul>
-            <li>refer date {{ each.refer_date|datetimeformat('%d %b %Y') }}
-              {% if each.user_promo.redeemed %}
-               | redeem date {{ each.user_promo.redeem_date|datetimeformat('%d %b %Y') }}
-              {% endif %}
-            </li>
-          </ul>
-          {% endfor %}
+        {% endfor %}
       {% endfor %}
       </ul>
   {% else %}

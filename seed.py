@@ -171,7 +171,8 @@ def create_referrals():
                                                           fake.random_int(min=1, max=1000),
                                                           fake.date_this_decade(before_today=True,
                                                                                 after_today=False),
-                                                          i + 1))
+                                                          i + 1),
+                                                          fake.boolean(chance_of_getting_true=70))
 
                 redeemed = fake.boolean(chance_of_getting_true=50)
 
@@ -566,16 +567,23 @@ def load_referrals():
     for row in open('data/referrals.txt', 'rU'):
         row = row.rstrip()
 
-        referer_id, referee_id, biz_id, refer_date_str, userpromo_id = row.split('|')
+        referer_id, referee_id, biz_id, refer_date_str, userpromo_id, redeemed = row.split('|')
 
         # Convert to datetime format
         refer_date = datetime.strptime(refer_date_str, '%Y-%m-%d')
+
+        # Convert from string to boolean
+        if redeemed == 'True':
+            redeemed = True
+        else:
+            redeemed = False
 
         referral = Referral(referer_id=int(referer_id),
                             referee_id=int(referee_id),
                             biz_id=int(biz_id),
                             refer_date=refer_date,
-                            userpromo_id=int(userpromo_id))
+                            userpromo_id=int(userpromo_id),
+                            redeemed=redeemed)
 
         # Add each referral to the session
         db.session.add(referral)

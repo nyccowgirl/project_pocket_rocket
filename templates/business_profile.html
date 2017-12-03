@@ -23,13 +23,15 @@
 
   <div class='container-fluid'>
 
+    <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalReferFriend'mdbRippleRadius>Refer Business</button>
+
     {% if not biz.is_checkin(session['user_id']) %}
 
       <button type='button' class='btn btn-unique btn-rounded waves-light check-in' data-review-id='{{ biz.biz_id }}' mdbRippleRadius><a href='/checkin/{{ biz.biz_id }}'>Check-In</a></button>
 
     {% endif %}
 
-    {% if (not biz.has_reviewed(session['user_id'])) or (not biz.is_claimed) %}
+    {% if (not biz.has_reviewed(session['user_id'])) or (not biz.is_owned) %}
       <button type='button' class='btn btn-unique btn-rounded waves-light' mdbRippleRadius><a href='/review/{{ biz.biz_name }}'>Review Business</a></button>
     {% endif %}
 
@@ -250,6 +252,47 @@
   {% endif %}
 
   </div>
+
+  <div class='container-fluid'>
+
+  <!--Modal: Login with Avatar Form-->
+  <form action='/refer/{{ biz.biz_id }}' method='POST' mdbModal #form='mdb-modal' class='modal fade' id='modalReferFriend' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+      <div class='modal-dialog cascading-modal modal-avatar modal-lg' role='document'>
+          <!--Content-->
+          <div class='modal-content'>
+
+              <!--Header-->
+              <div class='modal-header'>
+                  <img src='/static/img/pinky.jpg' class='rounded-circle img-responsive' height='125' width='125'>
+              </div>
+              <!--Body-->
+              <div class='modal-body text-center mb-1'>
+
+                  <h5 class='mt-1 mb-2'>My BFFs</h5>
+
+                  <div class='md-form ml-0 mr-0'>
+                    {% if user.friends %}
+                      {% for friend in user.friends}
+                        <input type='checkbox' id='friend-ref-{{ friend.friend_id }}' name='friend-ref[]' value='{{ friend.friend_id }}'>{{ friend.username }}
+
+                    {% else %}
+                      <p>Add some BFFs and refer an amazing business to them.</p>
+                      <button class='btn btn-unique btn-sm'><a href='/user-friends'>Add Friends</a></button>
+                    {% endif %}
+
+                    <div class='text-center'>
+                      <button class='btn btn-unique mt-1 waves-light' mdbRippleRadius>Refer <i class='fa fa-send ml-1'></i></button>
+                    </div>
+                  </div>
+
+              </div>
+
+          </div>
+          <!--/.Content-->
+      </div>
+  </form>
+  <!--Modal: Login with Avatar Form-->
+</div>
 
 {% endblock %}
 

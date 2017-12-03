@@ -4,7 +4,7 @@ from flask import (Flask, render_template, request, flash, redirect,
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
-                   LikeReview, Friend, Invite)
+                   LikeReview, Friend, Invite, Referral)
 from datetime import datetime
 import helper
 import re
@@ -586,6 +586,7 @@ def biz_profile(biz_name):
     """Displays business information."""
 
     biz = Business.query.filter_by(biz_name=biz_name).first()
+    user = User.query.get(session['user_id'])
     today = datetime.today()
     # category = c.BIZ_CATEGORY.get(biz.category)
 
@@ -623,8 +624,8 @@ def biz_profile(biz_name):
 # for approximations of nearby distances using spherical distance, search units nearby by meters; example below searches within 1000m
 # db.session.query(UnitDetails).filter(func.ST_Distance_Sphere("POINT(37.776164 -122.423355)",UnitDetails.latlng) < 1000).all()
 
-    return render_template('business_profile.html', biz=biz, today=today,
-                           user_score=user_rating)
+    return render_template('business_profile.html', biz=biz, user=user,
+                           today=today, user_score=user_rating)
 
 
 @app.route('/claim-biz/<int:biz_id>', methods=['POST'])
@@ -657,10 +658,12 @@ def check_in(biz_id):
     checkin = (CheckIn.query.filter(CheckIn.user_id == session['user_id'],
                CheckIn.biz_id == biz_id, CheckIn.checkin_date == today).first())
     biz = Business.query.get(biz_id)
-    biz_name = biz.biz_name
+    # biz_name = biz.biz_name
 
     # TO DELETE
     # print u'\n\n\n{}\n\n\n'.format(biz.biz_name)
+
+    referral = Referral.query.filter(Referral.referee_id == session['user_id'], Referral.biz_id == biz_id).first()
 
     if checkin:
         results = 'You have already checked into this business today. No double dipping!'
@@ -672,9 +675,14 @@ def check_in(biz_id):
         db.session.add(checkin)
         db.session.commit()
 
-        user_checkins = helper.calc_checkins_biz(biz_id)
+        # user_checkins = helper.calc_checkins_biz(biz_id)
 
-        results = ('You have checked in a total of {} times. {} thanks you for your support!'.format(user_checkins, biz_name))
+        results = ('You have checked in a total of {} times. {} thanks you for your support!'.format(biz.tot_user_checkins, biz.biz_name))
+
+        if referral:
+            referral[referral.redeemed] = True
+
+            db.session.commit()
 
     # TO DELETE
     # print u'\n\n\n{}\n\n\n'.format(biz_name)
@@ -728,7 +736,9 @@ def like_process():
     db.session.add(like)
     db.session.commit()
 
-    return 'Thanks for liking me!'
+    results = 'Thanks for liking me!'
+
+    return jsonify(results)
 
 
 @app.route('/search-biz')
@@ -745,7 +755,7 @@ def search():
     return render_template('search_results.html', search=search)
 
 
-@app.route('/review-home')
+@app.route('/biz-home')
 def review_home():
     """Displays review home page with list of businesses that have been checked into
     but not reviewed by user, limited to most recent 10."""
@@ -754,7 +764,7 @@ def review_home():
 
     recent_checkins = CheckIn.query.filter_by(user_id=session['user_id']).order_by(desc(CheckIn.checkin_date)).group_by(CheckIn.checkin_id, CheckIn.biz_id).limit(10).all()
 
-    return render_template('reviews_home.html', checkins=recent_checkins)
+    return render_template('biz_home.html', checkins=recent_checkins)
 
 
 @app.route('/data.json')
@@ -803,6 +813,7 @@ def response_form(review_id):
 
 @app.route('/respond/<int:review_id>', methods=['POST'])
 def rev_resp_process(review_id):
+    """ Processes biz owner's response to a specific review. """
 
     response = request.form.get('ref-response')
 
@@ -814,6 +825,67 @@ def rev_resp_process(review_id):
     flash("Your response has been posted. Thanks for addressing the reviewer's comments.")
 
     return redirect('/user-biz')
+
+
+
+@app.route('/refer/<int:biz_id>', methods=['POST'])
+def biz_refer_process(biz_id):
+    """ Processes biz referral and if referral promo, instantiate promo in
+    UserPromo table. """
+
+    friends = request.form.get['friend-ref[]']
+
+    biz = Business.query.get(biz_id)
+    promo - (Promo.query.filter(Promo.biz_id == biz_id, Promo.referral_promo == 'True')
+                  .order_by(desc(Promo.start_date)).first())
+
+    today = datetime.today().date()
+
+    have_checkedin = db.session.query(CheckIn.user_id).filter_by(biz_id=biz_id).all()
+
+    checkin = set()
+
+    for person in have_checkedin:
+        checkin.add(person[0])
+
+    newbie = True
+
+    for friend in friends:
+        if friend not in checkin:
+            if promo:
+                userpromo = UserPromo(user_id=friend, promo_id=promo.promo_id)
+
+                db.session.add(userpromo)
+                db.session.commit()
+
+                referral = Referral(referer_id=session['user_id'],
+                                    referee_id=friend,
+                                    biz_id=biz_id,
+                                    refer_date=today,
+                                    userpromo_id=userpromo.userpromo_id)
+
+                db.session.add(referral)
+                db.session.commit()
+            else:
+                referral = Referral(referer_id=session['user_id'],
+                                    referee_id=friend,
+                                    biz_id=biz_id,
+                                    refer_date=today)
+
+                db.session.add(referral)
+                db.session.commit()
+        else:
+            newbie = False
+
+    if newbie is True:
+
+        results = 'Thanks for paying it forward and recommending {}!'.format(biz.biz_name)
+
+    else:
+        results = 'Thanks for paying it forward and recommending {}! Some of your friends have been there. Referrals have been sent to those who have not.'.format(biz.biz_name)
+
+    return jsonify(results)
+
 
 
 ##############################################################################
