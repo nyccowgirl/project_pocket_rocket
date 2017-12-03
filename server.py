@@ -10,7 +10,7 @@ import helper
 import re
 # import constants as c
 from sqlalchemy import or_, desc
-from bubble import bubble_data
+from bubble import bubble_data_refs, bubble_data_promos
 from friend_network import make_nodes_and_paths, see_friends
 
 app = Flask(__name__)
@@ -42,7 +42,8 @@ def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
 def index():
     """Displays homepage."""
 
-    bubble_data()
+    bubble_data_refs()
+    bubble_data_promos()
 
     return render_template('home.html')
 
@@ -164,7 +165,7 @@ def login_process():
     # TO DELETE
     # print '\n\n\n{}{}\n\n\n'.format(user_input, pword)
 
-    user = helper.check_user_info(user_input)
+    user = User.query.filter((User.username == user_input) | (User.email == user_input)).first()
 
     if not user:
         code = 'error'
@@ -208,7 +209,7 @@ def check_email():
 
     user_input = request.form['user-input']
 
-    user = helper.check_user_info(user_input)
+    user = User.query.filter((User.email == email) | (User.username == username)).first()
 
     if not user:
         return False
@@ -232,7 +233,7 @@ def reset_pword():
     user_input = request.form['user']
     new_pword = request.form['pword']
 
-    user = helper.check_user_info(user_input)
+    user = User.query.filter((User.email == email) | (User.username == username)).first()
 
     user.password = new_pword
     db.session.commit()
@@ -757,16 +758,32 @@ def review_home():
 
 
 @app.route('/data.json')
-def get_graph_data():
+def get_graph_data_default():
     """ Create nodes and paths from friends table and jsonify for force layout."""
 
-    # degree = request.form.get('degree')
-    # print degree
+    degree = request.args.get('degree')
 
-    # nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], int(degree)))
-    nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], 2))
-    # print nodes
+    if degree:
+        nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], int(degree)))
+    else:
+        nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], 2))
+
     return jsonify({'nodes': nodes, 'paths': paths})
+
+
+# @app.route('/data.json', methods=['POST'])
+# def get_graph_data():
+#     """ Create nodes and paths from friends table and jsonify for force layout."""
+
+#     degree = request.form.get('degree')
+#     print degree
+
+#     if degree:
+#         nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], int(degree)))
+
+#     # import pdb; pdb.set_trace()
+#     print nodes
+#     return jsonify({'nodes': nodes, 'paths': paths})
 
 
 # @app.route('/network')

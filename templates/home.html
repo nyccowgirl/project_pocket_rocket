@@ -29,22 +29,36 @@
 
 <div class='container-fluid'>
   <br>
-  <h1 style='font-family: Architects Daughter, cursive; font-size: 30px'>BUDdy</h1>
+  <h1 style='font-family: Architects Daughter, cursive; font-size: 40px; font-color: unique'><b>BUDdy</b></h1>
 
-  <h2>Paying it forward...</h2>
+  <h2 style='font-size: 20px'>Paying it forward...</h2>
 
   {% if 'user_id' in session %}
-    <button type='button' class='btn btn-unique btn-rounded waves-light' mdbRippleRadius><a href='/add-biz'>Add a Business</a></button>
+    <button type='button' class='btn btn-outline-unique btn-rounded waves-light' mdbRippleRadius><a href='/add-biz'>Add a Business</a></button>
   {% endif %}
 
     <div class='dx-viewport demo-container'>
-        <div id='chart'></div>
+        <div id='chart-refs'></div>
     </div>
 
   <br><br><br>
 
-  <h2>What a wicked web we weave...</h2>
-    <form id='degree' action='/data.json' method='POST' enctype='multipart/form-data'>
+    <div class='dx-viewport demo-container'>
+        <div id='chart-promos'></div>
+    </div>
+
+  <br><br><br>
+
+  <h2 style='font-size: 20px'>What a wicked web we weave...</h2>
+    <br>
+    <form id='degree' action='/data.json' enctype='multipart/form-data'>
+      <input type='radio' name='degree' value='1'>1
+      <input type='radio' name='degree' value='2'>2
+      <input type='radio' name='degree' value='3'>3
+      <input type='radio' name='degree' value='4'>4
+      <input type='radio' name='degree' value='5'>5
+      <input type='radio' name='degree' value='6'>6
+
 <!--         Degree(s) of Separation:<select name='degree'>
           <option value='1'>1</option>
           <option value='2'>2</option>
@@ -52,9 +66,9 @@
           <option value='4'>4</option>
           <option value='5'>5</option>
           <option value='6'>6</option>
-        </select>
-      <input type='submit'>
-    </form> -->
+        </select> -->
+      <input type='submit' value='Connect Me'>
+    </form>
 
   <br>
 
@@ -96,6 +110,7 @@
 
               <!-- Body -->
               <div class='modal-body mb-1'>
+                <!-- FIXME: turn into modal content class rather than modal body? -->
                 <div class='md-form form-sm'>
                   <i class='fa fa-envelope prefix'></i>
                   <input type='text' id='user-input' name='user-input' class='form-control lowercase'>
@@ -264,7 +279,8 @@
 {% block script %}
 
   <script src='https://cdn3.devexpress.com/jslib/17.2.3/js/dx.all.js'></script>
-  <script src='/static/js/bubble_data.js'></script>
+  <script src='/static/js/bubble_data_refs.js'></script>
+  <script src='/static/js/bubble_data_promos.js'></script>
   <script src='/static/js/bubble.js'></script>
   <script src='https://d3js.org/d3.v4.min.js'></script>
   <script type='text/javascript' src='/static/js/friend_network.js'></script>

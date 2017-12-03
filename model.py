@@ -125,8 +125,9 @@ class User(db.Model):
 
     def deg_of_sep(self, user2_id, degrees=6):
         """
-        Calculates degrees of separation, if any, between two users. If count is none, the user2 is user1. Otherwise, count of zero
-        means no connection. Currently set to stop at count at n degrees.
+        Calculates degrees of separation, if any, between two users. If count is
+        zero, the user2 is user1. Otherwise, count of none means no connection.
+        Currently set to stop at count at n degrees.
         """
 
         visit = []
@@ -139,8 +140,6 @@ class User(db.Model):
         while visit:
             current = visit.pop(0)
             if current == sought:
-                if count == 0:
-                    count = None
                 return count
             else:
                 if current not in seen:
@@ -152,7 +151,7 @@ class User(db.Model):
                         anchor = visit[-1]
                     count += 1
                     if count == (degrees + 1):
-                        count = 0
+                        count = None
                         return count
 
         return count
@@ -363,7 +362,7 @@ class Business(db.Model):
     def deg_of_sep(self, user2_id, degrees=6):
         """
         Calculates degrees of separation, if any, between a user and business,
-        if claimed. If count is none, the user2 is user1. Otherwise, count of zero
+        if claimed. If count is zero, the user2 is user1. Otherwise, count of none
         means no connection. Currently set to stop at count at n degrees.
         """
 
@@ -381,8 +380,6 @@ class Business(db.Model):
             while visit:
                 current = visit.pop(0)
                 if current == sought:
-                    if count == 0:
-                        count = None
                     return count
                 else:
                     if current not in seen:
@@ -394,7 +391,7 @@ class Business(db.Model):
                             anchor = visit[-1]
                         count += 1
                         if count == (degrees + 1):
-                            count = 0
+                            count = None
                             return count
 
         return count

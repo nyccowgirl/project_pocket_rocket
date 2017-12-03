@@ -59,7 +59,9 @@
               <td>{{ promo.promo.title }}</td>
               <td>{{ promo.promo.descr }}</td>
               <td>{{ promo.promo.end_date|datetimeformat('%d %b %Y') }}</td>
-              <td><button type='button' class='btn-xs btn-unique btn-rounded'><a href='#'>Redeem</a></button></td>
+              <td><button type='button' class='btn-xs btn-outline-unique btn-rounded'><a href='#'>Redeem</a></button></td>
+
+              <!-- TO DO: Need to build out redeem -->
             </tr>
           {% endfor %}
         </tbody>

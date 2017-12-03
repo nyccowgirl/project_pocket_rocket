@@ -2,6 +2,7 @@ from flask import Flask, json  # jsonify  # session
 from model import User, Friend, connect_to_db  # db
 # from sqlalchemy import func
 import json
+# from collections import defaultdict()
 
 app = Flask(__name__)
 
@@ -58,10 +59,9 @@ def make_nodes_and_paths(friends_lst):
 def see_friends(user_id, max_degree=6):
     """ Provides information on connections.
 
-    Input: person_id, a list of friendships 'in the universe', max degress of
-           separation
-    Output: a list of tuples of the format: [(friend_id, degrees_of_separation,
-            connector)]
+    Input: person_id, max degrees of separation
+    Output: a list of tuples of the format: [(friend_username, connector,
+            degrees_of_separation)]
 
     Note: a high-degree connection could have multiple people that connects person
     to 'chain' of friends. In that case, the algorithm would add multiple tuples,

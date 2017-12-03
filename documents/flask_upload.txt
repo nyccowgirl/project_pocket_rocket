@@ -1,80 +1,104 @@
 
 --------------------------------------------------
 
-FLASK UPLOAD SETUP NOTES - To do Source: http://www.patricksoftwareblog.com/tag/flask-uploads/
-- with Material Design
-
-Works with Angular CLI 1.5.x, Angular 5.0.x., HTML5
-
-Requires Node6.9.0+ and NPM 3+
+FLASK UPLOAD SETUP NOTES
 
 --------------------------------------------------
 
 1) prerequisites
 
->>> npm i -g @angular/cli
->>> npm i -g typescript
+>>> git checkout -b add_file_upload
+>>> git branch
+* add_file_upload
+  master
 
 
-2) either manually installation or NPM installation
+2) install flask-upload in virtual environment
 
-NPM installation:
+>>> pip install flask-uploads
+>>> pip freeze > requirements.txt
 
-    a) create new angular project
 
-    >>> ng new your-angular-project --style=scss
+3) add configuration parameters to .../instance/flask.cfg
 
-    b) go into your-angular-project directory
+# Uploads
+UPLOADS_DEFAULT_DEST = TOP_LEVEL_DIR + '/project/static/img/'
+UPLOADS_DEFAULT_URL = 'http://localhost:5000/static/img/'
 
-    >>> cd your-angular-project
+UPLOADED_IMAGES_DEST = TOP_LEVEL_DIR + '/project/static/img/'
+UPLOADED_IMAGES_URL = 'http://localhost:5000/static/img/'
 
-    c) install from github
+Note: instance folder is not saved to git repository because of sensitive info
 
-    >>> npm i angular-bootstrap-md --save
 
-    d) in app.module.ts file, add the following to existing info (note: replace any NgModule import with the following and add relevant parts into @NgModule - be mindful of missing/trailing commas or semi-colons)
+4) update the …/project/[static/img/]__init__.py to configure flask-uploads module
 
-    import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-    import { MDBBootstrapModule } from 'angular-bootstrap-md';
+Note: each parent directory would also need to be updated with __init__.py
 
-    @NgModule({
-        imports: [
-            MDBBootstrapModule.forRoot()
-        ],
-        schemas: [ NO_ERRORS_SCHEMA ]
-    })
 
-    e) make sure that styleExt is set to "scss" in angular-cli.json file, if not change:
+5) import and config server.py
 
-    "styleExt": "css" to "styleExt": "scss"
+#################
+#### imports ####
+#################
 
-    * also, if you have src/styles.css instead, rename it to .scss. if you want to change styles in existing project you can use ng set defaults.styleExt scss
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
+from flask_mail import Mail
+from flask_uploads import UploadSet, IMAGES, configure_uploads
 
-    f) in angular-cli.json, add the following to existing info (note: similar to step d, be mindful of syntax and placement within {})
 
-    "styles": [
-        "../node_modules/font-awesome/scss/font-awesome.scss",
-        "../node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
-        "../node_modules/angular-bootstrap-md/scss/mdb-free.scss",
-        "./styles.scss"
-    ],
-    "scripts": [
-         "../node_modules/chart.js/dist/Chart.js",
-        "../node_modules/hammerjs/hammer.min.js"
-    ]
+################
+#### config ####
+################
 
-    g) in tsconfig.json within root folder, add the following to existing info (note: similar to step d, be mindful of syntax and placement within {})
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_pyfile('flask.cfg')
 
-    "include": ["node_modules/angular-bootstrap-md/**/*.ts", "src/**/*.ts"]
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+mail = Mail(app)
 
-    h) install external libraries
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'users.login'
 
-    >>> npm install -–save chart.js@2.5.0 font-awesome hammerjs
+# Configure the image uploading via Flask-Uploads
+images = UploadSet('images', IMAGES) # images can be named any variable - just
+                                     # be consistent with naming convention
+app.config['UPLOADED_IMAGES_DEST'] = 'static/img'
+configure_uploads(app, images)
 
-    i) run server
 
-    >>> ng serve --o
+6) select image to upload
 
+  a) update database (model.py)
+
+     class User(db.Model):
+
+     user_pic = db.Column(db.String(100), nullable=True)
+
+  b) update template
+
+     - update enctype of form
+
+     <form action='/' method='POST' enctype='multipart/form-data'>
+        <input type='file'>
+
+  c) in @app.route function
+
+     if request.method == 'POST' and 'photo' in request.files:
+        # 'photo' is 'name' parameter from html form
+
+        filename = images.save(request.files['photo']) # same as above
+        pic = images.url(filename) # converts image to url to instantiate
+
+        user = User(user_pic=pic)
+
+        db.session.add(user)
+        db.session.commit()
 
 
 --------------------------------------------------

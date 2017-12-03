@@ -57,9 +57,13 @@
 
     {% if biz.is_owned(session['user_id']) %}
 
-      <h4>Additional Infographics</h4>
+      <hr>
 
-      TO DO: Build out total check ins, reviews, redemptions, etc. by month/year
+      <h3>Additional Infographics</h3>
+
+      <i class='fa fa-wrench prefix'></i> UNDER CONSTRUCTION
+
+      <!-- TO DO: Build out total check ins, reviews, redemptions, etc. by month/year -->
 
     {% endif %}
 
@@ -257,7 +261,7 @@
 
   function myMap() {
     let myCenter = new google.maps.LatLng({{ biz.lat }}, {{ biz.lng }});
-    let mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.TERRAIN};
+    let mapProp = {center:myCenter, zoom:15, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.TERRAIN};
     let map = new google.maps.Map(document.getElementById('googleMap'),mapProp);
     let marker = new google.maps.Marker({position:myCenter, icon: '/static/img/chartreuse_marker.png', title: 'Hover text', animation: google.maps.Animation.BOUNCE});
     google.maps.event.addListener(marker,'click', function() {

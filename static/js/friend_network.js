@@ -2,6 +2,21 @@
 'use strict';
 
 $(document).ready(() => {
+
+  $('degree').on('submit', function(evt) {
+    evt.preventDefault();
+    // let data = new FormData(this);
+    // console.log(data);
+    let formInputs = {
+      'degree': $('degree').value()
+    };
+    // console.log(formInputs);
+    // debugger;
+    $.get('/data.json', formInputs, () => {
+      location.reload(true);
+    });
+  });
+
   d3.json('/data.json', makeForceGraph);
 
   function makeForceGraph(error, data) {
@@ -42,7 +57,12 @@ $(document).ready(() => {
               .on('drag', dragged)
               .on('end', dragended));
 
+
     let color = d3.scaleOrdinal(d3.schemeCategory20);
+    // let color = d3.scaleOrdinal().range([rgb(123, 65, 115), rgb(165, 81, 148),
+    //                                      rgb(140, 162, 82), rgb(206, 109, 189),
+    //                                      rgb(222, 158, 214), rgb(82, 84, 163)
+    //                                      rgb(173, 73, 74)]).range();
 
     node.append('circle')
         .attr('r', 7)
@@ -107,5 +127,7 @@ $(document).ready(() => {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+
   }
+
 });

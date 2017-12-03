@@ -15,72 +15,6 @@ $(document).ready(() => {
     let $msgAnimateTime = 150;
     let $msgShowTime = 2000;
 
-    $('form').on('submit', function(evt) {
-      // evt.preventDefault();
-      let test = {};
-      let formInputs = new FormData(this);
-      for (let [key, value] of formInputs.entries()) {
-        test[key] = value;
-      };
-      // console.log('test');
-      // may be same as formInputs.serialize()
-      switch(this.id) {
-        case 'biz-search':
-          // evt.preventDefault();
-          $.get('/search-biz', test, () => {
-            return false;
-          });
-          break;
-          // $('#biz-search').submit();
-
-          // return false;
-          // FIXME: Runs in a loop for a long time before it renders but had to move
-          // evt.preventDefault() to each case rather than at top
-        // case 'degree':
-        //   evt.preventDefault();
-        //   console.log(test);
-        //   debugger;
-        //   $.post('/data.json', test, () => {
-        //     // return false;
-        //     location.reload(true);
-        //   });
-          break;
-        case 'login-form':
-          evt.preventDefault();
-          $.post('/login', test, displayMsg);
-          break;
-        case 'lost-form':
-          evt.preventDefault();
-          if (!$('#email-lost')) {
-            alert('Please input your email.');
-          }
-          $.get('/email-check', test, checkEmail);
-          break;
-        case 'register-form':
-          evt.preventDefault();
-          let pword1 = $('#pword-reg').val();
-          let pword2 = $('#pword-rep').val();
-          if (pword1 != pword2) {
-            alert('The password does not match. Try again.');
-          } else {
-            $.ajax({
-              type: 'POST',
-              cache: false,
-              url: '/register',
-              enctype: 'multipart/form-data',
-              data: formInputs,
-              processData: false,
-              contentType: false,
-              success: displayMsg,
-              error: displayMsg
-            });
-            // $.post('/register', test, displayMsg);
-          };
-          break;
-        default:
-          alert('Something is broken. Check back later!');
-      }
-    });
 
 
     $('#login_register_btn').click( function () { modalAnimate($formLogin, $formRegister) });
@@ -103,27 +37,66 @@ $(document).ready(() => {
 
     // FIXME: modalAnimate, makes form disappear but when change $formLogin to #login-div, size of pane is right but nothing appears for normal tabbing
 
-    function displayMsg(results) {
-      if (results.code === 'error') {
-        alert(results.msg);
-      } else {
-        alert(results.msg);
-      }
-      location.reload('/');
-    }
-
-    function checkEmail(results) {
-      if (results === 'False') {
-        alert('Email does not exist. Please check your input or register.');
-      } else if (results === 'True') {
-        alert('A link has been sent to your email to reset your password.');
-        location.reload('/pword-reset');
-      } else {
-        alert('Please try again.');
-      }
-    }
 
   });
 
+  function displayMsg(results) {
+    if (results.code === 'error') {
+      alert(results.msg);
+    } else {
+      alert(results.msg);
+    }
+    location.reload('/');
+  }
+
+  function checkEmail(results) {
+    if (results === 'False') {
+      alert('Email does not exist. Please check your input or register.');
+    } else if (results === 'True') {
+      alert('A link has been sent to your email to reset your password.');
+      location.reload('/pword-reset');
+    } else {
+      alert('Please try again.');
+    }
+  }
+
+  $('#login-form').on('submit', function(evt) {
+    evt.preventDefault();
+    let formInputs = {
+      'user-input': $('#user-input').value(),
+      'pword': $('#pword').value()
+    };
+    $.post('/login', test, displayMsg);
+  });
+
+  $('#lost-form').on('submit', function(evt) {
+    evt.preventDefault();
+    if (!$('#email-lost')) {
+      alert('Please input your email.');
+    } else {
+      $.get('/email-check', test, checkEmail);
+    };
+  });
+
+  $('#register-form').on('submit', function(evt) {
+    evt.preventDefault();
+    let formInputs = new FormData(this);
+    let pword1 = $('#pword-reg').val();
+    let pword2 = $('#pword-rep').val();
+    if (pword1 != pword2) {
+      alert('The password does not match. Try again.');
+    } else {
+      $.ajax({
+        type: 'POST',
+        cache: false,
+        url: '/register',
+        enctype: 'multipart/form-data',
+        data: formInputs,
+        processData: false,
+        contentType: false,
+        success: displayMsg,
+        error: displayMsg
+      });
+  }});
 
 });
