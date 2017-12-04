@@ -7,18 +7,18 @@
     <link rel='stylesheet' type='text/css' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.spa.css' />
     <link rel='stylesheet' type='text/css' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.common.css' />
     <link rel='dx-theme' data-theme='generic.light' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.light.css' />
-
     <link rel='stylesheet' type='text/css' href='/static/css/bubble.css' />
     <link rel='stylesheet' type='text/css' href='/static/css/friend_network.css'>
+    <link rel='stylesheet' type='text/css' href='/static/css/styles.css'>
 
     <style>
     a {
       color:  #0275d8;
     }
-    body {
+/*    body {
       font: 400 15px/1.8 Lato, sans-serif;
       background-color: #f3e5f5;
-    }
+    }*/
     </style>
 
 {% endblock %}
@@ -37,19 +37,23 @@
     <button type='button' class='btn btn-outline-unique btn-rounded waves-light' mdbRippleRadius><a href='/add-biz'>Add a Business</a></button>
   {% endif %}
 
-    <div class='dx-viewport demo-container'>
-        <div id='chart-refs'></div>
-    </div>
+  <hr>
+  <ul class='nav nav-pills'>
+    <li class='nav-item'><a data-toggle='pill' href='#chart-refs' class='nav-link active'>Referrals</a></li>
+    <li class='nav-item'><a data-toggle='pill' href='#chart-promos' class='nav-link'>Promotions</a></li>
+  </ul>
 
-  <br><br><br>
+  <div class='tab-content'>
+    <div id='chart-refs' class='dx-viewport demo-container tab-pane active'></div>
 
-    <div class='dx-viewport demo-container'>
-        <div id='chart-promos'></div>
-    </div>
+    <div id='chart-promos' class='dx-viewport demo-container tab-pane fade'></div>
+  </div>
 
-  <br><br><br>
 
-  <h2 style='font-size: 20px'>What a wicked web we weave...</h2>
+  <br>
+  <br>
+
+  <h2 style='font-size: 20px;'>Chain Gang: What a wicked web we weave...</h2>
     <br>
     <form id='degree' action='/data.json' enctype='multipart/form-data'>
       <input type='radio' name='degree' value='1'>1
@@ -70,14 +74,7 @@
       <input type='submit' value='Connect Me'>
     </form>
 
-  <br>
-
-    <div id='network'>
-
-
-    </div>
-
-
+    <div id='network'></div>
 
 </div>
 

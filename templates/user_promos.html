@@ -21,7 +21,7 @@
 
 <div class='container-fluid'>
 
-  <button type='button' class='btn btn-unique btn-rounded waves-light' mdbRippleRadius><a href='#'>Redeem a Promo</a></button>
+  <button type='button' class='btn btn-unique btn-rounded waves-light' mdbRippleRadius><a href='/biz-home'>Redeem a Promo</a></button>
 
   <!-- TO DO: Need to build out redeem -->
 
@@ -59,7 +59,7 @@
               <td>{{ promo.promo.title }}</td>
               <td>{{ promo.promo.descr }}</td>
               <td>{{ promo.promo.end_date|datetimeformat('%d %b %Y') }}</td>
-              <td><button type='button' class='btn-xs btn-outline-unique btn-rounded'><a href='#'>Redeem</a></button></td>
+              <td><button type='button' class='btn-xs btn-outline-unique btn-rounded redeem' id='{{ promo.userpromo_id }}' data-review-id='{{ promo.userpromo_id }}'><a href='/red-promo'>Redeem</a></button></td>
 
               <!-- TO DO: Need to build out redeem -->
             </tr>

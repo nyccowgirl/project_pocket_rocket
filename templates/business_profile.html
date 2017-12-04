@@ -160,7 +160,7 @@
             {% if review.has_liked(session['user_id']) %}
               <button disabled><i class='fa fa-heart' aria-hidden='true'></i></button>
             {% else %}
-              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden="true"></i></button>
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden='true'></i></button>
             {% endif %}
           </p>
           <p>{{ review.review }}</p>
@@ -226,7 +226,8 @@
     <ul>
     {% for promo in biz.promos|sort(attribute='end_date', reverse=True) %}
       {% if promo.end_date >= today %}
-        <li>{{ promo.title }}: {{ promo.descr }} | expiration date: {{ promo.end_date|datetimeformat('%d %b %Y') }}</li>
+        <li><button type='button' class='btn-xs btn-outline-unique btn-rounded redeem-new' id='{{ promo.promo_id }}' data-review-id='{{ promo.promo_id }}'><a href='/red-promo'>Redeem</a></button>
+        {{ promo.title }}: {{ promo.descr }} | expiration date: {{ promo.end_date|datetimeformat('%d %b %Y') }}</li>
       {% elif loop.first and promo.end_date <= today %}
         <li>No active promotions.</li>
       {% endif %}
@@ -266,14 +267,15 @@
                   <img src='/static/img/pinky.jpg' class='rounded-circle img-responsive' height='125' width='125'>
               </div>
               <!--Body-->
-              <div class='modal-body text-center mb-1'>
+              <div class='modal-body mb-1'>
 
                   <h5 class='mt-1 mb-2'>My BFFs</h5>
 
                   <div class='md-form ml-0 mr-0'>
                     {% if user.friends %}
-                      {% for friend in user.friends}
-                        <input type='checkbox' id='friend-ref-{{ friend.friend_id }}' name='friend-ref[]' value='{{ friend.friend_id }}'>{{ friend.username }}
+                      {% for friend in user.friends %}
+                        <ul><input type='checkbox' id='friend-ref-{{ friend.user_id }}' name='friend-ref[]' value='{{ friend.user_id }}'>{{ friend.username }}</ul>
+                      {% endfor %}
 
                     {% else %}
                       <p>Add some BFFs and refer an amazing business to them.</p>
@@ -303,13 +305,13 @@
   'use strict';
 
   function myMap() {
-    let myCenter = new google.maps.LatLng({{ biz.lat }}, {{ biz.lng }});
+    let myCenter = new google.maps.LatLng({{ biz.lat|tojson|safe }}, {{ biz.lng|tojson|safe }});
     let mapProp = {center:myCenter, zoom:15, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.TERRAIN};
     let map = new google.maps.Map(document.getElementById('googleMap'),mapProp);
     let marker = new google.maps.Marker({position:myCenter, icon: '/static/img/chartreuse_marker.png', title: 'Hover text', animation: google.maps.Animation.BOUNCE});
     google.maps.event.addListener(marker,'click', function() {
       let infowindow = new google.maps.InfoWindow({
-        content: '{{ biz.biz_name }}'
+        content: '{{ biz.biz_name|tojson|safe }}'
       });
     infowindow.open(map,marker);
     });

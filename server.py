@@ -82,15 +82,6 @@ def register_process():
     bday_str = request.form['bday']
     biz = request.form['biz']
 
-        # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(fname)
-    # print u'\n\n\n{}\n\n\n'.format(lname)
-    # print u'\n\n\n{}\n\n\n'.format(username)
-    # print u'\n\n\n{}\n\n\n'.format(email)
-    # print u'\n\n\n{}\n\n\n'.format(pword)
-    # print u'\n\n\n{}\n\n\n'.format(bday_str)
-    # print u'\n\n\n{}\n\n\n'.format(biz)
-
     # Convert picture that would be saved to static/img directory but url stored
     # in database
     if 'user-pic' in request.files:
@@ -98,10 +89,6 @@ def register_process():
         pic = pics.url(filename)
     else:
         pic = None
-
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(username)
-    # print u'\n\n\n{}\n\n\n'.format(biz)
 
     # Convert birthday to datetime format
     if bday_str:
@@ -162,9 +149,6 @@ def login_process():
     user_input = request.form.get('user-input')
     pword = request.form.get('pword')
 
-    # TO DELETE
-    # print '\n\n\n{}{}\n\n\n'.format(user_input, pword)
-
     user = User.query.filter((User.username == user_input) | (User.email == user_input)).first()
 
     if not user:
@@ -177,9 +161,6 @@ def login_process():
         session['user_id'] = user.user_id
         session['username'] = user.username
         session['biz_acct'] = user.biz_acct
-
-        # TO DELETE
-        # print '\n\n\n{}\n\n\n'.format(user.biz_acct)
 
         if user.user_pic:
             session['user_pic'] = user.user_pic
@@ -209,7 +190,7 @@ def check_email():
 
     user_input = request.form['user-input']
 
-    user = User.query.filter((User.email == email) | (User.username == username)).first()
+    user = User.query.filter((User.email == user_input) | (User.username == user_input)).first()
 
     if not user:
         return False
@@ -219,6 +200,7 @@ def check_email():
 
     # TO DO: need to send link to user email to reset password
 
+
 @app.route('/pword-reset')
 def pword_form():
     """ Displays password reset form. """
@@ -226,6 +208,8 @@ def pword_form():
     return render_template('password.html')
 # The below is coming from password.html. At the moment, nothing renders the page
 # as AJAX refactoring stays on the page with email with password reset link being sent
+
+
 @app.route('/pword-reset', methods=['POST'])
 def reset_pword():
     """Resets user password."""
@@ -233,7 +217,7 @@ def reset_pword():
     user_input = request.form['user']
     new_pword = request.form['pword']
 
-    user = User.query.filter((User.email == email) | (User.username == username)).first()
+    user = User.query.filter((User.email == user_input) | (User.username == user_input)).first()
 
     user.password = new_pword
     db.session.commit()
@@ -250,31 +234,6 @@ def user_profile():
     """Displays user information."""
 
     user = User.query.filter_by(user_id=session['user_id']).first()
-
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(user.reviews)
-    # print u'\n\n\n{}\n\n\n'.format(user.friends)
-    # print u'\n\n\n{}\n\n\n'.format(user.referees)
-    # print u'\n\n\n{}\n\n\n'.format(user.promos)
-
-    # friends = helper.calc_friends(user)
-    # session['tot_friends'] = friends
-
-    # reviews = helper.calc_reviews(user)
-    # session['tot_revs'] = reviews
-
-    # FIXME: update helper function once relationship mapping is solved.
-    # total_refs, redeemed_refs = helper.calc_referrals(user)
-    # session['tot_refs'] = total_refs
-    # session['redeem_refs'] = redeemed_refs
-
-    # redemptions = helper.calc_redemptions(user)
-    # session['tot_redeem'] = redemptions
-
-    # checkins = helper.calc_checkins(user)
-    # session['tot_checkins'] = checkins
-
-    # refer_to_user = Referral.query.filter_by(referee_id=session['user_id']).all()
 
     return render_template('user_profile.html', user=user)
 
@@ -344,11 +303,6 @@ def user_friends():
 
     user = User.query.filter_by(user_id=session['user_id']).first()
 
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(user.friends)
-
-    # print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
-
     return render_template('user_friends.html', user=user)
 
 
@@ -357,11 +311,6 @@ def add_friend():
     """Processes add friend request."""
 
     friend_email = request.form.get('friend-email')
-
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(friend_email)
-    # print request.form.get('friend-email')
-    # print request.form.get('friend_email')
 
     friend = User.query.filter_by(email=friend_email).first()
 
@@ -429,19 +378,6 @@ def friend_profile(friend_id):
 
     friend = User.query.filter_by(user_id=friend_id).first()
 
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(friend)
-    # print u'\n\n\n{}\n\n\n'.format(friend.reviews)
-    # print u'\n\n\n{}\n\n\n'.format(friend.friends)
-    # print u'\n\n\n{}\n\n\n'.format(friend.referees)
-    # print u'\n\n\n{}\n\n\n'.format(friend.promos)
-
-    # friends = helper.calc_friends(friend)
-    # reviews = helper.calc_reviews(friend)
-    # total_refs, redeemed_refs = helper.calc_referrals(friend)
-    # redemptions = helper.calc_redemptions(friend)
-    # checkins = helper.calc_checkins(friend)
-
     return render_template('friend_profile.html', friend=friend)
 
 
@@ -450,11 +386,6 @@ def user_promos():
     """Displays user's available promotions and redemptions."""
 
     user = User.query.filter_by(user_id=session['user_id']).first()
-
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(user.promos)
-
-    # print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
 
     return render_template('user_promos.html', user=user)
 
@@ -465,11 +396,6 @@ def user_referrals():
 
     user = User.query.filter_by(user_id=session['user_id']).first()
 
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(user.referrals)
-
-    # print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
-
     return render_template('user_referrals.html', user=user)
 
 
@@ -478,11 +404,6 @@ def user_biz():
     """Displays user's businesses and related analytics."""
 
     user = User.query.filter_by(user_id=session['user_id']).first()
-
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(user.biz)
-
-    # print u'\n\n\n{}\n\n\n'.format(user.friends[0].tot_biz_referrals)
 
     return render_template('user_biz.html', user=user)
 
@@ -523,10 +444,6 @@ def biz_process():
         pic = pics.url(filename)
     else:
         pic = None
-
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(name)
-    # print u'\n\n\n{}\n\n\n'.format(claim)
 
     # Convert time to military format
     if open_mil == 'pm':
@@ -588,20 +505,6 @@ def biz_profile(biz_name):
     biz = Business.query.filter_by(biz_name=biz_name).first()
     user = User.query.get(session['user_id'])
     today = datetime.today()
-    # category = c.BIZ_CATEGORY.get(biz.category)
-
-    # # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(biz_name)
-    # print u'\n\n\n{}\n\n\n'.format(biz.reviews)
-    # print u'\n\n\n{}\n\n\n'.format(biz.referrals)
-    # print u'\n\n\n{}\n\n\n'.format(biz.promos)
-    # print u'\n\n\n{}\n\n\n'.format(biz.users)
-
-    # avg_score, count = helper.calc_avg_rating(biz)
-    # tot_checkins = helper.calc_biz_tot_checkins(biz)
-    # user_checkins = helper.calc_checkins_biz(biz.biz_id)
-    # promos_redeem = helper.calc_biz_promos_redeem(biz)
-    # total_refs, redeemed_refs = helper.calc_biz_referrals(biz)
 
     user_review = Review.query.filter(Review.biz_id == biz.biz_id,
                                       Review.user_id == session['user_id']).first()
@@ -613,9 +516,6 @@ def biz_profile(biz_name):
             user_rating = user_review.rating
     else:
         user_rating = 'N/A'
-
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(promos_redeem)
 
     # TO DO: build out helper functions to pull in totals to summarize;
     # format phone number and hours
@@ -658,10 +558,6 @@ def check_in(biz_id):
     checkin = (CheckIn.query.filter(CheckIn.user_id == session['user_id'],
                CheckIn.biz_id == biz_id, CheckIn.checkin_date == today).first())
     biz = Business.query.get(biz_id)
-    # biz_name = biz.biz_name
-
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(biz.biz_name)
 
     referral = Referral.query.filter(Referral.referee_id == session['user_id'], Referral.biz_id == biz_id).first()
 
@@ -684,16 +580,9 @@ def check_in(biz_id):
 
             db.session.commit()
 
-    # TO DELETE
-    # print u'\n\n\n{}\n\n\n'.format(biz_name)
-    # import pdb; pdb.set_trace()
-
-    # return redirect('/'))
-
     return jsonify(results)
 
-    # FIXME: redirect isn't taking in biz_name
-
+# FIXME: redirect isn't taking in biz_name
 
 @app.route('/review/<biz_name>')
 def review_form(biz_name):
@@ -886,6 +775,45 @@ def biz_refer_process(biz_id):
 
     return jsonify(results)
 
+
+@app.route('/red-userpromo', methods=['POST'])
+def red_userpromo_process():
+    """Processes user's redemption of promotion."""
+
+    userpromo_id = request.form['userpromo_id']
+
+    today = datetime.today().date()
+
+    userpromo = UserPromo.query.get(int(userpromo_id))
+
+    userpromo.redeemed = True
+    userpromo.redeem_date = today
+
+    db.session.commit()
+
+    results = 'Thanks for your patronage!'
+
+    return jsonify(results)
+
+
+@app.route('/red-promo', methods=['POST'])
+def red_promo_process():
+    """Processes user's redemption of promotion."""
+
+    promo_id = request.form['promo_id']
+
+    today = datetime.today().date()
+
+    userpromo = UserPromo(user_id=session['user_id'],
+                          promo_id=int(promo_id),
+                          redeemed=True,
+                          redeem_date=today)
+    db.session.add(userpromo)
+    db.session.commit()
+
+    results = 'Thanks for your patronage!'
+
+    return jsonify(results)
 
 
 ##############################################################################

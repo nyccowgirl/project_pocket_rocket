@@ -8,28 +8,28 @@ $(document).ready(() => {
   $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
 
 
-// $('#discountmodal').on('show.bs.modal', function () {
-// http://stackoverflow.com/questions/48239/getting-the-id-of-the-element-that-fired-an-event-using-jquery
-//     are we working with "home" or with "profile"?
-//     alert("alert Alert");
-//     var theButtonCaller = event.target.id;
-//     alert("alert Alert");
-//     theButtonCaller = theButtonCaller.replace("-btn", "");
+  function msgReload(results) {
+    alert(results);
+    location.reload(true);
+  }
 
-//     $(".tab-pane, #myTabs li").removeClass("active");
-//     $("#" + theButtonCaller).addClass("active");
-//     $("#myTabs li.li-" + theButtonCaller).addClass("active");
-// });
+  function displayMsg(results) {
+    alert(results);
+  }
+
+  function msgReloadError(results) {
+    if (results.code === 'error') {
+      alert(results.msg);
+    } else {
+      alert(results.msg);
+      location.reload(true);
+    }
+  }
 
 
 // processes like buttons on reviews
 
   let $like = $('.like');
-
-  function disableLike(results) {
-    alert(results);
-    location.reload(true);
-  }
 
   function handleClick(evt) {
     evt.preventDefault();
@@ -39,9 +39,8 @@ $(document).ready(() => {
     $(this).removeClass('.fa-heart-o');
     $(this).addClass('.fa-heart');
     $(this).prop('disabled', true);
-    $.post('/like-review', formInputs, disableLike);
+    $.post('/like-review', formInputs, msgReload);
   }
-// FIXME: Add in remove and add class for the solid heart shape - need to test
 
   $like.on('click', handleClick);
 
@@ -50,16 +49,12 @@ $(document).ready(() => {
 
   let $friend = $('#modalAddFriend');
 
-  function friendMsg(results) {
-    alert(results);
-  }
-
   function sendFriend(evt) {
     evt.preventDefault();
     let formInputs = {
       'friend_email': $('#friend-email').val()
     };
-    $.post('/add-friend', formInputs, friendMsg);
+    $.post('/add-friend', formInputs, displayMsg);
   }
 
   $friend.on('submit', sendFriend);
@@ -67,19 +62,19 @@ $(document).ready(() => {
 
 // processes biz referral
 
-  let $referral = $('$modalReferFriend');
-
-  function referMsg(results) {
-    alert(results);
-  }
+  let $referral = $('#modalReferFriend');
 
   function referFriend(evt) {
     evt.preventDefault();
     let formInputs = {'friend-ref[]': []};
+    console.log(formInputs);
+    debugger;
     $(':checked').each(function() {
       formInputs['friend-ref[]'].push($(this).val());
     });
-    $.post('/refer/{{ biz.biz_id }}', formInputs, referMsg);
+    console.log(formInputs);
+    console.log('{{ biz.biz_id|tojson|safe }}');
+    $.post('/refer/{{ biz.biz_id|tojson|safe }}', formInputs, displayMsg);
   }
 
   $referral.on('submit', referFriend);
@@ -89,21 +84,12 @@ $(document).ready(() => {
 
   let $claim = $('.claim-biz');
 
-  function claimMsg(results) {
-    if (results.code === 'error') {
-      alert(results.msg);
-    } else {
-      alert(results.msg);
-      location.reload(true);
-    }
-  }
-
   function claimBiz(evt) {
     evt.preventDefault();
     let formInputs = {
       'biz_id': this.id
     };
-    $.post('/claim-biz/<biz-id>', formInputs, claimMsg);
+    $.post('/claim-biz/<biz-id>', formInputs, msgReloadError);
   }
 
   $claim.on('click', claimBiz);
@@ -112,15 +98,6 @@ $(document).ready(() => {
 // processes user info edits
 
   let $userEdit = $('#modalEdit');
-
-  function editMsg(results) {
-    if (results.code === 'error') {
-      alert(results.msg);
-    } else {
-      alert(results.msg);
-      location.reload(true);
-    }
-  }
 
   function editUser(evt) {
     evt.preventDefault();
@@ -135,7 +112,7 @@ $(document).ready(() => {
         'user_pic': $('#form20').val(),
         'biz_acct': $('#form8').val()
       };
-      $.post('/edit-user', formInputs, editMsg);
+      $.post('/edit-user', formInputs, msgReloadError);
     } else {
       alert('The password you entered does not match.');
     }
@@ -150,17 +127,13 @@ $(document).ready(() => {
 
   let $checkIn = $('.check-in');
 
-  function checkinMsg(results) {
-    alert(results.msg);
-    location.reload(true);
-  }
-
   function checkBiz(evt) {
     evt.preventDefault();
     let formInputs = {
       'biz_id': this.id
     };
-    $.post('/checkin/<biz-id>', formInputs, checkinMsg);
+    $(this).prop('disabled', true);
+    $.post('/checkin/<biz-id>', formInputs, displayMsg);
   }
 
   $checkIn.on('click', checkBiz);
@@ -182,10 +155,32 @@ $(document).ready(() => {
     });
   });
 
-  // character count for reviews
 
-  // $('input#input-review').characterCounter();
-  // });
+// redeem promotions
 
+  let $redPromo = $('.redeem')
+  let $redPromoNew = $('.redeem-new')
+
+  function redeemPromo(evt) {
+    evt.preventDefault();
+    let formInputs = {
+      'userpromo_id': this.id
+    };
+    $(this).prop('disabled', true);
+    $.post('/red-userpromo', formInputs, displayMsg);
+  }
+
+  $redPromo.on('click', redeemPromo);
+
+  function redeemPromoNew(evt) {
+    evt.preventDefault();
+    let formInputs = {
+      'promo_id': this.id
+    };
+    $(this).prop('disabled', true);
+    $.post('/red-promo', formInputs, displayMsg);
+  }
+
+  $redPromoNew.on('click', redeemPromoNew);
 
 });

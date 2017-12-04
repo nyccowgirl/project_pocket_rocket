@@ -91,11 +91,14 @@
 
 @media (max-width: 575px) {
   .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
-    color: #ecf0f1;
+    /*color: #ecf0f1;*/
+    color: #73c8dd;
   }
   .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
   .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
-    color: #ecdbff;
+    /*color: #ecdbff;*/
+    color: #73c8dd;
+    background-color: #8e44ad;
   }
   .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
     color: #ecdbff;
@@ -242,3 +245,21 @@ border-radius: 1;
 a .btn {
   color: white;
 }*/
+
+/*nav-pills on homepage*/
+
+.nav-pills>li>a.active, .nav-pills>li>a.active:focus, .nav-pills>li>a.active:hover {
+    color: #fff;
+    background-color: #337ab7;
+}
+
+.nav-pills>li>a {
+    border-radius: 4px;
+}
+
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+

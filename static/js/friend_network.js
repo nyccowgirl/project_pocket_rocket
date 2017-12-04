@@ -4,7 +4,7 @@
 $(document).ready(() => {
 
   $('degree').on('submit', function(evt) {
-    // evt.preventDefault();
+    evt.preventDefault();
     // let data = new FormData(this);
     // console.log(data);
     let formInputs = {
