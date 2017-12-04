@@ -3,19 +3,19 @@
 
 $(document).ready(() => {
 
-  $('degree').on('submit', function(evt) {
-    evt.preventDefault();
-    // let data = new FormData(this);
-    // console.log(data);
-    let formInputs = {
-      'degree': $('degree').value()
-    };
-    // console.log(formInputs);
-    // debugger;
-    $.get('/data.json', formInputs, () => {
-      location.reload(true);
-    });
-  });
+  // $('degree').on('submit', function(evt) {
+  //   evt.preventDefault();
+  //   // let data = new FormData(this);
+  //   // console.log(data);
+  //   let formInputs = {
+  //     'degree': $('degree').value()
+  //   };
+  //   // console.log(formInputs);
+  //   // debugger;
+  //   $.get('/data.json', formInputs, () => {
+  //     location.reload(true);
+  //   });
+  // });
 
   d3.json('/data.json', makeForceGraph);
 

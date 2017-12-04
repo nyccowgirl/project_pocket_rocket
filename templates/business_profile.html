@@ -305,13 +305,13 @@
   'use strict';
 
   function myMap() {
-    let myCenter = new google.maps.LatLng({{ biz.lat|tojson|safe }}, {{ biz.lng|tojson|safe }});
+    let myCenter = new google.maps.LatLng({{ biz.lat }}, {{ biz.lng }});
     let mapProp = {center:myCenter, zoom:15, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.TERRAIN};
     let map = new google.maps.Map(document.getElementById('googleMap'),mapProp);
     let marker = new google.maps.Marker({position:myCenter, icon: '/static/img/chartreuse_marker.png', title: 'Hover text', animation: google.maps.Animation.BOUNCE});
     google.maps.event.addListener(marker,'click', function() {
       let infowindow = new google.maps.InfoWindow({
-        content: '{{ biz.biz_name|tojson|safe }}'
+        content: '{{ biz.biz_name }}'
       });
     infowindow.open(map,marker);
     });
@@ -329,6 +329,28 @@
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       });
     });
+
+    // processes biz referral
+
+  let $referral = $('#modalReferFriend');
+
+  function msgReload(results) {
+    alert(results);
+    location.reload(true);
+  }
+
+  function referFriend(evt) {
+    evt.preventDefault();
+    let formInputs = {'friend-ref[]': []};
+    $(':checked').each(function() {
+      formInputs['friend-ref[]'].push($(this).val());
+    });
+    console.log(formInputs);
+    console.log("{{ biz.biz_id }}");
+    $.post('/refer/{{ biz.biz_id }}', formInputs, msgReload);
+  }
+
+  $referral.on('submit', referFriend);
   });
 </script>
 

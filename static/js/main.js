@@ -60,26 +60,6 @@ $(document).ready(() => {
   $friend.on('submit', sendFriend);
 
 
-// processes biz referral
-
-  let $referral = $('#modalReferFriend');
-
-  function referFriend(evt) {
-    evt.preventDefault();
-    let formInputs = {'friend-ref[]': []};
-    console.log(formInputs);
-    debugger;
-    $(':checked').each(function() {
-      formInputs['friend-ref[]'].push($(this).val());
-    });
-    console.log(formInputs);
-    console.log('{{ biz.biz_id|tojson|safe }}');
-    $.post('/refer/{{ biz.biz_id|tojson|safe }}', formInputs, displayMsg);
-  }
-
-  $referral.on('submit', referFriend);
-
-
 // processes claim of biz
 
   let $claim = $('.claim-biz');

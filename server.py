@@ -4,9 +4,9 @@ from flask import (Flask, render_template, request, flash, redirect,
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
-                   LikeReview, Friend, Invite, Referral)
+                   LikeReview, Friend, Invite, Referral, UserPromo, Promo)
 from datetime import datetime
-import helper
+# import helper
 import re
 # import constants as c
 from sqlalchemy import or_, desc
@@ -716,16 +716,17 @@ def rev_resp_process(review_id):
     return redirect('/user-biz')
 
 
-
 @app.route('/refer/<int:biz_id>', methods=['POST'])
 def biz_refer_process(biz_id):
     """ Processes biz referral and if referral promo, instantiate promo in
     UserPromo table. """
 
-    friends = request.form.get['friend-ref[]']
+    friends = request.form['friend-ref[]']
+
+    print friends
 
     biz = Business.query.get(biz_id)
-    promo - (Promo.query.filter(Promo.biz_id == biz_id, Promo.referral_promo == 'True')
+    promo = (Promo.query.filter(Promo.biz_id == biz_id, Promo.referral_promo == 'True')
                   .order_by(desc(Promo.start_date)).first())
 
     today = datetime.today().date()
@@ -739,32 +740,34 @@ def biz_refer_process(biz_id):
 
     newbie = True
 
-    for friend in friends:
-        if friend not in checkin:
-            if promo:
-                userpromo = UserPromo(user_id=friend, promo_id=promo.promo_id)
+    if friends:
+        for friend in friends:
+            print friend, friends
+            if friend not in checkin:
+                if promo:
+                    userpromo = UserPromo(user_id=friend, promo_id=promo.promo_id)
 
-                db.session.add(userpromo)
-                db.session.commit()
+                    db.session.add(userpromo)
+                    db.session.commit()
 
-                referral = Referral(referer_id=session['user_id'],
-                                    referee_id=friend,
-                                    biz_id=biz_id,
-                                    refer_date=today,
-                                    userpromo_id=userpromo.userpromo_id)
+                    referral = Referral(referer_id=session['user_id'],
+                                        referee_id=friend,
+                                        biz_id=biz_id,
+                                        refer_date=today,
+                                        userpromo_id=userpromo.userpromo_id)
 
-                db.session.add(referral)
-                db.session.commit()
+                    db.session.add(referral)
+                    db.session.commit()
+                else:
+                    referral = Referral(referer_id=session['user_id'],
+                                        referee_id=friend,
+                                        biz_id=biz_id,
+                                        refer_date=today)
+
+                    db.session.add(referral)
+                    db.session.commit()
             else:
-                referral = Referral(referer_id=session['user_id'],
-                                    referee_id=friend,
-                                    biz_id=biz_id,
-                                    refer_date=today)
-
-                db.session.add(referral)
-                db.session.commit()
-        else:
-            newbie = False
+                newbie = False
 
     if newbie is True:
 
