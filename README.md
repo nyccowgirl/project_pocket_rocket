@@ -6,8 +6,6 @@ BUDdy enhances both the consumer and business experience for local small busines
 However, many of the search and review sites contain obscure algorithms that remove positive reviews based on the assumption that they are from 'friends and families' and/or place priority in search results for those who pay for the service, thus further placing local 'mom & pop' shops at a disadvantage.
 
 ![PPR](https://github.com/nyccowgirl/project_pocket_rocket/raw/master/static/img/Homepage.png)
-![PPR](https://github.com/nyccowgirl/project_pocket_rocket/raw/master/static/img/network_graph.png)
-
 
 ### Consumer
 
@@ -44,5 +42,7 @@ Business owners can view all the redemptions and analytics on referrals, redempt
 ## Degrees of Separation
 ###
 A user's network is visualized via forced layout with D3 utilizing an *algorithm based on recursion* and allows the user to see a specified number of degrees of separation based on the user's friend network/chain. The degrees of separation throughout the site utilizes a *BFS algorithm*.
+
+![PPR](https://github.com/nyccowgirl/project_pocket_rocket/raw/master/static/img/network_graph.png)
 
 While the degrees of separation with other consumers and businesses are from the user's perspective. All degrees of separation for business reviews reflect the connection between each reviewer with the respective business so that consumers can individually evaluate the objectivity of such review.
