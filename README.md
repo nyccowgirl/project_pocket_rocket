@@ -31,3 +31,5 @@ Business owners can view all the redemptions and analytics on referrals, redempt
 ## Degrees of Separation
 ###
 A user's network is visualized via forced layout with D3 utilizing an *algorithm based on recursion* and allows the user to see a specified number of degrees of separation based on the user's friend network/chain. The degrees of separation throughout the site utilizes a *BFS algorithm*.
+
+While the degrees of separation with other consumers and businesses are from the user's perspective. All degrees of separation for business reviews reflect the connection between each reviewer with the respective business so that consumers can individually evaluate the objectivity of such review.
