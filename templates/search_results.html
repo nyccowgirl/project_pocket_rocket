@@ -17,15 +17,20 @@
 
 <br><br>
 
-<div class='container-fluid' style='height: 650px;'>
+<div class='container-fluid' style='height: 690px;'>
 
   <h3>Search Results</h3>
 
     {% for item in search %}
 
     <ul>
-      <a href='{{ item.biz_name }}'><b>{{ item.biz_name }}</b></a>:
-      <li>Category: {{ item.category }} | Rating: {{ item.avg_score() }}</li>
+      <a href='/business-profile/{{ item.biz_name }}'><b>{{ item.biz_name }}</b></a>
+        {% if item.deg_of_sep(session['user_id']) %}
+          <i class='fa fa-chain prefix'></i> {{ item.deg_of_sep(session['user_id']) }}
+        {% else %}
+          <i class='fa fa-chain-broken prefix'></i>
+        {% endif %}
+      <li>Category: {{ item.category }} | Total Check-Ins: {{ item.tot_checkins() }} | Total Reviews: {{ item.tot_reviews() }} | Avg Rating: {{ item.avg_score() }}</li>
       <li>Address: {{ item.address }}, {{ item.city }}, {{ item.state }} {{ item.zipcode }} {{ item.country }}</li>
     </ul>
     {% endfor %}

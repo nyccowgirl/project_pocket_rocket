@@ -40,8 +40,8 @@ $(document).ready(() => {
 
   });
 
-  function displayMsg(results) {
-    if (results.code === 'error') {
+  function msgReload(results) {
+    if (results.code === 'danger') {
       alert(results.msg);
     } else {
       alert(results.msg);
@@ -66,7 +66,7 @@ $(document).ready(() => {
       'user-input': $('#user-input').val(),
       'pword': $('#pword').val()
     };
-    $.post('/login', formInputs, displayMsg);
+    $.post('/login', formInputs, msgReload);
   });
 
   $('#lost-form').on('submit', function(evt) {
@@ -97,8 +97,8 @@ $(document).ready(() => {
         data: formInputs,
         processData: false,
         contentType: false,
-        success: displayMsg,
-        error: displayMsg
+        success: msgReload,
+        error: msgReload
       });
   }});
 

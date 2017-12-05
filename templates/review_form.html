@@ -1,18 +1,13 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<style>
-  .container-fluid {
-    height: 1000px;
-  }
-</style>
+
 {% endblock %}
 
 {% block content %}
 
-
 <!-- TO DO: Make the below a modal on individual biz page -->
-<div class='container-fluid'>
+<div class='container-fluid' style='height: 745px'>
 
 <h1>Review</h1>
 
@@ -49,7 +44,7 @@
     let maxLength = 5000;
     $('#input-review, textarea').keyup(function() {
       let length = $(this).val().length;
-      let charLeft = maxLength-length;
+      let charLeft = maxLength - length;
       $('#chars').text(charLeft);
     });
 

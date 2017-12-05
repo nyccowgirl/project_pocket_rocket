@@ -107,7 +107,7 @@ def register_process():
     user = User.query.filter((User.email == email) | (User.username == username)).first()
 
     if user:
-        code = 'error'
+        code = 'danger'
         results = 'The user name or email provided already has an account. Please log-in.'
     else:
         user = User(username=username,
@@ -153,10 +153,10 @@ def login_process():
     user = User.query.filter((User.username == user_input) | (User.email == user_input)).first()
 
     if not user:
-        code = 'error'
+        code = 'danger'
         results = 'User name or email does not exist. Please check your input or register.'
     elif user.password != pword:
-        code = 'error'
+        code = 'danger'
         results = 'The password is incorrect. Please check you input or reset password.'
     else:
         session['user_id'] = user.user_id
@@ -168,7 +168,7 @@ def login_process():
         else:
             session['user_pic'] = '/static/img/dragonfly.jpeg'
 
-        code = 'success'
+        code = 'info'
         results = user.username + ' is now logged in.'
 
     return jsonify({'code': code, 'msg': results})
@@ -180,7 +180,7 @@ def logout():
 
     session.clear()
 
-    flash('Thanks for being a BUDdy. Continue to be your badass self and have a fantabulous day!')
+    flash('Thanks for being a BUDdy. Continue to be your badass self and have a fantabulous day!', 'info')
 
     return redirect('/')
 
@@ -197,7 +197,7 @@ def check_email():
         return False
     else:
         return True
-        email = user.email
+        # email = user.email
 
     # TO DO: need to send link to user email to reset password
 
@@ -225,7 +225,7 @@ def reset_pword():
     session['user_id'] = user.user_id
     session['username'] = user.username
 
-    flash('{} is now logged in.'.format(user.username))
+    flash('{} is now logged in.'.format(user.username), 'info')
 
     return redirect('/')
 
@@ -262,7 +262,7 @@ def edit_user():
         pic = None
 
     if check_email:
-        code = 'error'
+        code = 'danger'
         results = 'That email is already used.'
     elif (user.biz_acct is True) and (biz_acct == 'false'):
         code = 'warning'
@@ -324,6 +324,7 @@ def add_friend():
         db.session.add(invite)
         db.session.commit()
 
+        code = 'warning'
         results = 'A request has been sent to ' + friend_email
     else:
         # Checks if already existing friends
@@ -344,11 +345,12 @@ def add_friend():
             db.session.add(friend, friend_rev)
             db.session.commit()
 
+            code = 'info'
             results = friend.username + "is now your friend."
 
     print results
 
-    return jsonify(results)
+    return jsonify({'code': code, 'msg': results})
 
 
 @app.route('/user-reviews')
@@ -466,7 +468,7 @@ def biz_process():
     business = Business.query.filter((Business.email == email) | (Business.biz_name == name)).first()
 
     if business:
-        flash('The business name or email provided is already in BUDdy.')
+        flash('The business name or email provided is already in BUDdy.', 'warning')
         return redirect('/login')
     else:
         biz = Business(biz_name=name,
@@ -494,7 +496,7 @@ def biz_process():
             db.session.add(userbiz)
             db.session.commit()
 
-        flash('{} has been added'.format(biz.biz_name))
+        flash('{} has been added'.format(biz.biz_name), 'info')
 
         return redirect('/')
 
@@ -536,7 +538,7 @@ def claim_biz(biz_id):
     check = UserBiz.query.filter_by(biz_id=biz_id).first()
 
     if check:
-        code = 'error'
+        code = 'danger'
         results = 'The business has already been claimed. If you believe this is in \
               error, please submit message to administrators and provide evidence of your ownership.'
     else:
@@ -545,7 +547,7 @@ def claim_biz(biz_id):
 
         db.session.add(userbiz)
         db.session.commit()
-        code = 'success'
+        code = 'info'
         results = 'Thanks for being part of the BUDdy community.'
 
     return jsonify({'code': code, 'msg': results})
@@ -563,6 +565,7 @@ def check_in(biz_id):
     referral = Referral.query.filter(Referral.referee_id == session['user_id'], Referral.biz_id == biz_id).first()
 
     if checkin:
+        code = 'warning'
         results = 'You have already checked into this business today. No double dipping!'
     else:
         checkin = CheckIn(user_id=session['user_id'],
@@ -574,6 +577,7 @@ def check_in(biz_id):
 
         # user_checkins = helper.calc_checkins_biz(biz_id)
 
+        code = 'info'
         results = ('You have checked in a total of {} times. {} thanks you for your support!'.format(biz.tot_user_checkins, biz.biz_name))
 
         if referral:
@@ -581,7 +585,7 @@ def check_in(biz_id):
 
             db.session.commit()
 
-    return jsonify(results)
+    return jsonify({'code': code, 'msg': results})
 
 # FIXME: redirect isn't taking in biz_name
 
@@ -610,7 +614,7 @@ def review_process(biz_name):
     db.session.add(review)
     db.session.commit()
 
-    flash('Your review has been received. {} appreciates your feedback.'.format(biz_name))
+    flash('Your review has been received. {} appreciates your feedback.'.format(biz_name), 'info')
 
     return redirect('/business-profile/<biz_name>')
 
@@ -626,9 +630,10 @@ def like_process():
     db.session.add(like)
     db.session.commit()
 
+    code = 'info'
     results = 'Thanks for liking me!'
 
-    return jsonify(results)
+    return jsonify({'code': code, 'msg': results})
 
 
 @app.route('/search-biz')
@@ -698,6 +703,7 @@ def get_graph_data_default():
 
 #     return render_template('friend_network.html')
 
+
 @app.route('/respond/<int:review_id>')
 def response_form(review_id):
     """ Displays response form to a specific user review for business. """
@@ -711,14 +717,16 @@ def response_form(review_id):
 def rev_resp_process(review_id):
     """ Processes biz owner's response to a specific review. """
 
-    response = request.form.get('ref-response')
+    response = request.form.get('rev-response')
 
-    rev_resp = Review(dispute=True, response=response)
+    review = Review.query.get(review_id)
 
-    db.session.add(rev_resp)
+    review.dispute = True
+    review.response = response
+
     db.session.commit()
 
-    flash("Your response has been posted. Thanks for addressing the reviewer's comments.")
+    flash("Your response has been posted. Thanks for addressing the reviewer's comments.", 'warning')
 
     return redirect('/user-biz')
 
@@ -777,13 +785,14 @@ def biz_refer_process(biz_id):
                 newbie = False
 
     if newbie is True:
-
+        code = 'info'
         results = 'Thanks for paying it forward and recommending {}!'.format(biz.biz_name)
 
     else:
+        code = 'warning'
         results = 'Thanks for paying it forward and recommending {}! Some of your friends have been there. Referrals have been sent to those who have not.'.format(biz.biz_name)
 
-    return jsonify(results)
+    return jsonify({'code': code, 'msg': results})
 
 
 @app.route('/red-userpromo', methods=['POST'])
@@ -801,9 +810,10 @@ def red_userpromo_process():
 
     db.session.commit()
 
+    code = 'info'
     results = 'Thanks for your patronage!'
 
-    return jsonify(results)
+    return jsonify({'code': code, 'msg': results})
 
 
 @app.route('/red-promo', methods=['POST'])
@@ -821,9 +831,10 @@ def red_promo_process():
     db.session.add(userpromo)
     db.session.commit()
 
+    code = 'info'
     results = 'Thanks for your patronage!'
 
-    return jsonify(results)
+    return jsonify({'code': code, 'msg': results})
 
 
 ##############################################################################

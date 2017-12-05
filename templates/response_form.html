@@ -1,20 +1,14 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<style>
-  .container-fluid {
-    height: 1000px;
-  }
-</style>
+
 {% endblock %}
 
 {% block content %}
 
-
 <!-- TO DO: Make the below a modal on individual biz page -->
-{% block content %}
 
-<div class='container-fluid'>
+<div class='container-fluid' style='height: 745px'>
 
 <h1>Response to Review</h1>
 
@@ -32,7 +26,7 @@
 
 </div>
 
-{% endblock}
+{% endblock %}
 
 {% block script %}
 
@@ -42,13 +36,12 @@
     let maxLength = 5000;
     $('#input-response, textarea').keyup(function() {
       let length = $(this).val().length;
-      let charLeft = maxLength-length;
+      let charLeft = maxLength - length;
       $('#charsResponse').text(charLeft);
     });
 
   });
 
   </script>
-
 
 {% endblock %}

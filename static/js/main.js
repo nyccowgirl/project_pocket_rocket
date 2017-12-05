@@ -147,7 +147,7 @@ $(document).ready(() => {
       'userpromo_id': this.id
     };
     $(this).prop('disabled', true);
-    $.post('/red-userpromo', formInputs, displayMsg);
+    $.post('/red-userpromo', formInputs, msgReload);
   }
 
   $redPromo.on('click', redeemPromo);
@@ -158,7 +158,7 @@ $(document).ready(() => {
       'promo_id': this.id
     };
     $(this).prop('disabled', true);
-    $.post('/red-promo', formInputs, displayMsg);
+    $.post('/red-promo', formInputs, msgReload);
   }
 
   $redPromoNew.on('click', redeemPromoNew);

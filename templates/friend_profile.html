@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
+
+{% block head %}
+
+<link rel='stylesheet' type='text/css' href='/static/css/flipper.css'>
+
+{% endblock %}
+
 {% block content %}
 
   <h1>Friend's Profile</h1>
 
   <!-- TO DO: Set each as either menu item on left panel or as scroll down from nav bar. -->
-
 
     <div>
       {% if friend.user_pic %}
@@ -13,7 +19,14 @@
         <img id ='user_pic' src='/static/img/dragonfly_friend.jpeg' hspace='40' align='left'>
       {% endif %}
     </div>
-     <h2>{{ friend.username }}</h2>
+     <h2>{{ friend.username }}    <span style='font-size: 15px'>
+      <i class='fa fa-users prefix'></i> {{ friend.tot_friends() }} |
+      {% if friend.deg_of_sep(session['user_id']) %}
+        <i class='fa fa-chain prefix'></i> {{ friend.deg_of_sep(session['user_id']) }}
+      {% else %}
+        <i class='fa fa-chain-broken prefix'></i>
+      {% endif %}
+     </span></h2>
 
   <hr>
 
@@ -29,12 +42,6 @@
   <h3>About {{ friend.username }}</h3>
     <div>
       <ul>
-        <i class='fa fa-users prefix'></i> {{ friend.tot_friends() }} |
-        {% if friend.deg_of_sep(session['user_id']) %}
-          <i class='fa fa-chain prefix'></i> {{ friend.deg_of_sep(session['user_id']) }}
-        {% else %}
-          <i class='fa fa-chain-broken prefix'></i>
-        {% endif %}
         First Name: {{ friend.first_name }}<br>
         Last Name: {{ friend.last_name }}<br>
         User Name: {{ friend.username }}<br>
@@ -56,76 +63,6 @@
       </ul>
     </div>
 
-  {% if friend.friends %}
-    <hr>
-    <h3>Zir Friends</h3>
-
-    <ul>
-    {% for friend in friend.friends|sort(attribute='username') %}
-      <li>
-        {% if friend.user_id == session['user_id'] %}
-          <a href='/user-profile'> {{ friend.username }}</a>
-        {% else %}
-          <a href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a>
-        {% endif %}
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-
-  {% if friend.reviews %}
-    <hr>
-    <h3>Zir Reviews</h3>
-
-    <ul>
-    {% for review in friend.reviews|sort(attribute='review_date') %}
-      <li>
-        <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
-          {% if review.biz.deg_of_sep(session['user_id']) %}
-            <i class='fa fa-chain prefix'></i> {{ review.biz.deg_of_sep(session['user_id']) }}
-          {% else %}
-            <i class='fa fa-chain-broken prefix'></i>
-          {% endif %}
-        {% if review.revise_review %}
-          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
-            {% if review.has_liked(session['user_id']) %}
-              <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
-            {% else %}
-              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
-            {% endif %}
-          </p>
-          <p>{{ review.new_review }}</p>
-        {% else %}
-          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
-            {% if review.has_liked(session['user_id']) %}
-              <button disabled><i class="fa fa-heart" aria-hidden="true"></i></button>
-            {% else %}
-              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
-            {% endif %}
-          </p>
-          <p>{{ review.review }}</p>
-        {% endif %}
-        {% if review.dispute %}
-          <b style='color: #880e4f'>Comment from
-            {% if review.biz.users %}
-              {{ review.biz.users[0].username }},
-            {% endif %}
-             owner of {{ review.biz.biz_name }}</b>
-          <p>{{ review.response }}</p>
-          {% if review.cust_svc %}
-            <b><i>Customer Service Rating: </i>{{ review.cust_svc }}</b>
-          {% endif %}
-          {% if review.revise_review %}
-            <p><i>Original Rating: </i>{{ review.rating }}</p>
-            <p>{{ review.review }}</p>
-          {% endif %}
-        {% endif %}
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-  <!-- TO DO: Add total likes per review -->
-
   {% if friend.biz %}
     <hr>
     <h3>Zir Business(es)</h3>
@@ -137,7 +74,204 @@
     </ul>
   {% endif %}
 
+  {% if friend.friends %}
+    <hr>
+    <h3>Zir Friends</h3>
+    <br>
+
+<!--     <ul>
+    {% for friend in friend.friends|sort(attribute='username') %}
+      <li>
+        {% if friend.user_id == session['user_id'] %}
+          <a href='/user-profile'> {{ friend.username }}</a>
+        {% else %}
+          <a href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a>
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ul> -->
+
+    {% for friend in friend.friends|sort(attribute='username') %}
+      <!--Rotating card-->
+      <div id='myCard-{{ friend.user_id }}' class='myCard flip-container' ontouchstart="this.classList.toggle('flip');">
+        <div class='flipper'>
+          <!--Front Side-->
+          <div class='front'>
+            <!--Avatar-->
+            <div class='avatar'><img src='{{ friend.user_pic }}' class='rounded-circle img-responsive' height='100' width='100'></div>
+            <div class='card-body'>
+              <!-- front content -->
+              <br><br>
+              <h4><a class='card-title' href='/friend-profile/{{ friend.user_id }}'>{{ friend.username }}</a></h4>
+              <hr>
+              <div>
+              <p>{{ friend.first_name }} {{ friend.last_name }}</p>
+              <i class='fa fa-users prefix'></i> {{ friend.tot_friends() }} |
+              {% if friend.deg_of_sep(session['user_id']) %}
+                <i class='fa fa-chain prefix'></i> {{ friend.deg_of_sep(session['user_id']) }}
+              {% else %}
+                <i class='fa fa-chain-broken prefix'></i>
+              {% endif %}
+
+              <p>Member Since: {{ friend.join_date|datetimeformat('%b %Y') }}</p>
+              </div>
+              <hr>
+              <!--Triggering button-->
+              <a class='flip-card' class='rotate-btn'><i class='fa fa-repeat'></i> Click here to rotate</a>
+            </div>
+          </div>
+          <!--/.Front Side-->
+
+          <!--Back Side-->
+          <div class='back'>
+            <!-- back content -->
+            <div>
+              <h4 class='card-title'>About me</h4>
+              <hr>
+              Total Check-Ins: {{ friend.tot_checkins() }}</br>
+              Total Reviews: {{ friend.tot_reviews() }}</br>
+              Total Businesses Visited: {{ friend.tot_unique_biz() }}</br>
+              Total Businesses Referred to Friends: {{ friend.tot_biz_referrals() }}</br>
+            </div>
+            <hr>
+            <!--Social Icons-->
+            <div>
+              <ul class='inline-ul'>
+                <li><a class='icons-sm fb-ic'><i class='fa fa-facebook'></i></a></li>
+                <li><a class='icons-sm tw-ic'><i class='fa fa-twitter'></i></a></li>
+                <li><a class='icons-sm gplus-ic'><i class='fa fa-google-plus'></i></a></li>
+                <li><a class='icons-sm li-ic'><i class='fa fa-linkedin'></i></a></li>
+              </ul>
+            </div>
+            <!--Triggering button-->
+            <a class='flip-card' class='rotate-btn' data-card='card-1'><i class='fa fa-undo'></i> Click here to rotate back</a>
+          </div>
+          <!--/.Back Side-->
+        </div>
+      </div>
+      <!--/.Rotating card-->
+    {% endfor %}
+  {% endif %}
+
+  {% if friend.reviews %}
+    <hr>
+    <h3>Zir Reviews</h3>
+
+    {% for review in friend.reviews|sort(attribute='review_date') %}
+
+      {% if (review.dispute and (review.revise_review or review.cust_svc)) or not review.dispute %}
+
+      <ul>
+        <li>
+          <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
+          {% if review.biz.deg_of_sep(review.user_id) %}
+            <i class='fa fa-chain prefix'></i> {{ review.biz.deg_of_sep(review.user_id) }}
+          {% else %}
+            <i class='fa fa-chain-broken prefix'></i>
+          {% endif %}
+
+        {% if review.revise_review %}
+          <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
+            {% if review.has_liked(session['user_id']) %}
+              <button disabled><i class='fa fa-heart' aria-hidden='true'></i></button>
+            {% else %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden='true'></i></button>
+            {% endif %}
+          </p>
+
+          <p>{{ review.new_review }}</p>
+
+          <b style='color: #880e4f'>Comment from
+          {% if review.biz.users %}
+            {{ review.biz.users[0].username }},
+          {% endif %}
+           owner of {{ review.biz.biz_name }}</b>
+
+          <p>{{ review.response }}</p>
+
+          <p><i>Original Rating: </i>{{ review.rating }}</p>
+
+          <p>{{ review.review }}</p>
+
+        {% else %}
+
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
+            {% if review.has_liked(session['user_id']) %}
+              <button disabled><i class='fa fa-heart' aria-hidden='true'></i></button>
+            {% else %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden='true'></i></button>
+            {% endif %}
+          </p>
+
+          <p>{{ review.review }}</p>
+
+          {% if review.cust_svc %}
+            <p><b><i>Customer Service Rating:</i> {{ review.cust_svc }}</b></p>
+
+            <b style='color: #880e4f'>Comment from
+             {% if review.biz.users %}
+                {{ review.biz.users[0].username }},
+              {% endif %}
+               owner of {{ review.biz.biz_name }}</b>
+
+            <p>{{ review.response }}</p>
+
+          {% endif %}
+
+        {% endif %}
+        </li>
+      </ul>
+
+      {% else %}
+
+      <br><br>
+
+      <h4>Being Addressed</h4>
+
+      <ul>
+        <li>
+          <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
+            {% if review.users.deg_of_sep(review.user_id) %}
+              <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(review.user_id) }}
+            {% else %}
+              <i class='fa fa-chain-broken prefix'></i>
+            {% endif %}
+
+          <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
+            {% if review.has_liked(session['user_id']) %}
+              <button disabled><i class="fa fa-heart" aria-hidden='true'></i></button>
+            {% else %}
+              <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden='true'></i></button>
+            {% endif %}
+          </p>
+
+          <p>{{ review.review }}</p>
+
+          <b style='color: #880e4f'>Comment from
+            {% if review.biz.users %}
+              {{ review.biz.users[0].username }},
+            {% endif %}
+             owner of {{ review.biz.biz_name }}</b>
+
+          <p>{{ review.response }}</p>
+
+          {% if review.biz.has_reviewed(session['user_id']) and (review.user_id == session['user_id'])%}
+            <button id='revise {{ review.review_id }}' class='revise-review'>Revise Review</button>
+            <button id='cust-svc {{ review.review_id }}' class='cust-svc'>Rate Customer Svc</button>
+
+          <!-- TO DO: Add AJAX to update review or rate customer svc. -->
+
+          {% endif %}
+        </li>
+      </ul>
+
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
 </div>
+
+<div class='container-fluid'>
 
   <!--Modal: Login with Avatar Form-->
   <form action='/add-friend' method='POST' mdbModal #form='mdb-modal' class='modal fade' id='modalAddFriend' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
@@ -170,9 +304,17 @@
       </div>
   </form>
   <!--Modal: Login with Avatar Form-->
+</div>
 
 {% endblock %}
 
 {% block script %}
+<script>
 
+$('.myCard').on('click', function(evt) {
+    console.log(this);
+   this.classList.toggle('flip');
+});
+
+ </script>
 {% endblock %}

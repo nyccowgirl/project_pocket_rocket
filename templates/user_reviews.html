@@ -30,55 +30,118 @@
 
     <div>
       {% if user.reviews %}
+
         <h3>My Reviews</h3>
 
-        <ul>
         {% for review in user.reviews|sort(attribute='review_date', reverse=True) %}
-          <li>
-            <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
-            {% if review.biz.deg_of_sep(session['user_id']) %}
-              <i class='fa fa-chain prefix'></i> {{ review.biz.deg_of_sep(session['user_id']) }}
-            {% else %}
-              <i class='fa fa-chain-broken prefix'></i>
-            {% endif %}
 
-            {% if review.revise_review %}
-              <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
-                {% if review.has_liked(session['user_id']) %}
-                  <button disabled><i class='fa fa-heart' aria-hidden='true'></i></button>
-                {% else %}
-                  <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden='true'></i></button>
+          {% if (review.dispute and (review.revise_review or review.cust_svc)) or not review.dispute %}
+
+          <ul>
+            <li>
+              <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
+              {% if review.biz.deg_of_sep(session['user_id']) %}
+                <i class='fa fa-chain prefix'></i> {{ review.biz.deg_of_sep(session['user_id']) }}
+              {% else %}
+                <i class='fa fa-chain-broken prefix'></i>
+              {% endif %}
+
+              {% if review.revise_review %}
+                <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
+                  {% if review.has_liked(session['user_id']) %}
+                    <button disabled><i class='fa fa-heart' aria-hidden='true'></i></button>
+                  {% else %}
+                    <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden='true'></i></button>
+                  {% endif %}
+                </p>
+
+                <p>{{ review.new_review }}</p>
+
+                <b style='color: #880e4f'>Comment from
+                {% if review.biz.users %}
+                  {{ review.biz.users[0].username }},
                 {% endif %}
-              </p>
-              <p>{{ review.new_review }}</p>
-            {% else %}
+                 owner of {{ review.biz.biz_name }}</b>
+
+                <p>{{ review.response }}</p>
+
+                <p><i>Original Rating: </i>{{ review.rating }}</p>
+
+                <p>{{ review.review }}</p>
+
+              {% else %}
+
+                <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
+                  {% if review.has_liked(session['user_id']) %}
+                    <button disabled><i class='fa fa-heart' aria-hidden='true'></i></button>
+                  {% else %}
+                    <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden='true'></i></button>
+                  {% endif %}
+                </p>
+
+                <p>{{ review.review }}</p>
+
+                {% if review.cust_svc %}
+                  <p><b><i>Customer Service Rating:</i> {{ review.cust_svc }}</b></p>
+
+                  <b style='color: #880e4f'>Comment from
+                    {% if review.biz.users %}
+                       {{ review.biz.users[0].username }},
+                    {% endif %}
+                     owner of {{ review.biz.biz_name }}</b>
+
+                  <p>{{ review.response }}</p>
+
+                {% endif %}
+
+              {% endif %}
+            </li>
+          </ul>
+
+          {% else %}
+
+          <br><br>
+
+          <h4>Being Addressed</h4>
+
+          <ul>
+            <li>
+              <a href='/business-profile/{{ review.biz.biz_name }}'>{{ review.biz.biz_name}}</a>
+                {% if review.users.deg_of_sep(review.user_id) %}
+                  <i class='fa fa-chain prefix'></i> {{ review.users.deg_of_sep(review.user_id) }}
+                {% else %}
+                  <i class='fa fa-chain-broken prefix'></i>
+                {% endif %}
+
               <p>Rating: {{ review.rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |
                 {% if review.has_liked(session['user_id']) %}
-                  <button disabled><i class='fa fa-heart' aria-hidden='true'></i></button>
+                  <button disabled><i class="fa fa-heart" aria-hidden='true'></i></button>
                 {% else %}
                   <button id='{{ review.review_id }}' class='like' data-review-id='{{ review.review_id }}'><i class='fa fa-heart-o' aria-hidden='true'></i></button>
                 {% endif %}
               </p>
+
               <p>{{ review.review }}</p>
-            {% endif %}
-            {% if review.dispute %}
+
               <b style='color: #880e4f'>Comment from
                 {% if review.biz.users %}
                   {{ review.biz.users[0].username }},
                 {% endif %}
                  owner of {{ review.biz.biz_name }}</b>
+
               <p>{{ review.response }}</p>
-              {% if review.cust_svc %}
-                <b><i>Customer Service Rating: </i>{{ review.cust_svc }}</b>
+
+              {% if review.biz.has_reviewed(session['user_id']) and (review.user_id == session['user_id'])%}
+                <button id='revise {{ review.review_id }}' class='revise-review'>Revise Review</button>
+                <button id='cust-svc {{ review.review_id }}' class='cust-svc'>Rate Customer Svc</button>
+
+                <!-- TO DO: Add AJAX to update review or rate customer svc. -->
+
               {% endif %}
-              {% if review.revise_review %}
-                <p><i>Original Rating: </i>{{ review.rating }}</p>
-                <p>{{ review.review }}</p>
-              {% endif %}
-            {% endif %}
-          </li>
+            </li>
+          </ul>
+          {% endif %}
         {% endfor %}
-        </ul>
       {% endif %}
 
     </div>
