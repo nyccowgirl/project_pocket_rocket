@@ -25,18 +25,24 @@
 
     <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalReferFriend'mdbRippleRadius>Refer Business</button>
 
-    {% if not biz.is_checkin(session['user_id']) %}
+    {% if (not biz.is_checkin(session['user_id'])) and (not biz.is_owned(session['user_id'])) %}
 
       <button type='button' class='btn btn-unique btn-rounded waves-light check-in' data-review-id='{{ biz.biz_id }}' mdbRippleRadius><a href='/checkin/{{ biz.biz_id }}'>Check-In</a></button>
 
     {% endif %}
 
-    {% if (not biz.has_reviewed(session['user_id'])) or (not biz.is_owned) %}
+    {% if (not biz.has_reviewed(session['user_id'])) and (not biz.is_owned(session['user_id'])) %}
+
       <button type='button' class='btn btn-unique btn-rounded waves-light' mdbRippleRadius><a href='/review/{{ biz.biz_name }}'>Review Business</a></button>
+
     {% endif %}
 
+    <!-- FIXME: Think the logic above in if statement is wrong  -->
+
     {% if not biz.is_claimed() %}
+
       <button type='button' class='btn btn-unique btn-rounded waves-light claim-biz' data-review-id='{{ biz.biz_id }}' mdbRippleRadius><a href='/claim-biz/{{ biz.biz_id }}'>Claim Business</a></button>
+
     {% endif %}
 
       <hr>
@@ -190,7 +196,7 @@
             {% else %}
 
               {% if biz.is_owned(session['user_id']) %}
-                <button id='dispute {{ review.review_id }}' class='dispute'><a href='/respond/{{ review.review_id }}'>Respond</a></button>
+                <button id='dispute-{{ review.review_id }}' class='dispute'><a href='/respond/{{ review.review_id }}'>Respond</a></button>
               {% endif %}
 
             {% endif %}
@@ -233,9 +239,14 @@
 
             <p>{{ review.response }}</p>
 
-            {% if biz.has_reviewed(session['user_id']) and (review.user_id == session['user_id'])%}
-              <button id='revise {{ review.review_id }}' class='revise-review'>Revise Review</button>
-              <button id='cust-svc {{ review.review_id }}' class='cust-svc'>Rate Customer Svc</button>
+            {% if review.biz.has_reviewed(session['user_id']) and review.dispute %}
+              {% if not review.cust_svc %}
+                <button id='revise-{{ review.review_id }}' class='btn-rounded revise-review'><a href='/revise/{{ review.review_id }}'>Revise Review</a></button>
+              {% endif %}
+
+              {% if not review.revise_review %}
+                <button id='cust-svc-{{ review.review_id }}' class='btn-rounded cust-svc'><a href='/cust-svc/{{ review.review_id }}'>Rate Customer Svc</a></button>
+              {% endif %}
 
             <!-- TO DO: Add AJAX to update review or rate customer svc. -->
             {% endif %}

@@ -285,3 +285,15 @@ a .btn {
 h6>a {
    color: #f3e5f5;
 }
+
+.revise-review>a, .cust-svc>a, .dispute>a {
+  color: #fff;
+  /*background-color: #337ab7;*/
+}
+
+.revise-review, .cust-svc, .dispute {
+  color: #fff;
+  background-color: #337ab7;
+}
+
+

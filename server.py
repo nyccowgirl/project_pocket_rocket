@@ -182,7 +182,7 @@ def logout():
 
     flash('Thanks for being a BUDdy. Continue to be your badass self and have a fantabulous day!', 'info')
 
-    return redirect('/')
+    return render_template('logout.html')
 
 
 @app.route('/email-check')
@@ -835,6 +835,23 @@ def red_promo_process():
     results = 'Thanks for your patronage!'
 
     return jsonify({'code': code, 'msg': results})
+
+
+@app.route('/revise/<int:review_id>')
+def revise_rev(review_id):
+    """ Displays template for reviewer to revise review. """
+
+    pass
+
+    # TO DO: build out, perhaps with modal
+
+@app.route('/cust-svc/<int:review_id>')
+def cust_svc(review_id):
+    """ Displays template to rate customer service if not updating review. """
+
+    pass
+
+    # TO DO: build out, perhaps with modal
 
 
 ##############################################################################

@@ -131,9 +131,14 @@
 
               <p>{{ review.response }}</p>
 
-              {% if review.biz.has_reviewed(session['user_id']) and (review.user_id == session['user_id'])%}
-                <button id='revise {{ review.review_id }}' class='revise-review'>Revise Review</button>
-                <button id='cust-svc {{ review.review_id }}' class='cust-svc'>Rate Customer Svc</button>
+              {% if review.biz.has_reviewed(session['user_id']) and review.dispute %}
+                {% if not review.cust_svc %}
+                  <button id='revise-{{ review.review_id }}' class='btn-rounded revise-review'><a href='/revise/{{ review.review_id }}'>Revise Review</a></button>
+                {% endif %}
+
+                {% if not review.revise_review %}
+                  <button id='cust-svc-{{ review.review_id }}' class='btn-rounded cust-svc'><a href='/cust-svc/{{ review.review_id }}'>Rate Customer Svc</a></button>
+                {% endif %}
 
                 <!-- TO DO: Add AJAX to update review or rate customer svc. -->
 

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<link href='https://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet'>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.flex>div {
+  flex: 1 0 50%;
+  text-align: center;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.flex>div:first-child {
+  flex: 0 1 100%;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- TO DO: Make the below a modal on individual biz page -->
+
+<div class='flex'>
+
+  <p style="font-family: 'Rock Salt', cursive;
+  font-size: 80px; color: #337ab7; text-align: center;"><b><i>#changetheratio, #payitforward and #changetheworld</i></b></p>
+
+  <div class='row'>
+    <div  class= "col-md-6">
+      <iframe src="https://giphy.com/embed/3oriO75X3EdbWwBqIo" width="60%" height="350px" frameBorder="0" class="giphy-embed" allowFullScreen>
+      </iframe>
+    </div>
+
+    <div  class='col-md-6'>
+      <iframe src="https://giphy.com/embed/7w3PP2XfGa5fq" width="60%" height="350px" frameBorder="0" class="giphy-embed" allowFullScreen>
+      </iframe>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
