@@ -42,6 +42,7 @@ def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
 def index():
     """Displays homepage."""
 
+
     bubble_data_refs()
     bubble_data_promos()
 
@@ -660,14 +661,20 @@ def review_home():
 def get_graph_data_default():
     """ Create nodes and paths from friends table and jsonify for force layout."""
 
-    degree = request.args.get('degree')
-
-    if degree:
-        nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], int(degree)))
+    if 'user_id' not in session:
+        return jsonify({'error': 'error'})
     else:
-        nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], 2))
 
-    return jsonify({'nodes': nodes, 'paths': paths})
+        degree = request.args.get('degree')
+        print request.args
+
+        if degree:
+            nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], int(degree)))
+        else:
+            nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], 2))
+
+        return jsonify({'nodes': nodes, 'paths': paths})
+
 
 
 # @app.route('/data.json', methods=['POST'])

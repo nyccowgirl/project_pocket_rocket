@@ -63,10 +63,10 @@ $(document).ready(() => {
   $('#login-form').on('submit', function(evt) {
     evt.preventDefault();
     let formInputs = {
-      'user-input': $('#user-input').value(),
-      'pword': $('#pword').value()
+      'user-input': $('#user-input').val(),
+      'pword': $('#pword').val()
     };
-    $.post('/login', test, displayMsg);
+    $.post('/login', formInputs, displayMsg);
   });
 
   $('#lost-form').on('submit', function(evt) {
@@ -74,7 +74,10 @@ $(document).ready(() => {
     if (!$('#email-lost')) {
       alert('Please input your email.');
     } else {
-      $.get('/email-check', test, checkEmail);
+      let formInputs = {
+        'email': $('#email-lost').val()
+      }
+      $.get('/email-check', formInputs, checkEmail);
     };
   });
 

@@ -40,7 +40,7 @@
               <i class='fa fa-chain prefix'></i> {{ review.biz.deg_of_sep(session['user_id']) }}
             {% else %}
               <i class='fa fa-chain-broken prefix'></i>
-            {% endif %}</li>
+            {% endif %}
 
             {% if review.revise_review %}
               <p>Updated Rating: {{ review.new_rating }} | Date: {{ review.review_date|datetimeformat('%d %b %Y') }} | Total Likes: {{ review.tot_likes() }} |

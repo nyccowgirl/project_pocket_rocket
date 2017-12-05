@@ -3,23 +3,23 @@
 
 $(document).ready(() => {
 
-  // $('degree').on('submit', function(evt) {
-  //   evt.preventDefault();
-  //   // let data = new FormData(this);
-  //   // console.log(data);
-  //   let formInputs = {
-  //     'degree': $('degree').value()
-  //   };
-  //   // console.log(formInputs);
-  //   // debugger;
-  //   $.get('/data.json', formInputs, () => {
-  //     location.reload(true);
-  //   });
-  // });
+  $('#degree').on('submit', function(evt) {
+    evt.preventDefault();
+    let degreeInput = $("input[name='degree']:checked").val();
+    let formInputs = {
+      'degree': degreeInput
+    };
+    d3.json('/data.json?degree=' + degreeInput, makeForceGraph);
+
+  });
 
   d3.json('/data.json', makeForceGraph);
 
   function makeForceGraph(error, data) {
+    if (data.error === 'error') {
+      return;
+    }
+    $('#network').html('');
     let dataNodes = data.nodes;
     let links = data.paths;
     let width = 1700;

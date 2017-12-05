@@ -44,20 +44,25 @@
   <br>
   <br>
 
+{% if 'user_id' in session %}
   <h2 style='font-size: 20px;'>Chain Gang: What a wicked web we weave...</h2>
     <br>
+    <h6>Degrees of separation</h6>
     <form id='degree' action='/data.json' enctype='multipart/form-data'>
       <input type='radio' name='degree' value='1'>1
-      <input type='radio' name='degree' value='2'>2
+      <input type='radio' name='degree' value='2' checked>2
       <input type='radio' name='degree' value='3'>3
       <input type='radio' name='degree' value='4'>4
       <input type='radio' name='degree' value='5'>5
       <input type='radio' name='degree' value='6'>6
 
-      <input type='submit' value='Connect Me'>
+      <input type='submit' value='Connect Me' style='color: #fff;
+    background-color: #337ab7;'>
     </form>
 
     <div id='network'></div>
+
+{% endif %}
 
 </div>
 
@@ -266,26 +271,26 @@
   <script type='text/javascript' src='/static/js/friend_network.js'></script>
   <script type='text/javascript' src='/static/js/modular.js'></script>
 
-  <script>
-'use strict';
+<!-- //   <script> -->
+<!-- 'use strict'; -->
 
-  $(document).ready(() => {
+<!-- //   $(document).ready(() => { -->
 
-    $('degree').on('submit', function(evt) {
-      evt.preventDefault();
-      // let data = new FormData(this);
-      // console.log(data);
-      let formInputs = {
-        'degree': $('degree').value()
-      };
-      // console.log(formInputs);
-      $.get('/data.json', formInputs, () => {
-        // location.reload(true);
-        location.reload('/');
-      });
-    });
-  });
+<!-- //     $('degree').on('submit', function(evt) { -->
+<!-- //       // evt.preventDefault(); -->
+<!-- //       // let data = new FormData(this); -->
+<!-- //       // console.log(data); -->
+<!-- //       let formInputs = { -->
+<!-- //         'degree': $('degree').value() -->
+<!-- //       }; -->
+<!-- //       // console.log(formInputs); -->
+<!-- //       $.get('/data.json', formInputs, () => { -->
+<!-- //         // location.reload(true); -->
+<!-- //         location.reload('/'); -->
+<!-- //       }); -->
+<!-- //     }); -->
+<!-- //   }); -->
 
-  </script>
+<!-- //   </script> -->
 
 {% endblock %}
