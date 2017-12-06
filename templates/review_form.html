@@ -13,9 +13,10 @@
 
 <h2>{{ biz_name }}</h2>
 
-
   <form action='/review/{{ biz_name }}' method='POST'>
-    Rating:<select name='rating'>
+    <input type='hidden' name='rev-type' value='{{ rev_type }}'>
+    <input type='hidden' name='review-id' value='{{ review_id }}'
+      Rating:<select name='rating'>
       <option value='1'>1</option>
       <option value='2'>2</option>
       <option value='3'>3</option>
@@ -25,8 +26,13 @@
     <br>
     Review:<br>
       <div class='md-form'>
-        <textarea class='md-textarea' id='input-review' type='text' length='5000' name='review' mdbCharCounter mdbActive></textarea>
-        <label for='input-review'>Type your review</label>
+        {% if rev_type == 'new' %}
+          <textarea class='md-textarea review' id='input-review' type='text' length='5000' name='review' mdbCharCounter mdbActive></textarea>
+          <label for='input-review'>Type your review</label>
+        {% else %}
+          <textarea class='md-textarea review' id='input-revise' type='text' length='3000' name='review' mdbCharCounter mdbActive></textarea>
+          <label for='input-revise'>Type your review</label>
+        {% endif %}
         Remaining characters: <i id='chars'></i>
       </div>
     <input type='submit'>
@@ -41,8 +47,12 @@
   <script>
   $(document).ready(function() {
 
-    let maxLength = 5000;
-    $('#input-review, textarea').keyup(function() {
+    if ($('#input-review')) {
+      let maxLength = 5000;
+    } else {
+      let maxLength = 3000;
+    }
+    $('.review, textarea').keyup(function() {
       let length = $(this).val().length;
       let charLeft = maxLength - length;
       $('#chars').text(charLeft);

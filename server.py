@@ -613,30 +613,47 @@ def check_in(biz_id):
 def review_form(biz_name):
     """Displays form to review a business."""
 
-    return render_template('review_form.html', biz_name=biz_name)
+    rev_type = 'new'
+
+    return render_template('review_form.html', biz_name=biz_name, rev_type=rev_type)
 
 
 @app.route('/review/<biz_name>', methods=['POST'])
 def review_process(biz_name):
     """Processes user review of business."""
 
-    score = request.form['rating']
-    comment = request.form['review']
+    score = request.form.get['rating']
+    comment = request.form.get['review']
+    rev_type = request.form.get['rev_type']
     today = datetime.today()
     biz = Business.query.filter_by(biz_name=biz_name).first()
 
     user = User.query.get(session['user_id'])
 
-    review = Review(user_id=session['user_id'],
-                    biz_id=biz.biz_id,
-                    rating=int(score),
-                    review=comment,
-                    review_date=today)
+    if rev_type == 'new':
+        review = Review(user_id=session['user_id'],
+                        biz_id=biz.biz_id,
+                        rating=int(score),
+                        review=comment,
+                        review_date=today)
 
-    db.session.add(review)
-    db.session.commit()
+        db.session.add(review)
+        db.session.commit()
 
-    flash('Your review has been received. {} appreciates your feedback.'.format(biz_name), 'info')
+        flash('Your review has been received. {} appreciates your feedback.'.format(biz_name), 'info')
+
+    elif rev_type == 'revise':
+        review_id = request.form.get['review-id']
+
+        review = Review.query.get(review_id)
+
+        review.revise_review = True
+        review.new_rating = score
+        review.new_review = comment
+
+        db.session.commit()
+
+        flash('Your review has been updated. {} appreciates your feedback.'.format(biz_name), 'info')
 
     return render_template('business_profile.html', biz=biz, user=user,
                             today=today, user_score=int(score))
@@ -864,9 +881,15 @@ def red_promo_process():
 def revise_rev(review_id):
     """ Displays template for reviewer to revise review. """
 
-    pass
+    review = Review.query.get(review_id)
 
-    # TO DO: build out, perhaps with modal
+    biz_name = review.biz.biz_name
+
+    rev_type = 'revise'
+
+    return render_template('review_form.html', biz_name=biz_name,
+                           rev_type=rev_type, review_id=review_id)
+
 
 @app.route('/cust-svc/<int:review_id>')
 def cust_svc(review_id):
