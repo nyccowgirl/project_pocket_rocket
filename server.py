@@ -353,6 +353,24 @@ def add_friend():
     return jsonify({'code': code, 'msg': results})
 
 
+@app.route('/add-this-friend/<int:friend_id>')
+def add_this_friend(friend_id):
+    """Processes add friend request from friend profile page."""
+
+    friend = Friend(user_id=session['user_id'],
+                    friend_id=friend_id)
+
+    friend_rev = Friend(user_id=friend_id,
+                        friend_id=session['user_id'])
+
+    db.session.add(friend, friend_rev)
+    db.session.commit()
+
+    flash('Thanks for adding me. Share your faves with me!', 'info')
+
+    return redirect('/friend-profile/<int:friend_id>')
+
+
 @app.route('/user-reviews')
 def user_reviews():
     """Displays user's reviews with abbreviated profile."""

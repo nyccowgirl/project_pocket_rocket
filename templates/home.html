@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
-    <link rel='stylesheet' type='text/css' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.spa.css' />
-    <link rel='stylesheet' type='text/css' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.common.css' />
-    <link rel='dx-theme' data-theme='generic.light' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.light.css' />
-    <link rel='stylesheet' type='text/css' href='/static/css/bubble.css' />
-    <link rel='stylesheet' type='text/css' href='/static/css/friend_network.css'>
-    <link rel='stylesheet' type='text/css' href='/static/css/styles.css'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+  <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+  <link rel='stylesheet' type='text/css' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.spa.css' />
+  <link rel='stylesheet' type='text/css' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.common.css' />
+  <link rel='dx-theme' data-theme='generic.light' href='https://cdn3.devexpress.com/jslib/17.2.3/css/dx.light.css' />
+  <link rel='stylesheet' type='text/css' href='/static/css/bubble.css' />
+  <link rel='stylesheet' type='text/css' href='/static/css/friend_network.css'>
+  <link rel='stylesheet' type='text/css' href='/static/css/styles.css'>
 
 
 {% endblock %}
@@ -66,198 +66,6 @@
 
 </div>
 
-<!-- BEGIN # MODAL LOGIN -->
-<div class='modal fade' id='modalLRForm' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-  <div class='modal-dialog cascading-modal' role='document'>
-    <!-- Content -->
-    <div class='modal-content'>
-      <!-- FIXME: move body div b/f panes -->
-      <!-- Modal cascading tabs -->
-      <div class='modal-c-tabs'>
-        <!-- Nav tabs -->
-        <ul class='nav nav-tabs tabs-2 light-blue darken-1' role='tablist'>
-          <li class='nav-item'>
-            <a class='nav-link active unique-text' data-toggle='tab' href='#login-div' role='tab'><i class='fa fa-user mr-1'></i>Log In</a>
-          </li>
-          <li class='nav-item'>
-            <a class='nav-link unique-text' data-toggle='tab' href='#register-div' role='tab'><i class='fa fa-user-plus mr-1'></i>Register</a>
-          </li>
-          <li class='nav-item'>
-            <a class='nav-link unique-text' data-toggle='tab' href='#lost-div' role='tab'><i class='fa fa-lock mr-1'></i>Lost Password</a>
-          </li>
-        </ul>
-
-        <!-- Tab panels -->
-        <div id='div-forms' class='tab-content'>
-          <!-- Log In panel -->
-          <div class='tab-pane fade in active' id='login-div'>
-            <form action='/login' method='POST' role='tabpanel' id='login-form' enctype='multipart/form-data'>
-
-              <!-- Body -->
-              <div class='modal-body mb-1'>
-                <!-- FIXME: turn into modal content class rather than modal body? -->
-                <div class='md-form form-sm'>
-                  <i class='fa fa-envelope prefix'></i>
-                  <input type='text' id='user-input' name='user-input' class='form-control lowercase'>
-                  <label for='user-input'>Username or Email</label>
-                </div>
-
-                <div class='md-form form-sm'>
-                  <i class='fa fa-lock prefix'></i>
-                  <input type='password' id='pword' name='pword' class='form-control'>
-                  <label for='pword'>Password</label>
-                </div>
-
-                <div class='text-center mt-2'>
-                  <button type='submit' class='btn btn-unique'>Log In<i class='fa fa-sign-in ml-1'></i></button>
-                </div>
-
-                <div class='checkbox'>
-                  <label><input type='checkbox' name='remember'> Remember me</label>
-                </div>
-
-              </div>
-
-              <!-- Footer -->
-              <div class='modal-footer display-footer'>
-                <div class='options text-center text-md-right mt-1'>
-                  <p>Not a member? <a href='#register-form' class='unique-text' id='login_register_btn'>Sign Up</a></p>
-                  <p>Forgot <a href='#lost-form' class='unique-text' id='login_lost_btn'>Password?</a></p>
-                </div>
-
-                <button type='button' class='btn btn-outline-unique waves-effect ml-auto' data-dismiss='modal'>Close</button>
-              </div>
-            </form>
-          </div>
-          <!-- /.Log In panel -->
-
-          <!-- Registration Panel -->
-          <div id='register-div' class='tab-pane fade'>
-            <form action='/register' method='POST'  role='tabpanel' id='register-form' enctype='multipart/form-data'>
-
-              <!-- Body -->
-              <div class='modal-body'>
-                <div class='md-form form-sm'>
-                  <i class='fa fa-user prefix'></i>
-                  <input type='text' id='fname' name='fname' class='form-control'>
-                  <label for='fname'>First Name</label>
-                </div>
-
-                <div class='md-form form-sm'>
-                  <i class='fa fa-user prefix'></i>
-                  <input type='text' id='lname' name='lname' class='form-control'>
-                  <label for='lname'>Last Name</label>
-                </div>
-
-                <div class='md-form form-sm'>
-                  <i class='fa fa-user prefix'></i>
-                  <input type='text' id='username' name='username' class='form-control lowercase'>
-                  <label for='username'>Username</label>
-                </div>
-
-                <div class='md-form form-sm'>
-                  <i class='fa fa-envelope prefix'></i>
-                  <input type='text' id='email-reg' name='email-reg' class='form-control lowercase'>
-                  <label for='email-reg'>Email</label>
-                </div>
-
-                <div class='md-form form-sm'>
-                  <i class='fa fa-lock prefix'></i>
-                  <input type='password' id='pword-reg' name='pword-reg' class='form-control'>
-                  <label for='pword-reg'>Password</label>
-                </div>
-
-                <div class='md-form form-sm'>
-                  <i class='fa fa-lock prefix'></i>
-                  <input type='password' id='pword-rep' name='pword-rep' class='form-control'>
-                  <label for='pword-rep'>Repeat Password</label>
-                </div>
-
-                <div class='md-form form-sm'>
-                  <i class='fa fa-birthday-cake prefix'></i>
-                  <input type='text' id='bday' name='bday' class='form-control'>
-                  <label for='bday'>Date of Birth</label>
-                </div>
-
-                <div class='md-form form-sm'>
-                  <i class='fa fa-camera prefix'></i>
-                  <input type='file' id='user-pic' name='user-pic' accept='image/*'>
-                  <label for='user-pic'>Picture</label>
-                </div>
-
-                <!-- Radio -->
-                <div class='md-form form-sm'>
-                  <i class='fa fa-building prefix'></i>
-                  <p class='text-center'><strong>Business Account?</strong></p>
-                  <div class='form-group'>
-                    <input type='radio' id='biz-si' name='biz' value='true'>Yes
-                    <label for='biz-si'>Yes</label>
-                  </div>
-
-                  <div class='form-group'>
-                    <input type='radio' id='biz-no' name='biz' value='false' checked>No
-                  <label for='biz-no'>No</label>
-                  </div>
-                </div>
-                <!-- /.Radio -->
-
-                <div class='text-center mt-2'>
-                  <button type='submit' class='btn btn-unique'>Register<i class='fa fa-send ml-1'></i></button>
-                </div>
-
-              </div>
-              <!-- Footer -->
-              <div class='modal-footer'>
-                <div class='options text-right'>
-                  <p class='pt-1'>Already have an account? <a href='#login-form' class='unique-text' id='register_login_btn'>Log In</a></p>
-                </div>
-
-                <button type='button' class='btn btn-outline-unique waves-effect ml-auto' data-dismiss='modal'>Close</button>
-              </div>
-
-            </form>
-          </div>
-          <!-- /.Registration panel -->
-
-          <!-- Password change panel -->
-          <div id='lost-div' class='tab-pane fade'>
-            <form action='/pword-reset' method='POST' id='lost-form' role='tabpanel' enctype='multipart/form-data'>
-
-              <!-- Body -->
-              <div class='modal-body mb-1'>
-                <div class='md-form form-sm'>
-                  <i class='fa fa-lock prefix'></i>
-                  <input type='text' id='email-lost' name='email-lost' class='form-control lowercase'>
-                  <label for='email-lost'>Email</label>
-                </div>
-
-                <div class='text-center mt-2'>
-                  <button type='submit' class='btn btn-unique'>Submit<i class='fa fa-send ml-1'></i></button>
-                </div>
-              </div>
-              <!-- /.Body -->
-
-              <!-- Footer -->
-              <div class='modal-footer display-footer'>
-                <div class='options text-center text-md-right mt-1'>
-                  <p>Not a member? <a href='#register-form' class='unique-text' id='lost_register_btn'>Sign Up</a></p>
-                  <p>Remembered! <a href='#login-form' class='unique-text' id='lost_login_btn'>Log In</a></p>
-                </div>
-
-                <button type='button' class='btn btn-outline-unique waves-effect ml-auto' data-dismiss='modal'>Close</button>
-              </div>
-            </form>
-          </div>
-          <!-- /.Password change panel -->
-        </div>
-        <!-- /.Tab panels -->
-      </div>
-      <!-- /.Modal cascading -->
-    </div>
-    <!-- /.Content -->
-  </div>
-</div>
-<!-- Modal: Login / Regisration form -->
 
 {% endblock %}
 
@@ -269,7 +77,6 @@
   <script src='/static/js/bubble.js'></script>
   <script src='https://d3js.org/d3.v4.min.js'></script>
   <script type='text/javascript' src='/static/js/friend_network.js'></script>
-  <script type='text/javascript' src='/static/js/modular.js'></script>
 
 <!-- //   <script> -->
 <!-- 'use strict'; -->

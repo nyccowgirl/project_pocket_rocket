@@ -32,7 +32,11 @@
 
   <div class='container-fluid'>
 
-  <button type='button' class='btn btn-unique btn-rounded waves-light' (click)='form.show()' data-toggle='modal' data-target='#modalAddFriend' mdbRippleRadius>Add A Friend</button>
+  {% if not friend.is_friend(session['user_id']) %}
+    <button type='button' class='btn btn-unique btn-rounded waves-light' mdbRippleRadius><a href='/add-this-friend/{{ friend.user_id }}'>Add Friend</a></button>
+  {% else %}
+    <br><br>
+  {% endif %}
 
   </div>
 

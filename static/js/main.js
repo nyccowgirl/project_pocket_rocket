@@ -9,22 +9,27 @@ $(document).ready(() => {
 
 
   function msgReload(results) {
-    alert(results);
-    location.reload(true);
-  }
-
-  function displayMsg(results) {
-    alert(results);
-  }
-
-  function msgReloadError(results) {
-    if (results.code === 'error') {
+    if (results.code === 'danger') {
       alert(results.msg);
     } else {
       alert(results.msg);
-      location.reload(true);
+
     }
+    location.reload('/');
   }
+
+  function displayMsg(results) {
+    alert(results.msg);
+  }
+
+  // function msgReloadError(results) {
+  //   if (results.code === 'error') {
+  //     alert(results.msg);
+  //   } else {
+  //     alert(results.msg);
+  //     location.reload(true);
+  //   }
+  // }
 
 
 // processes like buttons on reviews
@@ -69,7 +74,7 @@ $(document).ready(() => {
     let formInputs = {
       'biz_id': this.id
     };
-    $.post('/claim-biz/<biz-id>', formInputs, msgReloadError);
+    $.post('/claim-biz/<biz-id>', formInputs, msgReload);
   }
 
   $claim.on('click', claimBiz);
@@ -92,7 +97,7 @@ $(document).ready(() => {
         'user_pic': $('#form20').val(),
         'biz_acct': $('#form8').val()
       };
-      $.post('/edit-user', formInputs, msgReloadError);
+      $.post('/edit-user', formInputs, msgReload);
     } else {
       alert('The password you entered does not match.');
     }

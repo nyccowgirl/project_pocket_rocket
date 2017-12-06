@@ -56,6 +56,19 @@ class User(db.Model):
         return (u'<user_id={} username={} email={}>'.format(self.user_id,
                 self.username, self.email))
 
+    def is_friend(self, friend_id):
+        """ Tracks whether a specific user is on a user's friend list. """
+
+        friends = set()
+
+        for friend in self.friends:
+            friends.add(friend.user_id)
+
+        if friend_id in friends:
+            return True
+        else:
+            return False
+
     def tot_friends(self):
         """ Calculates total friends. """
 
@@ -170,7 +183,6 @@ class Friend(db.Model):
         """ Displays info. """
 
         return (u'<user_id={} friend_id={}>'.format(self.user_id, self.friend_id))
-
 
 class UserBiz(db.Model):
     """ Relationship information between business user profile and related
