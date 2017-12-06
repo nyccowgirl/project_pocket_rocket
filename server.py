@@ -357,6 +357,8 @@ def add_friend():
 def add_this_friend(friend_id):
     """Processes add friend request from friend profile page."""
 
+    # user = User.query.get(friend_id)
+
     friend = Friend(user_id=session['user_id'],
                     friend_id=friend_id)
 
@@ -368,7 +370,7 @@ def add_this_friend(friend_id):
 
     flash('Thanks for adding me. Share your faves with me!', 'info')
 
-    return redirect('/friend-profile/<int:friend_id>')
+    return redirect('/user-friends')
 
 
 @app.route('/user-reviews')
@@ -620,8 +622,10 @@ def review_process(biz_name):
 
     score = request.form['rating']
     comment = request.form['review']
-    today = datetime.today().date()
+    today = datetime.today()
     biz = Business.query.filter_by(biz_name=biz_name).first()
+
+    user = User.query.get(session['user_id'])
 
     review = Review(user_id=session['user_id'],
                     biz_id=biz.biz_id,
@@ -634,7 +638,8 @@ def review_process(biz_name):
 
     flash('Your review has been received. {} appreciates your feedback.'.format(biz_name), 'info')
 
-    return redirect('/business-profile/<biz_name>')
+    return render_template('business_profile.html', biz=biz, user=user,
+                            today=today, user_score=int(score))
 
 
 @app.route('/like-review', methods=['POST'])

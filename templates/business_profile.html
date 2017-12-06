@@ -374,14 +374,16 @@
   let $referral = $('#modalReferFriend');
 
   function msgReload(results) {
-    alert(results);
+    alert(results.msg);
     location.reload(true);
   }
 
   function referFriend(evt) {
     evt.preventDefault();
+    debugger;
     let formInputs = {'friend-ref[]': []};
     $(':checked').each(function() {
+      console.log($(this).val());
       formInputs['friend-ref[]'].push($(this).val());
     });
     console.log(formInputs);
@@ -390,7 +392,9 @@
   }
 
   $referral.on('submit', referFriend);
+
   });
+
 </script>
 
 {% endblock %}
