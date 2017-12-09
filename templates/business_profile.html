@@ -54,7 +54,7 @@
   <div class='container-fluid'>
 
     <div>
-      Total Check-Ins: {{ biz.tot_checkins() }}| Your Check_Ins: {{ biz.tot_user_checkins(session['user_id']) }}<br>
+      Total Check-Ins: {{ biz.tot_checkins() }}| Your Check-Ins: {{ biz.tot_user_checkins(session['user_id']) }}<br>
       Average Rating: {{ biz.avg_score() }} | Your Rating: {{ user_score }}<br>
       Total Reviews: {{ biz.tot_reviews() }}<br>
       Total Referrals: {{ biz.tot_refs() }} | Redeemed: {{ biz.tot_refs_red() }}<br>

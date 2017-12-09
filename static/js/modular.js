@@ -45,8 +45,8 @@ $(document).ready(() => {
       alert(results.msg);
     } else {
       alert(results.msg);
+      location.reload('/');
     }
-    location.reload('/');
   }
 
   function checkEmail(results) {
@@ -54,7 +54,7 @@ $(document).ready(() => {
       alert('Email does not exist. Please check your input or register.');
     } else if (results === 'True') {
       alert('A link has been sent to your email to reset your password.');
-      location.reload('/pword-reset');
+      // location.reload('/pword-reset');
     } else {
       alert('Please try again.');
     }

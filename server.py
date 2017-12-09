@@ -6,7 +6,7 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES
 from model import (connect_to_db, db, User, Business, UserBiz, CheckIn, Review,
                    LikeReview, Friend, Invite, Referral, UserPromo, Promo)
 from datetime import datetime
-# import helper
+from helper import friend_request, lost_pword
 import re
 # import constants as c
 from sqlalchemy import or_, desc
@@ -63,18 +63,17 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/register')
-def register_form():
-    """Displays form for user registration/sign up."""
+# @app.route('/register')
+# def register_form():
+#     """Displays form for user registration/sign up."""
 
-    return render_template('registration_form.html')
+#     return render_template('registration_form.html')
 
 
 @app.route('/register', methods=['POST'])
 def register_process():
     """Processes registration form."""
-    # import pdb; pdb.set_trace()
-    # Get form variables
+
     fname = request.form['fname']
     lname = request.form['lname']
     username = request.form['username']
@@ -82,6 +81,7 @@ def register_process():
     pword = request.form['pword-reg']
     bday_str = request.form['bday']
     biz = request.form['biz']
+    invite_id = request.form.get['invite-id']
 
     # Convert picture that would be saved to static/img directory but url stored
     # in database
@@ -104,9 +104,10 @@ def register_process():
         biz = False
 
     # Check if user is already in database
-    user = User.query.filter((User.email == email) | (User.username == username)).first()
+    user_chk = User.query.filter((User.email == email) | (User.username == username)).first()
 
-    if user:
+
+    if user_chk:
         code = 'danger'
         results = 'The user name or email provided already has an account. Please log-in.'
     else:
@@ -130,17 +131,25 @@ def register_process():
         else:
             session['user_pic'] = '/static/img/dragonfly.jpeg'
 
-
         code = 'success'
         results = '{} is now registered and logged in as {}'.format(user.email, user.username)
 
+            if invite_id:
+                invite = Invite.query.get(int(invite_id))
+
+                invite.accepted = True
+
+                friend = Friend(user_id=invite.user_id,
+                                friend_id=user.user_id)
+
+                friend_rev = Friend(user_id=user.user_id,
+                                    friend_id=invite.user_id)
+
+                db.session.add(friend, friend_rev)
+                db.session.commit()
+
+
     return jsonify({'code': code, 'msg': results})
-
-# @app.route('/login')
-# def login_form():
-#     """Displays form for user to log-in."""
-
-#     return render_template('login_form.html')
 
 
 @app.route('/login', methods=['POST'])
@@ -182,7 +191,7 @@ def logout():
 
     flash('Thanks for being a BUDdy. Continue to be your badass self and have a fantabulous day!', 'info')
 
-    return render_template('logout.html')
+    return redirect('/')
 
 
 @app.route('/email-check')
@@ -196,19 +205,17 @@ def check_email():
     if not user:
         return False
     else:
+        lost_pword(user.email)
         return True
-        # email = user.email
-
-    # TO DO: need to send link to user email to reset password
 
 
-@app.route('/pword-reset')
+@app.route('/pword-reset/email=')
 def pword_form():
     """ Displays password reset form. """
 
-    return render_template('password.html')
-# The below is coming from password.html. At the moment, nothing renders the page
-# as AJAX refactoring stays on the page with email with password reset link being sent
+    email = request.args.get('email')
+
+    return render_template('password.html', email=email)
 
 
 @app.route('/pword-reset', methods=['POST'])
@@ -216,7 +223,8 @@ def reset_pword():
     """Resets user password."""
 
     user_input = request.form['user']
-    new_pword = request.form['pword']
+    new_pword = request.form['pword1']
+    rep_pword = request.form['pword2']
 
     user = User.query.filter((User.email == user_input) | (User.username == user_input)).first()
 
@@ -225,9 +233,10 @@ def reset_pword():
     session['user_id'] = user.user_id
     session['username'] = user.username
 
-    flash('{} is now logged in.'.format(user.username), 'info')
+    code = 'success'
+    results = '{} is now logged in.'.format(user.username)
 
-    return redirect('/')
+    return jsonify({code: 'code', msg: 'results'})
 
 
 @app.route('/user-profile')
@@ -324,6 +333,8 @@ def add_friend():
         db.session.add(invite)
         db.session.commit()
 
+        friend_request(friend_email, invite.invite_id)
+
         code = 'warning'
         results = 'A request has been sent to ' + friend_email
     else:
@@ -346,11 +357,20 @@ def add_friend():
             db.session.commit()
 
             code = 'info'
-            results = friend.username + "is now your friend."
+            results = friend.username + 'is now your friend.'
 
     print results
 
     return jsonify({'code': code, 'msg': results})
+
+@app.route('/registration/invite=')
+def friend_request_link():
+    """Routes request link to registration page"""
+
+    invite = request.args.get('invite')
+    # FIXME: not sure if this is how to get url values
+
+    return render_template('registration_form.html', invite_id=int(invite))
 
 
 @app.route('/add-this-friend/<int:friend_id>')
@@ -540,7 +560,6 @@ def biz_profile(biz_name):
     else:
         user_rating = 'N/A'
 
-    # TO DO: build out helper functions to pull in totals to summarize;
     # format phone number and hours
 
 #     query using:
@@ -594,8 +613,6 @@ def check_in(biz_id):
 
         db.session.add(checkin)
         db.session.commit()
-
-        # user_checkins = helper.calc_checkins_biz(biz_id)
 
         code = 'info'
         results = ('You have checked in a total of {} times. {} thanks you for your support!'.format(biz.tot_user_checkins, biz.biz_name))
@@ -695,8 +712,6 @@ def review_home():
     """Displays review home page with list of businesses that have been checked into
     but not reviewed by user, limited to most recent 10."""
 
-    # user = User.query.filter_by(user_id=session['user_id']).first()
-
     recent_checkins = CheckIn.query.filter_by(user_id=session['user_id']).order_by(desc(CheckIn.checkin_date)).group_by(CheckIn.checkin_id, CheckIn.biz_id).limit(10).all()
 
     return render_template('biz_home.html', checkins=recent_checkins)
@@ -719,29 +734,6 @@ def get_graph_data_default():
             nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], 2))
 
         return jsonify({'nodes': nodes, 'paths': paths})
-
-
-
-# @app.route('/data.json', methods=['POST'])
-# def get_graph_data():
-#     """ Create nodes and paths from friends table and jsonify for force layout."""
-
-#     degree = request.form.get('degree')
-#     print degree
-
-#     if degree:
-#         nodes, paths = make_nodes_and_paths(see_friends(session['user_id'], int(degree)))
-
-#     # import pdb; pdb.set_trace()
-#     print nodes
-#     return jsonify({'nodes': nodes, 'paths': paths})
-
-
-# @app.route('/network')
-# def index_advanced():
-#     """Return homepage."""
-
-#     return render_template('friend_network.html')
 
 
 @app.route('/respond/<int:review_id>')
