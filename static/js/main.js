@@ -43,6 +43,7 @@ $(document).ready(() => {
     };
     $(this).removeClass('.fa-heart-o');
     $(this).addClass('.fa-heart');
+    $(this).attr('style', 'color:#880e4f');
     $(this).prop('disabled', true);
     $.post('/like-review', formInputs, msgReload);
   }
