@@ -36,7 +36,7 @@ Business owners can view all the redemptions and analytics on referrals, redempt
 ## Technology Stack
 ###
 * Front End: JavaScript, jQuery, AJAX, Jinja, Bootstrap, ChartJS, D3, Font Awesome, DevExpress
-* Back End: Python, Flask, SQLAlchemy, PostGRES, PostGIS, Flask-Upload
+* Back End: Python, Flask, SQLAlchemy, PostGRES, PostGIS, Flask-Upload, SendGrid
 * API: Google Maps
 
 ## Degrees of Separation
