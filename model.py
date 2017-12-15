@@ -26,9 +26,7 @@ class User(db.Model):
     user_pic = db.Column(db.String(100), nullable=True)
     dob = db.Column(db.DateTime, nullable=True)
     join_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-    # FIXME: not sure if current_timestamp syntax is correct for SQLAlchemy
     biz_acct = db.Column(db.Boolean, nullable=True)
-    # FIXME: may not need, when user logs in, can do query of userbiz table for userid and store it all in businesses
     __table_args__ = (db.CheckConstraint("email ~ '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'"),)
 
     biz = db.relationship('Business', secondary='user_biz', backref='users')
@@ -183,6 +181,7 @@ class Friend(db.Model):
         """ Displays info. """
 
         return (u'<user_id={} friend_id={}>'.format(self.user_id, self.friend_id))
+
 
 class UserBiz(db.Model):
     """ Relationship information between business user profile and related
@@ -573,12 +572,11 @@ class Invite(db.Model):
     friend_email = db.Column(db.String(64), nullable=False)
     accepted = db.Column(db.Boolean, nullable=False, default=False)
     __table_args__ = (db.CheckConstraint("friend_email ~ '^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\.[A-Za-z]{2,}$'"),)
-    # data modeling lecture, look at many to many demo, instantiate book and user and comment link
 
     def __repr__(self):
         """ Displays info. """
 
-        return (u'<invite_id={} user_id={} accepted={}'
+        return (u'<invite_id={} user_id={} accepted={}>'
                 .format(self.invite_id, self.user_id, self.accepted))
 
 
