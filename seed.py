@@ -13,7 +13,8 @@ fake = Faker()
 
 
 def create_users():
-    """Creates users data from Faker.
+    """
+    Creates users data from Faker.
 
     Note: Overrode with data from mockaroo API for consistency of user.
     """
@@ -44,7 +45,8 @@ def create_users():
 
 
 def create_biz():
-    """Creates businesses data from Faker.
+    """
+    Creates businesses data from Faker.
 
     Note: Overrode with data from mockaroo API for consistency of business.
     """
@@ -281,7 +283,7 @@ def create_invites():
 def load_users():
     """Loads users from fake data into database."""
 
-    print "Users"
+    print 'Users'
 
     # Delete all rows in table, so if we need to run this a second time,
     # we won't be trying to add duplicate users
@@ -330,7 +332,7 @@ def load_users():
 def load_friends():
     """Loads friends relationship from fake data into database."""
 
-    print "Friends"
+    print 'Friends'
 
     # Delete all rows in table, so if we need to run this a second time,
     # we won't be trying to add duplicate friend relationships
@@ -354,10 +356,10 @@ def load_friends():
 def load_userbiz():
     """Loads user-biz relationship from fake data into database."""
 
-    print "UserBiz"
+    print 'UserBiz'
 
     # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
+    # we won't be trying to add duplicate user-business relationships
     UserBiz.query.delete()
 
     # Read user file and insert data
@@ -381,7 +383,7 @@ def load_biz():
     print 'Businesses'
 
     # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
+    # we won't be trying to add duplicate businesses
     Business.query.delete()
 
     # Read user file and insert data
@@ -442,7 +444,7 @@ def load_promos():
     print 'Promos'
 
     # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
+    # we won't be trying to add duplicate promotions
     Promo.query.delete()
 
     # Read user file and insert data
@@ -453,8 +455,6 @@ def load_promos():
 
         # Convert to datetime format
         start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
-        # start_date = datetime.strptime(start_date_str, '%m/%d/%y')
-        # end_date_str = end_date_str[:10]
         end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
 
         # Convert from string to boolean
@@ -492,7 +492,7 @@ def load_userpromos():
     print 'User-Promos'
 
     # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
+    # we won't be trying to add duplicate user-promotions relationships
     UserPromo.query.delete()
 
     # Read user file and insert data
@@ -531,7 +531,7 @@ def load_checkins():
     print 'Check-Ins'
 
     # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
+    # we won't be trying to add duplicate check ins
     CheckIn.query.delete()
 
     # Read user file and insert data
@@ -560,7 +560,7 @@ def load_referrals():
     print 'Referrals'
 
     # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
+    # we won't be trying to add duplicate referrals
     Referral.query.delete()
 
     # Read user file and insert data
@@ -598,7 +598,7 @@ def load_reviews():
     print 'Reviews'
 
     # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
+    # we won't be trying to add duplicate reviews
     Review.query.delete()
 
     # Read user file and insert data
@@ -658,7 +658,7 @@ def load_likes():
     print 'Likes'
 
     # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
+    # we won't be trying to add duplicate likes
     LikeReview.query.delete()
 
     # Read user file and insert data
@@ -682,7 +682,7 @@ def load_invites():
     print 'Invites'
 
     # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
+    # we won't be trying to add duplicate invites
     Invite.query.delete()
 
     # Read user file and insert data
@@ -758,11 +758,11 @@ def set_val_id():
 
     # Get the Max autoincremented primary key in the database
     result = db.session.query(func.max(CheckIn.checkin_id)).one()
-    checkins_max_id = int(result[0])
+    checkin_max_id = int(result[0])
 
     # Set the value for the next user_id to be max_id + 1
     query = "SELECT setval('checkins_checkin_id_seq', :new_id)"
-    db.session.execute(query, {'new_id': checkins_max_id + 1})
+    db.session.execute(query, {'new_id': checkin_max_id + 1})
 
     # Get the Max autoincremented primary key in the database
     result = db.session.query(func.max(Referral.referral_id)).one()
@@ -790,11 +790,11 @@ def set_val_id():
 
     # Get the Max autoincremented primary key in the database
     result = db.session.query(func.max(Invite.invite_id)).one()
-    invites_max_id = int(result[0])
+    invite_max_id = int(result[0])
 
     # Set the value for the next user_id to be max_id + 1
     query = "SELECT setval('invites_invite_id_seq', :new_id)"
-    db.session.execute(query, {'new_id': invites_max_id + 1})
+    db.session.execute(query, {'new_id': invite_max_id + 1})
 
     db.session.commit()
 
