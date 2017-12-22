@@ -333,10 +333,10 @@ def load_friends():
     print "Friends"
 
     # Delete all rows in table, so if we need to run this a second time,
-    # we won't be trying to add duplicate users
+    # we won't be trying to add duplicate friend relationships
     Friend.query.delete()
 
-    # Read user file and insert data
+    # Read friend file and insert data
     for row in open('data/friends.txt', 'rU'):
         row = row.rstrip()
 
@@ -677,7 +677,7 @@ def load_likes():
 
 
 def load_invites():
-    """Loads friends relationship from fake data into database."""
+    """Loads invites from fake data into database."""
 
     print 'Invites'
 
